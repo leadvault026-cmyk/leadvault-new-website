@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CheckCircle2, ArrowRight } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="Thank You — Your Recommendation Is On Its Way | LeadVault"
+  description="Your free LeadVault data recommendation is on its way within 24 hours."
+  path="/thank-you"
+  noindex
+>
+  <section class="section flex flex-col items-center py-24 text-center">
+    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+      <CheckCircle2 size={36} aria-hidden="true" />
+    </div>
+    <h1 class="mt-6 text-3xl font-extrabold text-white sm:text-4xl">Thank You!</h1>
+    <p class="mt-4 max-w-xl text-white/75">
+      Your recommendation is on its way within 24 hours.
+    </p>
+    <p class="mt-2 max-w-xl text-white/60">
+      A LeadVault strategist is reviewing what you told us and will follow up by email or WhatsApp
+      with your free, no-obligation recommendation.
+    </p>
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href="/services" class="btn-teal">Explore Services <ArrowRight size={18} /></a>
+      <a href="/trade" class="btn-outline">Visit the Trade Desk</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Fire conversion events (CLAUDE.md) — both are guarded no-ops until BaseLayout's
+  // GA4_MEASUREMENT_ID / META_PIXEL_ID are replaced with real IDs, since gtag/fbq
+  // are only defined on the page when a real ID is configured.
+  if (typeof (window as any).gtag === 'function') {
+    (window as any).gtag('event', 'generate_lead');
+  }
+  if (typeof (window as any).fbq === 'function') {
+    (window as any).fbq('track', 'Lead');
+  }
+</script>
