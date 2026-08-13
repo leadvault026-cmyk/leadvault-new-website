@@ -1,39 +1,51 @@
-// Generates public/og-image.png — a simple branded Open Graph image rendered from
-// inline SVG (CLAUDE.md: "generate a simple branded OG image as an SVG-rendered PNG").
-// Re-run with `node scripts/generate-og-image.mjs` any time the brand mark changes.
+// Generates public/og-image.png — a branded Open Graph image built from the real
+// logo (rasterized from /logo/logo.svg) composited onto a coded background, per
+// CLAUDE.md's "generate a simple branded OG image as an SVG-rendered PNG."
+// Re-run with `npm run generate:og` any time the brand mark or tagline changes.
 import sharp from 'sharp';
-import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const logoPath = join(__dirname, '..', 'logo', 'logo.svg');
+const outPath = join(__dirname, '..', 'public', 'og-image.png');
 
-const svg = `
+// Palette from CLAUDE.md design tokens v2 (rebranded from /logo/logo.png).
+const bgSvg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0A1F44" />
-      <stop offset="100%" stop-color="#081833" />
+      <stop offset="0%" stop-color="#0A0B0D" />
+      <stop offset="100%" stop-color="#000000" />
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1DBF9F" stroke-opacity="0.12" stroke-width="1" />
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#EAFF00" stroke-opacity="0.1" stroke-width="1" />
     </pattern>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)" />
   <rect width="1200" height="630" fill="url(#grid)" />
-  <circle cx="1000" cy="120" r="220" fill="#1DBF9F" fill-opacity="0.08" />
-  <text x="90" y="300" font-family="Arial, sans-serif" font-size="88" font-weight="800">
-    <tspan fill="#FFFFFF">Lead</tspan><tspan fill="#1DBF9F">Vault</tspan>
+  <circle cx="1060" cy="315" r="220" fill="#00D9EC" fill-opacity="0.06" />
+  <text x="70" y="250" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="#FFFFFF">
+    Every Business Needs Leads.
   </text>
-  <text x="92" y="360" font-family="Arial, sans-serif" font-size="34" font-weight="600" fill="#F5F7FA">
-    Every Business Needs Leads. Every Lead Starts Here.
+  <text x="70" y="304" font-family="Arial, sans-serif" font-size="42" font-weight="800" fill="#EAFF00">
+    Every Lead Starts Here.
   </text>
-  <text x="92" y="410" font-family="Arial, sans-serif" font-size="24" fill="#1DBF9F">
-    Fresh, verified leads — sourced on request, delivered in days.
+  <text x="72" y="368" font-family="Arial, sans-serif" font-size="22" font-weight="600" fill="#00D9EC">
+    Fresh, verified leads — sourced on request,
+  </text>
+  <text x="72" y="398" font-family="Arial, sans-serif" font-size="22" font-weight="600" fill="#00D9EC">
+    delivered in days.
   </text>
 </svg>
 `;
 
-const outPath = join(__dirname, '..', 'public', 'og-image.png');
-await sharp(Buffer.from(svg)).png().toFile(outPath);
+const logoSize = 300;
+const logoBuffer = await sharp(logoPath).resize(logoSize, logoSize).png().toBuffer();
+
+await sharp(Buffer.from(bgSvg))
+  .composite([{ input: logoBuffer, left: 1200 - logoSize - 60, top: Math.round((630 - logoSize) / 2) }])
+  .png()
+  .toFile(outPath);
+
 console.log(`OG image written to ${outPath}`);
