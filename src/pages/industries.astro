@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  ShoppingCart,
+  Megaphone,
+  Mail,
+  Ship,
+  Code,
+  Users,
+  Home as HomeIcon,
+  CreditCard,
+  TrendingUp,
+  Shield,
+  BarChart3,
+  Phone,
+  Calendar,
+  Package,
+  ArrowRight,
+} from '@lucide/astro';
+
+const industries = [
+  {
+    icon: ShoppingCart,
+    title: 'E-commerce & Online Retail',
+    body: 'Reach suppliers, wholesale buyers, affiliates, and B2B customers. Clean data powers your cold campaigns and partnership outreach.',
+  },
+  {
+    icon: Megaphone,
+    title: 'Marketing & Advertising Agencies',
+    body: "Buy verified data for your clients' campaigns and white-label our delivery. One agency partner, unlimited client use cases.",
+    note: '(Ask about Agency Partner Plans.)',
+  },
+  {
+    icon: Mail,
+    title: 'Cold Email & Outreach Teams',
+    body: 'Deliverability is your lifeblood. Bounce-free, freshly verified prospects protect your domains and multiply reply rates.',
+  },
+  {
+    icon: Ship,
+    title: 'Importers, Exporters & Freight Forwarders',
+    body: 'Our founding specialty.',
+    cta: { label: 'Dedicated page →', href: '/trade' },
+  },
+  {
+    icon: Code,
+    title: 'SaaS & Software Companies',
+    body: 'Decision-maker data filtered by role, company size, and tech-relevant signals for your outbound engine.',
+  },
+  {
+    icon: Users,
+    title: 'Recruitment & Staffing',
+    body: 'Source both sides: hiring decision-makers as clients, and candidate pools by profession and region.',
+  },
+  {
+    icon: HomeIcon,
+    title: 'Real Estate & Property Marketing',
+    body: 'Investor lists, buyer prospects, and developer contacts in your target locations.',
+  },
+  {
+    icon: CreditCard,
+    title: 'Fintech, Lending & Payments',
+    body: 'Verified SME and merchant data for product outreach — compliant and current.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Investment & Financial Services',
+    body: 'One of the highest-demand data categories in the vault. Verified investor leads, high-net-worth prospects, financial advisors, and capital-seeking businesses — for firms raising funds, selling investment products, or building client books.',
+  },
+  {
+    icon: Shield,
+    title: 'Insurance Brokers & Agents',
+    body: 'Individuals and businesses matching your policy products, fresh enough to still be shopping.',
+  },
+  {
+    icon: BarChart3,
+    title: 'Market Research & Consulting',
+    body: "Custom datasets built to your study's exact specification, delivered research-ready.",
+  },
+  {
+    icon: Phone,
+    title: 'Call Centers & Telemarketing',
+    body: 'Volume with validity: contact data that keeps agents talking to real people.',
+  },
+  {
+    icon: Calendar,
+    title: 'Events & Trade Shows',
+    body: 'Fill rooms and exhibitor lists with verified industry contacts.',
+  },
+  {
+    icon: Package,
+    title: 'Wholesalers & Distributors',
+    body: 'Retailer and reseller contacts across your product categories and territories.',
+  },
+];
+---
+
+<BaseLayout
+  title="Industries We Serve — Verified Data for Every Data-Driven Business | LeadVault"
+  description="From e-commerce and marketing agencies to recruiters, SaaS, insurance, and real estate — see how LeadVault delivers fresh verified data to every industry that runs on outreach."
+  path="/industries"
+>
+  <section class="section text-center">
+    <p class="eyebrow">Industries We Serve</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">If Your Business Runs on Reaching People, We're Built for You.</h1>
+    <p class="mx-auto mt-5 max-w-3xl text-white/75">
+      Every industry below shares one trait: growth depends on contacting the right people, at
+      scale, reliably. Here's what fresh, verified data does for each.
+    </p>
+  </section>
+
+  <section class="section !pt-0">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {industries.map((ind) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+            <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h2 class="text-lg font-semibold text-white">{ind.title}</h2>
+          <p class="text-sm leading-relaxed text-white/70">{ind.body}</p>
+          {ind.note && <p class="text-xs italic text-white/40">{ind.note}</p>}
+          {ind.cta && (
+            <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-teal)] hover:underline">
+              {ind.cta.label}
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="card mt-10 flex flex-col items-center gap-4 text-center">
+      <h2 class="text-xl font-bold text-white">Don't see your industry?</h2>
+      <p class="max-w-xl text-white/70">If your growth depends on reaching people, we can source for you.</p>
+      <a href="/contact" class="btn-teal">Ask Us <ArrowRight size={18} /></a>
+    </div>
+  </section>
+</BaseLayout>

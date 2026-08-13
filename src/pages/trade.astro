@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import Testimonial from '../components/Testimonial.astro';
+import { ArrowRight, Ship, Package, Truck, Globe, Warehouse } from '@lucide/astro';
+
+const audience = [
+  { icon: Ship, text: 'Exporters seeking verified international buyers for commodities and goods' },
+  { icon: Package, text: 'Importers seeking genuine, checkable suppliers' },
+  { icon: Truck, text: 'Freight forwarders & customs brokers seeking a pipeline of shippers and trade clients' },
+  { icon: Globe, text: 'Diaspora entrepreneurs — especially Nigerians and Africans abroad — trading between markets' },
+  { icon: Warehouse, text: 'Wholesalers and distributors expanding across borders' },
+];
+
+const receive = [
+  'A strategist consultation on your trade lane, product category, and target market',
+  'A verified counterparty dataset — buyers, suppliers, or shipper prospects matching your specification, each contact checked for existence, activity, and relevance',
+  'Fresh sourcing — records gathered and verified for your order, not recycled from a warehouse',
+  'Guidance on approach — how to make contact, what to verify further, and red flags to watch',
+];
+
+const testimonials = [
+  {
+    quote:
+      "I run an export business from Houston, and for years my biggest headache was finding genuine buyers back home and verified suppliers I could trust. Steve connected me with both. The contacts were real, the businesses were active, and deals actually closed. I've recommended him to everyone in my circle.",
+    attribution: 'A.O., Exporter — Houston, USA',
+  },
+  {
+    quote:
+      "Finding verified buyers for international trade is nearly impossible on your own — most contacts online are dead ends or scams. LeadVault's data was different: fresh, verified, and exactly the type of businesses I asked for.",
+    attribution: 'C.E., Freight Forwarder — Atlanta, USA',
+  },
+  {
+    quote:
+      "Every list I bought elsewhere was half dead — bounced emails, disconnected numbers. LeadVault's data connects. You can tell it was verified days before delivery, not years.",
+    attribution: 'T.M., Digital Marketing Agency Owner — Lagos',
+  },
+];
+---
+
+<BaseLayout
+  title="Verified Buyers, Sellers & Freight Leads for Importers & Exporters | LeadVault Trade Desk"
+  description="Stop chasing fake buyers. LeadVault finds and verifies genuine international buyers, suppliers, and freight clients — the service diaspora traders have trusted for years."
+  path="/trade"
+>
+  <section class="section grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">International Trade & Freight Forwarding</p>
+      <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">Verified Buyers. Genuine Suppliers. Real Deals.</h1>
+      <p class="mt-5 text-white/75">
+        International trade runs on one thing: <strong class="text-white">knowing your counterparty is real.</strong>
+        Yet every trader knows the pain — "buyers" who vanish after the invoice, "suppliers" who
+        don't exist, contact lists that lead nowhere.
+      </p>
+      <p class="mt-4 text-white/75">
+        LeadVault solves the problem the way it must be solved: <strong class="text-white">human-verified,
+        freshly-sourced counterparty data</strong> — the service our founder built his name on,
+        trusted for years by importers, exporters, and freight forwarders across the USA, UK, Canada, and Nigeria.
+      </p>
+      <div class="mt-8">
+        <a href="/contact?need=trade-desk" class="btn-teal">Find My Buyers/Suppliers <ArrowRight size={18} /></a>
+      </div>
+    </div>
+    <ImagePlaceholder caption="IMAGE: container port or cargo aircraft with teal data-connection overlay" ratio="aspect-[4/3]" />
+  </section>
+
+  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Who This Page Is For</h2>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {audience.map((a) => (
+          <div class="card flex flex-col items-center gap-3 text-center">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+              <a.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <p class="text-sm text-white/75">{a.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">The Story Behind This Service</h2>
+      <p class="mt-5 text-white/75">
+        LeadVault was born here. For years before this website existed, Steve Ehimigbai personally
+        helped diaspora-run import/export businesses in the United States find what they could not
+        find alone: buyers who actually pay, suppliers who actually ship, and freight clients who
+        actually move cargo. Deal by deal, referral by referral, the method was refined into the
+        system that now powers everything LeadVault does.
+      </p>
+      <p class="mt-4 text-white/75">
+        When you use the Trade Desk, you're not trying a new product. You're joining a service with
+        years of closed deals behind it.
+      </p>
+    </div>
+  </section>
+
+  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">What You Receive</h2>
+      <ol class="mx-auto mt-10 max-w-2xl space-y-5">
+        {receive.map((item, i) => (
+          <li class="flex gap-4">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-teal)] text-sm font-bold text-[var(--color-teal-dark)]">
+              {i + 1}
+            </span>
+            <p class="text-white/80">{item}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Why Traders Choose Us Over "Buyer Lists" Online</h2>
+    <div class="mt-10">
+      <ComparisonTable
+        caption='Typical online "buyer lists" versus the LeadVault Trade Desk'
+        headers={['Typical online "buyer lists"', 'LeadVault Trade Desk']}
+        rows={[
+          ['Anonymous, unverifiable, often scams', 'Every counterparty checked before delivery'],
+          ['Sold to hundreds of buyers', 'Sourced for your specification'],
+          ['No accountability', 'A named company with years of testimonials'],
+          ['List only', 'Data + strategy + approach guidance'],
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Trade Testimonials</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-3">
+        {testimonials.map((t) => <Testimonial quote={t.quote} attribution={t.attribution} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-3xl font-bold text-white sm:text-4xl">Your Next Trade Partner Is Verifiable. Let's Find Them.</h2>
+    <div class="mt-8">
+      <a href="/contact?need=trade-desk" class="btn-teal">Start With the Trade Survey <ArrowRight size={18} /></a>
+    </div>
+    <p class="mx-auto mt-4 max-w-xl text-sm text-white/60">
+      Tell us your product, your lane, and your target market. Recommendation within 24 hours.
+    </p>
+  </section>
+</BaseLayout>

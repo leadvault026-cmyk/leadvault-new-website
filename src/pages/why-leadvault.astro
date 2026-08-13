@@ -1,0 +1,115 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import { ArrowRight, Warehouse, Leaf } from '@lucide/astro';
+---
+
+<BaseLayout
+  title="LeadVault vs Apollo, ZoomInfo & RocketReach — Fresh Data vs Database Platforms"
+  description="An honest comparison: how LeadVault's fresh, on-request data sourcing differs from database platforms like Apollo, ZoomInfo, and RocketReach — and when each approach fits."
+  path="/why-leadvault"
+>
+  <section class="section text-center">
+    <p class="eyebrow">Why LeadVault</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">An Honest Comparison: The Warehouse vs. The Harvest.</h1>
+    <p class="mx-auto mt-5 max-w-3xl text-white/75">
+      Apollo. ZoomInfo. RocketReach. Lusha. These are serious companies with massive databases, and
+      for some use cases they're a reasonable choice. This page explains — factually — how their
+      model differs from ours, so you can decide what your business actually needs.
+    </p>
+  </section>
+
+  <section class="section !pt-0">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">The Two Models</h2>
+    <div class="mt-10 grid gap-6 lg:grid-cols-2">
+      <div class="card flex flex-col gap-3">
+        <Warehouse size={26} class="text-white/50" aria-hidden="true" />
+        <h3 class="text-lg font-bold text-white">The Database Platform Model</h3>
+        <p class="text-sm leading-relaxed text-white/75">
+          Build an enormous database once; verify it periodically; sell subscriptions to search and
+          download it. Strength: instant self-serve access at scale. Structural weakness:
+          <strong class="text-white"> records age between verification cycles.</strong> B2B data
+          decays at roughly 25–30% per year as people change roles and companies — a figure the
+          platforms themselves acknowledge in their own research. Users pay for access to records of
+          mixed and unknowable freshness.
+        </p>
+      </div>
+      <div class="card flex flex-col gap-3 ring-1 ring-[var(--color-teal)]/50">
+        <Leaf size={26} class="text-[var(--color-teal)]" aria-hidden="true" />
+        <h3 class="text-lg font-bold text-white">The LeadVault Model</h3>
+        <p class="text-sm leading-relaxed text-white/75">
+          Source on request. Your order defines the specification; our researchers and custom tools
+          gather and verify records <strong class="text-white">for that order</strong>, within days
+          of delivery. Strength: freshness, precision, and a human strategist attached to every
+          engagement. Trade-off: delivery takes days, not seconds — freshness cannot be instant.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Side by Side</h2>
+      <div class="mt-10">
+        <ComparisonTable
+          caption="Database platforms versus LeadVault, factor by factor"
+          headers={['Factor', 'Database Platforms', 'LeadVault']}
+          rows={[
+            ['Access model', 'Self-serve login & search', 'Sourced on request, delivered to you'],
+            ['Data age at delivery', 'Unknown — verified anywhere from weeks to years ago', 'Days — verified for your order'],
+            ['Bounce handling', 'Bounces included in what you export', 'Bounces removed before delivery'],
+            ['Customization', 'Limited to database filters', 'Any specification we can define, we can source'],
+            ['Human guidance', 'None — software subscription', 'Strategist consultation with every engagement'],
+            ['African & emerging-market coverage', 'Thin and frequently outdated', 'Deep, current, on-the-ground capability'],
+            ['Pricing model', 'Per-seat subscriptions (commonly $600–$1,800+/yr per user; enterprise contracts far higher)', 'Pay per dataset or flexible monthly plans'],
+            ['Best for', 'Large teams needing instant self-serve volume', "Businesses that need data that's right, fresh, and guided"],
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">When to Use Them — and When to Use Us</h2>
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+      <div class="card">
+        <h3 class="font-semibold text-white">Choose a database platform if:</h3>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          you need thousands of self-serve lookups daily and your team can tolerate bounce rates and
+          stale records as a cost of speed.
+        </p>
+      </div>
+      <div class="card ring-1 ring-[var(--color-teal)]/50">
+        <h3 class="font-semibold text-white">Choose LeadVault if:</h3>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          response rates matter more than instant access; you need markets the platforms cover
+          poorly; you want a specification they can't filter for; your sender reputation can't
+          afford bounces; or you want a human expert making sure you buy the right data.
+        </p>
+      </div>
+    </div>
+    <p class="mx-auto mt-8 max-w-2xl text-center text-white/70">
+      Many of our clients use both — the platform for bulk convenience, LeadVault when the campaign
+      actually has to work.
+    </p>
+  </section>
+
+  <section class="border-t border-white/10 bg-[var(--color-navy-dark)]">
+    <div class="section text-center">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">The Bottom Line</h2>
+      <p class="mx-auto mt-5 max-w-3xl text-white/75">
+        Nobody in this market combines what we combine:
+        <strong class="text-white"> on-request fresh sourcing, per-order verification, custom
+        engineering, deep emerging-market reach, and strategist service.</strong> That combination —
+        not any single feature — is why clients who try us, stay.
+      </p>
+      <div class="mt-8">
+        <a href="/contact" class="btn-teal">Test Us — Order a Sample Dataset <ArrowRight size={18} /></a>
+      </div>
+      <p class="mx-auto mt-6 max-w-2xl text-xs italic text-white/40">
+        Legal note: all comparative claims framed as model differences and publicly documented
+        facts; refresh incumbent pricing figures against their public pages before publishing.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

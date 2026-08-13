@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import { ShieldCheck, Search, Database, Send, Terminal, Wrench, ArrowRight } from '@lucide/astro';
+
+const tools = [
+  {
+    icon: ShieldCheck,
+    title: 'Email Verification Engine',
+    body: 'Confirms every address is real and deliverable: MX record verification across all provider types (Office 365, Google Workspace, independent and broker mail servers), so "verified" means exactly that.',
+  },
+  {
+    icon: Search,
+    title: 'Bounce & Hygiene Scanner',
+    body: 'Detects likely bounces, dormant mailboxes, and dead domains; automatically retires aging records.',
+  },
+  {
+    icon: Database,
+    title: 'Email Extraction System',
+    body: 'Responsibly gathers publicly available business contact information at scale, feeding the verification pipeline under our compliance standards.',
+  },
+  {
+    icon: Send,
+    title: 'Advanced Sending Infrastructure',
+    body: 'Controlled, configurable sending systems used to validate deliverability and run client campaigns under strict best practices.',
+  },
+  {
+    icon: Terminal,
+    title: 'Custom Python Filtering Scripts',
+    body: 'The heart of client work: purpose-written scripts slicing large datasets to precise specifications — roles, industries, geographies, company sizes — output as clean, structured CSV.',
+  },
+  {
+    icon: Wrench,
+    title: 'Bespoke Tools On Demand',
+    body: "Some projects need instruments that don't exist yet. We design and build them. Then the next challenge teaches us something new, and the vault gets stronger.",
+  },
+];
+---
+
+<BaseLayout
+  title="Custom Data Tools — Email Verification, MX Checks & Python Engineering | LeadVault"
+  description="The engineering behind LeadVault: in-house email verification, MX record checks, bounce scanning, extraction, advanced sending, and custom Python tools built for every challenge."
+  path="/tools"
+>
+  <section class="section grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">Tools & Technology</p>
+      <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">We Don't Just Use Tools. We Build Them.</h1>
+      <p class="mt-5 text-white/75">
+        Most data companies rent their capabilities. LeadVault engineers its own — and when a
+        client's challenge doesn't fit an existing tool, we build a new one. Every challenge brings
+        a different scripting strategy; constant research and construction is our culture. It's why
+        our data behaves differently in the field.
+      </p>
+    </div>
+    <ImagePlaceholder caption="IMAGE: multi-monitor engineering desk, dark blue tones" ratio="aspect-[4/3]" />
+  </section>
+
+  <section class="section !pt-0">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Inside the Toolbox</h2>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+            <tool.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-lg font-semibold text-white">{tool.title}</h3>
+          <p class="text-sm leading-relaxed text-white/70">{tool.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="border-t border-white/10 bg-[var(--color-navy-mid)]">
+    <div class="section grid items-center gap-10 lg:grid-cols-2">
+      <ImagePlaceholder caption="IMAGE: terminal/code screen — verification tool output" ratio="aspect-video" />
+      <div>
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
+        <p class="mt-5 text-white/75">
+          When you buy from a reseller, you inherit their shortcuts. When you buy from LeadVault,
+          your data has passed through technology we designed, understand, and continuously
+          improve. Quality isn't a promise on a website — it's engineered into the pipeline.
+        </p>
+        <div class="mt-8">
+          <a href="/about#data-standards" class="btn-teal">See Our Data Standards <ArrowRight size={18} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

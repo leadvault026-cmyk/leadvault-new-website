@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Database, Sparkles, Handshake, CalendarCheck, Terminal, Compass, Send, ArrowRight } from '@lucide/astro';
+
+const services = [
+  {
+    icon: Database,
+    title: 'Custom Fresh Datasets',
+    flagship: true,
+    body: "Tell us exactly who you need — industry, job titles, locations, company sizes, buying signals. We source the data fresh, verify every record, and deliver a clean CSV within days. Not pulled from storage; harvested for you.",
+    detail: 'What you receive per record: name, job title, company, verified email, phone (where available), location, industry — plus any custom fields you specify.',
+    price: 'From $299 per 1,000 verified records.',
+    priceNote: '(Confirm/adjust pricing.)',
+  },
+  {
+    icon: Sparkles,
+    title: 'Email List Cleaning & Hygiene',
+    body: 'Lists age fast — roughly a quarter of B2B contacts go stale every year. Send us any list (bought anywhere, or built in-house) and we return it healthy:',
+    list: [
+      'MX record verification across Office 365, Google Workspace, and every provider type',
+      'Bounce and dead-address removal before you ever hit "send"',
+      'Duplicate & error scrubbing',
+      'Your sender reputation, protected.',
+    ],
+    price: 'From $49 per 5,000 contacts cleaned.',
+  },
+  {
+    icon: Handshake,
+    title: 'Verified Buyer–Seller Matching',
+    subtitle: 'The Trade Desk — our original service',
+    body: 'The service that built LeadVault. For importers, exporters, and freight forwarders: we locate and verify genuine counterparties — buyers for your goods, suppliers you can trust, shippers who need forwarding — across international markets. Includes a strategist consultation on your trade lane.',
+    price: 'From $499 per engagement.',
+    cta: { label: 'Full details →', href: '/trade' },
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Monthly Lead Subscriptions',
+    body: 'A steady pipeline, on schedule. Fresh, verified leads matching your profile, delivered weekly or monthly — with a strategy report and priority support on higher tiers.',
+    price: 'From $199/month.',
+    cta: { label: 'See Plans →', href: '/pricing' },
+  },
+  {
+    icon: Terminal,
+    title: 'Custom Data Projects (Python-Powered)',
+    body: 'Our engineers write purpose-built Python scripts for every complex project — filtering massive datasets to your precise specification: decision-makers only, niche industries, unusual geographies, special formats. If it can be defined, it can be delivered.',
+    price: 'Custom quote.',
+  },
+  {
+    icon: Compass,
+    title: 'Data Strategy & Recommendations',
+    body: 'Not sure what data you need? Complete our 10-minute survey. A strategist analyses your business, market, and goals — then delivers a written recommendation: what to buy, how much, and how to use it for maximum response.',
+    price: 'Free with any order; $49 standalone (credited back if you purchase within 30 days).',
+  },
+  {
+    icon: Send,
+    title: 'Outreach Best-Practice Support',
+    subtitle: 'Add-on',
+    body: 'Clean data deserves clean usage. We advise on sending best practices, warm-up schedules, message templates, and follow-up sequences — so your campaigns land in inboxes, not spam folders, and comply with the rules of every market you contact.',
+  },
+];
+---
+
+<BaseLayout
+  title="B2B Lead Generation, List Cleaning & Custom Data Services | LeadVault"
+  description="Fresh verified leads, email list cleaning, custom Python-filtered datasets, buyer–seller matching, and data strategy — LeadVault's complete service suite for businesses worldwide."
+  path="/services"
+>
+  <section class="section text-center">
+    <p class="eyebrow">Services</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">One Vault. Every Data Service Your Business Needs.</h1>
+    <p class="mx-auto mt-5 max-w-3xl text-white/75">
+      We don't just hand over lists. We source, verify, clean, filter, match, and advise — and when
+      your challenge is unusual, we build the tool that solves it.
+    </p>
+  </section>
+
+  <section class="section !pt-0">
+    <div class="grid gap-6 lg:grid-cols-2">
+      {services.map((service) => (
+        <div class:list={['card flex flex-col gap-4', service.flagship && 'ring-1 ring-[var(--color-teal)]/50']}>
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+              <service.icon size={24} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            {service.flagship && (
+              <span class="rounded-full bg-[var(--color-teal)] px-3 py-1 text-xs font-bold text-[var(--color-teal-dark)]">Flagship</span>
+            )}
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-white">{service.title}</h2>
+            {service.subtitle && <p class="text-sm font-medium text-[var(--color-teal)]">{service.subtitle}</p>}
+          </div>
+          <p class="text-sm leading-relaxed text-white/75">{service.body}</p>
+          {service.list && (
+            <ul class="space-y-2">
+              {service.list.map((item) => (
+                <li class="flex gap-2 text-sm text-white/70">
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-teal)]"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+          {service.detail && <p class="text-xs italic text-white/50">{service.detail}</p>}
+          <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
+            <div>
+              {service.price && <p class="font-semibold text-white">{service.price}</p>}
+              {service.priceNote && <p class="text-xs text-white/40">{service.priceNote}</p>}
+            </div>
+            {service.cta && (
+              <a href={service.cta.href} class="text-sm font-semibold text-[var(--color-teal)] hover:underline">
+                {service.cta.label}
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-12 text-center">
+      <a href="/contact" class="btn-teal">Not Sure Where to Start? Take the Survey <ArrowRight size={18} /></a>
+    </div>
+  </section>
+</BaseLayout>
