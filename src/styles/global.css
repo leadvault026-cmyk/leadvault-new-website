@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/inter/800.css";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* LeadVault design tokens (CLAUDE.md locked decisions) */
+  --color-navy: #0a1f44;
+  --color-navy-mid: #12315f;
+  --color-navy-dark: #081833;
+  --color-teal: #1dbf9f;
+  --color-teal-dark: #04342c;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-navy);
+    color: #f5f7fa;
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Visible focus states for accessibility (CLAUDE.md perf/a11y requirement) */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .btn-teal {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-teal)] px-6 py-3 font-semibold text-[var(--color-teal-dark)] transition-colors duration-150 hover:bg-white;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-6 py-3 font-semibold text-white transition-colors duration-150 hover:border-[var(--color-teal)] hover:text-[var(--color-teal)];
+  }
+
+  .section {
+    @apply mx-auto max-w-7xl px-6 py-16 sm:py-20 lg:px-8;
+  }
+
+  .eyebrow {
+    @apply text-sm font-semibold uppercase tracking-widest text-[var(--color-teal)];
+  }
+
+  .card {
+    @apply rounded-xl border border-white/10 bg-[var(--color-navy-mid)] p-6 shadow-lg shadow-black/20;
+  }
+
+  .table-wrap {
+    @apply w-full overflow-x-auto rounded-xl border border-white/10;
+  }
+
+  .lv-table {
+    @apply w-full min-w-[640px] border-collapse text-left text-sm;
+  }
+
+  .lv-table th {
+    @apply bg-[var(--color-navy-dark)] px-4 py-3 font-semibold text-[var(--color-teal)];
+  }
+
+  .lv-table td {
+    @apply border-t border-white/10 px-4 py-3 text-white/85;
+  }
+
+  .lv-table tr:nth-child(even) td {
+    @apply bg-white/[0.03];
+  }
+
+  /* Navy duotone treatment applied to every photo slot (placeholder now, real photos later) */
+  .lv-duotone {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .lv-duotone img {
+    filter: grayscale(0.35) contrast(1.05);
+  }
+
+  .lv-duotone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(10, 31, 68, 0.8), rgba(29, 191, 159, 0.22));
+    mix-blend-mode: multiply;
+    pointer-events: none;
+  }
+}

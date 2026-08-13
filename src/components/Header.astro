@@ -1,0 +1,88 @@
+---
+import Logo from './Logo.astro';
+import { HEADER_LINKS } from '../data/site';
+
+const currentPath = new URL(Astro.request.url).pathname;
+const isActive = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
+---
+
+<header class="sticky top-0 z-50 border-b border-white/10 bg-[var(--color-navy)]/95 backdrop-blur">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
+    <a href="/" class="shrink-0" aria-label="LeadVault home">
+      <Logo />
+    </a>
+
+    <nav class="hidden items-center gap-5 lg:flex" aria-label="Primary">
+      {HEADER_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'text-sm font-medium whitespace-nowrap transition-colors hover:text-[var(--color-teal)]',
+            isActive(link.href) ? 'text-[var(--color-teal)]' : 'text-white/85',
+          ]}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden shrink-0 lg:block">
+      <a href="/contact" class="btn-teal !px-5 !py-2.5 text-sm">Get My Free Recommendation</a>
+    </div>
+
+    <button
+      id="mobile-nav-toggle"
+      type="button"
+      class="inline-flex items-center justify-center rounded-md p-2 text-white lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      aria-label="Toggle navigation menu"
+    >
+      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" x2="20" y1="7" y2="7"></line>
+        <line x1="4" x2="20" y1="12" y2="12"></line>
+        <line x1="4" x2="20" y1="17" y2="17"></line>
+      </svg>
+      <svg id="icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" x2="6" y1="6" y2="18"></line>
+        <line x1="6" x2="18" y1="6" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    class="hidden flex-col gap-1 border-t border-white/10 bg-[var(--color-navy)] px-6 py-4 lg:hidden"
+    aria-label="Mobile"
+  >
+    {HEADER_LINKS.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'rounded-md px-3 py-2.5 text-base font-medium transition-colors hover:bg-white/5 hover:text-[var(--color-teal)]',
+          isActive(link.href) ? 'text-[var(--color-teal)]' : 'text-white/85',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+    <a href="/contact" class="btn-teal mt-3 w-full">Get My Free Recommendation</a>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-nav-toggle');
+  const menu = document.getElementById('mobile-nav');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = menu?.classList.contains('flex');
+    menu?.classList.toggle('hidden', isOpen);
+    menu?.classList.toggle('flex', !isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    iconOpen?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+  });
+</script>

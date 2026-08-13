@@ -1,0 +1,141 @@
+---
+// Home "Data In Numbers" section. Copy doc's figures are literal bracket placeholders
+// ("[X]+ years", "[XX]%", …) — CLAUDE.md says keep placeholders visible and never invent
+// stats, so these reveal on scroll (IntersectionObserver) rather than counting up to a
+// fabricated number. The reusable count-up engine below activates automatically the day
+// a real numeric data-target replaces a bracket string — see ASSUMPTIONS.md.
+const stats = [
+  { value: '[X]+', label: 'years connecting verified buyers and sellers internationally' },
+  { value: '[X,XXX]+', label: 'datasets and lead batches delivered' },
+  { value: '[XX]%', label: 'average deliverability after cleaning' },
+  { value: '[X]', label: 'continents served' },
+];
+---
+
+<div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+  <div class="grid grid-cols-2 gap-4 sm:gap-6">
+    {stats.map((stat) => (
+      <div class="lv-reveal card text-center" data-reveal>
+        <div class="text-3xl font-extrabold text-[var(--color-teal)] sm:text-4xl" data-counter>{stat.value}</div>
+        <p class="mt-2 text-xs text-white/70 sm:text-sm">{stat.label}</p>
+      </div>
+    ))}
+  </div>
+
+  <div class="space-y-6">
+    <div class="lv-reveal card" data-reveal>
+      <p class="eyebrow">Deliverability</p>
+      <div class="mt-4 flex items-end gap-6" role="img" aria-label="Illustrative deliverability bar chart — replace with real figures before launch">
+        <div class="flex flex-1 flex-col items-center gap-2">
+          <div class="flex h-32 w-full items-end rounded-md bg-white/5">
+            <div class="w-full rounded-md bg-white/20" style="height: 42%"></div>
+          </div>
+          <span class="text-xs text-white/60">Database platforms</span>
+        </div>
+        <div class="flex flex-1 flex-col items-center gap-2">
+          <div class="flex h-32 w-full items-end rounded-md bg-white/5">
+            <div class="lv-bar w-full rounded-md bg-[var(--color-teal)]" data-bar-height="88" style="height: 88%"></div>
+          </div>
+          <span class="text-xs font-semibold text-white">LeadVault — [XX]%</span>
+        </div>
+      </div>
+      <p class="mt-3 text-xs text-white/40">Illustrative chart — replace with your real deliverability rate.</p>
+    </div>
+
+    <div class="lv-reveal card" data-reveal>
+      <p class="eyebrow">Worldwide Coverage</p>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        {['USA', 'UK', 'Canada', 'Nigeria', '+ more'].map((region) => (
+          <span class="rounded-full border border-[var(--color-teal)]/40 bg-[var(--color-teal)]/10 px-3 py-1.5 text-xs font-medium text-[var(--color-teal)]">
+            {region}
+          </span>
+        ))}
+      </div>
+      <p class="mt-3 text-xs text-white/60">[X] continents served — worldwide capacity.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Progressive enhancement: elements are fully visible by default (server-rendered).
+  // Only once we know IntersectionObserver exists — and synchronously, before the
+  // browser's first paint of this section — do we opt them into the hidden "pending"
+  // state, so a slow/blocked/failed script (or a screenshot tool that never scrolls)
+  // never leaves this content invisible.
+  const revealEls = document.querySelectorAll<HTMLElement>('[data-reveal]');
+
+  if ('IntersectionObserver' in window) {
+    revealEls.forEach((el) => el.classList.add('lv-pending'));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const el = entry.target as HTMLElement;
+          el.classList.remove('lv-pending');
+          el.classList.add('lv-reveal-visible');
+
+          const counter = el.querySelector<HTMLElement>('[data-counter]');
+          const target = counter?.dataset.target;
+          if (counter && target) {
+            const end = Number(target);
+            const suffix = counter.dataset.suffix ?? '';
+            const duration = 1200;
+            const start = performance.now();
+            const tick = (now: number) => {
+              const progress = Math.min((now - start) / duration, 1);
+              counter.textContent = Math.round(progress * end).toLocaleString() + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }
+
+          const bar = el.querySelector<HTMLElement>('.lv-bar');
+          if (bar) {
+            const target = bar.dataset.barHeight ?? '0';
+            bar.style.height = '0%';
+            requestAnimationFrame(() => {
+              bar.style.height = `${target}%`;
+            });
+          }
+
+          io.unobserve(el);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    revealEls.forEach((el) => io.observe(el));
+  }
+</script>
+
+<style>
+  [data-reveal].lv-pending {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  [data-reveal] {
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  [data-reveal].lv-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .lv-bar {
+    transition: height 1s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal].lv-pending {
+      opacity: 1;
+      transform: none;
+    }
+    [data-reveal] {
+      transition: none;
+    }
+    .lv-bar {
+      transition: none;
+    }
+  }
+</style>

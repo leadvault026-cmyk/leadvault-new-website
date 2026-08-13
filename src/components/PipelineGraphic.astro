@@ -1,0 +1,29 @@
+---
+import { Search, ShieldCheck, Sparkles, Mail, ArrowRight } from '@lucide/astro';
+
+const stages = [
+  { icon: Search, label: 'SOURCE', desc: 'Gathered to your exact specification' },
+  { icon: ShieldCheck, label: 'VERIFY', desc: 'MX checks, bounce & activity screening' },
+  { icon: Sparkles, label: 'CLEAN', desc: 'Duplicates & dead entries removed' },
+  { icon: Mail, label: 'DELIVER', desc: 'Bounce-free CSV, straight to your inbox' },
+];
+---
+
+<div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr]">
+  {stages.map((stage, i) => (
+    <>
+      <div class="card flex flex-col items-center gap-3 text-center">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+          <stage.icon size={26} stroke-width={1.75} aria-hidden="true" />
+        </div>
+        <div class="eyebrow">{stage.label}</div>
+        <p class="text-sm text-white/70">{stage.desc}</p>
+      </div>
+      {i < stages.length - 1 && (
+        <div class="hidden items-center justify-center lg:flex" aria-hidden="true">
+          <ArrowRight size={20} class="text-white/30" />
+        </div>
+      )}
+    </>
+  ))}
+</div>

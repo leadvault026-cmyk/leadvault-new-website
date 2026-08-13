@@ -1,0 +1,12 @@
+---
+// Text wordmark logo. Replace with an <img>/<svg> logo file here (single point of change)
+// once a real logo asset exists — nothing else in the site references the logo directly.
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<span class={`font-extrabold tracking-tight text-xl sm:text-2xl ${className}`}>
+  <span class="text-white">Lead</span><span class="text-[var(--color-teal)]">Vault</span>
+</span>

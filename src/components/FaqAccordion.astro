@@ -1,0 +1,26 @@
+---
+// Zero-JS accordion using native <details>/<summary> — satisfies CLAUDE.md's
+// "FAQ accordions may use minimal vanilla JS" allowance without shipping any JS at all.
+import { ChevronDown } from '@lucide/astro';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+interface Props {
+  items: FaqItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="divide-y divide-white/10 rounded-xl border border-white/10 bg-[var(--color-navy-mid)]">
+  {items.map((item) => (
+    <details class="group p-5">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-white marker:content-none">
+        {item.question}
+        <ChevronDown size={18} class="shrink-0 text-[var(--color-teal)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+      </summary>
+      <p class="mt-3 text-sm leading-relaxed text-white/70">{item.answer}</p>
+    </details>
+  ))}
+</div>
