@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(npm install*)",
+      "Bash(npm run*)",
+      "Bash(npm create*)",
+      "Bash(npx astro*)",
+      "Bash(npx tailwindcss*)",
+      "Bash(npx @astrojs/*)",
+      "Bash(node *)",
+      "Bash(mkdir *)",
+      "Bash(ls*)",
+      "Bash(cat *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(git init*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(git push --force*)",
+      "Bash(curl *)",
+      "Bash(wget *)"
+    ]
+  }
+}
