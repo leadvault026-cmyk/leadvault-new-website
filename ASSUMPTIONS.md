@@ -55,15 +55,61 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
 
 ## Design system
 
-- **Header nav shows 9 of the 10 "Explore" links**; "Get Started" is represented by the
-  sticky teal CTA button (linking to `/contact`) instead of a duplicate text link, per
-  CLAUDE.md's "nav, teal CTA button linking to /contact." The footer's "Explore" list
+- **Header nav shows 9 of the 10 "Explore" links** (grouped into Solutions/Company
+  dropdowns as of the design review — see below); "Get Started" is represented by the
+  sticky CTA button (linking to `/contact`) instead of a duplicate text link, per
+  CLAUDE.md's "nav, CTA button linking to /contact." The footer's "Explore" list
   still carries all 10, verbatim, per the copy doc.
-- **Logo is a single component** (`src/components/Logo.astro`) referenced everywhere, so
-  a real SVG logo can replace the text wordmark in one place later, per CLAUDE.md.
+- **Logo was a single component** (`src/components/Logo.astro`) referenced everywhere
+  from the start specifically so the real logo could replace the text wordmark in one
+  place later — done in the design review round, see below.
 - **Duotone overlay** is a reusable `.lv-duotone` CSS class applied to every image slot
   now (on the placeholder blocks) and automatically to any real `<img>` dropped into that
   same wrapper later — no per-photo styling work needed at launch.
+
+## Design review round 1 (rebrand + hero + nav)
+
+- **Palette values came from two sources, reconciled.** `/logo/logo.png` was sampled
+  programmatically (histogram of saturated pixel clusters) to find the accent hues;
+  `/logo/logo.svg`'s explicit gradient stops then gave exact hex values for the same
+  colors (more precise than raster sampling). Where they diverged slightly, the SVG's
+  values won (e.g. lime landed on `#EAFF00`, not the sampled `#EEFF00`).
+- **CSS custom property names were renamed, not just re-valued**, in a project-wide
+  mechanical pass (`--color-navy*` → `--color-bg*`, `--color-teal*` → `--color-lime*`,
+  `.btn-teal` → `.btn-primary`). Kept the tokens' *names* honest rather than leaving
+  `--color-teal` holding a lime-yellow value — a maintainer reading the CSS six months
+  from now shouldn't have to know the rebrand history to trust a variable's name.
+- **WCAG AA contrast needed a second pass after the initial rebrand.** Hand-verified
+  the core palette (lime/cyan/green/white against both background tiers) before
+  building anything, but the `text-white/40` and `/45` utility classes used throughout
+  for de-emphasized captions, notes, and footer legal labels only hit ~3.65–4.26:1 —
+  below the 4.5:1 normal-text minimum. Caught by running an automated axe-core
+  color-contrast scan against all 11 rendered pages (not just spot-checking), which
+  found 11 real violation groups the manual token-pair math had missed because it
+  didn't account for opacity-based utility classes. Fixed by raising the floor to
+  `text-white/50` (verified ≥4.93:1 against the lighter `bg-mid` tier) everywhere,
+  site-wide, then re-scanned to confirm zero violations across all pages.
+- **favicon.ico didn't exist in `/logo`** (only `favicon.png`, `favicon.svg`,
+  `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png`). Generated it from
+  the 16×16 and 32×32 PNGs via the `png-to-ico` package (new devDependency) in
+  `scripts/generate-brand-assets.mjs`, since the design review explicitly required
+  `favicon.ico` to be wired up.
+- **Logo used as a badge/icon mark, not paired with separate text.** The provided logo
+  is a circular badge with "LEADVAULT" already lettered inside it — the design review
+  said "replace the text wordmark... with the real logo," so `Logo.astro` renders only
+  the image (no adjacent text recreation). At header size (~48px) the internal lettering
+  reads as texture/brand-recognition rather than literal text, which is normal for
+  badge-style logos in nav bars; it's fully legible at the larger footer size (~64px).
+- **Hero graphic's node positions and "world map" are stylized, not geographically
+  accurate.** USA/UK/Canada/Nigeria/Worldwide are arranged for visual balance across
+  the canvas, not real relative geography — consistent with the original build's
+  approach and the handoff brief's "world-arc graphic" framing rather than a literal map.
+- **Section-alternation fixes favored merging over adding bands** where two adjacent
+  same-tone sections were really one continuous thought (e.g. About's hero heading +
+  founding story, Why LeadVault's hero + "Two Models" cards) — merged into a single
+  section rather than forcing an artificial color band between them. Where sections
+  were genuinely distinct content blocks (Pricing's four pricing tables, Tools'
+  toolbox grid), gave them their own `bg`/`bg-mid` tier instead.
 
 ## Technical
 
@@ -73,10 +119,11 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
 - **FAQ accordion uses native `<details>/<summary>`**, not JavaScript, satisfying
   CLAUDE.md's "may use minimal vanilla JS" allowance with zero shipped JS. Mobile nav
   toggle does use a small vanilla-JS script, since a true hamburger open/close needs it.
-- **OG image is a generated PNG** (`public/og-image.png`), rendered at build-adjacent
-  time from an inline SVG via `sharp` (`scripts/generate-og-image.mjs`, `npm run
-  generate:og`) — per CLAUDE.md's "SVG-rendered PNG" instruction. Re-run the script any
-  time the brand mark or tagline changes.
+- **OG image is a generated PNG** (`public/og-image.png`), composited from the real
+  logo (rasterized from `/logo/logo.svg`) over a coded background via `sharp`
+  (`scripts/generate-og-image.mjs`, `npm run generate:og`) — per CLAUDE.md's
+  "SVG-rendered PNG" instruction. Re-run the script any time the brand mark or
+  tagline changes.
 - **`netlify.toml` includes a custom 404 page** (`src/pages/404.astro`) even though it's
   not one of the 11 listed pages — it's a utility page Netlify/browsers expect, not
   marketing content, so it doesn't conflict with "don't add pages beyond the 11."

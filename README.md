@@ -64,7 +64,7 @@ event. Full step-by-step: `reference/leadvault-development-handoff-brief.md`, se
 
 ## Where to drop in real images
 
-Every photo slot on the site is currently a styled placeholder (navy gradient + grid
+Every photo slot on the site is currently a styled placeholder (dark gradient + grid
 pattern + caption naming what belongs there), built with `src/components/ImagePlaceholder.astro`.
 To replace one:
 
@@ -72,18 +72,27 @@ To replace one:
    Astro's image optimization).
 2. In the page file, replace the `<ImagePlaceholder caption="..." />` call with Astro's
    `<Image src={...} alt="..." />` component, keeping it inside the same
-   `.lv-photo-frame.lv-duotone` wrapper so the navy duotone treatment applies
-   automatically and the layout doesn't shift.
+   `.lv-photo-frame.lv-duotone` wrapper so the duotone treatment applies automatically
+   and the layout doesn't shift.
 
 The full shopping list (what to photograph, where, and free-source search terms) is in
 `reference/leadvault-development-handoff-brief.md`, section 2. Only 5–6 real photos are
 actually needed — everything else is icons or coded graphics.
 
-To swap the text wordmark for a real logo file later, edit only
-`src/components/Logo.astro` — every page references that one component.
+**The logo and favicons are already installed** (from `/logo`, processed into `public/`
+by `scripts/generate-brand-assets.mjs`). If the source logo files in `/logo` change,
+re-run:
 
-To regenerate the Open Graph share image (`public/og-image.png`) after changing the
-brand mark or tagline:
+```bash
+npm run generate:brand
+```
+
+This regenerates `public/logo.png` (optimized web copy), copies the favicon set, and
+rebuilds `favicon.ico`. `Logo.astro` is the only file that references the logo image —
+edit it there if the asset path or display size needs to change.
+
+To regenerate the Open Graph share image (`public/og-image.png`, which composites the
+logo onto the brand background) after changing the brand mark or tagline:
 
 ```bash
 npm run generate:og
@@ -119,6 +128,8 @@ src/
   layouts/      BaseLayout.astro — SEO, analytics slots, header/footer wrapper
   pages/        One file per route (11 marketing pages + /thank-you + /404)
   styles/       Tailwind entry point + design tokens (global.css)
-scripts/        generate-og-image.mjs — regenerates the OG share image
-public/         Static assets served as-is (favicon, robots.txt, og-image.png)
+scripts/        generate-og-image.mjs, generate-brand-assets.mjs — regenerate the
+                OG share image and the logo/favicon set from /logo
+public/         Static assets served as-is (favicons, logo.png/svg, robots.txt, og-image.png)
+logo/           Source brand assets (not deployed) — logo.png, logo.svg, favicons
 ```
