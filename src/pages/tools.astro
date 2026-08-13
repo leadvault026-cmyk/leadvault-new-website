@@ -56,34 +56,34 @@ const tools = [
     <ImagePlaceholder caption="IMAGE: multi-monitor engineering desk, dark blue tones" ratio="aspect-[4/3]" />
   </section>
 
-  <section class="section !pt-0">
-    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Inside the Toolbox</h2>
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {tools.map((tool) => (
-        <div class="card flex flex-col gap-3">
-          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
-            <tool.icon size={22} stroke-width={1.75} aria-hidden="true" />
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Inside the Toolbox</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {tools.map((tool) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <tool.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-lg font-semibold text-white">{tool.title}</h3>
+            <p class="text-sm leading-relaxed text-white/70">{tool.body}</p>
           </div>
-          <h3 class="text-lg font-semibold text-white">{tool.title}</h3>
-          <p class="text-sm leading-relaxed text-white/70">{tool.body}</p>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="border-t border-white/10 bg-[var(--color-navy-mid)]">
-    <div class="section grid items-center gap-10 lg:grid-cols-2">
-      <ImagePlaceholder caption="IMAGE: terminal/code screen — verification tool output" ratio="aspect-video" />
-      <div>
-        <h2 class="text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
-        <p class="mt-5 text-white/75">
-          When you buy from a reseller, you inherit their shortcuts. When you buy from LeadVault,
-          your data has passed through technology we designed, understand, and continuously
-          improve. Quality isn't a promise on a website — it's engineered into the pipeline.
-        </p>
-        <div class="mt-8">
-          <a href="/about#data-standards" class="btn-teal">See Our Data Standards <ArrowRight size={18} /></a>
-        </div>
+  <section class="section grid items-center gap-10 lg:grid-cols-2">
+    <ImagePlaceholder caption="IMAGE: terminal/code screen — verification tool output" ratio="aspect-video" />
+    <div>
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
+      <p class="mt-5 text-white/75">
+        When you buy from a reseller, you inherit their shortcuts. When you buy from LeadVault,
+        your data has passed through technology we designed, understand, and continuously
+        improve. Quality isn't a promise on a website — it's engineered into the pipeline.
+      </p>
+      <div class="mt-8">
+        <a href="/about#data-standards" class="btn-primary">See Our Data Standards <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>

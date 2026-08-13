@@ -65,12 +65,12 @@ const testimonials = [
   includeOrgSchema
 >
   <!-- Hero -->
-  <section class="section grid items-center gap-12 lg:grid-cols-2">
+  <section class="section grid gap-12 lg:grid-cols-2 lg:items-center">
     <div>
       <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
         Every Business Needs Leads. Every Lead Starts Here.
       </h1>
-      <p class="mt-5 text-lg font-semibold text-[var(--color-teal)]">
+      <p class="mt-5 text-lg font-semibold text-[var(--color-lime)]">
         Fresh, verified leads — sourced on request, delivered in days.
       </p>
       <p class="mt-4 text-white/75">
@@ -83,7 +83,7 @@ const testimonials = [
         businesses on four continents trust LeadVault to find the customers they can't find themselves.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact" class="btn-teal">Get Your Data <ArrowRight size={18} /></a>
+        <a href="/contact" class="btn-primary">Get Your Data <ArrowRight size={18} /></a>
         <a href="#how-it-works" class="btn-outline">See How It Works</a>
       </div>
       <p class="mt-6 text-sm italic text-white/50">
@@ -94,7 +94,7 @@ const testimonials = [
   </section>
 
   <!-- Plain-language bar -->
-  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section !py-12 text-center">
       <h2 class="text-2xl font-bold text-white sm:text-3xl">First — What Is Lead Generation? (In Plain English)</h2>
       <p class="mx-auto mt-4 max-w-3xl text-white/80">
@@ -105,19 +105,15 @@ const testimonials = [
         No jargon. No mystery. You tell us who your ideal customer is. We find them, confirm their
         details are real and current, and deliver them to you — so you spend your time selling, not searching.
       </p>
+      <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8">
+        {trustItems.map((item) => (
+          <li class="flex items-center gap-2 text-sm font-medium text-white/85">
+            <Check size={16} class="text-[var(--color-lime)]" aria-hidden="true" />
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
-  </section>
-
-  <!-- Trust bar -->
-  <section class="section !py-8">
-    <ul class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-      {trustItems.map((item) => (
-        <li class="flex items-center gap-2 text-sm font-medium text-white/85">
-          <Check size={16} class="text-[var(--color-teal)]" aria-hidden="true" />
-          {item}
-        </li>
-      ))}
-    </ul>
   </section>
 
   <!-- The Problem -->
@@ -145,7 +141,7 @@ const testimonials = [
   </section>
 
   <!-- The Solution -->
-  <section id="how-it-works" class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+  <section id="how-it-works" class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">The Solution</p>
@@ -159,10 +155,10 @@ const testimonials = [
       </div>
       <p class="mx-auto mt-10 max-w-2xl text-center text-lg text-white/80">
         Think of the big platforms as a warehouse of tinned goods.
-        <strong class="text-[var(--color-teal)]"> LeadVault is the farmer's market.</strong>
+        <strong class="text-[var(--color-lime)]"> LeadVault is the farmer's market.</strong>
       </p>
       <div class="mt-8 text-center">
-        <a href="/contact" class="btn-teal">Order Fresh Data <ArrowRight size={18} /></a>
+        <a href="/contact" class="btn-primary">Order Fresh Data <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>
@@ -188,7 +184,7 @@ const testimonials = [
         Today, that same fresh-sourcing discipline serves every industry that runs on data — worldwide.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/about" class="btn-teal">Read Our Story <ArrowRight size={18} /></a>
+        <a href="/about" class="btn-primary">Read Our Story <ArrowRight size={18} /></a>
         <a href="/trade" class="btn-outline">For Importers & Freight Forwarders</a>
       </div>
     </div>
@@ -196,7 +192,7 @@ const testimonials = [
   </section>
 
   <!-- Data In Numbers -->
-  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">By The Numbers</p>
@@ -229,12 +225,12 @@ const testimonials = [
       …and every other business that needs to reach the right people, reliably.
     </p>
     <div class="mt-8 text-center">
-      <a href="/industries" class="btn-teal">Explore Industries <ArrowRight size={18} /></a>
+      <a href="/industries" class="btn-primary">Explore Industries <ArrowRight size={18} /></a>
     </div>
   </section>
 
   <!-- Why Not Just Use The Big Platforms -->
-  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">The Comparison</p>
@@ -255,10 +251,10 @@ const testimonials = [
         />
       </div>
       <p class="mx-auto mt-8 max-w-2xl text-center text-lg text-white/80">
-        The platforms sell access to a warehouse. <strong class="text-[var(--color-teal)]">We deliver the fresh harvest.</strong>
+        The platforms sell access to a warehouse. <strong class="text-[var(--color-lime)]">We deliver the fresh harvest.</strong>
       </p>
       <div class="mt-8 text-center">
-        <a href="/why-leadvault" class="btn-teal">See the Full Comparison <ArrowRight size={18} /></a>
+        <a href="/why-leadvault" class="btn-primary">See the Full Comparison <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>
@@ -275,7 +271,7 @@ const testimonials = [
   </section>
 
   <!-- Final CTA -->
-  <section class="border-t border-white/10 bg-[var(--color-navy-dark)]">
+  <section class="section-alt">
     <div class="section text-center">
       <h2 class="text-3xl font-bold text-white sm:text-4xl">Your Next Customer Exists. We'll Find Them This Week.</h2>
       <p class="mx-auto mt-5 max-w-2xl text-white/75">
@@ -283,7 +279,7 @@ const testimonials = [
         free recommendation — the right data, the right volume, the right price. No obligation.
       </p>
       <div class="mt-8">
-        <a href="/contact" class="btn-teal">Get My Free Recommendation <ArrowRight size={18} /></a>
+        <a href="/contact" class="btn-primary">Get My Free Recommendation <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>

@@ -1,12 +1,19 @@
 ---
-// Text wordmark logo. Replace with an <img>/<svg> logo file here (single point of change)
-// once a real logo asset exists — nothing else in the site references the logo directly.
+// Real logo (public/logo.png — optimized web copy of /logo/logo.png, see
+// scripts/generate-brand-assets.mjs). Single point of change: if the asset
+// is swapped again, only this file and the script need updating.
 interface Props {
   class?: string;
 }
-const { class: className = '' } = Astro.props;
+const { class: className = 'h-11' } = Astro.props;
 ---
 
-<span class={`font-extrabold tracking-tight text-xl sm:text-2xl ${className}`}>
-  <span class="text-white">Lead</span><span class="text-[var(--color-teal)]">Vault</span>
-</span>
+<img
+  src="/logo.png"
+  alt="LeadVault"
+  width="512"
+  height="512"
+  class={`w-auto ${className}`}
+  loading="eager"
+  decoding="async"
+/>

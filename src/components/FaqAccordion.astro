@@ -13,12 +13,12 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<div class="divide-y divide-white/10 rounded-xl border border-white/10 bg-[var(--color-navy-mid)]">
+<div class="divide-y divide-white/10 rounded-xl border border-white/10 bg-[var(--color-bg-mid)]">
   {items.map((item) => (
     <details class="group p-5">
       <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-white marker:content-none">
         {item.question}
-        <ChevronDown size={18} class="shrink-0 text-[var(--color-teal)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+        <ChevronDown size={18} class="shrink-0 text-[var(--color-lime)] transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
       </summary>
       <p class="mt-3 text-sm leading-relaxed text-white/70">{item.answer}</p>
     </details>

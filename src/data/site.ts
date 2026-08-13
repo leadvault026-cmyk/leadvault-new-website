@@ -18,8 +18,44 @@ export const EXPLORE_LINKS: NavLink[] = [
   { label: 'Get Started', href: '/contact' },
 ];
 
-// Header nav omits "Get Started" — the sticky teal CTA button covers that slot.
+// Header nav omits "Get Started" — the sticky CTA button covers that slot.
 export const HEADER_LINKS: NavLink[] = EXPLORE_LINKS.filter((l) => l.href !== '/contact');
+
+// Grouped header nav (design review: 9 flat items was too crowded). Two related
+// groups collapse into keyboard-accessible dropdowns; everything still points at
+// the same 11 pages, just organized. Footer keeps the full flat EXPLORE_LINKS list
+// verbatim per the copy doc — this structure is header-only.
+export interface NavGroup {
+  label: string;
+  items: NavLink[];
+}
+export type NavEntry = NavLink | NavGroup;
+
+export function isNavGroup(entry: NavEntry): entry is NavGroup {
+  return 'items' in entry;
+}
+
+export const HEADER_NAV: NavEntry[] = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Solutions',
+    items: [
+      { label: 'Services', href: '/services' },
+      { label: 'Trade Desk', href: '/trade' },
+      { label: 'Industries', href: '/industries' },
+      { label: 'Data Catalog', href: '/data-catalog' },
+    ],
+  },
+  { label: 'Why LeadVault', href: '/why-leadvault' },
+  {
+    label: 'Company',
+    items: [
+      { label: 'About', href: '/about' },
+      { label: 'Tools & Technology', href: '/tools' },
+    ],
+  },
+  { label: 'Pricing', href: '/pricing' },
+];
 
 // Legal pages are drafted separately for lawyer review (out of Phase 1 scope per CLAUDE.md).
 // Rendered as inert labels in the footer until those pages exist — see ASSUMPTIONS.md.

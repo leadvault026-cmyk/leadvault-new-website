@@ -67,28 +67,30 @@ const faqs = [
       Pay per project, or subscribe for a steady pipeline. Every price includes verification,
       cleaning, CSV delivery, and our replacement guarantee.
     </p>
-    <p class="mx-auto mt-2 max-w-2xl text-sm italic text-white/40">(All figures placeholder — confirm before launch.)</p>
+    <p class="mx-auto mt-2 max-w-2xl text-sm italic text-white/50">(All figures placeholder — confirm before launch.)</p>
   </section>
 
-  <section class="section !pt-0">
-    <h2 class="text-2xl font-bold text-white">Custom Fresh Datasets (one-time)</h2>
-    <div class="mt-6">
-      <ComparisonTable
-        caption="Custom fresh dataset pricing by record volume"
-        headers={['Records', 'Price']}
-        rows={[
-          ['500 (Sample)', '$149'],
-          ['1,000', '$299'],
-          ['2,500', '$499'],
-          ['5,000', '$899'],
-          ['10,000+', 'Custom quote'],
-        ]}
-      />
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-2xl font-bold text-white">Custom Fresh Datasets (one-time)</h2>
+      <div class="mt-6">
+        <ComparisonTable
+          caption="Custom fresh dataset pricing by record volume"
+          headers={['Records', 'Price']}
+          rows={[
+            ['500 (Sample)', '$149'],
+            ['1,000', '$299'],
+            ['2,500', '$499'],
+            ['5,000', '$899'],
+            ['10,000+', 'Custom quote'],
+          ]}
+        />
+      </div>
+      <p class="mt-4 text-sm text-white/60">
+        Includes: your exact specification · decision-maker filtering · per-order verification ·
+        bounce-free CSV · strategist notes.
+      </p>
     </div>
-    <p class="mt-4 text-sm text-white/60">
-      Includes: your exact specification · decision-maker filtering · per-order verification ·
-      bounce-free CSV · strategist notes.
-    </p>
   </section>
 
   <section class="section !pt-0">
@@ -107,31 +109,33 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section !pt-0">
-    <h2 class="text-2xl font-bold text-white">Monthly Lead Subscriptions</h2>
-    <div class="mt-6 grid gap-6 lg:grid-cols-3">
-      {subscriptions.map((plan) => (
-        <div class:list={['card flex flex-col gap-4', plan.popular && 'ring-2 ring-[var(--color-teal)]']}>
-          {plan.popular && (
-            <span class="w-fit rounded-full bg-[var(--color-teal)] px-3 py-1 text-xs font-bold text-[var(--color-teal-dark)]">
-              ⭐ Most popular
-            </span>
-          )}
-          <h3 class="text-xl font-bold text-white">{plan.name}</h3>
-          <p class="text-3xl font-extrabold text-[var(--color-teal)]">{plan.price}</p>
-          <ul class="flex-1 space-y-2">
-            {plan.features.map((f) => (
-              <li class="flex items-start gap-2 text-sm text-white/75">
-                <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-teal)]" aria-hidden="true" />
-                {f}
-              </li>
-            ))}
-          </ul>
-          <a href="/contact" class="btn-teal w-full">Get Started</a>
-        </div>
-      ))}
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-2xl font-bold text-white">Monthly Lead Subscriptions</h2>
+      <div class="mt-6 grid gap-6 lg:grid-cols-3">
+        {subscriptions.map((plan) => (
+          <div class:list={['card flex flex-col gap-4', plan.popular && 'ring-2 ring-[var(--color-lime)]']}>
+            {plan.popular && (
+              <span class="w-fit rounded-full bg-[var(--color-lime)] px-3 py-1 text-xs font-bold text-[var(--color-lime-dark)]">
+                ⭐ Most popular
+              </span>
+            )}
+            <h3 class="text-xl font-bold text-white">{plan.name}</h3>
+            <p class="text-3xl font-extrabold text-[var(--color-lime)]">{plan.price}</p>
+            <ul class="flex-1 space-y-2">
+              {plan.features.map((f) => (
+                <li class="flex items-start gap-2 text-sm text-white/75">
+                  <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="/contact" class="btn-primary w-full">Get Started</a>
+          </div>
+        ))}
+      </div>
+      <p class="mt-4 text-sm text-white/60">Pause or adjust at the end of any month.</p>
     </div>
-    <p class="mt-4 text-sm text-white/60">Pause or adjust at the end of any month.</p>
   </section>
 
   <section class="section !pt-0 grid gap-6 lg:grid-cols-2">
@@ -141,7 +145,7 @@ const faqs = [
         <strong class="text-white">From $499 per engagement</strong> — consultation + verified
         counterparty dataset + approach guidance.
       </p>
-      <a href="/trade" class="mt-4 inline-block text-sm font-semibold text-[var(--color-teal)] hover:underline">Details →</a>
+      <a href="/trade" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Details →</a>
     </div>
     <div class="card">
       <h2 class="text-xl font-bold text-white">Agency & Enterprise Partner Plans</h2>
@@ -149,11 +153,11 @@ const faqs = [
         <strong class="text-white">From $1,500/mo</strong> — volume pricing, exclusive datasets,
         white-label delivery, custom tooling.
       </p>
-      <a href="/contact" class="mt-4 inline-block text-sm font-semibold text-[var(--color-teal)] hover:underline">Talk to us →</a>
+      <a href="/contact" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Talk to us →</a>
     </div>
   </section>
 
-  <section class="border-y border-white/10 bg-[var(--color-navy-mid)]">
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section text-center">
       <h2 class="text-2xl font-bold text-white sm:text-3xl">Our Replacement Guarantee</h2>
       <p class="mx-auto mt-5 max-w-2xl text-white/75">
@@ -170,7 +174,7 @@ const faqs = [
       <FaqAccordion items={faqs} />
     </div>
     <div class="mt-10 text-center">
-      <a href="/contact" class="btn-teal">Get My Free Recommendation <ArrowRight size={18} /></a>
+      <a href="/contact" class="btn-primary">Get My Free Recommendation <ArrowRight size={18} /></a>
     </div>
   </section>
 </BaseLayout>

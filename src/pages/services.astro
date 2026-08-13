@@ -74,28 +74,29 @@ const services = [
     </p>
   </section>
 
-  <section class="section !pt-0">
-    <div class="grid gap-6 lg:grid-cols-2">
+  <section class="section-alt">
+    <div class="section">
+      <div class="grid gap-6 lg:grid-cols-2">
       {services.map((service) => (
-        <div class:list={['card flex flex-col gap-4', service.flagship && 'ring-1 ring-[var(--color-teal)]/50']}>
+        <div class:list={['card flex flex-col gap-4', service.flagship && 'ring-1 ring-[var(--color-lime)]/50']}>
           <div class="flex items-start justify-between gap-3">
-            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
+            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
               <service.icon size={24} stroke-width={1.75} aria-hidden="true" />
             </div>
             {service.flagship && (
-              <span class="rounded-full bg-[var(--color-teal)] px-3 py-1 text-xs font-bold text-[var(--color-teal-dark)]">Flagship</span>
+              <span class="rounded-full bg-[var(--color-lime)] px-3 py-1 text-xs font-bold text-[var(--color-lime-dark)]">Flagship</span>
             )}
           </div>
           <div>
             <h2 class="text-xl font-bold text-white">{service.title}</h2>
-            {service.subtitle && <p class="text-sm font-medium text-[var(--color-teal)]">{service.subtitle}</p>}
+            {service.subtitle && <p class="text-sm font-medium text-[var(--color-lime)]">{service.subtitle}</p>}
           </div>
           <p class="text-sm leading-relaxed text-white/75">{service.body}</p>
           {service.list && (
             <ul class="space-y-2">
               {service.list.map((item) => (
                 <li class="flex gap-2 text-sm text-white/70">
-                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-teal)]"></span>
+                  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
                   {item}
                 </li>
               ))}
@@ -105,19 +106,20 @@ const services = [
           <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
             <div>
               {service.price && <p class="font-semibold text-white">{service.price}</p>}
-              {service.priceNote && <p class="text-xs text-white/40">{service.priceNote}</p>}
+              {service.priceNote && <p class="text-xs text-white/50">{service.priceNote}</p>}
             </div>
             {service.cta && (
-              <a href={service.cta.href} class="text-sm font-semibold text-[var(--color-teal)] hover:underline">
+              <a href={service.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">
                 {service.cta.label}
               </a>
             )}
           </div>
         </div>
       ))}
-    </div>
-    <div class="mt-12 text-center">
-      <a href="/contact" class="btn-teal">Not Sure Where to Start? Take the Survey <ArrowRight size={18} /></a>
+      </div>
+      <div class="mt-12 text-center">
+        <a href="/contact" class="btn-primary">Not Sure Where to Start? Take the Survey <ArrowRight size={18} /></a>
+      </div>
     </div>
   </section>
 </BaseLayout>

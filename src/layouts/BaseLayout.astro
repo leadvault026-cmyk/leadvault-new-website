@@ -39,7 +39,11 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>
@@ -123,7 +127,7 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
   <body class="flex min-h-screen flex-col">
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-[var(--color-teal)] focus:px-4 focus:py-2 focus:font-semibold focus:text-[var(--color-teal-dark)]"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-[var(--color-lime)] focus:px-4 focus:py-2 focus:font-semibold focus:text-[var(--color-lime-dark)]"
     >
       Skip to main content
     </a>

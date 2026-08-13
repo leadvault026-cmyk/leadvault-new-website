@@ -1,94 +1,150 @@
 ---
-// Coded hero graphic (handoff brief §2, row 1 — "Recommended" zero-sourcing option):
-// a stylized globe with animated teal connection arcs between served regions.
-// Purely decorative — aria-hidden, no alt text needed.
+// Hero visual centerpiece (design review: "the biggest visual fix" — large,
+// commanding, edge-to-edge of its column, multi-color animated arcs, glowing
+// labeled nodes). Coded SVG per the handoff brief's "Recommended" zero-sourcing
+// route for the hero — no photo to source. Colors pulled straight from the
+// rebranded palette (CLAUDE.md design tokens v2).
 const nodes = [
-  { x: 130, y: 150, label: 'USA' },
-  { x: 400, y: 90, label: 'UK' },
-  { x: 150, y: 230, label: 'Canada' },
-  { x: 430, y: 260, label: 'Nigeria' },
-  { x: 620, y: 190, label: 'Worldwide' },
+  { x: 110, y: 430, label: 'USA', r: 10 },
+  { x: 470, y: 75, label: 'UK', r: 9 },
+  { x: 130, y: 660, label: 'Canada', r: 9 },
+  { x: 560, y: 700, label: 'Nigeria', r: 9 },
+  { x: 715, y: 380, label: 'Worldwide', r: 14 },
 ];
+
+// Each arc cycles through the three accent tokens so the map reads as
+// genuinely multi-color, not a single-tint motif.
+const accents = ['var(--color-lime)', 'var(--color-cyan)', 'var(--color-green)'];
 const arcs = [
   [0, 1],
   [0, 2],
-  [1, 3],
+  [1, 4],
   [3, 4],
   [0, 4],
+  [2, 4],
+  [1, 3],
 ];
 ---
 
-<div class="relative mx-auto aspect-square w-full max-w-lg" aria-hidden="true">
-  <svg viewBox="0 0 700 400" class="h-full w-full">
+<div class="relative mx-auto aspect-square w-full max-w-[560px] lg:mx-0 lg:max-w-none" aria-hidden="true">
+  <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet" class="h-full w-full">
     <defs>
-      <radialGradient id="globeGlow" cx="50%" cy="45%" r="60%">
-        <stop offset="0%" stop-color="#12315F" stop-opacity="0.9"></stop>
-        <stop offset="100%" stop-color="#0A1F44" stop-opacity="0.2"></stop>
+      <radialGradient id="heroGlow" cx="50%" cy="45%" r="60%">
+        <stop offset="0%" stop-color="var(--color-bg-mid)" stop-opacity="0.9"></stop>
+        <stop offset="100%" stop-color="var(--color-bg)" stop-opacity="0"></stop>
       </radialGradient>
+      <filter id="heroNodeGlow" x="-150%" y="-150%" width="400%" height="400%">
+        <feGaussianBlur stdDeviation="8" result="b"></feGaussianBlur>
+        <feMerge>
+          <feMergeNode in="b"></feMergeNode>
+          <feMergeNode in="SourceGraphic"></feMergeNode>
+        </feMerge>
+      </filter>
+      <filter id="heroArcGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="2.2" result="b"></feGaussianBlur>
+        <feMerge>
+          <feMergeNode in="b"></feMergeNode>
+          <feMergeNode in="SourceGraphic"></feMergeNode>
+        </feMerge>
+      </filter>
     </defs>
 
-    <circle cx="350" cy="190" r="185" fill="url(#globeGlow)" stroke="#1DBF9F" stroke-opacity="0.25"></circle>
-    {[60, 110, 160].map((r) => (
-      <ellipse cx="350" cy="190" rx={r * 1.5} ry={r} fill="none" stroke="#1DBF9F" stroke-opacity="0.15"></ellipse>
-    ))}
-    <ellipse cx="350" cy="190" rx="185" ry="60" fill="none" stroke="#1DBF9F" stroke-opacity="0.15"></ellipse>
-    <line x1="165" y1="190" x2="535" y2="190" stroke="#1DBF9F" stroke-opacity="0.15"></line>
+    <circle cx="400" cy="400" r="395" fill="url(#heroGlow)"></circle>
+
+    <g class="lv-spin" style="transform-origin: 400px 400px;">
+      {[
+        { rx: 260, ry: 130 },
+        { rx: 340, ry: 200 },
+        { rx: 390, ry: 270 },
+      ].map(({ rx, ry }) => (
+        <ellipse cx="400" cy="400" rx={rx} ry={ry} fill="none" stroke="var(--color-cyan)" stroke-opacity="0.16"></ellipse>
+      ))}
+      <ellipse cx="400" cy="400" rx="390" ry="130" fill="none" stroke="var(--color-lime)" stroke-opacity="0.14"></ellipse>
+      <line x1="15" y1="400" x2="785" y2="400" stroke="var(--color-lime)" stroke-opacity="0.14"></line>
+    </g>
 
     {arcs.map(([a, b], i) => {
       const n1 = nodes[a];
       const n2 = nodes[b];
       const mx = (n1.x + n2.x) / 2;
-      const my = Math.min(n1.y, n2.y) - 50;
+      const my = (n1.y + n2.y) / 2 - 70 * (i % 2 === 0 ? 1 : -1);
+      const color = accents[i % accents.length];
       return (
         <path
           d={`M ${n1.x} ${n1.y} Q ${mx} ${my} ${n2.x} ${n2.y}`}
           fill="none"
-          stroke="#1DBF9F"
-          stroke-width="1.5"
-          stroke-opacity="0.55"
-          stroke-dasharray="6 6"
+          stroke={color}
+          stroke-width="2"
+          stroke-opacity="0.75"
+          stroke-linecap="round"
+          stroke-dasharray="7 9"
+          filter="url(#heroArcGlow)"
           class="lv-arc"
-          style={`animation-delay:${i * 0.4}s`}
+          style={`animation-delay:${i * 0.5}s`}
         ></path>
       );
     })}
 
-    {nodes.map((n, i) => (
-      <g>
-        <circle cx={n.x} cy={n.y} r="14" fill="#1DBF9F" fill-opacity="0.15" class="lv-pulse" style={`animation-delay:${i * 0.3}s`}></circle>
-        <circle cx={n.x} cy={n.y} r="5" fill="#1DBF9F"></circle>
-        <text x={n.x} y={n.y - 20} text-anchor="middle" fill="#F5F7FA" font-size="13" font-weight="600" opacity="0.85">{n.label}</text>
-      </g>
-    ))}
+    {nodes.map((n, i) => {
+      const color = accents[i % accents.length];
+      return (
+        <g>
+          <circle cx={n.x} cy={n.y} r={n.r + 10} fill={color} fill-opacity="0.18" class="lv-pulse" style={`animation-delay:${i * 0.35}s`}></circle>
+          <circle cx={n.x} cy={n.y} r={n.r} fill={color} filter="url(#heroNodeGlow)"></circle>
+          <circle cx={n.x} cy={n.y} r={Math.max(2, n.r - 4)} fill="var(--color-bg)"></circle>
+          <text
+            x={n.x}
+            y={n.y - n.r - 16}
+            text-anchor="middle"
+            fill="#F5F7FA"
+            font-size={n.label === 'Worldwide' ? 24 : 20}
+            font-weight="700"
+            style="paint-order: stroke; stroke: var(--color-bg); stroke-width: 6px; stroke-linejoin: round;"
+          >
+            {n.label}
+          </text>
+        </g>
+      );
+    })}
   </svg>
 </div>
 
 <style>
   .lv-arc {
-    animation: lv-dash 3.5s linear infinite;
+    animation: lv-dash 5s linear infinite;
   }
   @keyframes lv-dash {
     to {
-      stroke-dashoffset: -48;
+      stroke-dashoffset: -64;
     }
   }
   .lv-pulse {
+    transform-box: fill-box;
     transform-origin: center;
-    animation: lv-pulse 2.4s ease-out infinite;
+    animation: lv-pulse 2.8s ease-out infinite;
   }
   @keyframes lv-pulse {
     0% {
-      transform: scale(0.8);
-      opacity: 0.8;
+      transform: scale(0.75);
+      opacity: 0.9;
     }
     100% {
-      transform: scale(2.4);
+      transform: scale(2.6);
       opacity: 0;
+    }
+  }
+  .lv-spin {
+    animation: lv-spin 90s linear infinite;
+  }
+  @keyframes lv-spin {
+    to {
+      transform: rotate(360deg);
     }
   }
   @media (prefers-reduced-motion: reduce) {
     .lv-arc,
-    .lv-pulse {
+    .lv-pulse,
+    .lv-spin {
       animation: none;
     }
   }

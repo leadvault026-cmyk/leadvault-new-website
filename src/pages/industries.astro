@@ -108,29 +108,31 @@ const industries = [
     </p>
   </section>
 
-  <section class="section !pt-0">
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {industries.map((ind) => (
-        <div class="card flex flex-col gap-3">
-          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-teal)]/15 text-[var(--color-teal)]">
-            <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
+  <section class="section-alt">
+    <div class="section">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {industries.map((ind) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h2 class="text-lg font-semibold text-white">{ind.title}</h2>
+            <p class="text-sm leading-relaxed text-white/70">{ind.body}</p>
+            {ind.note && <p class="text-xs italic text-white/50">{ind.note}</p>}
+            {ind.cta && (
+              <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">
+                {ind.cta.label}
+              </a>
+            )}
           </div>
-          <h2 class="text-lg font-semibold text-white">{ind.title}</h2>
-          <p class="text-sm leading-relaxed text-white/70">{ind.body}</p>
-          {ind.note && <p class="text-xs italic text-white/40">{ind.note}</p>}
-          {ind.cta && (
-            <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-teal)] hover:underline">
-              {ind.cta.label}
-            </a>
-          )}
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
 
-    <div class="card mt-10 flex flex-col items-center gap-4 text-center">
-      <h2 class="text-xl font-bold text-white">Don't see your industry?</h2>
-      <p class="max-w-xl text-white/70">If your growth depends on reaching people, we can source for you.</p>
-      <a href="/contact" class="btn-teal">Ask Us <ArrowRight size={18} /></a>
+      <div class="card mt-10 flex flex-col items-center gap-4 text-center">
+        <h2 class="text-xl font-bold text-white">Don't see your industry?</h2>
+        <p class="max-w-xl text-white/70">If your growth depends on reaching people, we can source for you.</p>
+        <a href="/contact" class="btn-primary">Ask Us <ArrowRight size={18} /></a>
+      </div>
     </div>
   </section>
 </BaseLayout>

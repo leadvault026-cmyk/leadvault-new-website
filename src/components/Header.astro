@@ -1,34 +1,80 @@
 ---
 import Logo from './Logo.astro';
-import { HEADER_LINKS } from '../data/site';
+import { HEADER_NAV, isNavGroup } from '../data/site';
+import { ChevronDown } from '@lucide/astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
 const isActive = (href: string) => (href === '/' ? currentPath === '/' : currentPath.startsWith(href));
+const groupIsActive = (items: { href: string }[]) => items.some((i) => isActive(i.href));
+const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 ---
 
-<header class="sticky top-0 z-50 border-b border-white/10 bg-[var(--color-navy)]/95 backdrop-blur">
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 lg:px-8">
+<!--
+  Header gets its own surface tier (bg-mid, not bg) plus a border and shadow,
+  so it reads as a distinct element sitting on top of whatever section is
+  under it — never blending into the hero (design review requirement).
+-->
+<header class="sticky top-0 z-50 border-b border-white/10 bg-[var(--color-bg-mid)]/95 shadow-lg shadow-black/30 backdrop-blur">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-3 lg:px-8">
     <a href="/" class="shrink-0" aria-label="LeadVault home">
-      <Logo />
+      <Logo class="h-12 sm:h-14" />
     </a>
 
-    <nav class="hidden items-center gap-5 lg:flex" aria-label="Primary">
-      {HEADER_LINKS.map((link) => (
-        <a
-          href={link.href}
-          class:list={[
-            'text-sm font-medium whitespace-nowrap transition-colors hover:text-[var(--color-teal)]',
-            isActive(link.href) ? 'text-[var(--color-teal)]' : 'text-white/85',
-          ]}
-          aria-current={isActive(link.href) ? 'page' : undefined}
-        >
-          {link.label}
-        </a>
-      ))}
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+      {HEADER_NAV.map((entry) =>
+        isNavGroup(entry) ? (
+          <div class="group relative" data-dropdown>
+            <button
+              type="button"
+              class:list={[
+                'flex items-center gap-1 text-sm font-medium whitespace-nowrap transition-colors hover:text-[var(--color-lime)]',
+                groupIsActive(entry.items) ? 'text-[var(--color-lime)]' : 'text-white/85',
+              ]}
+              aria-haspopup="true"
+              aria-expanded="false"
+              aria-controls={`dropdown-${slug(entry.label)}`}
+              data-dropdown-trigger
+            >
+              {entry.label}
+              <ChevronDown size={15} class="transition-transform duration-150 group-[.is-open]:rotate-180" aria-hidden="true" />
+            </button>
+            <div
+              id={`dropdown-${slug(entry.label)}`}
+              role="menu"
+              aria-label={entry.label}
+              class="dropdown-panel absolute left-1/2 top-full z-10 mt-3 w-56 -translate-x-1/2 rounded-xl border border-white/10 bg-[var(--color-bg-mid)] p-2 shadow-xl shadow-black/40"
+            >
+              {entry.items.map((item) => (
+                <a
+                  href={item.href}
+                  role="menuitem"
+                  class:list={[
+                    'block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-white/5 hover:text-[var(--color-lime)]',
+                    isActive(item.href) ? 'text-[var(--color-lime)]' : 'text-white/85',
+                  ]}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={entry.href}
+            class:list={[
+              'text-sm font-medium whitespace-nowrap transition-colors hover:text-[var(--color-lime)]',
+              isActive(entry.href) ? 'text-[var(--color-lime)]' : 'text-white/85',
+            ]}
+            aria-current={isActive(entry.href) ? 'page' : undefined}
+          >
+            {entry.label}
+          </a>
+        )
+      )}
     </nav>
 
     <div class="hidden shrink-0 lg:block">
-      <a href="/contact" class="btn-teal !px-5 !py-2.5 text-sm">Get My Free Recommendation</a>
+      <a href="/contact" class="btn-primary !px-5 !py-2.5 text-sm">Get My Free Recommendation</a>
     </div>
 
     <button
@@ -53,21 +99,48 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
 
   <nav
     id="mobile-nav"
-    class="hidden flex-col gap-1 border-t border-white/10 bg-[var(--color-navy)] px-6 py-4 lg:hidden"
+    class="hidden flex-col gap-1 border-t border-white/10 bg-[var(--color-bg-mid)] px-6 py-4 lg:hidden"
     aria-label="Mobile"
   >
-    {HEADER_LINKS.map((link) => (
-      <a
-        href={link.href}
-        class:list={[
-          'rounded-md px-3 py-2.5 text-base font-medium transition-colors hover:bg-white/5 hover:text-[var(--color-teal)]',
-          isActive(link.href) ? 'text-[var(--color-teal)]' : 'text-white/85',
-        ]}
-      >
-        {link.label}
-      </a>
-    ))}
-    <a href="/contact" class="btn-teal mt-3 w-full">Get My Free Recommendation</a>
+    {HEADER_NAV.map((entry) =>
+      isNavGroup(entry) ? (
+        <details class="group">
+          <summary
+            class:list={[
+              'flex cursor-pointer list-none items-center justify-between rounded-md px-3 py-2.5 text-base font-medium marker:content-none',
+              groupIsActive(entry.items) ? 'text-[var(--color-lime)]' : 'text-white/85',
+            ]}
+          >
+            {entry.label}
+            <ChevronDown size={18} class="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <div class="ml-3 flex flex-col gap-1 border-l border-white/10 pl-3">
+            {entry.items.map((item) => (
+              <a
+                href={item.href}
+                class:list={[
+                  'rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-white/5 hover:text-[var(--color-lime)]',
+                  isActive(item.href) ? 'text-[var(--color-lime)]' : 'text-white/70',
+                ]}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </details>
+      ) : (
+        <a
+          href={entry.href}
+          class:list={[
+            'rounded-md px-3 py-2.5 text-base font-medium transition-colors hover:bg-white/5 hover:text-[var(--color-lime)]',
+            isActive(entry.href) ? 'text-[var(--color-lime)]' : 'text-white/85',
+          ]}
+        >
+          {entry.label}
+        </a>
+      )
+    )}
+    <a href="/contact" class="btn-primary mt-3 w-full">Get My Free Recommendation</a>
   </nav>
 </header>
 
@@ -85,4 +158,71 @@ const isActive = (href: string) => (href === '/' ? currentPath === '/' : current
     iconOpen?.classList.toggle('hidden', !isOpen);
     iconClose?.classList.toggle('hidden', isOpen);
   });
+
+  // Desktop dropdowns ("Solutions" / "Company"): click or keyboard (Enter/Space,
+  // since these are real <button> elements) toggles open; Escape closes and
+  // returns focus to the trigger; clicking or tabbing outside closes it too.
+  const dropdowns = document.querySelectorAll<HTMLElement>('[data-dropdown]');
+
+  function closeDropdown(el: HTMLElement) {
+    el.classList.remove('is-open');
+    el.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false');
+  }
+
+  function openDropdown(el: HTMLElement) {
+    dropdowns.forEach((d) => d !== el && closeDropdown(d));
+    el.classList.add('is-open');
+    el.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'true');
+  }
+
+  dropdowns.forEach((dropdown) => {
+    const trigger = dropdown.querySelector<HTMLButtonElement>('[data-dropdown-trigger]');
+
+    trigger?.addEventListener('click', () => {
+      const isOpen = dropdown.classList.contains('is-open');
+      isOpen ? closeDropdown(dropdown) : openDropdown(dropdown);
+    });
+
+    dropdown.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDropdown(dropdown);
+        trigger?.focus();
+      }
+    });
+
+    dropdown.addEventListener('focusout', (e) => {
+      const next = e.relatedTarget as Node | null;
+      if (!next || !dropdown.contains(next)) closeDropdown(dropdown);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    dropdowns.forEach((dropdown) => {
+      if (!dropdown.contains(e.target as Node)) closeDropdown(dropdown);
+    });
+  });
 </script>
+
+<style>
+  .dropdown-panel {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -4px);
+    pointer-events: none;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease,
+      visibility 0.15s;
+  }
+  [data-dropdown].is-open .dropdown-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dropdown-panel {
+      transition: none;
+    }
+  }
+</style>
