@@ -275,11 +275,16 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
   fictional rows (no new data invented) so the visible 4-row preview shows 3 of the
   sample's 3 distinct size bands instead of 1. Chose reordering over deleting the
   column since Company Size is a real, useful field this category offers.
-- **Fixed a Services-page CSS Grid stretch bug the client spotted as "unexplained empty
-  space."** `services.astro`'s 2-column grid had no `items-start`, so CSS Grid's default
-  `align-items: stretch` forced every card to match the tallest card in its row. Row 1
-  pairs the short "Custom Fresh Datasets" flagship card with the much longer "Managed
-  Email Campaigns" card (a 6-item list plus two paragraphs), so the short card stretched
-  to match — leaving a large blank gap between its body text and its price line, which
-  read as an empty, purposeless section. Added `items-start` so each card sizes to its
-  own content instead.
+- **Fixed a Services-page layout bug the client spotted twice as "unexplained empty
+  space."** First pass added `items-start` to the 2-column CSS Grid, which stopped the
+  short "Custom Fresh Datasets" card from stretching its own border/background to match
+  its much longer row-mate ("Managed Email Campaigns," a 6-item list plus two
+  paragraphs) — but the grid *row* was still exactly as tall as its tallest item, so a
+  visible gap remained below the short card, just outside it instead of inside it.
+  Root cause: any row-based 2-column grid with wildly uneven card lengths will leave a
+  gap somewhere as long as cards are locked to shared row heights. Replaced the grid
+  with a CSS multi-column layout (`columns-1 lg:columns-2` + `break-inside-avoid-column`
+  on each card) — true masonry packing, where each column fills independently to its own
+  balanced height instead of being paired row-by-row with whatever card happens to sit
+  next to it in the source order. Verified at 1440px (2 columns, no gaps), 813px
+  (single column, below the `lg` breakpoint), and 375px (single column, stacked).
