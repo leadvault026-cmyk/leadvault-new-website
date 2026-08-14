@@ -1,10 +1,11 @@
 ---
 // Styled placeholder for every photo slot noted in the copy doc. Drop-in ready:
 // once a real photo exists (optimized into public/photos/ via
-// scripts/generate-photos.mjs), pass it as `src` + `alt` and this renders an
-// <img> inside the same .lv-photo-frame wrapper instead of the placeholder —
-// the duotone overlay class (.lv-duotone) is already applied at the wrapper
-// level so every photo automatically matches the site's dark brand treatment.
+// scripts/generate-photos.mjs), pass it as `src` + `alt` and this renders a
+// plain <img> inside the same .lv-photo-frame wrapper instead of the
+// placeholder — real photos render at full brightness/color (no duotone
+// filter), per client feedback; the .lv-duotone treatment stays on
+// placeholder blocks only.
 interface Props {
   caption: string;
   ratio?: string; // Tailwind aspect-ratio utility value, e.g. "aspect-video"
@@ -18,7 +19,7 @@ const { caption, ratio = 'aspect-video', class: className = '', src, alt, width,
 ---
 
 <div
-  class={`lv-photo-frame lv-duotone relative overflow-hidden rounded-xl border border-white/10 ${ratio} ${className}`}
+  class={`lv-photo-frame ${src ? '' : 'lv-duotone'} relative overflow-hidden rounded-xl border border-white/10 ${ratio} ${className}`}
   role={src ? undefined : 'img'}
   aria-label={src ? undefined : caption}
 >

@@ -254,3 +254,32 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
      adding `w-full` alongside `max-w-sm` so the frame has a definite width to stretch to
      before `max-width` caps it. Every other `ImagePlaceholder` call site was checked —
      none else combines a bare `max-w-*` with no `w-full`, so this was the only instance.
+
+## Round 4 (client feedback on round 3)
+
+- **Duotone filter removed from real photos, kept on placeholders.** The client wants
+  real photos shown at true color/brightness, not tinted. `ImagePlaceholder` now only
+  applies the `.lv-duotone` class when rendering the placeholder graphic (no `src`);
+  real `<img>` elements get the plain `.lv-photo-frame` treatment (rounded corners,
+  border, no filter/gradient overlay). Placeholder blocks keep the duotone tint since
+  no complaint was raised about those and CLAUDE.md's original placeholder spec still
+  calls for it there.
+- **Removed the visible "Sample preview — illustrative, not real customer data." line**
+  from every Data Catalog card per client request. The screen-reader-only `<caption>`
+  on each `ComparisonTable` (same wording) was left in place — it's visually a 1×1px
+  element, invisible on screen, so it doesn't reintroduce the clutter the client
+  flagged, while still disclosing the data is illustrative to assistive-tech users.
+- **SME & Startup Databases sample reordered for Company Size variety**, not stripped.
+  The first 4 rows previously all showed "11-50" (an artifact of the source CSV's row
+  order, not a data problem), which read as fake/repetitive. Reordered the 8 existing
+  fictional rows (no new data invented) so the visible 4-row preview shows 3 of the
+  sample's 3 distinct size bands instead of 1. Chose reordering over deleting the
+  column since Company Size is a real, useful field this category offers.
+- **Fixed a Services-page CSS Grid stretch bug the client spotted as "unexplained empty
+  space."** `services.astro`'s 2-column grid had no `items-start`, so CSS Grid's default
+  `align-items: stretch` forced every card to match the tallest card in its row. Row 1
+  pairs the short "Custom Fresh Datasets" flagship card with the much longer "Managed
+  Email Campaigns" card (a 6-item list plus two paragraphs), so the short card stretched
+  to match — leaving a large blank gap between its body text and its price line, which
+  read as an empty, purposeless section. Added `items-start` so each card sizes to its
+  own content instead.
