@@ -1,41 +1,60 @@
 ---
-// Styled placeholder for every photo slot noted in the copy doc (no real photos exist yet).
-// Drop-in ready: once a real photo exists, replace the inner placeholder <div> with
-// <Image src={...} alt={caption} /> inside the same .lv-photo-frame wrapper — the
-// duotone overlay class (.lv-duotone) is already applied at the wrapper level so every
-// future photo automatically matches the site's dark brand treatment.
+// Styled placeholder for every photo slot noted in the copy doc. Drop-in ready:
+// once a real photo exists (optimized into public/photos/ via
+// scripts/generate-photos.mjs), pass it as `src` + `alt` and this renders an
+// <img> inside the same .lv-photo-frame wrapper instead of the placeholder —
+// the duotone overlay class (.lv-duotone) is already applied at the wrapper
+// level so every photo automatically matches the site's dark brand treatment.
 interface Props {
   caption: string;
   ratio?: string; // Tailwind aspect-ratio utility value, e.g. "aspect-video"
   class?: string;
+  src?: string;
+  alt?: string;
+  width?: number;
+  height?: number;
 }
-const { caption, ratio = 'aspect-video', class: className = '' } = Astro.props;
+const { caption, ratio = 'aspect-video', class: className = '', src, alt, width, height } = Astro.props;
 ---
 
 <div
   class={`lv-photo-frame lv-duotone relative overflow-hidden rounded-xl border border-white/10 ${ratio} ${className}`}
-  role="img"
-  aria-label={caption}
+  role={src ? undefined : 'img'}
+  aria-label={src ? undefined : caption}
 >
-  <div
-    class="absolute inset-0"
-    style="background: radial-gradient(circle at 30% 20%, var(--color-bg-mid) 0%, var(--color-bg) 55%, var(--color-bg-dark) 100%);"
-  >
-  </div>
-  <svg class="absolute inset-0 h-full w-full opacity-20" aria-hidden="true">
-    <defs>
-      <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="var(--color-lime)" stroke-width="0.75"></path>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#grid)"></rect>
-  </svg>
-  <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/50" aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="2"></rect>
-      <circle cx="9" cy="9" r="2"></circle>
-      <path d="m21 15-5-5L5 21"></path>
-    </svg>
-    <p class="text-xs font-medium uppercase tracking-wide text-white/50">{caption}</p>
-  </div>
+  {src ? (
+    <img
+      src={src}
+      alt={alt ?? caption}
+      width={width}
+      height={height}
+      loading="lazy"
+      decoding="async"
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+  ) : (
+    <>
+      <div
+        class="absolute inset-0"
+        style="background: radial-gradient(circle at 30% 20%, var(--color-bg-mid) 0%, var(--color-bg) 55%, var(--color-bg-dark) 100%);"
+      >
+      </div>
+      <svg class="absolute inset-0 h-full w-full opacity-20" aria-hidden="true">
+        <defs>
+          <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+            <path d="M 32 0 L 0 0 0 32" fill="none" stroke="var(--color-lime)" stroke-width="0.75"></path>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)"></rect>
+      </svg>
+      <div class="absolute inset-0 flex flex-col items-center justify-center gap-2 px-6 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-white/50" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <circle cx="9" cy="9" r="2"></circle>
+          <path d="m21 15-5-5L5 21"></path>
+        </svg>
+        <p class="text-xs font-medium uppercase tracking-wide text-white/50">{caption}</p>
+      </div>
+    </>
+  )}
 </div>
