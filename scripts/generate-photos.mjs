@@ -22,6 +22,7 @@ function kb(path) {
 const landscape = [
   { name: 'container-port-dusk', ext: 'jpg' },
   { name: 'engineering-desk', ext: 'jpg' },
+  { name: 'strategist-call', ext: 'jpg' },
 ];
 for (const { name, ext } of landscape) {
   const outPath = join(publicPhotosDir, `${name}.jpg`);

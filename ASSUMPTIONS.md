@@ -288,3 +288,43 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
   balanced height instead of being paired row-by-row with whatever card happens to sit
   next to it in the source order. Verified at 1440px (2 columns, no gaps), 813px
   (single column, below the `lg` breakpoint), and 375px (single column, stacked).
+
+## Round 5 (strategist photo, real contact details, WhatsApp)
+
+- **Picked one of three supplied "business strategist" photos** for the Contact page's
+  remaining IMAGE slot. Rejected one (`business-strategist 001.jpg`) — visibly stressed,
+  forehead-rubbing expression, wrong tone for a page promising a helpful 24-hour
+  recommendation. Rejected a second (`business-strategist 002.jpg`) — friendly but reads
+  as a casual home-office call, not a "strategist." Chose the unnumbered
+  `business-strategist.jpg`: composed, editorial-toned, holding a tablet/stylus mid-call,
+  matches "strategist" better than either alternative. Same treatment as the other three
+  photos — optimized via `generate-photos.mjs` into `public/photos/strategist-call.jpg`,
+  no duotone filter (round 4).
+- **Real contact details supplied by the client** (phone/WhatsApp number, two office
+  addresses) replace the Contact page's `[+ number]` / `[address]` placeholders — added
+  as `CONTACT_EMAIL`/`PHONE_DISPLAY`/`WHATSAPP_NUMBER_INTL`/`WHATSAPP_LINK`/
+  `OFFICE_ADDRESSES` in `src/data/site.ts` so the phone number has one source of truth
+  shared by the Contact page and the new WhatsApp button. **Hours** stayed as the
+  original bracketed placeholder — no hours were supplied, and CLAUDE.md forbids
+  inventing them. The single "Office: [address]" row became "Offices:" with both
+  addresses labeled Nigeria/USA, since two addresses don't fit one `<dd>` line
+  cleanly and both are real, given addresses (not a placeholder to leave singular).
+- **Business Name is no longer a required form field** — removed `required` and the
+  trailing `*` from its label, per direct client request. Every other field's
+  required/optional status is unchanged from the copy doc's spec.
+- **WhatsApp integration built as a plain `wa.me` link, not a third-party chat widget
+  script.** CLAUDE.md's "no chat widgets or third-party embeds" rule was written to keep
+  the site free of injected external scripts/tracking/iframes — a `<a href="https://wa.me/...">`
+  is neither; it's a static outbound link with zero added JS, consistent with that
+  rule's intent while fulfilling the client's explicit ask. Implemented as
+  `WhatsAppButton.astro`, a fixed circular button in the site's bottom-right corner on
+  every page (added once in `BaseLayout.astro`, not per-page), pre-filled with a short
+  greeting. Colored WhatsApp's own brand green (`#25D366`) rather than the site's
+  cyan/lime tokens — it's a recognizable third-party affordance (users look for the
+  familiar green bubble), not a site-authored CTA, so it intentionally sits outside the
+  cyan-for-buttons/lime-for-text system. Sized down on mobile (48px vs 56px button) since
+  a fixed bottom-right element will inevitably sit near/over whatever full-width CTA
+  button happens to be at the bottom of the viewport at a given scroll position — this
+  is standard, accepted behavior for floating chat buttons across the web (the CTA
+  underneath stays reachable outside the small circle), not something further
+  engineering (viewport-aware collision avoidance, etc.) is warranted for here.

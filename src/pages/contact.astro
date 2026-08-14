@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { PRIORITY_COUNTRIES, OTHER_COUNTRIES } from '../data/countries';
 import { NEED_OPTIONS } from '../data/catalog';
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_LINK, OFFICE_ADDRESSES } from '../data/site';
 import { ArrowRight } from '@lucide/astro';
 
 const industries = [
@@ -43,7 +44,14 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
       </p>
 
       <div class="mt-8 hidden lg:block">
-        <ImagePlaceholder caption="IMAGE: strategist on a call, world-clock motif" ratio="aspect-[4/3]" />
+        <ImagePlaceholder
+          caption="IMAGE: strategist on a call, world-clock motif"
+          alt="Business strategist on a phone call"
+          ratio="aspect-[4/3]"
+          src="/photos/strategist-call.jpg"
+          width={1400}
+          height={933}
+        />
       </div>
 
       <div class="card mt-8">
@@ -51,15 +59,25 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
         <dl class="mt-4 space-y-2 text-sm text-white/75">
           <div class="flex gap-2">
             <dt class="font-medium text-white/50">Email:</dt>
-            <dd><a href="mailto:hello@leadvault.com" class="hover:text-[var(--color-lime)]">hello@leadvault.com</a></dd>
+            <dd><a href={`mailto:${CONTACT_EMAIL}`} class="hover:text-[var(--color-lime)]">{CONTACT_EMAIL}</a></dd>
           </div>
           <div class="flex gap-2">
-            <dt class="font-medium text-white/50">WhatsApp:</dt>
-            <dd class="italic text-white/50">[+ number]</dd>
+            <dt class="font-medium text-white/50">Phone / WhatsApp:</dt>
+            <dd>
+              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-lime)]">
+                {PHONE_DISPLAY}
+              </a>
+            </dd>
           </div>
           <div class="flex gap-2">
-            <dt class="font-medium text-white/50">Office:</dt>
-            <dd class="italic text-white/50">[address]</dd>
+            <dt class="shrink-0 font-medium text-white/50">Offices:</dt>
+            <dd>
+              {OFFICE_ADDRESSES.map((o) => (
+                <p>
+                  <span class="text-white/50">{o.label}:</span> {o.address}
+                </p>
+              ))}
+            </dd>
           </div>
           <div class="flex gap-2">
             <dt class="font-medium text-white/50">Hours:</dt>
@@ -92,8 +110,8 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
         </div>
 
         <div>
-          <label for="business-name" class="mb-1.5 block text-sm font-medium text-white">Business Name *</label>
-          <input id="business-name" name="Business Name" type="text" required class="lv-input" />
+          <label for="business-name" class="mb-1.5 block text-sm font-medium text-white">Business Name</label>
+          <input id="business-name" name="Business Name" type="text" class="lv-input" />
         </div>
 
         <div class="grid gap-5 sm:grid-cols-2">

@@ -71,3 +71,14 @@ export const SITE_NAME = 'LeadVault';
 export const SITE_URL = 'https://leadvault.com';
 export const PRIMARY_TAGLINE = 'Every Business Needs Leads. Every Lead Starts Here.';
 export const SECONDARY_TAGLINE = 'Every Business Needs Us — Or Our Data.';
+
+// Real contact details supplied by the client. WHATSAPP_NUMBER_INTL is digits-only
+// (no "+", spaces, or leading zeros) — the format wa.me links require.
+export const CONTACT_EMAIL = 'hello@leadvault.com';
+export const PHONE_DISPLAY = '+234 903 387 8984';
+export const WHATSAPP_NUMBER_INTL = '2349033878984';
+export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER_INTL}`;
+export const OFFICE_ADDRESSES = [
+  { label: 'Nigeria', address: '16, Jegede Street, Shagari Estate, Ipaja-Lagos, Nigeria' },
+  { label: 'USA', address: '4040 Synott Road, Houston, Texas 77082, USA' },
+];
