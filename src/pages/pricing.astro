@@ -7,19 +7,46 @@ import { ArrowRight, Check } from '@lucide/astro';
 const subscriptions = [
   {
     name: 'STARTER',
-    price: '$199/mo',
-    features: ['250 fresh leads', '1 specification', 'Email delivery', 'Email support'],
+    price: '$129/mo',
+    features: ['300 fresh leads', '1 specification', 'Email delivery', 'Email support'],
   },
   {
     name: 'GROWTH',
-    price: '$449/mo',
+    price: '$299/mo',
     popular: true,
-    features: ['750 fresh leads', 'Up to 3 specifications', 'Strategy report', 'Priority delivery', 'WhatsApp + email support'],
+    features: ['1,000 fresh leads', 'Up to 3 specifications', 'Strategy report', 'Priority delivery', 'WhatsApp + email support'],
   },
   {
     name: 'SCALE',
-    price: '$899/mo',
-    features: ['2,000 fresh leads', 'Unlimited specifications', 'Dedicated strategist', 'Quarterly market insights', 'Outreach best-practice support'],
+    price: '$599/mo',
+    features: ['2,500 fresh leads', 'Unlimited specifications', 'Dedicated strategist', 'Quarterly market insights', 'Outreach best-practice support'],
+  },
+];
+
+const emailCampaignPlans = [
+  {
+    name: 'One-Time Setup',
+    price: '$499',
+    priceNote: 'one-time',
+    features: ['Account & pipeline setup', 'MX sorting configuration', 'Sending infrastructure connection', 'Ready for your first campaign'],
+  },
+  {
+    name: 'Per Campaign',
+    price: 'From $299',
+    priceNote: 'per campaign',
+    features: ['Verification', 'MX sorting', 'Per-provider testing', 'Warm-up', 'Sending', 'Full report'],
+  },
+  {
+    name: 'Managed Monthly — Entry',
+    price: 'From $699',
+    priceNote: '/mo',
+    features: ['Verification', 'MX sorting', 'Per-provider testing', 'Warm-up', 'Sending', 'Full report', 'For steady, single-lane campaigns'],
+  },
+  {
+    name: 'Managed Monthly — Growth',
+    price: 'From $1,299',
+    priceNote: '/mo',
+    features: ['Verification', 'MX sorting', 'Per-provider testing', 'Warm-up', 'Sending', 'Full report', 'For higher-volume, multi-segment programs'],
   },
 ];
 
@@ -67,7 +94,10 @@ const faqs = [
       Pay per project, or subscribe for a steady pipeline. Every price includes verification,
       cleaning, CSV delivery, and our replacement guarantee.
     </p>
-    <p class="mx-auto mt-2 max-w-2xl text-sm italic text-white/50">(All figures placeholder — confirm before launch.)</p>
+    <p class="mx-auto mt-2 max-w-2xl text-sm font-medium text-[var(--color-lime)]">
+      Priced deliberately below US and European equivalents — our efficiency is your advantage.
+      Quality guaranteed in writing.
+    </p>
   </section>
 
   <section class="section-alt">
@@ -78,11 +108,11 @@ const faqs = [
           caption="Custom fresh dataset pricing by record volume"
           headers={['Records', 'Price']}
           rows={[
-            ['500 (Sample)', '$149'],
-            ['1,000', '$299'],
-            ['2,500', '$499'],
-            ['5,000', '$899'],
-            ['10,000+', 'Custom quote'],
+            ['500 (Sample)', '$99'],
+            ['1,000', '$249'],
+            ['2,500', '$449'],
+            ['5,000', '$799'],
+            ['10,000', '$1,399'],
           ]}
         />
       </div>
@@ -100,9 +130,9 @@ const faqs = [
         caption="Email list cleaning pricing by list size"
         headers={['List size', 'Price']}
         rows={[
-          ['Up to 5,000', '$49'],
-          ['Up to 25,000', '$179'],
-          ['Up to 100,000', '$549'],
+          ['Up to 5,000', '$39'],
+          ['Up to 25,000', '$129'],
+          ['Up to 100,000', '$399'],
           ['Larger', 'Custom quote'],
         ]}
       />
@@ -113,30 +143,22 @@ const faqs = [
     <div class="section">
       <h2 class="text-2xl font-bold text-white">Managed Email Campaigns</h2>
       <div class="mt-6 grid gap-6 sm:grid-cols-2">
-        <div class="card">
-          <h3 class="text-lg font-bold text-white">Per Campaign</h3>
-          <p class="mt-2 text-2xl font-extrabold text-[var(--color-lime)]">From $[X] per campaign</p>
-          <ul class="mt-4 space-y-2">
-            {['Verification', 'MX sorting', 'Per-provider testing', 'Warm-up', 'Sending', 'Full report'].map((f) => (
-              <li class="flex items-start gap-2 text-sm text-white/75">
-                <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="card">
-          <h3 class="text-lg font-bold text-white">Managed Monthly</h3>
-          <p class="mt-2 text-2xl font-extrabold text-[var(--color-lime)]">From $[X]/mo</p>
-          <ul class="mt-4 space-y-2">
-            {['Verification', 'MX sorting', 'Per-provider testing', 'Warm-up', 'Sending', 'Full report'].map((f) => (
-              <li class="flex items-start gap-2 text-sm text-white/75">
-                <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {emailCampaignPlans.map((plan) => (
+          <div class="card">
+            <h3 class="text-lg font-bold text-white">{plan.name}</h3>
+            <p class="mt-2 text-2xl font-extrabold text-[var(--color-lime)]">
+              {plan.price} <span class="text-sm font-medium text-white/60">{plan.priceNote}</span>
+            </p>
+            <ul class="mt-4 space-y-2">
+              {plan.features.map((f) => (
+                <li class="flex items-start gap-2 text-sm text-white/75">
+                  <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
       <a href="/services#managed-email-campaigns" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Full details →</a>
     </div>
@@ -174,7 +196,7 @@ const faqs = [
       <div class="card">
         <h2 class="text-xl font-bold text-white">Trade Desk (Buyer–Seller Matching)</h2>
         <p class="mt-3 text-white/75">
-          <strong class="text-white">From $499 per engagement</strong> — consultation + verified
+          <strong class="text-white">From $449 per engagement</strong> — consultation + verified
           counterparty dataset + approach guidance.
         </p>
         <a href="/trade" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Details →</a>
@@ -182,7 +204,7 @@ const faqs = [
       <div class="card">
         <h2 class="text-xl font-bold text-white">Agency & Enterprise Partner Plans</h2>
         <p class="mt-3 text-white/75">
-          <strong class="text-white">From $1,500/mo</strong> — volume pricing, exclusive datasets,
+          <strong class="text-white">From $999/mo</strong> — volume pricing, exclusive datasets,
           white-label delivery, custom tooling.
         </p>
         <a href="/contact" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Talk to us →</a>
@@ -193,7 +215,7 @@ const faqs = [
   <section class="section text-center">
     <h2 class="text-2xl font-bold text-white sm:text-3xl">Our Replacement Guarantee</h2>
     <p class="mx-auto mt-5 max-w-2xl text-white/75">
-      If more than <strong class="text-white">5%</strong> <em class="text-white/50">(confirm figure)</em> of
+      If more than <strong class="text-white">5%</strong> of
       records in any delivery prove invalid within 14 days, we replace them free. That's not
       generosity — it's confidence in the pipeline.
     </p>
