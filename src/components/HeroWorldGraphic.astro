@@ -70,7 +70,7 @@ import svgMarkup from '../../leadvault-globe-animated.svg?raw';
   function applyMotionPreference(reduced: boolean) {
     if (!svgEl || typeof svgEl.pauseAnimations !== 'function') return;
     if (reduced) {
-      svgEl.setCurrentTime(6);
+      svgEl.setCurrentTime(8);
       svgEl.pauseAnimations();
     } else {
       svgEl.unpauseAnimations();
