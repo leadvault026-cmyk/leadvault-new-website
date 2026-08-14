@@ -1,11 +1,13 @@
 ---
-// Hero visual centerpiece. This inlines the client-provided
-// leadvault-globe-animated.svg (project root) EXACTLY as delivered —
-// accurate geography, multicolor countries, built-in animated arcs, and
-// labeled nodes for USA/UK/Canada/Nigeria/Worldwide. Do not regenerate or
-// redesign it here; this component only sizes it responsively and adds
-// prefers-reduced-motion handling (see <script> below) without touching
-// its internal markup, colors, animations, or labels.
+// Hero visual centerpiece. Inlines leadvault-globe-animated.svg (project
+// root) — accurate geography, multicolor countries, labeled nodes for
+// USA/UK/Canada/Nigeria/Worldwide. Geography, colors, and labels are
+// untouched from the delivered file; the 5 connection-arc animations were
+// changed from a one-time draw-and-freeze to a continuous flowing loop
+// (repeatCount="indefinite") per follow-up feedback asking for continuous
+// arc movement — see ASSUMPTIONS.md. Globe rotation (also requested) is
+// added below as pure CSS on the country-shapes group only, with zero
+// changes to the SVG file itself.
 // Vite's `?raw` suffix inlines the file's contents as a string at build
 // time (resolved relative to this file, not the runtime output location) —
 // unlike a runtime fs.readFileSync, this survives production builds, where
@@ -26,17 +28,42 @@ import svgMarkup from '../../leadvault-globe-animated.svg?raw';
     width: 100%;
     height: 100%;
   }
+
+  /* Continuous globe rotation — spins only the country-shapes layer (the
+     SVG's first <g>, clipped to the sphere) so the map appears to rotate
+     beneath the fixed arcs/nodes/labels, which stay put and readable.
+     transform-box: view-box anchors the rotation to the SVG's own 2000x2000
+     coordinate space (the sphere's true center), not the group's own
+     (clipped) bounding box. */
+  #hero-globe :global(svg > g:first-of-type) {
+    transform-box: view-box;
+    transform-origin: 1000px 1000px;
+    animation: lv-globe-spin 90s linear infinite;
+  }
+
+  @keyframes lv-globe-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #hero-globe :global(svg > g:first-of-type) {
+      animation: none;
+    }
+  }
 </style>
 
 <script>
-  // The globe's motion is authored as SVG SMIL <animate> elements, which CSS
+  // The arcs/nodes are authored as SVG SMIL <animate> elements, which CSS
   // `prefers-reduced-motion` cannot reach — only the SVG DOM's native
-  // animation-control API can pause it. This never edits the SVG's own
-  // markup: it jumps the shared timeline past every one-time arc/label
-  // reveal (so reduced-motion users see the graphic fully drawn in, not
-  // stuck mid-animation) and then pauses it there, freezing the otherwise-
-  // continuous node-pulse loops. Re-enables normally if the preference
-  // changes back at runtime.
+  // animation-control API can pause them. This never edits the SVG's own
+  // markup: it jumps the shared timeline forward (past every arc's initial
+  // begin delay, so reduced-motion users see a mid-flow snapshot rather
+  // than the pre-animation start state) and then pauses it there. The CSS
+  // globe rotation above is handled separately by its own
+  // prefers-reduced-motion media query. Re-enables normally if the
+  // preference changes back at runtime.
   const svgEl = document.querySelector<SVGSVGElement>('#hero-globe svg');
   const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
 
