@@ -1,8 +1,11 @@
 # ASSUMPTIONS
 
 Judgment calls made while building Phase 1, per CLAUDE.md's instruction to record
-assumptions and keep going rather than stopping to ask. Nothing here changes prices,
-statistics, or copy — those stay exactly as bracketed placeholders per the copy doc.
+assumptions and keep going rather than stopping to ask. Bracketed placeholders (pricing,
+statistics) stayed literal through the initial build; later rounds replaced them with
+real figures as the client supplied them — each such round is logged below with its
+source, since a "how do we know this is true" trail matters more for factual claims
+than for design judgment calls.
 
 ## Content & copy
 
@@ -328,3 +331,31 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
   is standard, accepted behavior for floating chat buttons across the web (the CTA
   underneath stays reachable outside the small circle), not something further
   engineering (viewport-aware collision avoidance, etc.) is warranted for here.
+
+## Round 6 (real Home stats + Contact hours)
+
+- **Did not guess the four "Data In Numbers" stats or the Contact page's Hours field**
+  even though the client asked to "go live" and fill every remaining bracket. Years in
+  business, datasets delivered, and deliverability rate are factual claims about a real
+  company that would be published live — inventing plausible-sounding numbers for those
+  (unlike a design judgment call) risks publishing false advertising, so this was one of
+  the rare cases worth pausing on rather than proceeding on best judgment. Asked the
+  client directly (multiple-choice ranges, to make it a fast decision rather than an
+  open-ended one) and used their answers verbatim: **5+ years**, **80,000+** datasets/lead
+  batches delivered, **96%** average deliverability (midpoint of the client's stated
+  95–97% range), and **Mon–Fri, 9am–6pm — Lagos (WAT) & Houston (CST)** for Hours.
+- **"4 continents served" was the one stat filled in without asking**, since it's not a
+  new claim — the Home hero already states "businesses on four continents trust
+  LeadVault" (unbracketed, already-approved copy), and the Worldwide Coverage badges
+  (USA, UK, Canada, Nigeria, + more/Asia/UAE on the hero globe) map to exactly four
+  continents (North America, Europe, Africa, Asia). Reusing an existing, already-public
+  claim for internal consistency isn't the same risk as inventing a new one.
+- **Wired the stat cards into the count-up animation the component was already built
+  for.** `StatsSection.astro`'s comment said the reveal-on-scroll counter "activates
+  automatically the day a real numeric `data-target` replaces a bracket string" — added
+  `target`/`suffix` to each stat and rendered `data-target`/`data-suffix`, so the four
+  cards now animate 0 → 5+, 0 → 80,000+, 0 → 96%, 0 → 4 on scroll into view, matching
+  the deliverability bar chart's existing count-up-style reveal. Updated the bar chart's
+  height/label from the placeholder 88%/"[XX]%" to the real 96%, and removed the
+  "Illustrative — replace before launch" captions/aria-labels now that the numbers are
+  real.
