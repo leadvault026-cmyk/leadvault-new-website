@@ -1,12 +1,32 @@
 // Data Catalog categories + the mapping used to pre-fill the contact form's
 // "What do you need?" select and "ideal customer" text field from the
 // ?need=<slug> URL param (CLAUDE.md: catalog cards -> /contact?need=<category-slug>).
+//
+// Each category also carries a `sample` preview table, parsed at build time
+// from the fictional CSVs in src/data/catalog-samples/ (see that folder's
+// README — structure modeled on real LeadVault datasets, identities invented,
+// emails/phones pre-masked; never real customer records).
+import { parseCsv, type ParsedCsv } from '../lib/csv';
+
+import tradeCounterpartiesCsv from './catalog-samples/trade-counterparties-sample.csv?raw';
+import freightLogisticsCsv from './catalog-samples/freight-logistics-sample.csv?raw';
+import businessDecisionMakersCsv from './catalog-samples/business-decision-makers-sample.csv?raw';
+import ecommerceRetailCsv from './catalog-samples/ecommerce-retail-sample.csv?raw';
+import marketingAgenciesCsv from './catalog-samples/marketing-agencies-sample.csv?raw';
+import insuranceProspectsCsv from './catalog-samples/insurance-prospects-sample.csv?raw';
+import investmentInvestorLeadsCsv from './catalog-samples/investment-investor-leads-sample.csv?raw';
+import realEstateCsv from './catalog-samples/real-estate-sample.csv?raw';
+import recruitmentTargetsCsv from './catalog-samples/recruitment-targets-sample.csv?raw';
+import smeStartupCsv from './catalog-samples/sme-startup-sample.csv?raw';
+import customSpecificationCsv from './catalog-samples/custom-specification-example.csv?raw';
+
 export interface CatalogCategory {
   slug: string;
   name: string;
   description: string;
   turnaround: string;
   highDemand?: boolean;
+  sample: ParsedCsv;
 }
 
 export const CATALOG_CATEGORIES: CatalogCategory[] = [
@@ -15,36 +35,42 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
     name: 'International Trade Counterparties',
     description: 'Verified buyers, suppliers, shippers by product category and trade lane',
     turnaround: '3–7 days',
+    sample: parseCsv(tradeCounterpartiesCsv),
   },
   {
     slug: 'freight-logistics-companies',
     name: 'Freight & Logistics Companies',
     description: 'Forwarders, brokers, carriers, 3PLs by region',
     turnaround: '3–5 days',
+    sample: parseCsv(freightLogisticsCsv),
   },
   {
     slug: 'business-decision-makers',
     name: 'Business Decision-Makers by Country/State',
     description: 'Owners, MDs, directors, filtered by industry and company size',
     turnaround: '3–5 days',
+    sample: parseCsv(businessDecisionMakersCsv),
   },
   {
     slug: 'ecommerce-retail-businesses',
     name: 'E-commerce & Retail Businesses',
     description: 'Online sellers, store owners, marketplace merchants',
     turnaround: '3–5 days',
+    sample: parseCsv(ecommerceRetailCsv),
   },
   {
     slug: 'marketing-agency-contacts',
     name: 'Marketing & Agency Contacts',
     description: 'Agency founders and growth leads',
     turnaround: '3–5 days',
+    sample: parseCsv(marketingAgenciesCsv),
   },
   {
     slug: 'insurance-prospects',
     name: 'Insurance Prospects',
     description: 'Businesses and individuals by policy relevance',
     turnaround: '3–5 days',
+    sample: parseCsv(insuranceProspectsCsv),
   },
   {
     slug: 'investment-investor-leads',
@@ -52,30 +78,35 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
     description: 'Verified investors, HNW prospects, financial advisors, and capital-seeking businesses',
     turnaround: '3–5 days',
     highDemand: true,
+    sample: parseCsv(investmentInvestorLeadsCsv),
   },
   {
     slug: 'real-estate-investors-developers',
     name: 'Real Estate Investors & Developers',
     description: 'Active market participants by location',
     turnaround: '3–5 days',
+    sample: parseCsv(realEstateCsv),
   },
   {
     slug: 'recruitment-targets',
     name: 'Recruitment Targets',
     description: 'Hiring managers and candidate pools by profession',
     turnaround: '3–7 days',
+    sample: parseCsv(recruitmentTargetsCsv),
   },
   {
     slug: 'sme-startup-databases',
     name: 'SME & Startup Databases',
     description: 'By country, sector, and size',
     turnaround: '3–5 days',
+    sample: parseCsv(smeStartupCsv),
   },
   {
     slug: 'fully-custom-specification',
     name: 'Fully Custom Specification',
     description: 'If you can define it, we can source it',
     turnaround: 'quoted per project',
+    sample: parseCsv(customSpecificationCsv),
   },
 ];
 
