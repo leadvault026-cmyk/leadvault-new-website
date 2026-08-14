@@ -182,3 +182,75 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
   seconds is past every arc's `begin + dur` (the latest finishes at 4.5s), so
   reduced-motion users still see the complete, correctly-drawn graphic — just static
   instead of animating in.
+
+## Round 3 (real pricing + real photos + real catalog samples)
+
+- **Real prices were supplied by the client and adopted verbatim**, replacing every
+  bracketed `[X]`/"confirm" pricing placeholder in `pricing.astro` and `services.astro`
+  (subscriptions, per-record datasets, list cleaning, managed email campaigns, Trade
+  Desk, agency plans, replacement-guarantee percentage). These are deliberately priced
+  below US/European equivalents, per the client's positioning — added a line on the
+  Pricing hero making that explicit. One stale figure caught in a consistency pass:
+  Services page listed the Monthly Subscription add-on at "From $199/month" (the old
+  STARTER price); corrected to $129/month to match the new `pricing.astro` STARTER
+  tier. The FAQ's payment-methods bracket (`[payment methods — confirm: card / PayPal /
+  bank transfer]`) and the `[X]`-style stats in `StatsSection.astro` were left as-is —
+  no real values were supplied for either, and CLAUDE.md forbids inventing them.
+- **Three real photos were supplied** (container port at dusk, founder portrait,
+  multi-monitor engineering desk) to fill three of the copy doc's IMAGE slots. Source
+  originals live in `/photos/` (mirroring the existing `/logo/` convention — raw
+  assets outside `src/`), optimized into `public/photos/*.jpg` by a new
+  `scripts/generate-photos.mjs` (mirrors `generate-brand-assets.mjs`'s sharp pattern;
+  run via `npm run generate:photos`). `ImagePlaceholder.astro` now accepts an optional
+  `src`/`alt`/`width`/`height`; when present it renders a real `<img>` inside the same
+  `.lv-photo-frame`/`.lv-duotone` wrapper instead of the placeholder graphic, so the
+  duotone treatment applies automatically with no per-photo styling — exactly the
+  drop-in path the component's original comment anticipated. Wired into the Home
+  founding-story slot, the About founder-portrait slot, and the Tools workshop-hero
+  slot. The Trade page's port/aircraft slot, the Contact strategist slot, and the
+  Tools terminal-screen slot remain placeholders — no matching photo was supplied for
+  those (the provided port photo's caption matches Home's slot exactly, not Trade's
+  differently-worded one, so it wasn't reused there).
+- **Picked one of three supplied engineering-desk photo variants**, since the single
+  Tools workshop-hero slot only fits one image. Rejected one variant outright — it
+  prominently features a Guy Fawkes/Anonymous mask on the desk, which reads as
+  "hacker" iconography and actively undercuts a B2B data-compliance brand. Rejected a
+  second — it's a church/media-production editing setup (video timeline, "FAITH x
+  WORKS" project), off-topic for an "engineering desk." Chose the third: a clean
+  multi-monitor coding setup in moody dark-blue tones with no distracting props,
+  matching the copy doc's caption directly.
+- **Catalog sample CSVs became real per-category preview tables**, not another styled
+  placeholder. The client supplied 11 fictional sample CSVs (one per Data Catalog
+  category, structure modeled on real LeadVault datasets, identities invented,
+  emails/phones pre-masked — see `src/data/catalog-samples/README.md`) specifically
+  "to be rendered as preview tables." Moved them into `src/data/catalog-samples/`,
+  added a small hand-rolled CSV parser (`src/lib/csv.ts` — RFC4180-style, handles
+  quoted fields with embedded commas, since the recruitment-targets sample has a
+  comma-separated skills list inside quotes) and parse each at build time in
+  `src/data/catalog.ts`. Each Data Catalog card now renders the first 4 sample rows
+  via the existing `ComparisonTable` component (reused as-is — its
+  `{headers, rows, caption}` shape was already exactly what a parsed CSV produces)
+  instead of the generic `ImagePlaceholder` "Sample: {name}" block. Every card also
+  carries a visible "illustrative, not real customer data" caption, both for honesty
+  and because the sample README explicitly warns never to present these as real
+  customer records.
+- **Two layout bugs surfaced by an actual browser check (Playwright), not caught by
+  `npm run build` alone**, since a static-output build only proves the HTML compiles,
+  not that it lays out correctly:
+  1. The new Data Catalog sample tables (7–9 columns, `min-w-[640px]`) blew out their
+     `.card` grid item's width instead of scrolling inside `.table-wrap`'s
+     `overflow-x-auto` — a classic flex/grid "children don't shrink below content size
+     unless told to" issue, since grid/flex items default to `min-width: auto`. On
+     mobile this made the whole page scroll horizontally, cutting off the "Request This
+     Dataset" button past the viewport edge. Fixed by adding `min-w-0` to the catalog
+     card (`data-catalog.astro`) so it can shrink to its grid track and let the inner
+     table-wrap do the scrolling, as designed.
+  2. The About page's founder-portrait `ImagePlaceholder` collapsed to ~2×3px — invisible
+     — because its wrapper combines `aspect-[3/4]` with only `max-w-sm` (a max-width, not
+     a width) while its only child is `position: absolute` (so contributes no in-flow
+     content size for the grid item to size against). This is a pre-existing bug in the
+     page (not introduced this round) that a styled-but-empty placeholder never exposed
+     visually; only became obvious once a real photo needed to render there. Fixed by
+     adding `w-full` alongside `max-w-sm` so the frame has a definite width to stretch to
+     before `max-width` caps it. Every other `ImagePlaceholder` call site was checked —
+     none else combines a bare `max-w-*` with no `w-full`, so this was the only instance.
