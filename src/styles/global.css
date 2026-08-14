@@ -9,16 +9,17 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* LeadVault design tokens v2 (CLAUDE.md — rebranded from /logo/logo.png).
-     Backgrounds sampled from the logo disc; accents sampled from the shield
-     glow (lime), "LEAD" wordmark (cyan), and padlock body (green). All
-     text/background pairings below are WCAG AA verified — see ASSUMPTIONS.md. */
+  /* LeadVault design tokens v3 (client-specified exact brand colors from the
+     "LEAD" / "VAULT" wordmark). Roles: cyan = buttons/interactive affordances;
+     lime = text highlights, links, icons, eyebrows, stat numbers, badges.
+     All text/background pairings below are WCAG AA verified — see ASSUMPTIONS.md. */
   --color-bg: #0a0b0d;
   --color-bg-mid: #22262e;
   --color-bg-dark: #000000;
-  --color-lime: #eaff00;
+  --color-cyan: #00d9ff;
+  --color-cyan-ink: #04141a;
+  --color-lime: #b7ff00;
   --color-lime-dark: #0b1400;
-  --color-cyan: #00d9ec;
   --color-green: #86d30b;
 }
 
@@ -48,18 +49,20 @@
   select:focus-visible,
   textarea:focus-visible,
   summary:focus-visible {
-    outline: 2px solid var(--color-lime);
+    outline: 2px solid var(--color-cyan);
     outline-offset: 2px;
   }
 }
 
 @layer components {
+  /* All buttons/CTAs use the electric cyan brand color, per the client's
+     color spec — never white text on it (contrast ~1.6:1, fails AA). */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-lime)] px-6 py-3 font-semibold text-[var(--color-lime-dark)] transition-colors duration-150 hover:bg-white;
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-cyan)] px-6 py-3 font-semibold text-[var(--color-cyan-ink)] transition-colors duration-150 hover:bg-white;
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-6 py-3 font-semibold text-white transition-colors duration-150 hover:border-[var(--color-lime)] hover:text-[var(--color-lime)];
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-6 py-3 font-semibold text-white transition-colors duration-150 hover:border-[var(--color-cyan)] hover:text-[var(--color-cyan)];
   }
 
   .section {

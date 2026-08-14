@@ -1,151 +1,55 @@
 ---
-// Hero visual centerpiece (design review: "the biggest visual fix" — large,
-// commanding, edge-to-edge of its column, multi-color animated arcs, glowing
-// labeled nodes). Coded SVG per the handoff brief's "Recommended" zero-sourcing
-// route for the hero — no photo to source. Colors pulled straight from the
-// rebranded palette (CLAUDE.md design tokens v2).
-const nodes = [
-  { x: 110, y: 430, label: 'USA', r: 10 },
-  { x: 470, y: 75, label: 'UK', r: 9 },
-  { x: 130, y: 660, label: 'Canada', r: 9 },
-  { x: 560, y: 700, label: 'Nigeria', r: 9 },
-  { x: 715, y: 380, label: 'Worldwide', r: 14 },
-];
-
-// Each arc cycles through the three accent tokens so the map reads as
-// genuinely multi-color, not a single-tint motif.
-const accents = ['var(--color-lime)', 'var(--color-cyan)', 'var(--color-green)'];
-const arcs = [
-  [0, 1],
-  [0, 2],
-  [1, 4],
-  [3, 4],
-  [0, 4],
-  [2, 4],
-  [1, 3],
-];
+// Hero visual centerpiece. This inlines the client-provided
+// leadvault-globe-animated.svg (project root) EXACTLY as delivered —
+// accurate geography, multicolor countries, built-in animated arcs, and
+// labeled nodes for USA/UK/Canada/Nigeria/Worldwide. Do not regenerate or
+// redesign it here; this component only sizes it responsively and adds
+// prefers-reduced-motion handling (see <script> below) without touching
+// its internal markup, colors, animations, or labels.
+// Vite's `?raw` suffix inlines the file's contents as a string at build
+// time (resolved relative to this file, not the runtime output location) —
+// unlike a runtime fs.readFileSync, this survives production builds, where
+// the compiled component is relocated into dist/ and a relative filesystem
+// path would no longer resolve.
+import svgMarkup from '../../leadvault-globe-animated.svg?raw';
 ---
 
-<div class="relative mx-auto aspect-square w-full max-w-[560px] lg:mx-0 lg:max-w-none" aria-hidden="true">
-  <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet" class="h-full w-full">
-    <defs>
-      <radialGradient id="heroGlow" cx="50%" cy="45%" r="60%">
-        <stop offset="0%" stop-color="var(--color-bg-mid)" stop-opacity="0.9"></stop>
-        <stop offset="100%" stop-color="var(--color-bg)" stop-opacity="0"></stop>
-      </radialGradient>
-      <filter id="heroNodeGlow" x="-150%" y="-150%" width="400%" height="400%">
-        <feGaussianBlur stdDeviation="8" result="b"></feGaussianBlur>
-        <feMerge>
-          <feMergeNode in="b"></feMergeNode>
-          <feMergeNode in="SourceGraphic"></feMergeNode>
-        </feMerge>
-      </filter>
-      <filter id="heroArcGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="2.2" result="b"></feGaussianBlur>
-        <feMerge>
-          <feMergeNode in="b"></feMergeNode>
-          <feMergeNode in="SourceGraphic"></feMergeNode>
-        </feMerge>
-      </filter>
-    </defs>
-
-    <circle cx="400" cy="400" r="395" fill="url(#heroGlow)"></circle>
-
-    <g class="lv-spin" style="transform-origin: 400px 400px;">
-      {[
-        { rx: 260, ry: 130 },
-        { rx: 340, ry: 200 },
-        { rx: 390, ry: 270 },
-      ].map(({ rx, ry }) => (
-        <ellipse cx="400" cy="400" rx={rx} ry={ry} fill="none" stroke="var(--color-cyan)" stroke-opacity="0.16"></ellipse>
-      ))}
-      <ellipse cx="400" cy="400" rx="390" ry="130" fill="none" stroke="var(--color-lime)" stroke-opacity="0.14"></ellipse>
-      <line x1="15" y1="400" x2="785" y2="400" stroke="var(--color-lime)" stroke-opacity="0.14"></line>
-    </g>
-
-    {arcs.map(([a, b], i) => {
-      const n1 = nodes[a];
-      const n2 = nodes[b];
-      const mx = (n1.x + n2.x) / 2;
-      const my = (n1.y + n2.y) / 2 - 70 * (i % 2 === 0 ? 1 : -1);
-      const color = accents[i % accents.length];
-      return (
-        <path
-          d={`M ${n1.x} ${n1.y} Q ${mx} ${my} ${n2.x} ${n2.y}`}
-          fill="none"
-          stroke={color}
-          stroke-width="2"
-          stroke-opacity="0.75"
-          stroke-linecap="round"
-          stroke-dasharray="7 9"
-          filter="url(#heroArcGlow)"
-          class="lv-arc"
-          style={`animation-delay:${i * 0.5}s`}
-        ></path>
-      );
-    })}
-
-    {nodes.map((n, i) => {
-      const color = accents[i % accents.length];
-      return (
-        <g>
-          <circle cx={n.x} cy={n.y} r={n.r + 10} fill={color} fill-opacity="0.18" class="lv-pulse" style={`animation-delay:${i * 0.35}s`}></circle>
-          <circle cx={n.x} cy={n.y} r={n.r} fill={color} filter="url(#heroNodeGlow)"></circle>
-          <circle cx={n.x} cy={n.y} r={Math.max(2, n.r - 4)} fill="var(--color-bg)"></circle>
-          <text
-            x={n.x}
-            y={n.y - n.r - 16}
-            text-anchor="middle"
-            fill="#F5F7FA"
-            font-size={n.label === 'Worldwide' ? 24 : 20}
-            font-weight="700"
-            style="paint-order: stroke; stroke: var(--color-bg); stroke-width: 6px; stroke-linejoin: round;"
-          >
-            {n.label}
-          </text>
-        </g>
-      );
-    })}
-  </svg>
-</div>
+<div
+  id="hero-globe"
+  class="relative mx-auto aspect-square w-full max-w-[560px] lg:mx-0 lg:max-w-none"
+  set:html={svgMarkup}
+/>
 
 <style>
-  .lv-arc {
-    animation: lv-dash 5s linear infinite;
-  }
-  @keyframes lv-dash {
-    to {
-      stroke-dashoffset: -64;
-    }
-  }
-  .lv-pulse {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: lv-pulse 2.8s ease-out infinite;
-  }
-  @keyframes lv-pulse {
-    0% {
-      transform: scale(0.75);
-      opacity: 0.9;
-    }
-    100% {
-      transform: scale(2.6);
-      opacity: 0;
-    }
-  }
-  .lv-spin {
-    animation: lv-spin 90s linear infinite;
-  }
-  @keyframes lv-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .lv-arc,
-    .lv-pulse,
-    .lv-spin {
-      animation: none;
-    }
+  #hero-globe :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>
+
+<script>
+  // The globe's motion is authored as SVG SMIL <animate> elements, which CSS
+  // `prefers-reduced-motion` cannot reach — only the SVG DOM's native
+  // animation-control API can pause it. This never edits the SVG's own
+  // markup: it jumps the shared timeline past every one-time arc/label
+  // reveal (so reduced-motion users see the graphic fully drawn in, not
+  // stuck mid-animation) and then pauses it there, freezing the otherwise-
+  // continuous node-pulse loops. Re-enables normally if the preference
+  // changes back at runtime.
+  const svgEl = document.querySelector<SVGSVGElement>('#hero-globe svg');
+  const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function applyMotionPreference(reduced: boolean) {
+    if (!svgEl || typeof svgEl.pauseAnimations !== 'function') return;
+    if (reduced) {
+      svgEl.setCurrentTime(6);
+      svgEl.pauseAnimations();
+    } else {
+      svgEl.unpauseAnimations();
+    }
+  }
+
+  applyMotionPreference(mql.matches);
+  mql.addEventListener('change', (e) => applyMotionPreference(e.matches));
+</script>

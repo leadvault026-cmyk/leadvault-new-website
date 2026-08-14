@@ -1,18 +1,19 @@
 ---
 // Real logo (public/logo.png — optimized web copy of /logo/logo.png, see
-// scripts/generate-brand-assets.mjs). Single point of change: if the asset
-// is swapped again, only this file and the script need updating.
+// scripts/generate-brand-assets.mjs). Rectangular wordmark lockup, 3:1
+// aspect ratio. Single point of change: if the asset is swapped again,
+// only this file and the script need updating.
 interface Props {
   class?: string;
 }
-const { class: className = 'h-11' } = Astro.props;
+const { class: className = 'h-10' } = Astro.props;
 ---
 
 <img
   src="/logo.png"
   alt="LeadVault"
-  width="512"
-  height="512"
+  width="900"
+  height="300"
   class={`w-auto ${className}`}
   loading="eager"
   decoding="async"
