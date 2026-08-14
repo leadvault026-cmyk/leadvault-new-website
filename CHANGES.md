@@ -1,5 +1,39 @@
 # CHANGES
 
+## Design Review Round 2 follow-up — continuous globe motion, bigger logo
+
+1. **Nav/footer logo increased considerably.** The logo read as too small next to
+   the CTA button (144px vs. the button's 244px at desktop). Header logo grew from
+   `h-9 sm:h-10 lg:h-12` to `h-14 sm:h-16 lg:h-20`; footer from `h-12` to `h-20`.
+   Verified at 1024/1280/1440px that the header still fits comfortably with room
+   to spare.
+2. **Hero globe's connection arcs now move continuously**, not once-and-freeze.
+   Changed each of the 5 arcs' `stroke-dasharray`/`stroke-dashoffset` from a
+   single large reveal segment to a small repeating dash pattern (`"16 12"`)
+   animated with `repeatCount="indefinite"`, giving a perpetual "flowing"
+   marching-dash effect along each connection rather than drawing in once and
+   stopping. Durations/stagger kept proportional to each arc's original timing.
+3. **Globe now rotates continuously.** Added a slow (90s/rotation), pure-CSS
+   `rotate(360deg)` animation targeting only the SVG's country-shapes group
+   (`svg > g:first-of-type`, anchored via `transform-box: view-box` to the
+   sphere's true center) — arcs, nodes, and labels are siblings outside that
+   group, so they stay fixed, aligned, and readable while the map appears to
+   spin beneath them. This is pure CSS added in `HeroWorldGraphic.astro`; the
+   SVG file itself gained no rotation-related markup. Respects
+   `prefers-reduced-motion` (separate media query disables the CSS animation;
+   the existing SMIL-pause script handles the arc/node loops).
+
+Note: this necessarily means the SVG file is no longer byte-for-byte identical
+to the originally delivered asset (see round 2 item 3 below) — the geography,
+colors, node positions, and labels are still untouched; only the arc animation
+timing attributes changed, per this explicit follow-up request.
+
+### Build
+
+`npm run build` — 12/12 pages, zero errors/warnings.
+
+---
+
 ## Design Review Round 2 — exact brand colors, new logo, client-provided hero globe
 
 1. **Exact brand colors applied.** Client specified "LEAD" = Electric Cyan/Neon Blue
