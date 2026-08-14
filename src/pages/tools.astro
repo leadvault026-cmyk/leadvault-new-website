@@ -1,13 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
-import { ShieldCheck, Search, Database, Send, Terminal, Wrench, ArrowRight } from '@lucide/astro';
+import { ShieldCheck, ListFilter, Search, Database, Send, Terminal, Wrench, ArrowRight } from '@lucide/astro';
 
 const tools = [
   {
     icon: ShieldCheck,
     title: 'Email Verification Engine',
     body: 'Confirms every address is real and deliverable: MX record verification across all provider types (Office 365, Google Workspace, independent and broker mail servers), so "verified" means exactly that.',
+  },
+  {
+    icon: ListFilter,
+    title: 'MX Sorting Engine',
+    body: 'Separates any verified list into per-provider segments (Gmail, Office 365, IONOS, and all other MX types) — the foundation of provider-by-provider deliverability testing and professional campaign sending.',
   },
   {
     icon: Search,

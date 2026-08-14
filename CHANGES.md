@@ -1,5 +1,43 @@
 # CHANGES
 
+## New service — Managed Email Campaigns & Deliverability Engineering
+
+Added across four places, per spec, copy used verbatim:
+
+1. **Services page** (`src/pages/services.astro`) — new featured card, inserted directly
+   after "Custom Fresh Datasets" (now the 2nd service; the rest shifted down). Card
+   template extended with two new optional fields (`listIntro`, `body2`) to support
+   the longer structured copy (intro → labeled tool list → closing line → compliance
+   note → price) without changing how the other six simpler cards render. Card has
+   `id="managed-email-campaigns"` (with `scroll-mt-28` so the sticky header doesn't
+   cover it) for the deep links added below.
+2. **Home page** (`src/pages/index.astro`) — one line added inside "The Solution"
+   section, linking "Managed Email Campaigns" to `/services#managed-email-campaigns`.
+3. **Tools & Technology page** (`src/pages/tools.astro`) — new "MX Sorting Engine"
+   card, positioned 2nd (right after "Email Verification Engine," its natural sibling).
+4. **Pricing page** (`src/pages/pricing.astro`) — new "Managed Email Campaigns" section
+   with two cards (per-campaign / managed monthly), each listing verification, MX
+   sorting, per-provider testing, warm-up, sending, and full report, with `$[X]`
+   placeholders kept visible per the no-invented-numbers rule. Inserted between
+   "Email List Cleaning" and "Monthly Lead Subscriptions" — this shifted every
+   section after it by one position, so the whole rest of the page (subscriptions,
+   Trade Desk/Agency cards, guarantee, FAQ) was re-alternated bg/bg-mid to keep the
+   design review's "every section distinguishable at a glance" rule intact end to end.
+5. **Contact form** — "Managed email campaigns" added to the "What do you need?"
+   dropdown (`src/data/catalog.ts`'s `NEED_OPTIONS`), plus a
+   `managed-email-campaigns` → "Managed email campaigns" entry in
+   `NEED_SLUG_TO_OPTION` for consistency with the rest of the ?need= pre-fill system.
+
+Sitemap needs no manual edit — `@astrojs/sitemap` regenerates it from actual routes
+on every build, and no new pages were added (the service lives on existing pages).
+
+### Build
+
+`npm run build` — 12/12 pages, zero errors. axe-core color-contrast re-scan on every
+touched page (/, /services, /tools, /pricing, /contact): 0 violations.
+
+---
+
 ## Design Review Round 2 follow-up — continuous globe motion, bigger logo
 
 1. **Nav/footer logo increased considerably.** The logo read as too small next to

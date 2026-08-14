@@ -85,6 +85,7 @@ export const NEED_OPTIONS = [
   'Clean my existing list',
   'Find buyers/suppliers (Trade Desk)',
   'Monthly lead subscription',
+  'Managed email campaigns',
   'Custom data project',
   'Not sure — advise me',
 ];
@@ -95,4 +96,5 @@ export const NEED_SLUG_TO_OPTION: Record<string, string> = {
   'trade-desk': 'Find buyers/suppliers (Trade Desk)',
   'international-trade-counterparties': 'Find buyers/suppliers (Trade Desk)',
   'fully-custom-specification': 'Custom data project',
+  'managed-email-campaigns': 'Managed email campaigns',
 };

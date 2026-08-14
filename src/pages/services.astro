@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Database, Sparkles, Handshake, CalendarCheck, Terminal, Compass, Send, ArrowRight } from '@lucide/astro';
+import { Database, Sparkles, Handshake, CalendarCheck, Terminal, Compass, Send, MailCheck, ArrowRight } from '@lucide/astro';
 
 const services = [
   {
@@ -11,6 +11,24 @@ const services = [
     detail: 'What you receive per record: name, job title, company, verified email, phone (where available), location, industry — plus any custom fields you specify.',
     price: 'From $299 per 1,000 verified records.',
     priceNote: '(Confirm/adjust pricing.)',
+  },
+  {
+    id: 'managed-email-campaigns',
+    icon: MailCheck,
+    title: 'Managed Email Campaigns & Deliverability Engineering',
+    body: "Sending bulk email like it's 2010 is why your campaigns disappear. Most businesses gather a list and blast every address in one campaign — Gmail, Office 365, IONOS, and every other provider mixed together. That approach is dead. Today's mailbox providers use machine-learning filters, and each one judges your email differently: a message that lands perfectly in a Gmail inbox can vanish silently at Office 365. Send to them all identically, and your results — and sender reputation — suffer everywhere at once.",
+    listIntro: 'LeadVault runs your campaigns the way deliverability professionals do, using our own in-house engineered tools:',
+    list: [
+      'Clean & verify first — every address passes our verification pipeline before anything is sent.',
+      'MX-sort the list — our sorting software separates your list by mail provider (Gmail, Office 365, IONOS, and every other MX record type) into individual segments, because each provider must be approached on its own terms.',
+      'Test deliverability per provider — before full send, we test how each segment performs at its provider and tune accordingly.',
+      'Warm up properly — new or under-used domains are warmed on a controlled schedule; a cold domain sent at volume is a campaign lost in the air.',
+      'Send with best practices — provider-appropriate pacing, authentication (SPF/DKIM/DMARC), honest sender identity, and working opt-outs on every message.',
+      'Report everything — you receive a real campaign report: delivered, opened, bounced, by provider segment. No more sending into the void and hearing nothing back.',
+    ],
+    body2: 'Most companies running campaigns today have no idea whether their emails ever landed. Our clients know — because we engineered the landing.',
+    detail: 'Compliance note: we run permission-appropriate, regulation-compliant B2B outreach only (CAN-SPAM and applicable laws). We decline campaigns designed to deceive.',
+    price: 'From $[X] per campaign or $[X]/month managed.',
   },
   {
     icon: Sparkles,
@@ -78,7 +96,7 @@ const services = [
     <div class="section">
       <div class="grid gap-6 lg:grid-cols-2">
       {services.map((service) => (
-        <div class:list={['card flex flex-col gap-4', service.flagship && 'ring-1 ring-[var(--color-lime)]/50']}>
+        <div id={service.id} class:list={['card flex flex-col gap-4 scroll-mt-28', service.flagship && 'ring-1 ring-[var(--color-lime)]/50']}>
           <div class="flex items-start justify-between gap-3">
             <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
               <service.icon size={24} stroke-width={1.75} aria-hidden="true" />
@@ -92,6 +110,7 @@ const services = [
             {service.subtitle && <p class="text-sm font-medium text-[var(--color-lime)]">{service.subtitle}</p>}
           </div>
           <p class="text-sm leading-relaxed text-white/75">{service.body}</p>
+          {service.listIntro && <p class="text-sm font-medium text-white">{service.listIntro}</p>}
           {service.list && (
             <ul class="space-y-2">
               {service.list.map((item) => (
@@ -102,6 +121,7 @@ const services = [
               ))}
             </ul>
           )}
+          {service.body2 && <p class="text-sm leading-relaxed text-white/75">{service.body2}</p>}
           {service.detail && <p class="text-xs italic text-white/50">{service.detail}</p>}
           <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
             <div>
