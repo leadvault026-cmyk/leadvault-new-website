@@ -18,20 +18,18 @@ function kb(path) {
   return (statSync(path).size / 1024).toFixed(1) + 'KB';
 }
 
-// 1. Optimized header/footer logo — rendered from the vector source (not the
-// 1254px raster) so it's crisp at any size and trivially small. Rendered at
-// 320x320 (well beyond 2x retina for the ~48-64px display heights it's used
-// at) and palette-compressed to stay inside the ~40KB budget.
+// 1. Optimized header/footer logo — rectangular wordmark lockup (2172x724,
+// exactly 3:1, transparent background), rendered wide enough to stay sharp
+// at 2x retina even at the largest display size used (footer, ~64px tall ->
+// ~192px wide, so 900px-wide source is >4x that) and palette-compressed to
+// stay inside the ~40KB budget. logo.svg is the earlier square badge mark —
+// superseded by this wordmark lockup, no longer copied into public/.
 const logoPngPath = join(publicDir, 'logo.png');
-await sharp(join(logoDir, 'logo.svg'))
-  .resize(512, 512)
-  .png({ compressionLevel: 9, effort: 10, palette: true, colors: 192 })
+await sharp(join(logoDir, 'logo.png'))
+  .resize({ width: 900 })
+  .png({ compressionLevel: 9, effort: 10, palette: true, colors: 128 })
   .toFile(logoPngPath);
 console.log('logo.png written:', kb(logoPngPath));
-
-// Vector copy too — used where the browser can take an SVG directly (crisper
-// than any raster, and ~3KB).
-copyFileSync(join(logoDir, 'logo.svg'), join(publicDir, 'logo.svg'));
 
 // 2. Favicons — the 16/32/apple-touch PNGs are already correctly sized; copy
 // as-is. favicon.svg copied for browsers that prefer a vector favicon.
