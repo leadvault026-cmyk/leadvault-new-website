@@ -130,6 +130,8 @@ src/
   styles/       Tailwind entry point + design tokens (global.css)
 scripts/        generate-og-image.mjs, generate-brand-assets.mjs — regenerate the
                 OG share image and the logo/favicon set from /logo
-public/         Static assets served as-is (favicons, logo.png/svg, robots.txt, og-image.png)
-logo/           Source brand assets (not deployed) — logo.png, logo.svg, favicons
+public/         Static assets served as-is (favicons, logo.png, robots.txt, og-image.png)
+logo/           Source brand assets (not deployed) — logo.png (wordmark), favicons
+leadvault-globe-animated.svg   Client-provided hero graphic, inlined at build time
+                (not deployed as a standalone file — see src/components/HeroWorldGraphic.astro)
 ```

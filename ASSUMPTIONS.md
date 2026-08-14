@@ -127,3 +127,58 @@ statistics, or copy — those stay exactly as bracketed placeholders per the cop
 - **`netlify.toml` includes a custom 404 page** (`src/pages/404.astro`) even though it's
   not one of the 11 listed pages — it's a utility page Netlify/browsers expect, not
   marketing content, so it doesn't conflict with "don't add pages beyond the 11."
+
+## Design review round 2 (exact colors, new logo, provided hero globe)
+
+- **"Text in lime, shared using judgement of color balance" interpreted as: keep the
+  existing accent grouping, don't force cyan into new spots.** The client's instruction
+  split colors by role (cyan = buttons, lime = text) but asked for judgment on
+  balance. Round 1 had already established a restrained two-color accent system where
+  everything non-button (eyebrows, links, active nav, stat numbers, icon tints,
+  badges, highlight rings) uses one accent consistently. Rather than manually
+  reassigning some of those elements to cyan for "variety," left them all on lime —
+  introducing cyan into text/highlight spots would blur the cyan = "click here" signal
+  buttons now carry, which is worse balance, not better. The one exception: the
+  skip-to-content link and focus-visible ring moved to cyan, since they're functionally
+  button-like (interactive affordances a keyboard user activates), not display text.
+- **`--color-green` (`#86D30B`) kept as-is, unexpanded.** The client's two named colors
+  (cyan for LEAD, lime for VAULT) don't mention a third color, but round 1's tertiary
+  green accent (sampled from the original logo's padlock) is still used sparingly for
+  icon-color variety and wasn't asked to be removed. Left it alone rather than either
+  ripping it out (not requested) or expanding its use (not requested either).
+- **Logo sized by height, not forced to a fixed width**, in `Logo.astro`/`Header.astro`/
+  `Footer.astro`, because the new asset's exact aspect ratio (2172×724, precisely 3:1)
+  means height-based sizing (`h-9 sm:h-10 lg:h-12` in the header, `h-12` in the footer)
+  keeps it crisp and proportional at every breakpoint without separate width rules.
+  Reduced the header height from round 1's square-badge sizing (`h-12 sm:h-14`) since
+  the wordmark is 3× wider than it is tall — at the old height it would have crowded
+  the nav links.
+- **`/logo/logo.svg` (the old square badge) is no longer copied into `public/`.**
+  It's superseded by the new rectangular PNG lockup and nothing references it anymore;
+  leaving a stale, unused, differently-branded asset sitting in `public/` would be
+  actively misleading to whoever opens the repo next. The file stays in `/logo/`
+  (source folder, not deployed) for history — not deleted, just not shipped.
+- **`leadvault-globe-animated.svg` stays at the project root, not moved into `public/`**,
+  even though the client's message named `public/leadvault-globe-animated.svg` as its
+  location (it was actually already sitting at the project root when delivered — not
+  in `public/`). Since it's inlined directly into the HTML at build time (Vite `?raw`
+  import), it never needs to be served as its own URL, so `public/` isn't the right
+  place for it — same reasoning as `/logo/` staying out of `public/`. `HeroWorldGraphic.astro`
+  imports it from the root by relative path.
+- **Reduced-motion handling required a different mechanism than the rest of the site.**
+  Every other animation on this site is CSS-based, so `@media (prefers-reduced-motion:
+  reduce)` handles it everywhere else. This SVG's animations are authored as SMIL
+  `<animate>` elements, which that media query cannot reach at all — a CSS rule
+  targeting the inlined `<svg>` would silently do nothing. Used the SVG DOM's own
+  animation-control API (`pauseAnimations()` / `setCurrentTime()`) instead, called from
+  a small script that checks `matchMedia('(prefers-reduced-motion: reduce)')`. Verified
+  this actually works with a Playwright test (`reducedMotion: 'reduce'` context) rather
+  than assuming it did, since SMIL control from JS is a less common pattern than CSS
+  media queries and worth confirming directly.
+- **Chose to jump the timeline to a fixed offset (`setCurrentTime(6)`) rather than
+  simply pausing at whatever the current time happened to be.** Pausing immediately on
+  page load would freeze the one-time arc-drawing reveals mid-stroke (arcs partially
+  invisible, since they animate `stroke-dashoffset` from hidden to fully drawn). `6`
+  seconds is past every arc's `begin + dur` (the latest finishes at 4.5s), so
+  reduced-motion users still see the complete, correctly-drawn graphic — just static
+  instead of animating in.

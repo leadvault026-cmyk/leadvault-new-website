@@ -1,4 +1,51 @@
-# CHANGES — Design Review Round 1
+# CHANGES
+
+## Design Review Round 2 — exact brand colors, new logo, client-provided hero globe
+
+1. **Exact brand colors applied.** Client specified "LEAD" = Electric Cyan/Neon Blue
+   `#00D9FF`, "VAULT" = Neon Lime Green `#B7FF00`. Split the single accent token into
+   two roles: `--color-cyan` (`#00D9FF`) for **every button/CTA** — `.btn-primary`,
+   `.btn-outline`'s accent, focus-visible rings, the skip-to-content link — and
+   `--color-lime` (`#B7FF00`) for everything else in the accent/highlight family
+   (eyebrows, active nav state, links, stat numbers, icon tints, badges, highlight
+   rings), left as-is since that grouping was already a deliberate, restrained system
+   from round 1 (see ASSUMPTIONS.md for the reasoning on not over-mixing the two).
+   Added `--color-cyan-ink` (`#04141A`) as the dark text color for cyan fills.
+   Re-verified WCAG AA with axe-core after the swap: **0 violations, all 11 pages.**
+2. **New rectangular logo installed.** `/logo/logo.png` is a redesigned 2172×724
+   (3:1) wordmark lockup — shield+padlock mark, "LEAD" in cyan, "VAULT" in lime,
+   transparent background — replacing the old square badge that read as illegible
+   micro-text in the nav. `scripts/generate-brand-assets.mjs` now renders it at
+   900px wide, palette-compressed to **14.4KB** (well under the ~40KB budget).
+   `Logo.astro`, `Header.astro`, and `Footer.astro` resized for the new 3:1 aspect.
+   The old square `logo.svg` is superseded and no longer copied into `public/`.
+   `scripts/generate-og-image.mjs` also rebuilt around the new lockup and colors.
+3. **Hero globe replaced with the client-provided asset, verbatim.**
+   `leadvault-globe-animated.svg` (accurate world geography, multicolor countries,
+   built-in SMIL-animated arcs, labeled/glowing nodes) is inlined into
+   `HeroWorldGraphic.astro` via a Vite `?raw` import + `set:html` — confirmed
+   **byte-for-byte identical** between source file and rendered HTML, so its colors,
+   animations, and labels are untouched. Fills the hero's right column edge-to-edge
+   on desktop (same responsive wrapper pattern as round 1), full-width below the
+   headline on mobile, not cropped (verified by screenshot).
+   - **Added `prefers-reduced-motion` handling that CSS can't provide**, since the
+     graphic's animations are SVG SMIL (`<animate>` elements), which the CSS
+     `prefers-reduced-motion` media query cannot reach. Uses the SVG DOM's native
+     animation-control API instead: jumps the shared timeline past every one-time
+     arc/label reveal and pauses it there, so reduced-motion users see the graphic
+     fully drawn in (not stuck mid-animation) with the continuous node-pulse loops
+     frozen. Verified with a Playwright test using `reducedMotion: 'reduce'`:
+     animations report paused, current time frozen across repeated checks, and the
+     screenshot shows all arcs fully drawn.
+
+### Build
+
+`npm run build` — 12/12 pages, zero errors/warnings. axe-core color-contrast scan:
+0 violations across all 11 pages (unchanged from round 1's clean result).
+
+---
+
+# Design Review Round 1
 
 Everything requested in the design review pass, implemented before further testing.
 
