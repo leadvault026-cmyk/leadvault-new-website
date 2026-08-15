@@ -379,3 +379,22 @@ than for design judgment calls.
   process `/thank-you`, forcing a 404 instead. Removed the rule entirely; Netlify's
   built-in "serve 404.html for unmatched paths" behavior covers the same case without
   the collateral damage.
+
+## Round 8 (real GA4/Meta Pixel IDs, founder achievements)
+
+- **GA4 (`G-RVMGVR05JD`) and Meta Pixel (`901363379491498`) installed with real IDs.**
+  Both snippets were also changed from `define:vars` (which compiles to a JS variable
+  reference — `gtag('config', GA4_MEASUREMENT_ID)`) to `set:html` with the ID inlined
+  as a literal string at build time (`gtag('config', 'G-RVMGVR05JD')`). This was
+  required, not cosmetic: Search Console's "Google Analytics" ownership-verification
+  method does a literal text scan for `gtag('config', '<ID>')` and doesn't resolve
+  variables, so the variable form — functionally identical for real tracking — failed
+  verification with "could not find any Google Analytics tracking codes," confirmed by
+  fetching the live production HTML directly. Applied the same literal-inlining fix to
+  the Meta Pixel snippet preemptively, since Meta's domain-verification/Pixel Helper
+  checks follow the same literal-format expectation.
+- **Founder achievements filled in verbatim**, replacing the "(Add 2–3 specific career
+  achievements when finalized.)" placeholder on the About page — three items supplied
+  directly by the client. Rendered as a bulleted list reusing the site's existing
+  lime-dot bullet pattern (already used for feature/tool lists in `services.astro`)
+  rather than inventing a new list style for this one section.

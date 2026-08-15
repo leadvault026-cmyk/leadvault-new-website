@@ -3,6 +3,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { ArrowRight, Sparkles, Cog, HeartHandshake, Globe, Award } from '@lucide/astro';
 
+const founderAchievements = [
+  "Pioneered LeadVault's founding service — connecting Nigerian diaspora importers and exporters in the US with genuine trade partners, helping clients grow their sales and income through consistent, qualified prospect leads.",
+  'Solved the email deliverability problem for growing businesses — built a verification-first sending process (list sorting, dead-lead removal, MX record checks) that fixed the "emails never reach the inbox" problem plaguing companies without in-house deliverability expertise.',
+  'Delivered leads across a wide range of high-demand niches over the years — including real estate, investment/investor outreach, and financial and payroll services — building the cross-industry data expertise LeadVault now runs on.',
+];
+
 const differentiators = [
   { icon: Sparkles, text: 'Fresh, on-request sourcing — the anti-warehouse model.' },
   { icon: Cog, text: 'Engineering culture — we build our own verification and filtering tools, and new ones for every new challenge.' },
@@ -117,7 +123,14 @@ const differentiators = [
           "Every business needs us — or our data. I built LeadVault so that no business, anywhere,
           has to grow blind. If it leaves the vault, it's clean, it's fresh, and it's real."
         </blockquote>
-        <p class="mt-5 text-sm italic text-white/50">(Add 2–3 specific career achievements when finalized.)</p>
+        <ul class="mt-5 space-y-2.5">
+          {founderAchievements.map((item) => (
+            <li class="flex gap-2 text-sm text-white/75">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   </section>
