@@ -398,3 +398,50 @@ than for design judgment calls.
   directly by the client. Rendered as a bulleted list reusing the site's existing
   lime-dot bullet pattern (already used for feature/tool lists in `services.astro`)
   rather than inventing a new list style for this one section.
+
+## Round 9 (five legal pages published, superseding the original "out of scope" call)
+
+- **Published Privacy Policy, Terms of Service, Data Sourcing Policy, Removal Request,
+  and Refund & Replacement Policy as real, live pages** (`src/pages/privacy-policy.astro`,
+  `terms-of-service.astro`, `data-sourcing-policy.astro`, `removal-request.astro`,
+  `refund-replacement-policy.astro`), reversing the original build's assumption (see
+  "Content & copy" above) that these stay inert "Coming soon" labels since CLAUDE.md
+  called them out-of-scope, drafted separately for lawyer review. Going live with drafted
+  copy instead — at the client's direction to take the site fully live — was treated as
+  the kind of scope change prior rounds already made (real prices, real photos, real
+  analytics IDs), not a fresh judgment call to make unprompted, since CLAUDE.md's "don't
+  add pages" rule was written against an unfinished Phase 1 build, not a site the client
+  has since decided to launch. **These five pages are self-drafted, not written or
+  reviewed by a lawyer** — flagged prominently in `README.md` since, unlike a pricing
+  figure or a stat, an unreviewed legal term is a standing liability if left unflagged.
+- **Shared `LegalLayout.astro`** (wraps `BaseLayout`, adds consistent long-form
+  typography for `h2`/`p`/`ul`/`a` via `:global()` selectors) so each page's content is
+  plain semantic HTML instead of every paragraph carrying its own utility classes —
+  mirrors the rest of the site's pattern of one shared layout per page family.
+  `LEGAL_LINKS` in `src/data/site.ts` changed from a bare `string[]` (rendered as inert
+  `<span>`s) to `NavLink[]` (`{label, href}`), consumed by both the footer's Legal
+  column and the About page's "Data Handled Professionally" paragraph, which now link
+  out instead of showing "Coming soon" tooltips.
+- **Every figure inside the legal copy was pulled from already-published, real site
+  content, not invented for these pages** — the 5%-invalid-records/14-day replacement
+  guarantee and the 50%-deposit custom-project term both match `pricing.astro` verbatim;
+  contact details reuse the `CONTACT_EMAIL`/`PHONE_DISPLAY`/`OFFICE_ADDRESSES` constants
+  from `src/data/site.ts` (round 5) rather than restating them. Where the copy doc and
+  prior rounds never supplied a fact (e.g. a specific data-retention period, a named
+  DPO/legal contact), the pages describe the practice in general terms instead of
+  inventing a specific figure — consistent with CLAUDE.md's standing rule against
+  fabricating factual claims.
+- **Removal Request page ships its own Netlify form** (`name="removal-request"`,
+  honeypot, required Full Name/Email/Request Type + optional Details), separate from
+  `lead-survey`/`newsletter-subscribe`/`portal-waitlist`, since a data-removal request is
+  a distinct, compliance-relevant submission type worth its own form name in the Netlify
+  dashboard rather than overloading an existing one. Unlike the newsletter/waitlist forms
+  (plain POST, Netlify's default success handling), it self-redirects to
+  `/removal-request?submitted=true` and swaps in a success message via a few lines of
+  inline JS — closer to the main contact form's `/thank-you` pattern than the other two
+  minor forms, since a compliance request warrants clearer on-page confirmation than a
+  newsletter signup does.
+- **`.lv-input` (text/select/textarea styling) moved from a `contact.astro`-local
+  `<style>` block into `global.css`** as a shared utility, since the Removal Request
+  form's fields needed the identical styling — kept the one definition rather than
+  duplicating the block onto a second page.

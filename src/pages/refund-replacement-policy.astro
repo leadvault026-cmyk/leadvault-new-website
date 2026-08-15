@@ -1,0 +1,67 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL, PHONE_DISPLAY } from '../data/site';
+---
+
+<LegalLayout
+  title="Refund & Replacement Policy | LeadVault"
+  description="LeadVault's replacement guarantee for invalid records, and how refunds and deposits are handled for custom projects and subscriptions."
+  path="/refund-replacement-policy"
+  heading="Refund & Replacement Policy"
+  lastUpdated="August 15, 2026"
+>
+  <p>
+    LeadVault stands behind every delivery with a replacement guarantee. This page explains how it
+    works, and how refunds are handled where a replacement isn't the right fix.
+  </p>
+
+  <h2>Our Replacement Guarantee</h2>
+  <p>
+    If more than <strong>5%</strong> of records in any delivery prove invalid within 14 days of
+    delivery, we replace them free of charge. "Invalid" means a record that was inaccurate or
+    undeliverable at the time we verified it — not a contact who has since changed roles, updated
+    their details, or otherwise become outdated after delivery.
+  </p>
+  <p>To request a replacement:</p>
+  <ul>
+    <li>Contact us within 14 days of delivery.</li>
+    <li>Tell us which records you believe are invalid and why (e.g. hard bounce, wrong number).</li>
+    <li>We review and, where the 5% threshold is met, replace the affected records at no charge.</li>
+  </ul>
+
+  <h2>Refunds</h2>
+  <p>
+    We prioritize replacement over refunds — it gets you the working data you actually ordered.
+    Where a delivery genuinely can't be corrected to your specification, we'll work with you to make
+    it right, which may include a partial or full refund depending on the circumstances. Refunds, if
+    issued, are returned via your original payment method.
+  </p>
+
+  <h2>Custom Project Deposits</h2>
+  <p>
+    Custom data projects require a 50% deposit to begin work, with the balance due on delivery. The
+    deposit secures your project slot and covers initial sourcing work; once work has begun,
+    deposits are generally non-refundable, though we'll always work with you in good faith if a
+    project needs to change scope or be cancelled early.
+  </p>
+
+  <h2>Monthly Subscriptions</h2>
+  <p>
+    Subscription plans can be cancelled at any time, effective at the end of the current billing
+    cycle. We don't provide partial refunds for the remainder of a cycle already paid for, and the
+    replacement guarantee above still applies to any lead batch already delivered within that cycle.
+  </p>
+
+  <h2>How to Request a Replacement or Refund</h2>
+  <p>
+    Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> or message us on WhatsApp at{' '}
+    {PHONE_DISPLAY} with your order details and the issue you've run into. We aim to respond and
+    resolve requests promptly.
+  </p>
+
+  <h2>Changes to This Policy</h2>
+  <p>
+    We may update this policy from time to time. The "Last updated" date above reflects the most
+    recent revision.
+  </p>
+</LegalLayout>

@@ -1,0 +1,118 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL, PHONE_DISPLAY } from '../data/site';
+---
+
+<LegalLayout
+  title="Terms of Service | LeadVault"
+  description="The terms that govern use of leadvaultdata.com and LeadVault's data, list cleaning, campaign, and trade-desk services."
+  path="/terms-of-service"
+  heading="Terms of Service"
+  lastUpdated="August 15, 2026"
+>
+  <p>
+    These Terms of Service ("Terms") govern your use of <strong>leadvaultdata.com</strong> and any
+    service you order from LeadVault — custom fresh datasets, email list cleaning, managed email
+    campaigns, Trade Desk buyer–seller matching, monthly lead subscriptions, custom data projects,
+    and data strategy consultations. By submitting our survey, placing an order, or using this
+    site, you agree to these Terms.
+  </p>
+
+  <h2>Our Services</h2>
+  <p>
+    LeadVault sources, verifies, and delivers business contact data and related services on
+    request. Every engagement starts with a free recommendation (typically within 24 hours of your
+    survey submission) describing the data or service we recommend, the expected volume, and the
+    price — nothing is charged until you approve a quote.
+  </p>
+
+  <h2>Ordering &amp; Payment</h2>
+  <ul>
+    <li>Pricing is quoted in USD unless otherwise agreed in writing.</li>
+    <li>Custom data projects require a 50% deposit to begin work, with the balance due on delivery.</li>
+    <li>Monthly subscriptions renew automatically each billing cycle until cancelled; see "Cancellation" below.</li>
+    <li>Delivery timelines quoted (e.g. "3–5 days") are estimates based on the complexity of your specification, not guarantees.</li>
+  </ul>
+
+  <h2>Data Quality &amp; Replacement</h2>
+  <p>
+    Every delivery is verified before it reaches you, and comes with our replacement guarantee.
+    Full details — including what qualifies for a replacement and how to request one — are in our{' '}
+    <a href="/refund-replacement-policy">Refund &amp; Replacement Policy</a>.
+  </p>
+
+  <h2>Acceptable Use</h2>
+  <p>
+    LeadVault provides data and campaign services for legitimate B2B outreach only. You agree not to
+    use any dataset or service we provide to:
+  </p>
+  <ul>
+    <li>Send deceptive, fraudulent, or misleading communications;</li>
+    <li>Violate CAN-SPAM, applicable anti-spam laws, or any other law in the jurisdictions you contact;</li>
+    <li>Harass, defraud, or knowingly target individuals who have opted out of contact; or</li>
+    <li>Resell, redistribute, or sublicense a dataset we deliver to you, in whole or in part, without our prior written consent.</li>
+  </ul>
+  <p>
+    We reserve the right to decline any order, or to stop work on an active engagement, that we
+    reasonably believe is intended for a use described above.
+  </p>
+
+  <h2>License to Delivered Data</h2>
+  <p>
+    When you purchase a dataset from LeadVault, we grant you a non-exclusive license to use it for
+    your own business's outreach, sales, and marketing purposes. Ownership of the underlying data
+    about third-party businesses and individuals is not transferred to you, and the license does not
+    include the right to resell, sublicense, or redistribute the dataset itself.
+  </p>
+
+  <h2>Cancellation</h2>
+  <p>
+    You may cancel a monthly subscription at any time; cancellation takes effect at the end of the
+    current billing cycle, and we don't provide partial refunds for time already paid for in that
+    cycle. To cancel, contact us using the details below.
+  </p>
+
+  <h2>Disclaimers</h2>
+  <p>
+    Data we source reflects information available at the time of verification; individuals and
+    businesses change roles, contact details, and circumstances after delivery, and we can't
+    guarantee results (response rates, conversions, or sales) from any dataset or campaign. Our
+    services are provided "as is," and — other than the express replacement guarantee described in
+    our Refund &amp; Replacement Policy — without other warranties, express or implied, to the
+    fullest extent permitted by law.
+  </p>
+
+  <h2>Limitation of Liability</h2>
+  <p>
+    To the fullest extent permitted by law, LeadVault's total liability arising out of any order or
+    engagement is limited to the amount you paid for that specific order. We are not liable for
+    indirect, incidental, or consequential damages, including lost profits, arising from your use
+    of our data or services.
+  </p>
+
+  <h2>Intellectual Property</h2>
+  <p>
+    The leadvaultdata.com website — its design, text, graphics, and the LeadVault name and logo —
+    is owned by LeadVault and may not be copied or reused without our written permission.
+  </p>
+
+  <h2>Governing Law</h2>
+  <p>
+    These Terms are governed by the laws of Nigeria, without regard to conflict-of-law principles,
+    without limiting any consumer-protection rights you may have under the law of your own
+    jurisdiction.
+  </p>
+
+  <h2>Changes to These Terms</h2>
+  <p>
+    We may update these Terms from time to time. Continued use of the site or our services after a
+    change means you accept the updated Terms. The "Last updated" date above reflects the most
+    recent revision.
+  </p>
+
+  <h2>Contact Us</h2>
+  <p>
+    Questions about these Terms? Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> or
+    reach us on WhatsApp at {PHONE_DISPLAY}.
+  </p>
+</LegalLayout>

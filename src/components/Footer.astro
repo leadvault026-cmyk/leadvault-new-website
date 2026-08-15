@@ -30,11 +30,11 @@ const year = new Date().getFullYear();
       <div>
         <h2 class="text-sm font-semibold uppercase tracking-wide text-[var(--color-lime)]">Legal</h2>
         <ul class="mt-4 space-y-2">
-          {LEGAL_LINKS.map((label) => (
+          {LEGAL_LINKS.map((link) => (
             <li>
-              <span class="text-sm text-white/50" title="Coming soon — drafted separately for lawyer review">
-                {label}
-              </span>
+              <a href={link.href} class="text-sm text-white/70 transition-colors hover:text-[var(--color-lime)]">
+                {link.label}
+              </a>
             </li>
           ))}
         </ul>

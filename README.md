@@ -117,7 +117,10 @@ and `(confirm` to find every instance, or work through this list:
 See `ASSUMPTIONS.md` for every judgment call made along the way, and the copy doc's own
 "PRE-LAUNCH CHECKLIST" (`content/leadvault-website-copy-v5.md`) for the full list of
 what still needs your input before launch — including lawyer review of the comparison
-page and legal/privacy pages, which are intentionally out of scope for this build.
+page. The five legal pages (Privacy, Terms, Data Sourcing, Removal Request, Refund &
+Replacement — `src/pages/*-policy.astro`, `src/pages/removal-request.astro`,
+`src/pages/terms-of-service.astro`) are self-drafted, not written or reviewed by a
+lawyer; have counsel review them before treating them as your actual legal terms.
 
 ## Project structure
 
@@ -126,7 +129,7 @@ src/
   components/   Shared UI: header, footer, cards, tables, image placeholders, charts
   data/         Nav links, catalog categories, country list — single source of truth
   layouts/      BaseLayout.astro — SEO, analytics slots, header/footer wrapper
-  pages/        One file per route (11 marketing pages + /thank-you + /404)
+  pages/        One file per route (11 marketing pages + 5 legal pages + /thank-you + /404)
   styles/       Tailwind entry point + design tokens (global.css)
 scripts/        generate-og-image.mjs, generate-brand-assets.mjs — regenerate the
                 OG share image and the logo/favicon set from /logo

@@ -84,6 +84,18 @@
     @apply rounded-xl border border-white/10 bg-[var(--color-bg-mid)] p-6 shadow-lg shadow-black/40;
   }
 
+  /* Shared text/select/textarea styling for every form on the site (contact
+     survey, removal request, etc.) so each page doesn't redefine it locally. */
+  .lv-input {
+    @apply w-full rounded-md border border-white/15 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-[var(--color-lime)] focus:outline-none;
+  }
+  .lv-input option {
+    /* Native <option> renders on a system (usually white) background regardless
+       of page theme, so this just needs to be dark and legible there — not a
+       brand color. */
+    color: #111318;
+  }
+
   .table-wrap {
     @apply w-full overflow-x-auto rounded-xl border border-white/10;
   }

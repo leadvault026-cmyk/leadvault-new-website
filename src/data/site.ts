@@ -57,14 +57,14 @@ export const HEADER_NAV: NavEntry[] = [
   { label: 'Pricing', href: '/pricing' },
 ];
 
-// Legal pages are drafted separately for lawyer review (out of Phase 1 scope per CLAUDE.md).
-// Rendered as inert labels in the footer until those pages exist — see ASSUMPTIONS.md.
-export const LEGAL_LINKS: string[] = [
-  'Privacy Policy',
-  'Terms of Service',
-  'Data Sourcing Policy',
-  'Removal Request',
-  'Refund & Replacement Policy',
+// Legal pages — drafted directly (not by outside counsel); see ASSUMPTIONS.md for
+// the scope/limitations of that draft, recorded when these went live post-launch.
+export const LEGAL_LINKS: NavLink[] = [
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Service', href: '/terms-of-service' },
+  { label: 'Data Sourcing Policy', href: '/data-sourcing-policy' },
+  { label: 'Removal Request', href: '/removal-request' },
+  { label: 'Refund & Replacement Policy', href: '/refund-replacement-policy' },
 ];
 
 export const SITE_NAME = 'LeadVault';

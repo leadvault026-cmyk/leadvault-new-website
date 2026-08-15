@@ -1,0 +1,90 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL } from '../data/site';
+---
+
+<LegalLayout
+  title="Removal Request | LeadVault"
+  description="Request removal of your business contact information from LeadVault's datasets, or unsubscribe from our newsletter or waitlist."
+  path="/removal-request"
+  heading="Removal Request"
+  lastUpdated="August 15, 2026"
+>
+  <p>
+    If your business contact information appears in a LeadVault dataset and you'd like it removed,
+    or you'd like to unsubscribe from our newsletter or Data Catalog waitlist, submit the form below.
+    We process removal requests promptly — see our
+    <a href="/data-sourcing-policy">Data Sourcing Policy</a> for how we source and handle data.
+  </p>
+
+  <div id="removal-form-wrap" class="mt-8 card">
+    <form
+      id="removal-request-form"
+      name="removal-request"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="company-website"
+      action="/removal-request?submitted=true"
+      class="space-y-5"
+    >
+      <input type="hidden" name="form-name" value="removal-request" />
+      <div class="hidden">
+        <label>
+          Don't fill this out if you're human: <input name="company-website" />
+        </label>
+      </div>
+
+      <div>
+        <label for="removal-name" class="mb-1.5 block text-sm font-medium text-white">Full Name *</label>
+        <input id="removal-name" name="Full Name" type="text" required class="lv-input" />
+      </div>
+
+      <div>
+        <label for="removal-email" class="mb-1.5 block text-sm font-medium text-white">Email Address *</label>
+        <input id="removal-email" name="Email Address" type="email" required class="lv-input" />
+      </div>
+
+      <div>
+        <label for="removal-what" class="mb-1.5 block text-sm font-medium text-white">What would you like removed? *</label>
+        <select id="removal-what" name="Request Type" required class="lv-input">
+          <option value="" disabled selected>Select an option</option>
+          <option>My business contact information from LeadVault's datasets</option>
+          <option>Newsletter subscription</option>
+          <option>Data Catalog waitlist</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="removal-details" class="mb-1.5 block text-sm font-medium text-white">
+          Details (e.g. company name, or how you believe we have your information)
+        </label>
+        <textarea id="removal-details" name="Details" rows="4" class="lv-input"></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary w-full">Submit Request</button>
+    </form>
+
+    <div id="removal-success" class="hidden text-center">
+      <p class="text-lg font-semibold text-white">Request received.</p>
+      <p class="mt-2 text-white/70">
+        We'll review and process your request promptly. If we need more information, we'll reach
+        out at the email address you provided.
+      </p>
+    </div>
+  </div>
+
+  <p class="mt-8 text-sm text-white/50">
+    Prefer email? Reach us directly at <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+  </p>
+</LegalLayout>
+
+<script>
+  // Netlify Forms redirects here with ?submitted=true after a successful POST
+  // (this is a static site — no server-side render to branch on, so the swap
+  // happens client-side on load).
+  if (new URLSearchParams(window.location.search).get('submitted') === 'true') {
+    document.getElementById('removal-request-form')?.classList.add('hidden');
+    document.getElementById('removal-success')?.classList.remove('hidden');
+  }
+</script>

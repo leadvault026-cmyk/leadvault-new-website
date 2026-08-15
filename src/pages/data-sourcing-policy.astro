@@ -1,0 +1,86 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { CONTACT_EMAIL } from '../data/site';
+---
+
+<LegalLayout
+  title="Data Sourcing Policy | LeadVault"
+  description="How LeadVault sources, verifies, and handles the business contact data in the datasets we sell — and how to request removal."
+  path="/data-sourcing-policy"
+  heading="Data Sourcing Policy"
+  lastUpdated="August 15, 2026"
+>
+  <p>
+    This policy explains how LeadVault sources and handles the business contact data that appears
+    in the datasets we deliver to clients — separate from
+    <a href="/privacy-policy">our Privacy Policy</a>, which covers information from visitors to
+    this website and people who submit our forms.
+  </p>
+
+  <h2>What We Source</h2>
+  <p>
+    LeadVault provides <strong>business contact data only</strong> — names, job titles, company
+    names, business email addresses, business phone numbers (where available), locations, and
+    industries of professionals and companies relevant to a client's specification. We do not
+    collect or sell sensitive personal information: no government ID numbers, financial account
+    details, health information, or similarly sensitive categories of personal data.
+  </p>
+
+  <h2>Where It Comes From</h2>
+  <ul>
+    <li><strong>Publicly available information</strong> — business listings, professional profiles, company websites, and other public sources.</li>
+    <li><strong>Licensed partners</strong> — data providers we've vetted and contracted with.</li>
+    <li><strong>Direct research</strong> — our team and tools compiling records to a client's specific request.</li>
+  </ul>
+
+  <h2>Verification Before Delivery</h2>
+  <p>
+    Every record passes through our in-house verification pipeline before it reaches a client:
+  </p>
+  <ul>
+    <li>Email verification — MX record checks across all major provider types (Office 365, Google Workspace, and others), confirming the address is real and deliverable.</li>
+    <li>Bounce &amp; hygiene screening — dormant mailboxes and dead domains are filtered out before delivery.</li>
+    <li>Duplicate removal and basic data-quality checks.</li>
+  </ul>
+
+  <h2>Compliance Alignment</h2>
+  <p>
+    Our sourcing and handling practices are built around: public business data only, no sensitive
+    personal information, alignment with the principles of the Nigeria Data Protection Act and the
+    EU GDPR (including a legitimate-interest basis for B2B contact data), honoring removal requests
+    promptly, and compliance with CAN-SPAM and applicable anti-spam law for any campaign we run on
+    a client's behalf.
+  </p>
+
+  <h2>Order Screening</h2>
+  <p>
+    We review incoming orders and decline any request we reasonably believe is intended for
+    fraudulent, deceptive, or harassing purposes, or that targets individuals or categories of data
+    outside the scope described above.
+  </p>
+
+  <h2>If You're an Individual Whose Business Contact Information Appears in Our Data</h2>
+  <p>
+    If you'd like a record about you removed from our sourcing pipeline and any dataset we hold, or
+    have questions about how your business contact information was sourced, submit a request on our
+    <a href="/removal-request">Removal Request</a> page. We process removal requests promptly and
+    will not knowingly re-source a record you've asked us to remove.
+  </p>
+
+  <h2>Data Security</h2>
+  <p>
+    Datasets are protected with encryption, access controls, and secure delivery methods from the
+    point of sourcing through delivery to a client.
+  </p>
+
+  <h2>Changes to This Policy</h2>
+  <p>
+    We may update this policy as our sourcing practices or the law changes. The "Last updated" date
+    above reflects the most recent revision.
+  </p>
+
+  <h2>Contact Us</h2>
+  <p>
+    Questions about how we source data? Email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+  </p>
+</LegalLayout>

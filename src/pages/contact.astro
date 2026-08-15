@@ -199,19 +199,6 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
   </section>
 </BaseLayout>
 
-<style>
-  @reference "../styles/global.css";
-  .lv-input {
-    @apply w-full rounded-md border border-white/15 bg-white/5 px-3.5 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-[var(--color-lime)] focus:outline-none;
-  }
-  .lv-input option {
-    /* Native <option> renders on a system (usually white) background regardless
-       of page theme, so this just needs to be dark and legible there — not a
-       brand color. */
-    color: #111318;
-  }
-</style>
-
 <script>
   import { NEED_SLUG_TO_OPTION, CATALOG_CATEGORIES } from '../data/catalog';
 
