@@ -38,10 +38,10 @@ netlify dev
    Netlify auto-detects Astro (`npm run build`, publish directory `dist`) via
    `netlify.toml` — accept the defaults and click **Deploy**.
 3. Once live on the temporary `*.netlify.app` address, go to **Domain settings → Add
-   custom domain** and follow Netlify's DNS instructions to connect `leadvault.com`.
+   custom domain** and follow Netlify's DNS instructions to connect `leadvaultdata.com`.
    Enable HTTPS (one click, free) once the domain verifies.
 4. In **Site settings → Forms → Notifications**, add an email notification to
-   `hello@leadvault.com` so form submissions land in an inbox, not just the Netlify
+   `hello@leadvaultdata.com` so form submissions land in an inbox, not just the Netlify
    dashboard.
 
 Full walkthrough with screenshots: `reference/leadvault-development-handoff-brief.md`,

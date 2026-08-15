@@ -49,7 +49,7 @@ claude
 
 1. Review every page. Give Claude Code change requests in plain English ("make the hero headline bigger", "swap the order of services 2 and 3").
 2. Read `ASSUMPTIONS.md` — approve or correct anything listed there.
-3. Follow `reference/leadvault-development-handoff-brief.md` sections 4–5 for deployment (GitHub → Netlify → leadvault.com) and analytics (GA4, Search Console, Meta Pixel).
+3. Follow `reference/leadvault-development-handoff-brief.md` sections 4–5 for deployment (GitHub → Netlify → leadvaultdata.com) and analytics (GA4, Search Console, Meta Pixel).
 4. Drop in your real images, numbers, prices, and contact details per the copy doc's pre-launch checklist — then launch-day checklist section 7 of the handoff brief.
 
 ## What NOT to upload to the code project

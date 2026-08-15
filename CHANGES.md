@@ -1,5 +1,38 @@
 # CHANGES
 
+## Domain change — leadvault.com → leadvaultdata.com
+
+The project's real domain is `leadvaultdata.com`, not `leadvault.com`. Searched the
+whole project for `leadvault.com` and replaced every occurrence with
+`leadvaultdata.com` — brand/company name stays "LeadVault" everywhere; only the URL
+(and the email addresses that share its domain) changed. Touched:
+
+1. **`astro.config.mjs`** — `site` field, which drives every absolute URL
+   `@astrojs/sitemap` and `BaseLayout.astro` generate (canonical URLs, OG/Twitter
+   `og:url`/`og:image`, sitemap entries).
+2. **`src/data/site.ts`** — `SITE_URL` and `CONTACT_EMAIL` (`hello@leadvault.com` →
+   `hello@leadvaultdata.com`), the single source both the Contact page and
+   `BaseLayout` read from.
+3. **`src/layouts/BaseLayout.astro`** — JSON-LD Organization schema's `url` field.
+4. **`src/components/Footer.astro`** — the site-wide footer copyright line.
+5. **`public/robots.txt`** — the `Sitemap:` directive.
+6. **Documentation/reference files** — `README.md`, `CLAUDE.md`,
+   `content/leadvault-website-copy-v5.md`, `START-HERE-UPLOAD-ORDER.md`, and
+   `reference/leadvault-development-handoff-brief.md` — every domain/email mention in
+   deployment instructions, the JSON-LD spec note, and the copy doc's own header/footer
+   text, so none of them point a future reader at the wrong domain.
+
+### Build
+
+`npm run build` — 12/12 pages, zero errors. Verified in the build output: sitemap
+(`sitemap-index.xml`/`sitemap-0.xml`) lists `https://leadvaultdata.com/...` URLs;
+`robots.txt`'s `Sitemap:` line, every page's canonical/OG/Twitter URLs, and the
+homepage's JSON-LD `url` all resolve to `leadvaultdata.com`; footer copyright renders
+`leadvaultdata.com`. Re-searched the whole project afterward for `leadvault.com` —
+zero remaining matches.
+
+---
+
 ## New service — Managed Email Campaigns & Deliverability Engineering
 
 Added across four places, per spec, copy used verbatim:

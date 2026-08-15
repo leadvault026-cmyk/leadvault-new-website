@@ -1,5 +1,5 @@
 # LEADVAULT — COMPLETE WEBSITE COPY (V5)
-### Final pre-development version · Phase 1 Marketing Website · leadvault.com
+### Final pre-development version · Phase 1 Marketing Website · leadvaultdata.com
 
 **Primary Tagline (used site-wide):** Every Business Needs Leads. Every Lead Starts Here.
 **Secondary Tagline:** Every Business Needs Us — Or Our Data.
@@ -655,7 +655,7 @@ Complete the survey below — it takes under 10 minutes. Within 24 hours, a Lead
 
 ## Direct Contact *(finalize before launch)*
 
-**Email:** hello@leadvault.com · **WhatsApp:** [+ number] · **Office:** [address] · **Hours:** [hours, with time zones for international clients]
+**Email:** hello@leadvaultdata.com · **WhatsApp:** [+ number] · **Office:** [address] · **Hours:** [hours, with time zones for international clients]
 
 **IMAGE:** Consultation/support visual — strategist on a call, world-clock motif.
 
@@ -671,7 +671,7 @@ Complete the survey below — it takes under 10 minutes. Within 24 hours, a Lead
 **Legal:** Privacy Policy · Terms of Service · Data Sourcing Policy · Removal Request · Refund & Replacement Policy
 **Newsletter:** *"Fresh-data insights for growing businesses — monthly, no spam."* [Email] [Subscribe]
 
-© 2026 LeadVault · leadvault.com · Serving businesses worldwide from our roots in Nigeria. 🌍
+© 2026 LeadVault · leadvaultdata.com · Serving businesses worldwide from our roots in Nigeria. 🌍
 
 ---
 ---

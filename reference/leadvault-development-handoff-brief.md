@@ -12,7 +12,7 @@
 |---|---|---|
 | Framework | **Astro** (static site) | Outputs pure, ultra-fast HTML — the best possible foundation for SEO, which is a core objective. Shared header/footer/components across all 10 pages without repeating code. Zero unnecessary JavaScript, so the site loads fast even on slow connections (important for Nigerian and global visitors). Claude Code knows it extremely well. |
 | Styling | **Tailwind CSS** | Fast to build, easy to keep the navy/teal design system consistent, and Claude Code produces excellent Tailwind. |
-| Forms | **Netlify Forms** | Built into the hosting — form submissions arrive in your Netlify dashboard AND get emailed to hello@leadvault.com. No backend, no third-party service, no monthly fee (100 free submissions/month, upgradeable). This solves the "where do survey submissions go?" question with zero extra setup. |
+| Forms | **Netlify Forms** | Built into the hosting — form submissions arrive in your Netlify dashboard AND get emailed to hello@leadvaultdata.com. No backend, no third-party service, no monthly fee (100 free submissions/month, upgradeable). This solves the "where do survey submissions go?" question with zero extra setup. |
 | Hosting | **Netlify** (free tier) | Free SSL certificate (https), global CDN, deploys automatically, generous free tier that a Phase 1 marketing site will not exceed. |
 | Charts/graphs | **Built in code** (SVG/CSS or a light library like Chart.js) | The stats section's graphs should be coded, not images — sharper, faster, on-brand, and easy to update numbers later. |
 
@@ -24,7 +24,7 @@
 
 ## Phase 2 architecture note (important)
 
-When the client portal/marketplace application is built later, do **not** rebuild this site. Keep the marketing site at **leadvault.com** (Astro, static, SEO-optimized) and build the application separately at **app.leadvault.com** (that's when Next.js or similar earns its place). This is the standard architecture used by virtually every SaaS/data company — marketing and product stay decoupled, so neither breaks the other.
+When the client portal/marketplace application is built later, do **not** rebuild this site. Keep the marketing site at **leadvaultdata.com** (Astro, static, SEO-optimized) and build the application separately at **app.leadvaultdata.com** (that's when Next.js or similar earns its place). This is the standard architecture used by virtually every SaaS/data company — marketing and product stay decoupled, so neither breaks the other.
 
 ---
 
@@ -65,7 +65,7 @@ When the client portal/marketplace application is built later, do **not** rebuil
 
 Netlify Forms, configured by Claude Code during the build:
 1. Survey submissions arrive in the Netlify dashboard (Forms tab)
-2. Email notification to hello@leadvault.com for every submission (set in Netlify: Site settings → Forms → Notifications)
+2. Email notification to hello@leadvaultdata.com for every submission (set in Netlify: Site settings → Forms → Notifications)
 3. Spam filtering included (honeypot field — Claude Code adds it)
 4. A styled "Thank you — your recommendation is on its way within 24 hours" page after submission (**this page is also the conversion-tracking trigger** for GA4 and Meta ads — see section 5)
 
@@ -76,10 +76,10 @@ Netlify Forms, configured by Claude Code during the build:
 1. **Create a free GitHub account** (github.com) — this stores the website code. Claude Code will push the project here.
 2. **Create a free Netlify account** (netlify.com) — sign up "with GitHub" (one click, links them automatically).
 3. In Netlify: **Add new site → Import an existing project → GitHub → select the leadvault repository.** Netlify auto-detects Astro; accept defaults; click Deploy. Your site is now live on a temporary address like `leadvault.netlify.app`.
-4. **Connect leadvault.com:** Netlify → Domain settings → Add custom domain → type leadvault.com. Netlify shows you 2–4 DNS records (usually an A record and a CNAME for www).
-5. **At your domain registrar** (wherever leadvault.com is registered — e.g., Namecheap, GoDaddy): open DNS settings and enter exactly the records Netlify displayed. Propagation takes minutes to a few hours.
+4. **Connect leadvaultdata.com:** Netlify → Domain settings → Add custom domain → type leadvaultdata.com. Netlify shows you 2–4 DNS records (usually an A record and a CNAME for www).
+5. **At your domain registrar** (wherever leadvaultdata.com is registered — e.g., Namecheap, GoDaddy): open DNS settings and enter exactly the records Netlify displayed. Propagation takes minutes to a few hours.
 6. Back in Netlify: click **Verify**, then enable **HTTPS** (automatic, free, one click).
-7. Done. From then on, every update Claude Code pushes to GitHub deploys to leadvault.com automatically within about a minute.
+7. Done. From then on, every update Claude Code pushes to GitHub deploys to leadvaultdata.com automatically within about a minute.
 
 **Cost: $0/month** (only your existing domain registration fee, ~$10–15/year).
 
@@ -87,7 +87,7 @@ Netlify Forms, configured by Claude Code during the build:
 
 # 5. ANALYTICS SETUP — THE COMPLETE BEGINNER'S WALKTHROUGH
 
-*(You said this is the part you're not used to — so here is every click. Do these AFTER the site is live on leadvault.com. Total time: about 45 minutes. You are creating three free measurement accounts, and each one gives you a small ID code that you hand to Claude Code to install.)*
+*(You said this is the part you're not used to — so here is every click. Do these AFTER the site is live on leadvaultdata.com. Total time: about 45 minutes. You are creating three free measurement accounts, and each one gives you a small ID code that you hand to Claude Code to install.)*
 
 ## What these three things are, in plain English
 
@@ -97,15 +97,15 @@ Netlify Forms, configured by Claude Code during the build:
 
 ## 5A. Google Analytics 4 — step by step
 
-1. Go to **analytics.google.com** → sign in with your business Google account (the steve@leadvault.com one, or the Google account attached to it).
+1. Go to **analytics.google.com** → sign in with your business Google account (the steve@leadvaultdata.com one, or the Google account attached to it).
 2. Click **Start measuring**.
 3. Account name: `LeadVault` → Next.
 4. Property name: `LeadVault Website` → time zone: your primary market (recommend **United States – Eastern**, since diaspora/US is the beachhead; Nigeria also fine — just be consistent) → currency: **USD** → Next.
 5. Business details: Industry = "Business & Industrial Markets", size = Small → describe objectives: tick "Generate leads" → Create → accept terms.
-6. Choose platform: **Web** → Website URL: `https://leadvault.com` → Stream name: `LeadVault` → **Create stream**.
+6. Choose platform: **Web** → Website URL: `https://leadvaultdata.com` → Stream name: `LeadVault` → **Create stream**.
 7. A screen appears showing your **Measurement ID** — it looks like **G-XXXXXXXXXX**. **Copy it.**
 8. **Hand that ID to Claude Code** with the instruction: *"Install GA4 with measurement ID G-XXXXXXXXXX on all pages."* That's your part done.
-9. Verify it works: open leadvault.com on your phone, then in GA4 click **Reports → Realtime** — you should see yourself as 1 visitor within about a minute.
+9. Verify it works: open leadvaultdata.com on your phone, then in GA4 click **Reports → Realtime** — you should see yourself as 1 visitor within about a minute.
 
 **One extra step that matters — counting inquiries, not just visitors:**
 10. In GA4: **Admin (gear icon) → Events**. After Claude Code sets the thank-you page live, visits to `/thank-you` can be marked as a conversion: Admin → Events → find the thank-you page event → toggle **Mark as key event**. (Tell Claude Code: *"Fire a `generate_lead` event on the thank-you page"* — then this toggle takes 10 seconds.) From that moment, GA4 tells you not just "500 people visited" but "500 visited and 12 became inquiries — and 8 of those came from LinkedIn." That sentence is the entire measurement strategy of the business plan.
@@ -113,7 +113,7 @@ Netlify Forms, configured by Claude Code during the build:
 ## 5B. Google Search Console — step by step
 
 1. Go to **search.google.com/search-console** → sign in with the same Google account.
-2. Choose **URL prefix** → enter `https://leadvault.com` → Continue.
+2. Choose **URL prefix** → enter `https://leadvaultdata.com` → Continue.
 3. Verification: because GA4 is already installed with the same account, choose the **Google Analytics** verification method → Verify. (One click, done. If it fails, the alternative is a DNS record — copy the TXT record it shows you into your domain registrar's DNS settings, same place as section 4 step 5, wait an hour, verify.)
 4. Once verified: left menu → **Sitemaps** → enter `sitemap-index.xml` → Submit. (Astro generates this automatically; Claude Code will confirm the exact filename.)
 5. That's it. Within days, the **Performance** tab starts showing which Google searches display your site and which get clicks. Check it weekly; it will guide the Q2 content plan.
@@ -127,7 +127,7 @@ Netlify Forms, configured by Claude Code during the build:
 5. When offered a connection method, choose **"Set up manually" / "Meta Pixel"** (not a partner integration).
 6. You'll see your **Pixel/Dataset ID** — a long number like **1234567890123456**. **Copy it.**
 7. **Hand it to Claude Code:** *"Install the Meta Pixel with ID 1234567890123456 on all pages, and fire a `Lead` event on the thank-you page."*
-8. Verify: install the free Chrome extension **Meta Pixel Helper**, visit leadvault.com — the extension icon shows a green pixel firing. Also, Events Manager will show activity within ~20 minutes.
+8. Verify: install the free Chrome extension **Meta Pixel Helper**, visit leadvaultdata.com — the extension icon shows a green pixel firing. Also, Events Manager will show activity within ~20 minutes.
 
 **Then walk away.** The pixel needs nothing further from you — it quietly builds your retargeting audience until Month 4, when the Social Media Playbook's Campaign A switches it on.
 
@@ -162,8 +162,8 @@ Same concept for LinkedIn ads later. When you create the LinkedIn Company Page: 
 2. ☐ Your 5–6 sourced photos + founder portrait + anonymized thumbnails dropped in
 3. ☐ Real numbers, prices, and contact details replace all placeholders (per V5's pre-launch checklist)
 4. ☐ Lawyer sign-off on legal pages + comparison-page claims
-5. ☐ GitHub repo pushed → Netlify site live → leadvault.com connected + HTTPS on (section 4)
-6. ☐ Form test: submit the survey yourself; confirm email arrives at hello@leadvault.com
+5. ☐ GitHub repo pushed → Netlify site live → leadvaultdata.com connected + HTTPS on (section 4)
+6. ☐ Form test: submit the survey yourself; confirm email arrives at hello@leadvaultdata.com
 7. ☐ GA4 installed & showing you in Realtime (5A) · key event marked (5A.10)
 8. ☐ Search Console verified + sitemap submitted (5B)
 9. ☐ Meta Pixel installed & green in Pixel Helper (5C)
