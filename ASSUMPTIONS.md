@@ -359,3 +359,23 @@ than for design judgment calls.
   height/label from the placeholder 88%/"[XX]%" to the real 96%, and removed the
   "Illustrative — replace before launch" captions/aria-labels now that the numbers are
   real.
+
+## Round 7 (Netlify Forms not detected — root cause found and fixed)
+
+- **`netlify.toml`'s catch-all `[[redirects]] from = "/*" to = "/404.html" status = 404`
+  was removed — it was breaking form submissions, not just serving a 404 page.** The
+  contact form's HTML was verified correct (`data-netlify="true"`, matching `name`,
+  hidden `form-name` input, matching honeypot) both in the local build and by fetching
+  the live production HTML directly — byte-identical, fully correct, and had been since
+  the project's very first commit. Yet Netlify's Forms dashboard showed the empty
+  tutorial state across three separate production deploys (including a manually
+  retriggered one), and a live test submission to the "lead-survey" form's
+  `action="/thank-you"` returned a hard 404 instead of the real thank-you page. That
+  404 was the deciding clue: `dist/404.html` already exists automatically (Astro
+  generates it from `src/pages/404.astro`), and Netlify serves it for any genuinely
+  unmatched route with **no explicit redirect rule needed at all** — the blanket
+  `from = "/*"` rule was redundant for that purpose, and for a POST request it matches
+  before Netlify's form-handling middleware / normal static routing gets a chance to
+  process `/thank-you`, forcing a 404 instead. Removed the rule entirely; Netlify's
+  built-in "serve 404.html for unmatched paths" behavior covers the same case without
+  the collateral damage.

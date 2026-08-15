@@ -1,5 +1,44 @@
 # CHANGES
 
+## Fix — Netlify Forms not detected / form submission 404s
+
+**Symptom:** Netlify's Forms dashboard showed the generic empty-state tutorial instead
+of listing `lead-survey`, across three production deploys. Submitting the live contact
+form returned a hard 404 instead of redirecting to `/thank-you`.
+
+**Diagnosis:** The contact form's HTML was verified fully correct — `data-netlify="true"`,
+a `name` attribute, a matching hidden `form-name` input, and a matching honeypot field —
+both in the local `npm run build` output and by fetching `https://leadvaultdata.com/contact/`
+directly (byte-identical). Form detection was also confirmed enabled in Netlify's
+project settings. The 404 on submission was the deciding clue: `netlify.toml` had a
+blanket redirect —
+
+```toml
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+```
+
+— intended to serve a custom 404 page, but Astro already generates `dist/404.html`
+automatically (from `src/pages/404.astro`), and Netlify serves it for any unmatched
+route with **no redirect rule required**. Because this rule matched literally every
+path with no exceptions, it intercepted the POST to `/thank-you` before Netlify's form
+handling could process the submission — forcing a 404 instead of the real page, and
+very plausibly interfering with form registration too.
+
+**Fix:** Removed the redundant/harmful `[[redirects]]` block from `netlify.toml`.
+Netlify's built-in unmatched-route → `404.html` behavior covers the same case without
+swallowing form POSTs.
+
+### Build
+
+`npm run build` — 12/12 pages, zero errors. Confirmed `data-netlify="true"` still
+present in `dist/contact/index.html`, `dist/index.html` (newsletter form), and
+`dist/data-catalog/index.html` (waitlist form) after the change.
+
+---
+
 ## Domain change — leadvault.com → leadvaultdata.com
 
 The project's real domain is `leadvaultdata.com`, not `leadvault.com`. Searched the

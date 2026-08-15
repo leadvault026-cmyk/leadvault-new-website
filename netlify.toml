@@ -22,7 +22,10 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+# No explicit 404 redirect needed: Netlify automatically serves dist/404.html
+# (generated from src/pages/404.astro) for any genuinely unmatched route. An
+# earlier `from = "/*" to = "/404.html" status = 404` catch-all here was
+# intercepting EVERY request that hits this file — including the POST to
+# /thank-you after a Netlify Forms submission — before Netlify's form
+# handling and normal static routing could process it, forcing a hard 404
+# instead of the real thank-you page. Removed.
