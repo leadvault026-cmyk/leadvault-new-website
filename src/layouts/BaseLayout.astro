@@ -8,9 +8,8 @@ import { SITE_URL } from '../data/site';
 // ---- Analytics placeholder IDs (CLAUDE.md: leave clearly-commented slots) ----
 // Real GA4 Measurement ID (handoff brief §5A).
 const GA4_MEASUREMENT_ID = 'G-RVMGVR05JD';
-// Replace PIXEL_ID_TBD with the real Meta Pixel/Dataset ID from business.facebook.com
-// (handoff brief §5C). Snippet below no-ops while this is still the placeholder.
-const META_PIXEL_ID = 'PIXEL_ID_TBD';
+// Real Meta Pixel/Dataset ID (handoff brief §5C).
+const META_PIXEL_ID = '901363379491498';
 
 interface Props {
   title: string;
@@ -112,7 +111,14 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
       no-ops (does not load) while the ID is still the placeholder.
     -->
     {META_PIXEL_ID !== 'PIXEL_ID_TBD' && (
-      <script define:vars={{ META_PIXEL_ID }}>
+      /*
+        Pixel ID inlined as a literal string (set:html, not define:vars) for the
+        same reason as the GA4 snippet above: Meta's domain-verification and
+        Pixel Helper checks expect fbq('init', '<ID>') as literal text, matching
+        Meta's own canonical snippet — a variable reference is functionally
+        identical at runtime but can fail a static/literal scan.
+      */
+      <script set:html={`
         !(function (f, b, e, v, n, t, s) {
           if (f.fbq) return;
           n = f.fbq = function () {
@@ -129,9 +135,9 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
           s = b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t, s);
         })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', META_PIXEL_ID);
+        fbq('init', '${META_PIXEL_ID}');
         fbq('track', 'PageView');
-      </script>
+      `} />
     )}
   </head>
   <body class="flex min-h-screen flex-col">
