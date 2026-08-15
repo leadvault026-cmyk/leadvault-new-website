@@ -86,13 +86,23 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
     {GA4_MEASUREMENT_ID !== 'G-XXXXXXXXXX' && (
       <>
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}></script>
-        <script define:vars={{ GA4_MEASUREMENT_ID }}>
+        {/*
+          The measurement ID is inlined as a literal string (not a JS variable
+          reference) on purpose: Search Console's "Google Analytics" ownership
+          verification method does a literal text scan for
+          gtag('config', '<ID>') and does not resolve variables, so a
+          gtag('config', GA4_MEASUREMENT_ID) call — functionally identical at
+          runtime — was silently failing that specific check. set:html (built
+          at compile time, not define:vars) is what lets the real ID land in
+          the source text here instead of a variable name.
+        */}
+        <script set:html={`
           window.dataLayer = window.dataLayer || [];
           function gtag() { dataLayer.push(arguments); }
           gtag('js', new Date());
-          gtag('config', GA4_MEASUREMENT_ID);
+          gtag('config', '${GA4_MEASUREMENT_ID}');
           window.gtag = gtag;
-        </script>
+        `} />
       </>
     )}
 
