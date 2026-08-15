@@ -100,9 +100,9 @@ Think of the big platforms as a warehouse of tinned goods. **LeadVault is the fa
 
 ### This Company Began With Real Deals — Not a Business Plan.
 
-Before LeadVault had a name, our founder Steve Ehimigbai spent years doing one difficult thing extremely well: connecting Nigerian import/export businesses — many run by Nigerians in the American diaspora — with **verified buyers and sellers** across borders.
+Before LeadVault had a name, our founder Steven Ehimigbai spent years doing one difficult thing extremely well: connecting Nigerian import/export businesses — many run by Nigerians in the American diaspora — with **verified buyers and sellers** across borders.
 
-International traders face a brutal problem: most "buyer lists" online are dead ends or outright scams. Steve solved it the hard way — sourcing, checking, and matching real counterparties, deal after deal, year after year. The reviews and referrals piled up. The method became a system. The system became LeadVault.
+International traders face a brutal problem: most "buyer lists" online are dead ends or outright scams. Steven solved it the hard way — sourcing, checking, and matching real counterparties, deal after deal, year after year. The reviews and referrals piled up. The method became a system. The system became LeadVault.
 
 Today, that same fresh-sourcing discipline serves every industry that runs on data — worldwide.
 
@@ -165,7 +165,7 @@ The platforms sell access to a warehouse. **We deliver the fresh harvest.**
 
 ### Trusted by Traders, Agencies, and Growth Teams Worldwide
 
-> "I run an export business from Houston, and for years my biggest headache was finding genuine buyers back home and verified suppliers I could trust. Steve connected me with both. The contacts were real, the businesses were active, and deals actually closed. I've recommended him to everyone in my circle."
+> "I run an export business from Houston, and for years my biggest headache was finding genuine buyers back home and verified suppliers I could trust. Steven connected me with both. The contacts were real, the businesses were active, and deals actually closed. I've recommended him to everyone in my circle."
 > — **A.O., Exporter — Houston, USA**
 
 > "Finding verified buyers for international trade is nearly impossible on your own — most contacts online are dead ends or scams. LeadVault's data was different: fresh, verified, and exactly the type of businesses I asked for."
@@ -286,7 +286,7 @@ LeadVault solves the problem the way it must be solved: **human-verified, freshl
 
 ## The Story Behind This Service
 
-LeadVault was born here. For years before this website existed, Steve Ehimigbai personally helped diaspora-run import/export businesses in the United States find what they could not find alone: buyers who actually pay, suppliers who actually ship, and freight clients who actually move cargo. Deal by deal, referral by referral, the method was refined into the system that now powers everything LeadVault does.
+LeadVault was born here. For years before this website existed, Steven Ehimigbai personally helped diaspora-run import/export businesses in the United States find what they could not find alone: buyers who actually pay, suppliers who actually ship, and freight clients who actually move cargo. Deal by deal, referral by referral, the method was refined into the system that now powers everything LeadVault does.
 
 When you use the Trade Desk, you're not trying a new product. You're joining a service with years of closed deals behind it.
 
@@ -488,8 +488,8 @@ Every delivery includes: verification report summary · replacement guarantee ·
 
 # PAGE 8: ABOUT US
 
-**SEO Title:** About LeadVault — Our Story, Vision & Founder Steve Ehimigbai
-**Meta Description:** LeadVault began by connecting diaspora importers and exporters with verified buyers and sellers. Meet founder Steve Ehimigbai and the vision behind the vault.
+**SEO Title:** About LeadVault — Our Story, Vision & Founder Steven Ehimigbai
+**Meta Description:** LeadVault began by connecting diaspora importers and exporters with verified buyers and sellers. Meet founder Steven Ehimigbai and the vision behind the vault.
 
 ## Header
 
@@ -499,11 +499,11 @@ Every delivery includes: verification report summary · replacement guarantee ·
 
 LeadVault didn't start with a pitch deck. It started with phone calls.
 
-For years, our founder **Steve Ehimigbai** worked with Nigerian import/export businesses — many of them run by Nigerians living in the United States — on the hardest problem in international trade: *finding counterparties you can trust.* Genuine buyers who pay. Real suppliers who ship. Freight clients who actually move cargo.
+For years, our founder **Steven Ehimigbai** worked with Nigerian import/export businesses — many of them run by Nigerians living in the United States — on the hardest problem in international trade: *finding counterparties you can trust.* Genuine buyers who pay. Real suppliers who ship. Freight clients who actually move cargo.
 
-The internet was full of "buyer lists" that led nowhere — or worse, to scams. So Steve did it the hard way: sourcing contacts freshly, verifying them personally, and matching traders deal by deal. It worked. The referrals multiplied. The thank-you messages accumulated. And a realization formed: **if finding verified prospects is this hard for international traders, it's this hard for everyone.**
+The internet was full of "buyer lists" that led nowhere — or worse, to scams. So Steven did it the hard way: sourcing contacts freshly, verifying them personally, and matching traders deal by deal. It worked. The referrals multiplied. The thank-you messages accumulated. And a realization formed: **if finding verified prospects is this hard for international traders, it's this hard for everyone.**
 
-The method became tools. The tools became a pipeline. The pipeline became LeadVault — a company built to do for every data-driven business what Steve had been doing for traders all along: **deliver contacts that are real, fresh, and ready.**
+The method became tools. The tools became a pipeline. The pipeline became LeadVault — a company built to do for every data-driven business what Steven had been doing for traders all along: **deliver contacts that are real, fresh, and ready.**
 
 ## Our Vision
 
@@ -527,11 +527,11 @@ To deliver professionally handled, freshly sourced, rigorously verified data to 
 
 ## Meet the Founder
 
-**IMAGE:** Professional portrait of Steve Ehimigbai.
+**IMAGE:** Professional portrait of Steven Ehimigbai.
 
-### Steve Ehimigbai — Founder & CEO
+### Steven Ehimigbai — Founder & CEO
 
-Steve built LeadVault on years of hands-on work connecting international traders with verified buyers and suppliers — earning a reputation, one successful deal at a time, among diaspora business communities in the USA and beyond. That experience shaped LeadVault's defining standard:
+Steven built LeadVault on years of hands-on work connecting international traders with verified buyers and suppliers — earning a reputation, one successful deal at a time, among diaspora business communities in the USA and beyond. That experience shaped LeadVault's defining standard:
 
 > "Every business needs us — or our data. I built LeadVault so that no business, anywhere, has to grow blind. If it leaves the vault, it's clean, it's fresh, and it's real."
 
@@ -687,7 +687,7 @@ Complete the survey below — it takes under 10 minutes. Within 24 hours, a Lead
 7. Trade page hero — cargo ship/port/aircraft
 8. Services — 7 icons
 9. Tools — 6 technical illustrations + engineering-desk hero
-10. Founder portrait — Steve Ehimigbai, professional
+10. Founder portrait — Steven Ehimigbai, professional
 11. Catalog — 10 category card thumbnails
 12. Contact — consultation visual
 13. Background textures — subtle data-grid/circuit patterns, navy

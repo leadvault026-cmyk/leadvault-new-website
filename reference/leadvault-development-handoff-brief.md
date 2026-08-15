@@ -53,7 +53,7 @@ When the client portal/marketplace application is built later, do **not** rebuil
 | 8 | Services icons | Lucide icons | `database` (datasets), `sparkles` or `filter` (cleaning), `handshake` (trade desk), `calendar-check` (subscriptions), `terminal` (Python projects), `compass` (strategy), `send` (outreach) | — |
 | 9 | Tools page | YOUR screenshots + 1 hero photo | Hero: "developer workspace dark", "code on screen dark" | Real (anonymized) screenshots of your verification tool outputs, terminal runs, and CSV samples beat any stock photo here. This is your proof-of-engineering page. |
 | 10 | Data Catalog cards | YOUR anonymized sample thumbnails | — | One blurred/anonymized sample per category where you have it; abstract data-pattern fallback (Claude Code generates) where you don't. |
-| 11 | Founder portrait | Professional photo of Steve | — | Worth doing properly: plain background, business attire, good lighting. A phone photo in front of a plain wall in daylight works if a photographer isn't available now. |
+| 11 | Founder portrait | Professional photo of Steven | — | Worth doing properly: plain background, business attire, good lighting. A phone photo in front of a plain wall in daylight works if a photographer isn't available now. |
 | 12 | Contact page | Consultation visual | "customer support headset professional", "business call office" | Choose diverse, natural-looking, non-cheesy. |
 | 13 | Background textures | Nothing — coded | — | Subtle data-grid/dot patterns generated in CSS/SVG. |
 
