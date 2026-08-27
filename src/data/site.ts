@@ -81,8 +81,8 @@ export const SECONDARY_TAGLINE = 'Every Business Needs Us — Or Our Data.';
 // Real contact details supplied by the client. WHATSAPP_NUMBER_INTL is digits-only
 // (no "+", spaces, or leading zeros) — the format wa.me links require.
 export const CONTACT_EMAIL = 'hello@leadvaultdata.com';
-export const PHONE_DISPLAY = '+234 903 387 8984';
-export const WHATSAPP_NUMBER_INTL = '2349033878984';
+export const PHONE_DISPLAY = '+234 803 625 3684';
+export const WHATSAPP_NUMBER_INTL = '2348036253684';
 export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER_INTL}`;
 export const OFFICE_ADDRESSES = [
   { label: 'Nigeria', address: '16, Jegede Street, Shagari Estate, Ipaja-Lagos, Nigeria' },
