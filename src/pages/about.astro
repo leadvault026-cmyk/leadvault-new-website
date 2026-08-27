@@ -3,10 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { ArrowRight, Sparkles, Cog, HeartHandshake, Globe, Award } from '@lucide/astro';
 
-const founderAchievements = [
-  "Pioneered LeadVault's founding service — connecting Nigerian diaspora importers and exporters in the US with genuine trade partners, helping clients grow their sales and income through consistent, qualified prospect leads.",
-  'Solved the email deliverability problem for growing businesses — built a verification-first sending process (list sorting, dead-lead removal, MX record checks) that fixed the "emails never reach the inbox" problem plaguing companies without in-house deliverability expertise.',
-  'Delivered leads across a wide range of high-demand niches over the years — including real estate, investment/investor outreach, and financial and payroll services — building the cross-industry data expertise LeadVault now runs on.',
+// Rewritten as experience areas, not achievement/demand claims (commercial-
+// completion round — see ASSUMPTIONS.md). The prior list asserted things like
+// "earning a reputation" and "high-demand niches" without evidence; this
+// describes capability and scope instead of unverifiable outcomes.
+const founderExperience = [
+  'International trade research — sourcing and verifying buyers, suppliers, and freight partners for import/export businesses.',
+  'Data and deliverability work — building a verification-first sending process: list sorting, dead-address removal, MX record checks.',
+  'Cross-industry prospect research — applying the same research discipline to real estate, investment/investor outreach, and financial and payroll services.',
 ];
 
 const differentiators = [
@@ -117,17 +121,25 @@ const differentiators = [
         <p class="eyebrow">Meet the Founder</p>
         <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">Steven Ehimigbai — Founder & CEO</h2>
         <p class="mt-5 text-white/75">
-          Steven built LeadVault on years of hands-on work connecting international traders with
-          verified buyers and suppliers — earning a reputation, one successful deal at a time, among
-          diaspora business communities in the USA and beyond. That experience shaped LeadVault's
-          defining standard:
+          Steven built LeadVault from hands-on work researching and connecting businesses with
+          buyers, suppliers, and decision-makers across international markets.
+        </p>
+        <p class="mt-4 text-white/75">
+          That work exposed a problem that appears across industries: businesses don't necessarily
+          struggle to find a list of contacts. They struggle to find the <em>right</em> contacts,
+          with enough current information to make the list useful.
+        </p>
+        <p class="mt-4 text-white/75">
+          LeadVault was built around solving that problem through fresh research, structured
+          filtering, and verification before delivery.
         </p>
         <blockquote class="mt-5 border-l-2 border-[var(--color-lime)] pl-5 italic text-white/85">
           "Every business needs us — or our data. I built LeadVault so that no business, anywhere,
           has to grow blind. If it leaves the vault, it's clean, it's fresh, and it's real."
         </blockquote>
-        <ul class="mt-5 space-y-2.5">
-          {founderAchievements.map((item) => (
+        <p class="mt-5 text-sm font-semibold text-white">His experience spans:</p>
+        <ul class="mt-2.5 space-y-2.5">
+          {founderExperience.map((item) => (
             <li class="flex gap-2 text-sm text-white/75">
               <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
               {item}

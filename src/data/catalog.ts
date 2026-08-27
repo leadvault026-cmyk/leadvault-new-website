@@ -86,9 +86,14 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
     sample: parseCsv(realEstateCsv),
   },
   {
+    // Repositioned toward business-development research (employers and hiring
+    // decision-makers a recruitment agency can approach), not a candidate
+    // database — commercial-completion round, see ASSUMPTIONS.md. Candidate
+    // sourcing is still available, just as a separate custom request rather
+    // than this category's primary example.
     slug: 'recruitment-targets',
-    name: 'Recruitment Targets',
-    description: 'Hiring managers and candidate pools by profession',
+    name: 'Recruitment Market Research',
+    description: 'Employers and hiring decision-makers to approach for business development, by industry and hiring signal — candidate sourcing available as a separate custom request',
     turnaround: '3–7 days',
     sample: parseCsv(recruitmentTargetsCsv),
   },

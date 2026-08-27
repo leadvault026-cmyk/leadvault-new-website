@@ -4,22 +4,27 @@ import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { ArrowRight, Check } from '@lucide/astro';
 
+// Recurring prospect-research plans, not access to a static database — each
+// cycle's prospects are freshly researched to the client's specification.
+// Renamed from "Monthly Lead Subscriptions" (commercial-completion round —
+// see ASSUMPTIONS.md) to make that explicit, and restructured around ICPs/
+// target markets rather than a flat leads-per-month count.
 const subscriptions = [
   {
     name: 'STARTER',
-    price: '$129/mo',
-    features: ['300 fresh leads', '1 specification', 'Email delivery', 'Email support'],
+    price: '$199/mo',
+    features: ['500 fresh prospects', '1 ICP', '1 target market', 'Email delivery', 'Email support'],
   },
   {
     name: 'GROWTH',
-    price: '$299/mo',
+    price: '$399/mo',
     popular: true,
-    features: ['1,000 fresh leads', 'Up to 3 specifications', 'Strategy report', 'Priority delivery', 'WhatsApp + email support'],
+    features: ['1,500 prospects/month', 'Up to 3 ICPs', 'Multiple target markets', 'Strategy report', 'WhatsApp + email support'],
   },
   {
-    name: 'SCALE',
-    price: '$599/mo',
-    features: ['2,500 fresh leads', 'Unlimited specifications', 'Dedicated strategist', 'Quarterly market insights', 'Outreach best-practice support'],
+    name: 'AGENCY',
+    price: 'From $799/mo',
+    features: ['Recurring research for multiple client campaigns', 'White-label delivery', 'Custom specifications', 'Dedicated strategist'],
   },
 ];
 
@@ -61,11 +66,11 @@ const faqs = [
   },
   {
     question: 'How is data delivered?',
-    answer: 'Clean CSV files to your email. (Instant portal delivery arrives with Phase 2 — join the waitlist.)',
+    answer: 'Clean CSV files to your email. A self-serve portal is planned for a future phase — join the waitlist on the Data Catalog page.',
   },
   {
     question: 'How do I pay?',
-    answer: 'USD, via international bank transfer or PayPal. Payment instructions are provided directly with your order. Custom projects: 50% deposit, balance on delivery.',
+    answer: 'Payment is accepted in USD by international bank transfer or PayPal. Payment instructions are provided with your order. Custom projects: 50% deposit, balance on delivery.',
   },
   {
     question: 'Do you offer refunds?',
@@ -91,8 +96,9 @@ const faqs = [
     <p class="eyebrow">Pricing</p>
     <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Transparent Pricing. All in USD. Worldwide.</h1>
     <p class="mx-auto mt-5 max-w-3xl text-white/75">
-      Pay per project, or subscribe for a steady pipeline. Every price includes the research to
-      your specification, verification, cleaning, CSV delivery, and our replacement guarantee.
+      You define the prospects. We research, verify and deliver the dataset. Every price includes
+      the research to your specification, verification, cleaning, CSV delivery, and our
+      replacement guarantee.
     </p>
     <p class="mx-auto mt-2 max-w-2xl text-sm font-medium text-[var(--color-lime)]">
       Priced deliberately below US and European equivalents — our efficiency is your advantage.
@@ -103,16 +109,17 @@ const faqs = [
   <section class="section-alt">
     <div class="section">
       <h2 class="text-2xl font-bold text-white">Custom Fresh Datasets (one-time)</h2>
+      <p class="mt-2 text-sm text-white/60">Test → Start → Grow → Custom — start small and scale up as a specification proves out.</p>
       <div class="mt-6">
         <ComparisonTable
-          caption="Custom fresh dataset pricing by record volume"
-          headers={['Records', 'Price']}
+          caption="Custom fresh dataset pricing by tier"
+          headers={['Tier', 'Prospects', 'Price']}
           rows={[
-            ['500 (Sample)', '$99'],
-            ['1,000', '$249'],
-            ['2,500', '$449'],
-            ['5,000', '$799'],
-            ['10,000', '$1,399'],
+            ['Prospect Sample', '100', '$29'],
+            ['Targeted List', '250', '$59'],
+            ['Campaign List', '500', '$99'],
+            ['Larger Campaign', '1,000', '$179'],
+            ['Custom Research', 'Quoted to your specification', 'From $299'],
           ]}
         />
       </div>
@@ -165,7 +172,11 @@ const faqs = [
   </section>
 
   <section class="section !pt-0">
-    <h2 class="text-2xl font-bold text-white">Monthly Lead Subscriptions</h2>
+    <h2 class="text-2xl font-bold text-white">Monthly Prospect Research</h2>
+    <p class="mt-2 max-w-2xl text-sm text-white/60">
+      A recurring research engagement, not access to a static database — each cycle's prospects
+      are freshly researched to your specification, the same way a one-time order is.
+    </p>
     <div class="mt-6 grid gap-6 lg:grid-cols-3">
       {subscriptions.map((plan) => (
         <div class:list={['card flex flex-col gap-4', plan.popular && 'ring-2 ring-[var(--color-lime)]']}>
@@ -192,22 +203,14 @@ const faqs = [
   </section>
 
   <section class="section-alt">
-    <div class="section grid gap-6 lg:grid-cols-2">
-      <div class="card">
+    <div class="section">
+      <div class="card mx-auto max-w-2xl text-center">
         <h2 class="text-xl font-bold text-white">Trade Desk (Buyer–Seller Matching)</h2>
         <p class="mt-3 text-white/75">
           <strong class="text-white">From $449 per engagement</strong> — consultation + verified
           counterparty dataset + approach guidance.
         </p>
         <a href="/trade" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Details →</a>
-      </div>
-      <div class="card">
-        <h2 class="text-xl font-bold text-white">Agency & Enterprise Partner Plans</h2>
-        <p class="mt-3 text-white/75">
-          <strong class="text-white">From $999/mo</strong> — volume pricing, exclusive datasets,
-          white-label delivery, custom tooling.
-        </p>
-        <a href="/contact" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Talk to us →</a>
       </div>
     </div>
   </section>

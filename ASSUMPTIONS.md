@@ -700,3 +700,105 @@ That's a real miss, not a difference of judgment.
 - **Not deployed.** Same as Round 11 — stopped after implementing and reporting, per
   explicit instruction. `npm run build`: 17/17 routes, 0 errors. Round 10 remains what's
   live in production.
+
+## Round 13 (commercial completion pass — pricing rebuild, visual placeholders, claims)
+
+Prompted by a "final content, commercial & visual completion pass" instruction, which
+opened by claiming the live site still showed old copy despite Round 12's QA. Re-verified
+against the live site fresh (cache-busting query params, learned necessary in Round 10)
+before touching anything: the deployment was genuinely clean — hero, payment wording,
+privacy statement, and submit button all matched what Round 12 shipped. The one real
+miss found by a repo-wide grep was a "Fresh, verified leads" line in Services' monthly-
+plan card, superseded anyway by this round's plan rework. Recorded as a real finding,
+not a false alarm dismissed without checking.
+
+- **Pricing rebuilt around a lower-friction testing ladder** — one-time tiers changed
+  from 500/1,000/2,500/5,000/10,000 records ($99–$1,399) to Prospect Sample (100/$29),
+  Targeted List (250/$59), Campaign List (500/$99 — kept unchanged, the proven entry
+  product), Larger Campaign (1,000/$179), and Custom Research (from $299, quoted).
+  Monthly plans renamed "Monthly Prospect Research" (from "Monthly Lead Subscriptions")
+  and restructured around ICPs/target markets rather than a flat leads-per-month count:
+  STARTER $199/mo, GROWTH $399/mo, AGENCY from $799/mo. The old standalone "Agency &
+  Enterprise Partner Plans" card (from $999/mo) was removed, not just left alongside —
+  its positioning (white-label, multiple client campaigns, custom specs) is now fully
+  covered by the new AGENCY tier at a different price, and keeping both would have put
+  two contradictory agency prices on the same page.
+- **Services.astro's pricing kept in sync**: Custom Fresh Datasets' price line changed
+  from "$99 per 500 verified records" to "From $29 per 100 verified prospects — see the
+  full ladder on Pricing" (the $99/500 point itself is unchanged, just no longer the
+  only number shown here); Monthly Prospect Research's price updated to match the new
+  $199/mo STARTER tier.
+- **Services restructured around who/problem/what/receive/price/next** for the five
+  named priority services (Custom Fresh Datasets, Managed Email Campaigns, Email List
+  Cleaning, Monthly Prospect Research, Custom Data Projects) — added explicit `who` and
+  `problem` fields rendered as small labeled lines above the existing body copy, plus a
+  `cta` on each pointing at a concrete next step. Trade Desk, Data Strategy, and
+  Outreach Support were left in their existing (already-adequate) structure rather than
+  forcing the same template onto every card.
+- **About's "Meet the Founder" section rewritten to remove unsupported achievement
+  claims** — "earning a reputation," "helping clients grow their sales and income,"
+  "fixed the emails never reach the inbox problem," "high-demand niches," and "one
+  successful deal at a time" are gone. Replaced with the client's own suggested
+  structure (three paragraphs on the problem LeadVault solves + a "his experience
+  spans" list of three capability areas, not achievement claims) — followed close to
+  verbatim since it was well-written and explicitly supplied. The founding story
+  itself, the founder's name, and the mission-statement blockquote are untouched.
+- **Tools' and Trade's literal "IMAGE:" text placeholders replaced with real content**,
+  not real photos (none were supplied for these two slots) — Tools gets a 5-stage
+  "How the Data Pipeline Works" diagram (Research → Filter → Verify → Clean → Deliver,
+  extending the homepage's existing 4-stage `PipelineGraphic` concept with a Filter
+  stage specific to this page, built inline rather than modifying the shared component
+  used elsewhere) plus a named Precision/Freshness/Quality-Control breakdown under the
+  existing "Why This Matters" heading; Trade gets a 6-step vertical workflow diagram
+  (Product/Trade Lane → Target Market → Buyer/Supplier Research → Verification →
+  Counterparty Dataset → Approach Guidance) replacing the hero's placeholder slot
+  directly. Audited every other `ImagePlaceholder` usage site-wide afterward: the
+  remaining 4 (About, Contact, Tools' hero, Home's origin section) all pass a real
+  `src` **and** an explicit `alt`, so their leftover `caption="IMAGE: ..."` prop is
+  inert dead text — never rendered, not a visible placeholder — confirmed by reading
+  the component (`alt ?? caption` only matters when `alt` is absent, and it never is
+  here). Left those `caption` props as-is rather than editing four working call sites
+  to remove a prop with zero visible or accessibility effect.
+- **Industries gets a new "One Research Method. Many Markets." section** — 6 example-
+  market badges (reusing icons already imported for the existing grouped cards) above
+  a 4-step Company → Decision-Maker → Verified Contact → Research Dataset chain.
+  Inserting it broke the page's background alternation the same way Round 11's ICP
+  section did (landed adjacent to `.section-alt`, which resolves to the same `bg-mid`
+  tier) — same fix pattern: the new section uses the default tier, not a second
+  manually-added `bg-mid` block.
+- **Recruitment category repositioned from a candidate database to business-development
+  research.** The "Recruitment Targets" sample CSV was literally a candidate list (name,
+  headline, skills, years experience) — replaced entirely with a new 8-row fictional
+  sample of companies and hiring decision-makers (Company, Industry, Location, Company
+  Size, Hiring Signal, Decision-Maker, Job Title, Business Email, Status), matching the
+  same masked-email/fictional-identity convention as the other 10 sample CSVs. Category
+  renamed "Recruitment Targets" → "Recruitment Market Research"; its description now
+  leads with employer/decision-maker framing and explicitly notes candidate sourcing is
+  still available as a separate custom request, per instruction, rather than being this
+  category's headline example.
+- **Why LeadVault's two unsupported client-behavior claims rewritten**: "Many of our
+  clients use both" → "Some teams use both models" (a description of a real, common
+  buyer pattern rather than a claim about LeadVault's own client base); "why clients who
+  try us, stay" → "the case for choosing LeadVault when a campaign needs to work, not
+  just launch" (removes the implied retention-rate claim, keeps the underlying pitch).
+- **Contact and Home's final-CTA copy reworded away from "free recommendation" as the
+  primary promise** — both now say a strategist "will review the specification and
+  respond within 24 hours with the right data, volume, and price," matching this
+  round's instruction almost verbatim. `thank-you.astro`'s "recommendation" language
+  and Services' "Data Strategy & Recommendations" service name were confirmed still
+  correctly classified as keep-contextual (post-submission confirmation and a real
+  named service, respectively) and left alone — consistent with this round's own
+  explicit carve-out for legitimate service terminology.
+- **Data Catalog's "Phase 2... in development" language removed** in both places it
+  appeared (the page intro and the waitlist card) — replaced with "planned for a future
+  phase," no implied timeline, matching Pricing's FAQ answer for the same topic so the
+  two pages don't contradict each other.
+- **Full CTA and claims sweep run after all changes, not just before**: every
+  `btn-primary`/`btn-outline` on the site was pulled and checked against the approved
+  vocabulary — no remaining vague or contradictory CTA found. A fresh grep for numeric
+  claims, "highest-demand," "trusted by," and similar found nothing beyond the real,
+  documented replacement guarantee and the form's own user-selectable dropdown ranges.
+- **Deployed.** Commit and push happened after this round's build validated, per this
+  round's own instruction that live QA follows deployment (unlike Round 11/12, which
+  were explicitly told to stop before deploying) — see the commit hash and live QA
+  results in the implementation report delivered alongside this round.

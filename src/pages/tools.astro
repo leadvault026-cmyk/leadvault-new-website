@@ -1,44 +1,55 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
-import { ShieldCheck, ListFilter, Search, Database, Send, Terminal, Wrench, ArrowRight } from '@lucide/astro';
+import { ShieldCheck, ListFilter, Search, Database, Send, Terminal, Wrench, Sparkles, MailCheck, ArrowRight } from '@lucide/astro';
 
+// Titles renamed to the category names used sitewide for the pipeline stages
+// (commercial-completion round — see ASSUMPTIONS.md); underlying descriptions
+// unchanged where they already answered the buyer's question.
 const tools = [
   {
     icon: ShieldCheck,
-    title: 'Email Verification Engine',
+    title: 'Email Verification',
     body: 'Confirms every address is real and deliverable: MX record verification across all provider types (Office 365, Google Workspace, independent and broker mail servers), so "verified" means exactly that.',
   },
   {
     icon: ListFilter,
-    title: 'MX Sorting Engine',
+    title: 'MX Sorting',
     body: 'Separates any verified list into per-provider segments (Gmail, Office 365, IONOS, and all other MX types) — the foundation of provider-by-provider deliverability testing and professional campaign sending.',
   },
   {
     icon: Search,
-    title: 'Bounce & Hygiene Scanner',
+    title: 'Bounce & Hygiene',
     body: 'Detects likely bounces, dormant mailboxes, and dead domains; automatically retires aging records.',
   },
   {
     icon: Database,
-    title: 'Email Extraction System',
-    body: 'Responsibly gathers publicly available business contact information at scale, feeding the verification pipeline under our compliance standards.',
+    title: 'Public Business Data Research',
+    body: 'Responsibly researches publicly available business contact information at scale, feeding the verification pipeline under our compliance standards.',
   },
   {
     icon: Send,
-    title: 'Advanced Sending Infrastructure',
+    title: 'Campaign Infrastructure',
     body: 'Controlled, configurable sending systems used to validate deliverability and run client campaigns under strict best practices.',
   },
   {
     icon: Terminal,
-    title: 'Custom Python Filtering Scripts',
+    title: 'Python Filtering',
     body: 'The heart of client work: purpose-written scripts slicing large datasets to precise specifications — roles, industries, geographies, company sizes — output as clean, structured CSV.',
   },
   {
     icon: Wrench,
-    title: 'Bespoke Tools On Demand',
+    title: 'Custom Tools',
     body: "Some projects need instruments that don't exist yet. We design and build them. Then the next challenge teaches us something new, and the vault gets stronger.",
   },
+];
+
+const pipelineStages = [
+  { icon: Search, label: 'RESEARCH', desc: 'Prospects gathered to your exact specification' },
+  { icon: ListFilter, label: 'FILTER', desc: 'Narrowed to your criteria — role, industry, geography, size' },
+  { icon: ShieldCheck, label: 'VERIFY', desc: 'MX checks, bounce & activity screening' },
+  { icon: Sparkles, label: 'CLEAN', desc: 'Duplicates & dead entries removed' },
+  { icon: MailCheck, label: 'DELIVER', desc: 'Clean CSV, straight to your inbox' },
 ];
 ---
 
@@ -85,16 +96,46 @@ const tools = [
     </div>
   </section>
 
-  <section class="section grid items-center gap-10 lg:grid-cols-2">
-    <ImagePlaceholder caption="IMAGE: terminal/code screen — verification tool output" ratio="aspect-video" />
-    <div>
-      <h2 class="text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
-      <p class="mt-5 text-white/75">
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">How the Data Pipeline Works</h2>
+    <div class="mt-10">
+      <div class="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {pipelineStages.map((stage) => (
+          <div class="card flex flex-col items-center gap-3 text-center">
+            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <stage.icon size={26} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <div class="eyebrow">{stage.label}</div>
+            <p class="text-sm text-white/70">{stage.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
+      <p class="mx-auto mt-5 max-w-3xl text-center text-white/75">
         When you buy from a reseller, you inherit their shortcuts. When you buy from LeadVault,
         your data has passed through technology we designed, understand, and continuously
         improve. Quality isn't a promise on a website — it's engineered into the pipeline.
       </p>
-      <div class="mt-8">
+      <div class="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-3">
+        <div class="card text-center">
+          <h3 class="font-semibold text-white">Precision</h3>
+          <p class="mt-2 text-sm text-white/70">Every record is filtered to your specific criteria, not a generic category.</p>
+        </div>
+        <div class="card text-center">
+          <h3 class="font-semibold text-white">Freshness</h3>
+          <p class="mt-2 text-sm text-white/70">Sourced and verified for your order — not pulled from a stored, aging database.</p>
+        </div>
+        <div class="card text-center">
+          <h3 class="font-semibold text-white">Quality Control</h3>
+          <p class="mt-2 text-sm text-white/70">MX checks, bounce screening, and duplicate removal happen before anything reaches you.</p>
+        </div>
+      </div>
+      <div class="mt-10 text-center">
         <a href="/about#data-standards" class="btn-primary">See Our Data Standards <ArrowRight size={18} /></a>
       </div>
     </div>

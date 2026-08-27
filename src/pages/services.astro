@@ -7,14 +7,19 @@ const services = [
     icon: Database,
     title: 'Custom Fresh Datasets',
     flagship: true,
+    who: "Anyone who needs a prospect list matching specific, real criteria — not whatever a database happens to have on file.",
+    problem: "Off-the-shelf databases give you what's already in storage, not necessarily who you actually need to reach.",
     body: "Tell us exactly who you need — industry, job titles, locations, company sizes, buying signals. We source the data fresh, verify every record, and deliver a clean CSV within days. Not pulled from storage; harvested for you.",
     detail: 'What you receive per record: name, job title, company, verified email, phone (where available), location, industry — plus any custom fields you specify.',
-    price: 'From $99 per 500 verified records.',
+    price: 'From $29 per 100 verified prospects — see the full ladder on Pricing.',
+    cta: { label: 'See pricing tiers →', href: '/pricing' },
   },
   {
     id: 'managed-email-campaigns',
     icon: MailCheck,
     title: 'Managed Email Campaigns & Deliverability Engineering',
+    who: 'Agencies and outbound teams running client or in-house email campaigns.',
+    problem: 'Sending identically to every provider (Gmail, Office 365, and the rest) tanks deliverability and sender reputation everywhere at once.',
     body: "For agencies and outbound teams running client or in-house campaigns: sending bulk email like it's 2010 is why your campaigns disappear. Most businesses gather a list and blast every address in one campaign — Gmail, Office 365, IONOS, and every other provider mixed together. That approach is dead. Today's mailbox providers use machine-learning filters, and each one judges your email differently: a message that lands perfectly in a Gmail inbox can vanish silently at Office 365. Send to them all identically, and your results — and sender reputation — suffer everywhere at once.",
     listIntro: 'LeadVault runs your campaigns the way deliverability professionals do, using our own in-house engineered tools:',
     list: [
@@ -28,10 +33,13 @@ const services = [
     body2: 'Most companies running campaigns today have no idea whether their emails ever landed. Our clients know — because we engineered the landing.',
     detail: 'Compliance note: we run permission-appropriate, regulation-compliant B2B outreach only (CAN-SPAM and applicable laws). We decline campaigns designed to deceive.',
     price: 'Setup from $499 one-time · campaigns from $299 · managed monthly from $699.',
+    cta: { label: 'Request this service →', href: '/contact' },
   },
   {
     icon: Sparkles,
     title: 'Email List Cleaning & Hygiene',
+    who: 'Anyone holding a list — bought, inherited, or built in-house — that has started to bounce.',
+    problem: 'An aging or unverified list damages sender reputation before you ever see the results.',
     body: 'Lists age fast — independent research puts B2B contact decay at roughly 22–23% per year (see the citation on our homepage). Send us any list (bought anywhere, or built in-house) and we return it healthy:',
     list: [
       'MX record verification across Office 365, Google Workspace, and every provider type',
@@ -40,6 +48,7 @@ const services = [
       'Your sender reputation, protected.',
     ],
     price: 'From $39 per 5,000 contacts cleaned.',
+    cta: { label: 'Clean my list →', href: '/contact' },
   },
   {
     icon: Handshake,
@@ -51,16 +60,21 @@ const services = [
   },
   {
     icon: CalendarCheck,
-    title: 'Monthly Lead Subscriptions',
-    body: 'A steady pipeline, on schedule. Fresh, verified leads matching your profile, delivered weekly or monthly — with a strategy report and priority support on higher tiers.',
-    price: 'From $129/month.',
-    cta: { label: 'See Plans →', href: '/pricing' },
+    title: 'Monthly Prospect Research',
+    who: 'Teams with an ongoing, recurring need for fresh prospects — not a one-time list.',
+    problem: 'A single dataset ages; a team that prospects continuously needs a continuous supply, freshly researched each cycle.',
+    body: 'A recurring research engagement, not access to a static database. Fresh prospects matching your ICP, researched and delivered on schedule — with a strategy report and priority support on higher tiers.',
+    price: 'From $199/month.',
+    cta: { label: 'See plans →', href: '/pricing' },
   },
   {
     icon: Terminal,
     title: 'Custom Data Projects (Python-Powered)',
+    who: 'Teams with a research requirement too specific or unusual for a standard category.',
+    problem: "Standard filters don't cover every real-world specification — unusual geographies, niche industries, or custom output formats.",
     body: 'Our engineers write purpose-built Python scripts for every complex project — filtering massive datasets to your precise specification: decision-makers only, niche industries, unusual geographies, special formats. If it can be defined, it can be delivered.',
     price: 'Custom quote.',
+    cta: { label: 'Discuss your project →', href: '/contact' },
   },
   {
     icon: Compass,
@@ -108,6 +122,16 @@ const services = [
             <h2 class="text-xl font-bold text-white">{service.title}</h2>
             {service.subtitle && <p class="text-sm font-medium text-[var(--color-lime)]">{service.subtitle}</p>}
           </div>
+          {(service.who || service.problem) && (
+            <dl class="space-y-1.5 border-l-2 border-[var(--color-lime)]/40 pl-3 text-xs">
+              {service.who && (
+                <div class="flex gap-1.5"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Who it's for:</dt><dd class="text-white/70">{service.who}</dd></div>
+              )}
+              {service.problem && (
+                <div class="flex gap-1.5"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">The problem:</dt><dd class="text-white/70">{service.problem}</dd></div>
+              )}
+            </dl>
+          )}
           <p class="text-sm leading-relaxed text-white/75">{service.body}</p>
           {service.listIntro && <p class="text-sm font-medium text-white">{service.listIntro}</p>}
           {service.list && (

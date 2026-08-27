@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
-import { ArrowRight, Ship, Package, Truck, Globe, Warehouse } from '@lucide/astro';
+import { ArrowRight, ArrowDown, Ship, Package, Truck, Globe, Warehouse, Search, ShieldCheck, Database, Compass } from '@lucide/astro';
 
 const audience = [
   { icon: Ship, text: 'Exporters seeking verified international buyers for commodities and goods' },
@@ -10,6 +9,17 @@ const audience = [
   { icon: Truck, text: 'Freight forwarders & customs brokers seeking a pipeline of shippers and trade clients' },
   { icon: Globe, text: 'Diaspora entrepreneurs — especially Nigerians and Africans abroad — trading between markets' },
   { icon: Warehouse, text: 'Wholesalers and distributors expanding across borders' },
+];
+
+// Replaces the hero's old "IMAGE: container port" placeholder with a real
+// visual workflow (commercial-completion round — see ASSUMPTIONS.md).
+const workflow = [
+  { icon: Package, label: 'Product / Trade Lane' },
+  { icon: Globe, label: 'Target Market' },
+  { icon: Search, label: 'Buyer / Supplier Research' },
+  { icon: ShieldCheck, label: 'Verification' },
+  { icon: Database, label: 'Counterparty Dataset' },
+  { icon: Compass, label: 'Approach Guidance' },
 ];
 
 const receive = [
@@ -50,7 +60,22 @@ const receive = [
         <a href="/contact?need=trade-desk" data-cta="trade-hero" class="btn-primary">Find My Buyers/Suppliers <ArrowRight size={18} /></a>
       </div>
     </div>
-    <ImagePlaceholder caption="IMAGE: container port or cargo aircraft with teal data-connection overlay" ratio="aspect-[4/3]" />
+    <div class="card">
+      <p class="eyebrow text-center">How a Trade Desk Engagement Runs</p>
+      <div class="mt-5 flex flex-col items-center gap-2">
+        {workflow.map((step, i) => (
+          <>
+            <div class="flex w-full max-w-xs items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5">
+              <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+                <step.icon size={16} stroke-width={1.75} aria-hidden="true" />
+              </div>
+              <span class="text-sm font-medium text-white">{step.label}</span>
+            </div>
+            {i < workflow.length - 1 && <ArrowDown size={16} class="text-white/30" aria-hidden="true" />}
+          </>
+        ))}
+      </div>
+    </div>
   </section>
 
   <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
