@@ -21,7 +21,7 @@ const PREVIEW_ROW_COUNT = 4;
       Because LeadVault data is harvested on request — not stored in a warehouse — this catalog
       shows what we source, not what's sitting on a shelf. Choose a category, tell us your
       specification, and receive a quote within 24 hours. Datasets are delivered to your email as
-      verified, bounce-free CSV files.
+      a verified, bounce-free Google Sheet — CSV and Excel are also available.
     </p>
     <p class="mx-auto mt-3 max-w-2xl text-sm italic text-white/50">
       Self-serve portal planned for a future phase. LeadVault currently handles each research
@@ -40,7 +40,8 @@ const PREVIEW_ROW_COUNT = 4;
             <ComparisonTable
               headers={cat.sample.headers}
               rows={cat.sample.rows.slice(0, PREVIEW_ROW_COUNT)}
-              caption={`Sample preview: ${cat.name} (illustrative, not real customer data)`}
+              caption={`Sample preview: ${cat.name} — illustrative, not real customer data`}
+              captionVisible
               class="!rounded-lg"
             />
             <p class="flex flex-1 items-center gap-1.5 text-xs text-white/50">

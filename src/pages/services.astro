@@ -4,17 +4,19 @@ import { Database, Sparkles, Handshake, CalendarCheck, Terminal, Compass, Send, 
 
 const services = [
   {
+    id: 'custom-fresh-datasets',
     icon: Database,
     title: 'Custom Fresh Datasets',
     flagship: true,
     who: "Anyone who needs a prospect list matching specific, real criteria — not whatever a database happens to have on file.",
     problem: "Off-the-shelf databases give you what's already in storage, not necessarily who you actually need to reach.",
-    body: "Tell us exactly who you need — industry, job titles, locations, company sizes, buying signals. We source the data fresh, verify every record, and deliver a clean CSV within days. Not pulled from storage; harvested for you.",
+    body: "Tell us exactly who you need — industry, job titles, locations, company sizes, buying signals. We research it against your specification, verify every record, and deliver a clean Google Sheet within days (CSV and Excel also available). Not pulled from storage; harvested for you.",
     detail: 'What you receive per record: name, job title, company, verified email, phone (where available), location, industry — plus any custom fields you specify.',
     price: 'From $29 per 100 verified prospects — see the full ladder on Pricing.',
     cta: { label: 'See pricing tiers →', href: '/pricing' },
   },
   {
+    id: 'monthly-prospect-research',
     icon: CalendarCheck,
     title: 'Monthly Prospect Research',
     who: 'Teams with an ongoing, recurring need for fresh prospects — not a one-time list.',
@@ -25,10 +27,10 @@ const services = [
   },
   {
     icon: Terminal,
-    title: 'Custom Data Projects (Python-Powered)',
+    title: 'Custom Data Projects (Precision-Engineered)',
     who: 'Teams with a research requirement too specific or unusual for a standard category.',
     problem: "Standard filters don't cover every real-world specification — unusual geographies, niche industries, or custom output formats.",
-    body: 'Our engineers write purpose-built Python scripts for every complex project — filtering massive datasets to your precise specification: decision-makers only, niche industries, unusual geographies, special formats. If it can be defined, it can be delivered.',
+    body: 'Our team builds a purpose-fit research and filtering process for every complex project — narrowing massive datasets to your precise specification: decision-makers only, niche industries, unusual geographies, special formats. If it can be defined, it can be delivered.',
     price: 'Custom quote.',
     cta: { label: 'Discuss your project →', href: '/contact' },
   },
@@ -39,7 +41,7 @@ const services = [
     problem: 'An aging or unverified list damages sender reputation before you ever see the results.',
     body: 'Lists age fast — independent research puts B2B contact decay at roughly 22–23% per year (see the citation on our homepage). Send us any list (bought anywhere, or built in-house) and we return it healthy:',
     list: [
-      'MX record verification across Office 365, Google Workspace, and every provider type',
+      'Deliverability verification across Office 365, Google Workspace, and every provider type',
       'Bounce and dead-address removal before you ever hit "send"',
       'Duplicate & error scrubbing',
       'Your sender reputation, protected.',
@@ -48,6 +50,7 @@ const services = [
     cta: { label: 'Clean my list →', href: '/contact' },
   },
   {
+    id: 'trade-desk',
     icon: Handshake,
     title: 'Verified Buyer–Seller Matching',
     subtitle: 'The Trade Desk — our specialized research service for international trade',
@@ -70,7 +73,7 @@ const services = [
     list: [
       'Campaign setup',
       'Data verification',
-      'MX sorting',
+      'Deliverability sorting',
       'Provider-aware testing',
       'Sending infrastructure',
       'Campaign execution',
@@ -107,6 +110,25 @@ const services = [
       We don't just hand over lists. We source, verify, clean, filter, match, and advise — and when
       your challenge is unusual, we build the tool that solves it.
     </p>
+
+    <div class="card mx-auto mt-10 max-w-3xl text-left">
+      <h2 class="text-lg font-bold text-white">Not Sure Where to Start?</h2>
+      <ul class="mt-4 space-y-3">
+        <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
+          <span>Need a prospect list for a specific campaign — from a small test batch to a fully custom, hard-to-find specification?</span>
+          <a href="#custom-fresh-datasets" class="font-semibold text-[var(--color-lime)] hover:underline">Custom Fresh Datasets →</a>
+        </li>
+        <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
+          <span>Need an ongoing, recurring supply of prospects rather than a one-time list?</span>
+          <a href="#monthly-prospect-research" class="font-semibold text-[var(--color-lime)] hover:underline">Monthly Prospect Research →</a>
+        </li>
+        <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
+          <span>Need to verify a buyer, supplier, or trade counterparty?</span>
+          <a href="#trade-desk" class="font-semibold text-[var(--color-lime)] hover:underline">Trade Desk →</a>
+        </li>
+      </ul>
+      <p class="mt-4 text-xs text-white/50">Still not sure? <a href="/contact" class="underline hover:text-[var(--color-lime)]">Tell us what you need</a> and a strategist will point you to the right one.</p>
+    </div>
   </section>
 
   <section class="section-alt">

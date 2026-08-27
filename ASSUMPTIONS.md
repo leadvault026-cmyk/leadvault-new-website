@@ -802,3 +802,367 @@ not a false alarm dismissed without checking.
   round's own instruction that live QA follows deployment (unlike Round 11/12, which
   were explicitly told to stop before deploying) — see the commit hash and live QA
   results in the implementation report delivered alongside this round.
+
+## Round 14 (Contact page — post-submission clarity pass, not yet deployed)
+
+Prompted by an instruction to finalize the Contact page: make clear that submitting is
+a request for a quote, not a purchase; requirements get reviewed; LeadVault recommends
+an option; payment happens only after that offer is agreed; the 24-hour promise is
+genuine. Do not rebuild the form. Add a "free, no-obligation quote" reassurance near the
+form only if accurate, without adding friction or new required fields.
+
+- **Read the current form and confirmation page in full first.** Most of the underlying
+  process was already accurate — the intro paragraph above the form already says "no
+  obligation," the confirmation page already says "free, no-obligation recommendation,"
+  and email notifications/honeypot/privacy link were all previously verified working.
+  The gap was placement, not accuracy: a visitor who scrolls straight to the form (or
+  lands on it directly via a Data Catalog `?need=` link) could reach the form fields
+  without ever reading the left-column intro paragraph that carries this reassurance.
+- **Added a short reassurance banner at the top of the form card itself**, inside
+  `contact.astro`'s `<div class="card">`, before the `<form>` tag: "**Free, no-obligation
+  quote.** We'll review your requirements and recommend the right option — nothing is
+  charged until you approve it." This is the only new form-facing content; no fields,
+  labels, or required/optional status were changed.
+- **`thank-you.astro`'s confirmation copy tightened, not rewritten**: "...will follow up
+  by email or WhatsApp with your free, no-obligation recommendation" became "...with your
+  free, no-obligation recommendation **and price. You decide whether to proceed —
+  nothing is charged until you approve the offer.**" The "within 24 hours" line above it
+  is untouched, per the instruction not to change that promise.
+- **"Who is your ideal customer or counterparty?" field given a placeholder** ("e.g. VP
+  of Sales at 50–200 person SaaS companies") to surface the target-roles/titles concept
+  the instruction listed as essential information — without adding a new field or making
+  an optional field required.
+- **Deliberately left unchanged**: the "Submit My Data Request" CTA wording (already
+  approved sitewide vocabulary, and the surrounding no-obligation language now makes the
+  "quote, not purchase" framing clear without needing to reword the button itself);
+  which fields are required vs. optional (Country/Industry/What-do-you-need stay
+  required, Volume/Budget stay optional — an earlier round's deliberate choice, not
+  re-litigated here); the mobile Submit-button/WhatsApp-button spacing fix from a prior
+  round (re-verified, not touched); honeypot, `data-netlify`, and privacy-policy link
+  (already correct).
+- **Verified via `npm run build` (zero errors) and a live Playwright session**: desktop
+  and mobile (375px) renders of the new banner, `#lead-survey-form`-scoped checks that
+  the honeypot field, hidden `form-name=lead-survey`, and 6 required-field ids are all
+  still present and correct, no console errors, no horizontal overflow, no WhatsApp-
+  button overlap at the submit-button scroll position, and a full end-to-end form
+  submission (filled + submitted against the local dev server) redirecting correctly to
+  `/thank-you`.
+- **Not deployed.** Consistent with the last several rounds, these changes are committed
+  to the working tree only, pending explicit approval to commit/push.
+
+## Round 15 (Pricing and payment-experience audit)
+
+Prompted by an instruction to audit and finalize the pricing/payment experience: review
+where a direct PayPal payment option makes sense, without turning the site into an
+ecommerce store, and without ever claiming "pay now" where a quote is actually needed
+first. PayPal was said to be "personally tested and verified," with bank transfer also
+available.
+
+- **Asked before building anything**, since a wrong payment identifier has real
+  financial consequences: confirmed the technical approach (PayPal.me links over hosted
+  buttons — no PayPal dashboard work needed) and the scope (the 4 fixed-price one-time
+  dataset tiers only — Custom Research, Monthly plans, Trade Desk, and Managed Campaigns
+  stay quote/invoice-based, matching the CUSTOM/TRADE flow the instruction defined).
+- **New fact surfaced mid-round: the client's PayPal account can currently only send
+  money, not receive it** — "personally tested" evidently didn't cover the receiving
+  side. This makes any live PayPal payment link non-functional and was not something to
+  guess around. Asked directly how payment methods should be described given this;
+  answer: **bank transfer only, for now** — remove PayPal from the site's payment
+  wording until receiving is fixed, rather than advertise a method that doesn't work.
+  No PayPal buttons or links were implemented as a result — not a technical limitation
+  of the site, a business-side account limitation on the client's end.
+- **Pricing's "How do I pay?" FAQ answer rewritten** to drop PayPal and describe the
+  flow that now actually exists: bank transfer in USD; for the 4 tiers, requesting a
+  tier gets transfer instructions for that exact amount; for custom research, monthly
+  plans, and Trade Desk, a quote comes first and instructions follow once approved.
+  50% deposit / balance-on-delivery for custom projects, already accurate, kept as-is.
+- **Added a "Request This Tier" link under each of the 4 fixed one-time dataset tiers**
+  on Pricing (Prospect Sample $29, Targeted List $59, Campaign List $99, Larger Campaign
+  $179) — the closest safe equivalent to a direct-payment button without live PayPal:
+  each link names the exact tier, records, and price and goes to
+  `/contact?tier=<slug>`, so what the visitor requests can't be ambiguous. A line under
+  the links states plainly that this confirms the order and gets bank transfer
+  instructions for that price — "nothing is charged automatically." The
+  `ComparisonTable`'s existing row structure (shared with several other pages) was left
+  untouched; the tier data and links live in a new small array instead of adding a CTA
+  column to a component other pages depend on.
+- **`DATASET_TIERS` added to `src/data/catalog.ts`** as the single source of truth for
+  tier slug/name/records/price/volume-bucket, used by both Pricing's table+links and
+  Contact's new pre-fill script — avoiding a second hardcoded copy of the same 4 prices
+  that could drift out of sync with what Pricing displays (the exact failure mode
+  `PRIMARY_TAGLINE` was introduced to prevent, earlier in this project).
+- **Contact's existing `?need=<slug>` pre-fill script (Data Catalog) extended, not
+  replaced, with a second `?tier=<slug>` handler**: sets "What do you need?" to "Fresh
+  custom dataset," "Approximate volume needed" to the matching bucket, and — if not
+  already filled — writes `Requesting: <tier name> — <records> prospects, <price>` into
+  "Who is your ideal customer or counterparty?" so the strategist sees the exact
+  requested tier and amount with no back-and-forth. Verified the pre-existing `?need=`
+  flow (Data Catalog cards) still works unchanged after this addition.
+- **Reviewed Services, Trade, Terms of Service, Refund & Replacement Policy, and the
+  footer for payment wording**: no "pay now"/"buy now" language and no other PayPal
+  mentions existed anywhere outside this one FAQ answer (confirmed by a repo-wide grep,
+  before and after). Trade Desk's CTAs ("Find My Buyers/Suppliers," "Start With the
+  Trade Survey") already route to the quote-first flow the instruction asked for and
+  needed no change. Terms of Service names no specific payment method and wasn't
+  inaccurate, so it was left alone rather than edited without a real defect to fix.
+- **No prices changed.** No banking details (account numbers, IBAN, routing info) were
+  added anywhere on the public site — "bank transfer" stays a named method, not
+  published credentials, per the instruction not to expose private banking information.
+- **Verified via `npm run build` (zero errors) and a live Playwright session**: all 4
+  tier links render with the correct href/label/price; clicking through from Pricing to
+  Contact confirms the "What do you need?", "Approximate volume needed," and "Ideal
+  Customer" fields pre-fill correctly for two different tiers; the pre-existing
+  Data Catalog `?need=` flow still works; no console errors; the built `dist/pricing`
+  output was checked directly for the new FAQ answer text.
+- **Not deployed.** Consistent with recent rounds, pending explicit approval to
+  commit/push — alongside the still-unpushed Contact-page and earlier rounds.
+
+## Round 16 (Delivery, verification & fulfillment copy audit)
+
+Prompted by an instruction to audit all copy touching delivery, turnaround, verification,
+and fulfillment against a real operating model (LeadVault personally performs research
+and verification through a ten-step internal workflow; Google Sheets is the preferred
+delivery/database format, with CSV and Excel also supported; the approved delivery
+timeframe stays unchanged) and against a checklist of unsupported-claim categories to
+find and correct: instant delivery, automatically generated leads, guaranteed accuracy /
+response / sales / appointments / conversion, unstated real-time data, unlimited
+research, 100% accuracy — without disclosing internal tooling (named examples:
+Python/Snov.io/MX/SMTP) unnecessarily, and without making the site sound weak.
+
+- **Repo-wide grep against every category before touching anything.** No guaranteed-
+  response/sales/appointment/conversion claims existed anywhere — the one place "guarantee
+  results" appears (`terms-of-service.astro`) is the existing disclaimer explicitly saying
+  results *can't* be guaranteed, already correct. No "100% accuracy" claims, no
+  false "real-time" claims, no unlimited-research claims. The only genuine hit in that
+  whole checklist: **"unlimited client use cases"** on Industries' Marketing Agencies
+  card — softened to "many client campaigns," since LeadVault doesn't actually promise
+  no cap. Every "instant" mention on Why LeadVault describes the *competitor's*
+  self-serve database platforms in honest contrast to LeadVault's own already-hedged
+  "delivery takes days, not seconds — freshness cannot be instant" — accurate framing,
+  left untouched.
+- **Internal tooling over-disclosure was the real finding**, concentrated on
+  `tools.astro`: "Python Filtering" and "MX Sorting" were tool-card titles naming
+  implementation directly; the page's own `<title>`/meta description led with "MX Checks
+  & Python Engineering"; "MX record checks" appeared six more times across `tools.astro`,
+  `services.astro`, `about.astro`, `industries.astro`, `index.astro`'s process steps, and
+  `data-sourcing-policy.astro`. All renamed to outcome language — "Precision Filtering,"
+  "Deliverability Segmentation," "deliverability checks" — while **keeping** the
+  customer-facing provider names (Office 365, Google Workspace, Gmail, IONOS), since
+  those aren't internal tooling, they're the real-world inboxes a customer recognizes and
+  help demonstrate rigor without exposing *how* LeadVault does it. `data-sourcing-policy`
+  (a compliance document, different audience/intent from marketing pages) kept slightly
+  more procedural specificity — "deliverability checks (mailbox and domain verification)"
+  — rather than being stripped to the same bare phrase used in ad copy.
+- **Explicit positioning sentence added** to `tools.astro`'s "Why This Matters to You"
+  section, leading the paragraph: *"Every dataset is researched against your exact
+  specification, then reviewed before it reaches you."* — the exact framing this round
+  asked the site to communicate, placed once, prominently, on the page that explains the
+  process, rather than repeated on every page (the surrounding copy — process steps on
+  Home, the Quality Control card here, the replacement guarantee on Pricing — already
+  told the same story in different words and didn't need restating).
+- **Google Sheets positioned as the preferred delivery/database format, CSV and Excel
+  named as also available**, everywhere the site previously said only "CSV": Pricing's
+  "How is data delivered?" FAQ, its Custom Fresh Datasets includes-line and tier-links
+  reassurance, Services' Custom Fresh Datasets description, Data Catalog's intro,
+  Home's `processSteps` and the shared `PipelineGraphic` component's DELIVER stage, and
+  Tools' own pipeline DELIVER stage and Precision Filtering card. The custom-specification
+  sample CSV's fictional "Delivered as clean CSV" row was left alone — it's an example of
+  what a *client* might specify in a request, not a company-wide format promise, and
+  doesn't misstate anything.
+- **The internal ten-step workflow supplied for this round (requirement definition →
+  prospect discovery → website/domain research → dataset construction →
+  deduplication/merging → decision-maker research → email/domain validation → quality
+  review → final formatting → delivery) was used to calibrate accuracy, not published.**
+  The site's existing five-stage abstraction (Research/Filter/Verify/Clean/Deliver on
+  Home and Tools) already maps to it at the right level of customer-facing detail once
+  the MX/Python jargon was removed — no new stages were added, since more granularity
+  would be over-disclosure, not under-disclosure.
+- **Delivery-timeframe wording was not touched.** Verified directly in the built
+  `dist/` output that every "24 hours," "3–5 days," "3–7 days," "72 hours," "within
+  days," "as fresh as 3 days," and "14 days" mention survived this round's edits exactly
+  as before (a `node` script counted every occurrence pre- and post-edit).
+- **Verified via `npm run build` (zero errors, 17 pages) and a live Playwright session**:
+  screenshotted Home's pipeline section and the full Tools page at desktop and mobile
+  (375px) widths — the slightly longer DELIVER-stage and tool-card copy wraps cleanly
+  with no overflow or clipping; no console errors on either page.
+- **Not deployed.** Consistent with recent rounds, pending explicit approval to
+  commit/push — alongside the still-unpushed Contact, Pricing/payment, and earlier
+  rounds.
+
+## Round 17 (Data Catalog final audit)
+
+Prompted by a final audit of the Data Catalog against a checklist: samples labeled
+appropriately, never presented as a guaranteed live database, no implied ownership or
+exclusive access to the businesses shown, sensitive info masked where required, no
+unsupported accuracy claims, understandable categories, a clear sense of what a
+delivered dataset looks like, and a CTA that leads naturally onward — without adding
+fake records, fabricated statistics, inflated apparent database size, or catalog pricing
+that would duplicate Pricing.
+
+- **The one real defect: the "illustrative, not real customer data" disclaimer existed
+  but was invisible.** `ComparisonTable.astro`'s `caption` prop rendered as
+  `<caption class="sr-only">` — announced to screen readers, never shown to a sighted
+  visitor. Every one of the catalog's 11 sample tables (and the homepage's featured
+  sample) carried this exact disclaimer in the markup the whole time, but no visitor
+  could actually see it. This is the gap the audit's "unmistakably clear" standard was
+  really testing for.
+- **Fixed with an opt-in `captionVisible` prop**, defaulting to `false` so the other 4
+  `ComparisonTable` call sites (Pricing's two tables, Home's platform-comparison table,
+  Why LeadVault, Trade) are provably unaffected — verified directly in the built output
+  that they still render `sr-only` and show zero visible "illustrative" text. Set to
+  `true` only on Data Catalog's 11 category cards and the homepage's `SampleDataSection`
+  — the two places actually showing sample "customer" records.
+- **First implementation attempt was wrong and caught before shipping**: rendering the
+  visible caption as the table's own `<caption>` element put it inside the same
+  `overflow-x-auto` box as the data columns, so on a card narrower than the table's
+  `min-w-[640px]` the disclaimer text was clipped exactly like the data itself — visible
+  in principle, unreadable in practice without scrolling. Confirmed via screenshot,
+  fixed by moving the visible version to a plain `<p>` outside the scrollable
+  `table-wrap` div entirely, so it wraps naturally at full card width instead of being
+  cut off. Re-screenshotted afterward to confirm the full sentence now reads without
+  scrolling on both the Data Catalog cards and the homepage section.
+- **Everything else on the checklist was already correct and left unchanged**: all 10
+  real sample CSVs consistently label their email/phone columns "(masked)" and mask
+  consistently (`n.****@cro*****.com`, `+234 8XX XXX 9652`) — per this round's own
+  instruction, masking that's already appropriate stays untouched. No category
+  description implies LeadVault owns or has exclusive access to the businesses shown
+  (all describe filter criteria — "by industry and company size," "by product category
+  and trade lane" — not possession). No unsupported accuracy claims found beyond the
+  already-real, already-documented replacement guarantee. Categories, sample-preview
+  tables, and turnaround times already give a concrete, accurate sense of what a
+  delivery looks like. The `Request This Dataset` → `/contact?need=<slug>` CTA was
+  re-verified working end-to-end (pre-fills the "What do you need?" select correctly).
+  No pricing exists on this page and none was added — Pricing owns that, avoiding the
+  duplication/conflict this round explicitly warned against.
+- **One data edit, not a new record**: the "Fully Custom Specification" category's
+  template example row said "Delivered as clean CSV" — updated to "Delivered as a clean
+  Google Sheet" to match last round's delivery-format audit. This is a template/example
+  cell ("Your Field 1, Your Field 2..."), not a company or person record, so it doesn't
+  touch the "no fake records" instruction.
+- **Verified via `npm run build` (zero errors, 17 pages) and two rounds of live
+  Playwright checks** (the second after catching and fixing the clipping issue): visible
+  captions render in full on both Data Catalog and Home; Pricing/Home-comparison/Why
+  LeadVault/Trade tables provably unaffected; no mobile horizontal overflow on Data
+  Catalog; the catalog CTA click-through and form pre-fill still work; no console
+  errors. Also fixed an unrelated pre-existing typo spotted while reviewing the
+  homepage sample section ("a preview ofBusiness Decision-Makers" — missing space).
+- **Not deployed.** Consistent with recent rounds, pending explicit approval to
+  commit/push.
+
+## Round 18 (About / Why LeadVault / Trade Desk credibility audit)
+
+Prompted by a credibility audit of About and Why LeadVault (Trade reviewed too) aimed at
+"authentic authority — not artificial corporate authority": confirm the pages explain why
+LeadVault exists, the founder's research/verification approach, why a specification-
+driven service makes sense, and that LeadVault complements existing databases rather than
+claiming blanket superiority — with no fake logos/testimonials/case studies/statistics/
+team members/years-of-operation, and competitor language held to "unless there is actual
+evidence supporting the exact claim," preferring defensible framing like "built for
+situations where a standard database search does not fully match the required segment."
+
+- **No fake credibility markers found anywhere on any of the three pages** — no client
+  logos, no customer testimonials (the founder's own quote on About is first-person
+  founder voice about his own reasoning, not a fabricated customer endorsement, so it
+  stays), no case studies, no invented statistics, no named-but-fictional team members,
+  no specific years-of-operation claim. The one statistic on these pages (22–23% annual
+  B2B contact decay, Why LeadVault) is the same cited, sourced figure used elsewhere on
+  the site — left as-is.
+- **The real finding was uncited competitor characterization, concentrated on Why
+  LeadVault's comparison table** — three cells stated specific operational facts about
+  named-category competitor platforms with no citation: "Unknown — verified anywhere
+  from weeks to years ago" (data age), "Bounces included in what you export" (bounce
+  handling), "Thin and frequently outdated" (African/emerging-market coverage). Softened
+  to defensible, appropriately hedged versions ("Not disclosed per record — periodic
+  verification cycles, not per order"; "Bounce rates vary by plan and provider";
+  "Generally thinner, per public market reports") — same comparative point, without
+  asserting specifics no citation backs. The identical pattern appeared once more on
+  About's differentiator list ("the big platforms barely touch" → "many database
+  platforms cover thinly") for consistency across both pages.
+- **One absolute "we're better than everyone" claim, exactly the pattern this round's
+  brief warned against**: Why LeadVault's closing section opened with "Nobody in this
+  market combines what we combine" — an unqualified claim about the entire market with
+  no evidence. Reworded to "This combination is uncommon among self-serve database
+  platforms," which keeps the real, defensible point (LeadVault does combine several
+  things at once) without the sweeping, unverifiable "nobody" claim.
+- **Widened the page's existing disclaimer from pricing-only to the whole comparison**:
+  it previously read "Comparative figures reflect publicly available information and
+  general industry pricing patterns... individual vendor pricing may vary" — worded as
+  if it only covered the pricing row. Now reads "This comparison reflects LeadVault's
+  general understanding of how self-serve database platforms typically operate, based on
+  publicly available information; individual vendor practices, data freshness, and
+  pricing vary by provider and plan" — one sentence, now honestly hedging every row, not
+  just one.
+- **"Complements, don't replace" framing was already present and needed no change** — Why
+  LeadVault already states "Some teams use both models: a database platform for instant
+  self-serve searches, and LeadVault when a campaign requires fresh, custom research,"
+  and opens by calling Apollo/ZoomInfo/RocketReach/Lusha "serious companies... a
+  reasonable choice" for some use cases. This is exactly the complementary positioning
+  the brief asked for — left untouched.
+- **Trade Desk's specialization-without-exclusivity framing was already correct and
+  needed no change** — the hero explicitly states "LeadVault researches B2B prospects for
+  businesses of every kind — the Trade Desk is our specialized version of that same
+  research process," with an inline link to Services for non-trade needs. The founding-
+  story section's trade-heavy narrative is followed by explicit broadening language both
+  on Trade ("the system that now powers everything LeadVault does" refers to the
+  research *method*, in a page that already disclaims trade-only scope one paragraph
+  above) and on About ("International trade was where that discipline was proven first —
+  today it's applied to every business..."). Reviewed carefully per this round's specific
+  instruction on this point; found nothing that actually makes the company read as
+  trade-exclusive, so nothing was changed on Trade itself.
+- **Deliberately left alone**: About's Vision/Mission/Philosophy cards (generic-sounding
+  but not a fake-authority violation — no invented facts, just aspirational framing) and
+  the founder's own quote (first-person, not a customer testimonial). Rewriting these
+  would be a tone/style pass beyond "necessary copy corrections," not a credibility fix.
+- **Verified via `npm run build` (zero errors, 17 pages) and a live Playwright session**:
+  full-page screenshots of About and Why LeadVault confirm the reworded comparison table
+  and differentiator card render cleanly with no layout breaks; no horizontal overflow on
+  About, Why LeadVault, or Trade at 375px; no console errors on any of the three pages.
+- **Not deployed.** Consistent with recent rounds, pending explicit approval to
+  commit/push.
+
+## Round 19 (Full cross-site consistency audit)
+
+Prompted by a complete cross-site consistency audit: check every page and shared
+component for contradictions in business identity, email addresses, pricing, ICP
+positioning, data claims, delivery, payment, and CTA wording, and produce a
+PAGE / CLAIM / CURRENT VERSION / CONSISTENT? / REQUIRED ACTION matrix — with the
+smallest possible correction for anything genuinely wrong, no redesign.
+
+- **Method**: full-repo pattern searches for every specific item named in the brief
+  (`steven@`/`hello@` addresses, each dollar figure, PayPal remnants, CSV-only delivery
+  mentions, "Get My Free Recommendation" leftovers, superlative competitor language) plus
+  a manual read-through of every CTA's destination and every legal page's cross-links and
+  dates — checked against the site's own single-source-of-truth files
+  (`site.ts`, `catalog.ts`'s `DATASET_TIERS`) wherever one exists, since those make whole
+  categories of drift structurally impossible rather than just currently correct.
+- **36 specific claims checked across 9 categories; 35 already consistent, 1 genuine
+  contradiction found and fixed.** No `steven@` email address exists anywhere on the
+  site — the single contact address (`hello@leadvaultdata.com`) is correct sitewide. No
+  PayPal mentions remain (Round 15). No CSV-only delivery claims remain (Round 16). No
+  "Get My Free Recommendation" leftovers. All 9 pricing figures match between Pricing and
+  Services. All 7 CTA groups resolve to their correct, working destinations. All 5 legal
+  pages share the same "Last updated" date.
+- **The one contradiction**: Industries' "Recruitment & Staffing" card described the
+  offering as covering "both sides... equally" (hiring decision-makers *and* candidate
+  pools) — this directly contradicted Data Catalog's "Recruitment Market Research"
+  category, which was deliberately repositioned in an earlier round (commercial-
+  completion pass — see Round 13 above) to lead with employer/decision-maker research
+  and treat candidate sourcing as a separate custom request. Industries hadn't been
+  updated when that repositioning happened elsewhere. Fixed with a single sentence,
+  matching the wording the business had already settled on: "Hiring decision-makers to
+  approach for business development, by industry and hiring signal — candidate sourcing
+  available as a separate custom request."
+- **Explicitly checked and confirmed NOT a contradiction**: Home's 3 priority-ICP cards
+  vs. Industries' broader grouping structure (different pages, different purposes —
+  self-identification vs. a full examples catalog) and Services' "Custom Research" ($299
+  tier within Custom Fresh Datasets) vs. "Custom Data Projects" (a separate, quote-only
+  engineering service) — two genuinely distinct offerings, not two descriptions of the
+  same thing.
+- **Matrix delivered as a published artifact** (also saved to the project root as
+  `leadvault-consistency-audit.html`) rather than a giant inline table, given its size —
+  same reporting convention as this session's earlier audit/positioning/blueprint
+  reports.
+- **Verified via `npm run build`** (zero errors, 17 pages) after the one edit. No visual
+  or structural redesign performed on any page, per this round's explicit instruction.
+- **Not deployed.** Consistent with recent rounds, pending explicit approval to
+  commit/push.

@@ -6,12 +6,18 @@ import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import SampleDataSection from '../components/SampleDataSection.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import { PRIMARY_TAGLINE } from '../data/site';
-import { ArrowRight, Check, Megaphone, Users, Code, Compass } from '@lucide/astro';
+import { ArrowRight, Check, Megaphone, Ship, Code, Compass } from '@lucide/astro';
 
 // Positioning-pass round (see ASSUMPTIONS.md) — lets the three priority ICPs
 // self-identify near the top of the page, before Problem/Solution. No card
 // links to a dedicated landing page (none exist yet — that's a later phase);
 // all three point at the same real next step everyone else on the page uses.
+// Pre-launch completion round: swapped Recruitment Agencies for International
+// Traders/Importers/Exporters — the current, explicitly-stated Phase 3 ICP
+// priority is Agencies / SaaS / Trade, not Agencies / Recruitment / SaaS.
+// Recruitment remains a real, supported use case (Data Catalog category,
+// Industries page, the "Other" card below) — just no longer one of the three
+// featured here, matching where it currently ranks.
 const icpGroups = [
   {
     icon: Megaphone,
@@ -19,14 +25,14 @@ const icpGroups = [
     body: "Give us a client's ICP — industry, geography, company size, role — and we research the matching prospect list, ready for outreach.",
   },
   {
-    icon: Users,
-    title: 'Recruitment Agencies',
-    body: "Tell us the roles you're hiring for or the employers you're targeting, and we research the companies and decision-makers that match.",
-  },
-  {
     icon: Code,
     title: 'B2B SaaS & Sales Teams',
     body: 'Define your ideal customer by industry, company size, role, and geography — we research and deliver the matching prospect data.',
+  },
+  {
+    icon: Ship,
+    title: 'International Traders, Importers & Exporters',
+    body: 'Tell us your product, trade lane, and target market — we research and verify genuine buyers, suppliers, or shipper prospects for you.',
   },
   {
     icon: Compass,
@@ -69,8 +75,8 @@ const trustItems = [
 const processSteps = [
   'You tell us exactly who you need to reach — industry, role, location, company size, or any custom criteria.',
   'We source the records fresh for your order — not pulled from a stored, aging database.',
-  'Every record passes our verification pipeline: MX checks, bounce and hygiene screening, duplicate removal.',
-  'You receive a clean CSV, plus a short summary of what was checked and how.',
+  'Every record passes our verification pipeline: deliverability checks, bounce and hygiene screening, duplicate removal.',
+  'You receive a clean Google Sheet (CSV and Excel also available), plus a short summary of what was checked and how.',
   'If more than 5% of a delivery proves invalid within 14 days, we replace it — see our Refund & Replacement Policy.',
 ];
 ---
@@ -97,7 +103,7 @@ const processSteps = [
         request.</strong>
       </p>
       <p class="mt-4 text-white/75">
-        From marketing agencies and SaaS sales teams to recruiters and importers — businesses across
+        From marketing agencies and SaaS sales teams to importers and exporters — businesses across
         the USA, UK, Canada, Nigeria, and beyond trust LeadVault to research the prospects they can't
         find themselves.
       </p>

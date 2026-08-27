@@ -132,3 +132,23 @@ export const NEED_SLUG_TO_OPTION: Record<string, string> = {
   'fully-custom-specification': 'Custom data project',
   'managed-email-campaigns': 'Managed email campaigns',
 };
+
+// The fixed-price, one-time dataset tiers shown on /pricing. Single source of
+// truth for both that page's table/"Request This Tier" links and the contact
+// form's ?tier=<slug> pre-fill script (payment/pricing audit round — see
+// ASSUMPTIONS.md) — keeps the price shown on Pricing and the price named in
+// the pre-filled contact request from ever drifting apart.
+export interface DatasetTier {
+  slug: string;
+  name: string;
+  records: string;
+  price: string;
+  volumeBucket: string;
+}
+
+export const DATASET_TIERS: DatasetTier[] = [
+  { slug: 'prospect-sample', name: 'Prospect Sample', records: '100', price: '$29', volumeBucket: 'Under 500' },
+  { slug: 'targeted-list', name: 'Targeted List', records: '250', price: '$59', volumeBucket: 'Under 500' },
+  { slug: 'campaign-list', name: 'Campaign List', records: '500', price: '$99', volumeBucket: '500–2,500' },
+  { slug: 'larger-campaign', name: 'Larger Campaign', records: '1,000', price: '$179', volumeBucket: '500–2,500' },
+];

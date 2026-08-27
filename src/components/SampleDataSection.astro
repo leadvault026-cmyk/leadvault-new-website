@@ -22,7 +22,7 @@ const PREVIEW_ROWS = 3;
     <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">Want to See What a LeadVault Dataset Looks Like Before Requesting One?</h2>
     <p class="mt-4 text-white/75">
       Every category in our Data Catalog ships with a real sample preview — showing the fields,
-      formatting, and types of businesses a full research order would cover. Below: a preview of
+      formatting, and types of businesses a full research order would cover. Below: a preview of{' '}
       {featured.name}.
     </p>
     <div class="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -34,7 +34,8 @@ const PREVIEW_ROWS = 3;
     <ComparisonTable
       headers={featured.sample.headers}
       rows={featured.sample.rows.slice(0, PREVIEW_ROWS)}
-      caption={`Sample preview: ${featured.name} (illustrative, not real customer data)`}
+      caption={`Sample preview: ${featured.name} — illustrative, not real customer data`}
+      captionVisible
     />
     <p class="mt-3 text-xs text-white/50">{CATALOG_CATEGORIES.length} categories available in the full Data Catalog.</p>
   </div>

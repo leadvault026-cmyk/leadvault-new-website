@@ -10,12 +10,12 @@ const tools = [
   {
     icon: ShieldCheck,
     title: 'Email Verification',
-    body: 'Confirms every address is real and deliverable: MX record verification across all provider types (Office 365, Google Workspace, independent and broker mail servers), so "verified" means exactly that.',
+    body: 'Confirms every address is real and deliverable — checked across all provider types (Office 365, Google Workspace, independent and broker mail servers), so "verified" means exactly that.',
   },
   {
     icon: ListFilter,
-    title: 'MX Sorting',
-    body: 'Separates any verified list into per-provider segments (Gmail, Office 365, IONOS, and all other MX types) — the foundation of provider-by-provider deliverability testing and professional campaign sending.',
+    title: 'Deliverability Segmentation',
+    body: 'Separates any verified list into per-provider segments (Gmail, Office 365, IONOS, and others) — the foundation of provider-by-provider deliverability testing and professional campaign sending.',
   },
   {
     icon: Search,
@@ -34,8 +34,8 @@ const tools = [
   },
   {
     icon: Terminal,
-    title: 'Python Filtering',
-    body: 'The heart of client work: purpose-written scripts slicing large datasets to precise specifications — roles, industries, geographies, company sizes — output as clean, structured CSV.',
+    title: 'Precision Filtering',
+    body: 'The heart of client work: a purpose-built filtering process that narrows large datasets to precise specifications — roles, industries, geographies, company sizes — output as a clean, structured Google Sheet, CSV, or Excel file.',
   },
   {
     icon: Wrench,
@@ -47,15 +47,15 @@ const tools = [
 const pipelineStages = [
   { icon: Search, label: 'RESEARCH', desc: 'Prospects gathered to your exact specification' },
   { icon: ListFilter, label: 'FILTER', desc: 'Narrowed to your criteria — role, industry, geography, size' },
-  { icon: ShieldCheck, label: 'VERIFY', desc: 'MX checks, bounce & activity screening' },
+  { icon: ShieldCheck, label: 'VERIFY', desc: 'Deliverability checks, bounce & activity screening' },
   { icon: Sparkles, label: 'CLEAN', desc: 'Duplicates & dead entries removed' },
-  { icon: MailCheck, label: 'DELIVER', desc: 'Clean CSV, straight to your inbox' },
+  { icon: MailCheck, label: 'DELIVER', desc: 'Clean Google Sheet or CSV, straight to your inbox' },
 ];
 ---
 
 <BaseLayout
-  title="Custom Data Tools — Email Verification, MX Checks & Python Engineering | LeadVault"
-  description="The engineering behind LeadVault: in-house email verification, MX record checks, bounce scanning, extraction, advanced sending, and custom Python tools built for every challenge."
+  title="Custom Data Tools & Verification Process | LeadVault"
+  description="The engineering behind LeadVault: in-house email verification, deliverability testing, and custom-built research tools designed for every challenge."
   path="/tools"
 >
   <section class="section grid items-center gap-12 lg:grid-cols-2">
@@ -117,9 +117,10 @@ const pipelineStages = [
     <div class="section">
       <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
       <p class="mx-auto mt-5 max-w-3xl text-center text-white/75">
-        When you buy from a reseller, you inherit their shortcuts. When you buy from LeadVault,
-        your data has passed through technology we designed, understand, and continuously
-        improve. Quality isn't a promise on a website — it's engineered into the pipeline.
+        Every dataset is researched against your exact specification, then reviewed before it
+        reaches you. When you buy from a reseller, you inherit their shortcuts. When you buy from
+        LeadVault, your data has passed through a process we designed, understand, and
+        continuously improve. Quality isn't a promise on a website — it's built into the process.
       </p>
       <div class="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-3">
         <div class="card text-center">
@@ -132,7 +133,7 @@ const pipelineStages = [
         </div>
         <div class="card text-center">
           <h3 class="font-semibold text-white">Quality Control</h3>
-          <p class="mt-2 text-sm text-white/70">MX checks, bounce screening, and duplicate removal happen before anything reaches you.</p>
+          <p class="mt-2 text-sm text-white/70">Deliverability checks, bounce screening, and duplicate removal happen before anything reaches you.</p>
         </div>
       </div>
       <div class="mt-10 text-center">

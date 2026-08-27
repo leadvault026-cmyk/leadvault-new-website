@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import { DATASET_TIERS } from '../data/catalog';
 import { ArrowRight, Check } from '@lucide/astro';
 
 // Recurring prospect-research plans, not access to a static database — each
@@ -37,7 +38,7 @@ const subscriptions = [
 const managedCampaignIncludes = [
   'Campaign setup',
   'Data verification',
-  'MX sorting',
+  'Deliverability sorting',
   'Provider-aware testing',
   'Sending infrastructure',
   'Campaign execution',
@@ -55,11 +56,11 @@ const faqs = [
   },
   {
     question: 'How is data delivered?',
-    answer: 'Clean CSV files to your email. A self-serve portal is planned for a future phase — join the waitlist on the Data Catalog page.',
+    answer: 'To your email as a clean Google Sheet — our preferred format for easy filtering and re-use. CSV and Excel are also available on request. A self-serve portal is planned for a future phase — join the waitlist on the Data Catalog page.',
   },
   {
     question: 'How do I pay?',
-    answer: 'Payment is accepted in USD by international bank transfer or PayPal. Payment instructions are provided with your order. Custom projects: 50% deposit, balance on delivery.',
+    answer: "Payment is by international bank transfer, in USD. For the tiers above, request your tier and we'll send transfer instructions for that exact amount. For custom research, monthly plans, and Trade Desk engagements, we send a quote first — payment instructions follow once you approve it. Custom projects: 50% deposit, balance on delivery.",
   },
   {
     question: 'Do you offer refunds?',
@@ -86,8 +87,8 @@ const faqs = [
     <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Transparent Pricing. All in USD. Worldwide.</h1>
     <p class="mx-auto mt-5 max-w-3xl text-white/75">
       You define the prospects. We research, verify and deliver the dataset. Every price includes
-      the research to your specification, verification, cleaning, CSV delivery, and our
-      replacement guarantee.
+      the research to your specification, verification, cleaning, delivery in your preferred
+      format (Google Sheet, CSV, or Excel), and our replacement guarantee.
     </p>
     <p class="mx-auto mt-2 max-w-2xl text-sm font-medium text-[var(--color-lime)]">
       Straightforward pricing for targeted research and usable business data. Quality guaranteed
@@ -104,17 +105,31 @@ const faqs = [
           caption="Custom fresh dataset pricing by tier"
           headers={['Tier', 'Prospects', 'Price']}
           rows={[
-            ['Prospect Sample', '100', '$29'],
-            ['Targeted List', '250', '$59'],
-            ['Campaign List', '500', '$99'],
-            ['Larger Campaign', '1,000', '$179'],
+            ...DATASET_TIERS.map((t) => [t.name, t.records, t.price]),
             ['Custom Research', 'Quoted to your specification', 'From $299'],
           ]}
         />
       </div>
       <p class="mt-4 text-sm text-white/60">
         Includes: your exact specification · decision-maker filtering · per-order verification ·
-        bounce-free CSV · strategist notes.
+        bounce-free Google Sheet or CSV · strategist notes.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        {DATASET_TIERS.map((t) => (
+          <a
+            href={`/contact?tier=${t.slug}`}
+            data-cta={`pricing-tier-${t.slug}`}
+            class="btn-outline !px-4 !py-2 text-sm"
+          >
+            Request {t.name} ({t.records} · {t.price})
+          </a>
+        ))}
+      </div>
+      <p class="mt-3 max-w-2xl text-xs text-white/50">
+        Requesting a tier confirms the exact dataset and amount — we'll follow up with bank
+        transfer payment instructions for that price. Nothing is charged automatically. Custom
+        Research is quoted first; see "How do I pay?" below.
       </p>
     </div>
   </section>

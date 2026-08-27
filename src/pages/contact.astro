@@ -88,6 +88,10 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
     </div>
 
     <div class="card">
+      <p class="mb-5 rounded-md border border-[var(--color-lime)]/30 bg-[var(--color-lime)]/10 px-4 py-3 text-sm text-white/85">
+        <strong class="text-[var(--color-lime)]">Free, no-obligation quote.</strong> We'll review
+        your requirements and recommend the right option — nothing is charged until you approve it.
+      </p>
       <form
         id="lead-survey-form"
         name="lead-survey"
@@ -156,7 +160,7 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
           <label for="ideal-customer" class="mb-1.5 block text-sm font-medium text-white">
             Who is your ideal customer or counterparty?
           </label>
-          <input id="ideal-customer" name="Ideal Customer" type="text" class="lv-input" />
+          <input id="ideal-customer" name="Ideal Customer" type="text" placeholder="e.g. VP of Sales at 50–200 person SaaS companies" class="lv-input" />
         </div>
 
         <div>
@@ -188,7 +192,7 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
           <textarea id="challenge" name="Biggest Challenge" rows="4" class="lv-input"></textarea>
         </div>
 
-        <button type="submit" class="btn-primary w-full">Submit My Data Request <ArrowRight size={18} /></button>
+        <button type="submit" class="btn-primary w-[calc(100%-2rem)] !px-4 text-sm sm:text-base">Submit My Data Request <ArrowRight size={18} /></button>
 
         <p class="text-xs text-white/50">
           By submitting, you agree to be contacted by LeadVault via email, phone, or WhatsApp. We
@@ -201,15 +205,16 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
 </BaseLayout>
 
 <script>
-  import { NEED_SLUG_TO_OPTION, CATALOG_CATEGORIES } from '../data/catalog';
+  import { NEED_SLUG_TO_OPTION, CATALOG_CATEGORIES, DATASET_TIERS } from '../data/catalog';
+
+  const params = new URLSearchParams(window.location.search);
+  const needSelect = document.getElementById('need') as HTMLSelectElement | null;
+  const idealCustomer = document.getElementById('ideal-customer') as HTMLInputElement | null;
 
   // Data Catalog "Request This Dataset" buttons link to /contact?need=<category-slug>
   // (CLAUDE.md). Pre-fill "What do you need?" + the "ideal customer" field from it.
-  const params = new URLSearchParams(window.location.search);
   const slug = params.get('need');
   if (slug) {
-    const needSelect = document.getElementById('need') as HTMLSelectElement | null;
-    const idealCustomer = document.getElementById('ideal-customer') as HTMLInputElement | null;
     const category = CATALOG_CATEGORIES.find((c) => c.slug === slug);
     const needOption = NEED_SLUG_TO_OPTION[slug] ?? (category ? 'Fresh custom dataset' : undefined);
 
@@ -218,6 +223,24 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
     }
     if (idealCustomer && category && !idealCustomer.value) {
       idealCustomer.value = `Interested in: ${category.name}`;
+    }
+  }
+
+  // Pricing's "Request This Tier" links use /contact?tier=<slug> so a visitor's
+  // exact dataset and price carry over unambiguously (payment/pricing audit
+  // round — see ASSUMPTIONS.md). Pre-fills "What do you need?", "Approximate
+  // volume needed", and names the tier in "ideal customer" for the strategist.
+  const tierSlug = params.get('tier');
+  if (tierSlug) {
+    const tier = DATASET_TIERS.find((t) => t.slug === tierSlug);
+    const volumeSelect = document.getElementById('volume') as HTMLSelectElement | null;
+
+    if (tier) {
+      if (needSelect) needSelect.value = 'Fresh custom dataset';
+      if (volumeSelect) volumeSelect.value = tier.volumeBucket;
+      if (idealCustomer && !idealCustomer.value) {
+        idealCustomer.value = `Requesting: ${tier.name} — ${tier.records} prospects, ${tier.price}`;
+      }
     }
   }
 </script>

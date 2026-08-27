@@ -3,27 +3,39 @@ interface Props {
   headers: string[];
   rows: string[][];
   caption?: string;
+  /** Show `caption` as real on-page text (not just sr-only) — for tables
+   * presenting fictional sample records, where visitors must be able to see,
+   * not just have announced to them, that it's illustrative and not a real
+   * customer database (Data Catalog audit — see ASSUMPTIONS.md). Defaults to
+   * false so every other ComparisonTable usage (Pricing, comparison tables)
+   * is unaffected. */
+  captionVisible?: boolean;
   class?: string;
 }
-const { headers, rows, caption, class: className = '' } = Astro.props;
+const { headers, rows, caption, captionVisible = false, class: className = '' } = Astro.props;
 ---
 
-<div class={`table-wrap ${className}`}>
-  <table class="lv-table">
-    {caption && <caption class="sr-only">{caption}</caption>}
-    <thead>
-      <tr>
-        {headers.map((h) => <th scope="col">{h}</th>)}
-      </tr>
-    </thead>
-    <tbody>
-      {rows.map((row) => (
+<Fragment>
+  {caption && captionVisible && (
+    <p class="mb-2 text-xs font-medium text-white/60">{caption}</p>
+  )}
+  <div class={`table-wrap ${className}`}>
+    <table class="lv-table">
+      {caption && <caption class="sr-only">{caption}</caption>}
+      <thead>
         <tr>
-          {row.map((cell, i) =>
-            i === 0 ? <th scope="row" class="bg-transparent! font-medium text-white">{cell}</th> : <td>{cell}</td>
-          )}
+          {headers.map((h) => <th scope="col">{h}</th>)}
         </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr>
+            {row.map((cell, i) =>
+              i === 0 ? <th scope="row" class="bg-transparent! font-medium text-white">{cell}</th> : <td>{cell}</td>
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Fragment>
