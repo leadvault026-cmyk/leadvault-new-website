@@ -69,7 +69,13 @@ export const LEGAL_LINKS: NavLink[] = [
 
 export const SITE_NAME = 'LeadVault';
 export const SITE_URL = 'https://leadvaultdata.com';
-export const PRIMARY_TAGLINE = 'Every Business Needs Leads. Every Lead Starts Here.';
+// Positioning-pass correction (see ASSUMPTIONS.md, Round 12): the old tagline
+// ("Every Business Needs Leads. Every Lead Starts Here.") was never actually
+// imported anywhere — index.astro's H1 and Footer.astro's tagline each held
+// their own hardcoded copy of the same string, so updating it here alone
+// wouldn't have changed anything live. Both now import PRIMARY_TAGLINE
+// directly, so there's exactly one place to change this going forward.
+export const PRIMARY_TAGLINE = "Tell Us Who You Need to Reach. We'll Research the Prospects That Match.";
 export const SECONDARY_TAGLINE = 'Every Business Needs Us — Or Our Data.';
 
 // Real contact details supplied by the client. WHATSAPP_NUMBER_INTL is digits-only

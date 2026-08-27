@@ -579,3 +579,124 @@ those answers — nothing here is a guess.
   all four require live infrastructure or a driven browser this round didn't have
   access to; each is called out explicitly, not silently skipped, in the implementation
   report delivered alongside this round.
+
+## Round 11 (positioning pass — ICP self-identification, CTA consistency, not yet deployed)
+
+Follow-up to Round 10, prompted by a second, larger instruction set: the credibility
+fixes were accepted, but the site still centered the founder's original trade-desk
+niche more than the three priority ICPs (marketing/lead-gen agencies, recruitment,
+SaaS/sales teams), and "recommendation"-style CTA language lingered in several spots
+Round 10 didn't touch. Unlike Round 10, this round was explicitly told to stop after
+implementing and reporting, not to deploy — so it stayed local, build-validated, and
+uncommitted pending review. See the companion implementation-report artifact for the
+full file-by-file account; the notable judgment calls:
+
+- **New homepage section, "Built for the Way You Prospect"** (`index.astro`, right
+  after the trust bar, before The Problem) — four cards (3 priority ICPs + "Other B2B
+  Research Needs") let a visitor self-identify early, per the instruction's explicit
+  ask. Deliberately not linked to per-ICP landing pages (none exist — a later phase,
+  per the instruction's own §30) — all four point at the same `/contact` CTA every
+  other undecided-visitor path on the site already uses. Inserting a new section broke
+  the homepage's background-alternation rhythm (CLAUDE.md's "no two same-tone sections
+  back to back" rule); traced the whole chain and found the minimal fix was flipping
+  just one *existing* section's tier (Solution: bg-mid → default) rather than
+  recoloring every section from the insertion point forward — everything downstream
+  already alternated correctly once that one link in the chain changed.
+- **"Request a Custom Recommendation" → "Request a Custom Dataset"** everywhere it
+  appeared (hero secondary, final-CTA secondary, Sample Data section, Pricing) — Round
+  10 introduced this phrase as the secondary CTA but didn't catch that "Recommendation"
+  was exactly the word this round's instruction wanted purged. Renamed the matching
+  `data-cta` tracking IDs to match (`*-custom-recommendation` → `*-custom-dataset`) so
+  analytics dashboards don't end up with an ID that no longer matches any visible copy.
+- **Contact form's own submit button changed** ("Submit — Get My Free Recommendation" →
+  "Submit My Data Request") — Round 10 deliberately left this one alone, reasoning a
+  submit button is a contextual, already-committed action rather than a top-level CTA.
+  This round's instruction explicitly re-examined that exact case and gave "Submit Data
+  Request" as its own suggested wording for this context, so it changed on direct
+  instruction rather than the earlier reasoning being wrong.
+- **Services' "Take the Survey" → "Tell Us What You Need"** — kept the button's actual
+  *intent* (a distinct, softer path for visitors who don't yet know what they need,
+  different from "Request a Custom Dataset" for visitors who do) rather than collapsing
+  it into the generic vocabulary, since the instruction was explicit: determine each
+  CTA's intent before changing it, don't blindly replace.
+- **Found and fixed a second, uncited data-decay figure** ("roughly a quarter of B2B
+  contacts go stale every year," `services.astro`'s Email List Cleaning card) that
+  Round 10 missed — that round's claims grep was scoped to `src/pages` broadly but
+  this exact phrasing ("a quarter," not "25–30%") didn't match the patterns searched
+  for. Corrected to the same cited 22–23% figure used on Home and Why LeadVault, and
+  ran a fresh repo-wide grep (including `src/components` this time) to confirm no
+  other instance was hiding behind different wording.
+- **Trade Desk explicitly separated from LeadVault's core positioning** — added a line
+  to `trade.astro`'s hero ("LeadVault researches B2B prospects for businesses of every
+  kind — the Trade Desk is our specialized version of that... for international
+  trade," with a link to `/services`) and reworded its Services-page subtitle ("our
+  original service" → "our specialized research service for international trade").
+  The Trade Desk itself, its testimonials-free copy, and its own CTAs were left
+  untouched — this was about the *frame* around it, not the page's content.
+- **About page's founding-story pivot paragraph rewritten**, not the founding story
+  itself — the three paragraphs describing the founder's actual trade-industry work
+  stayed (authentic personal history, explicitly protected). Only the final paragraph
+  (which already pivoted to "every data-driven business" pre-round) was strengthened to
+  name the transferable discipline explicitly ("take a specific requirement, research
+  it properly, deliver...") rather than just asserting the pivot happened.
+- **Industries and Why LeadVault page framings adjusted** (industries: "industries we
+  serve" → "examples of prospect research requirements we support"; Why LeadVault: added
+  an explicit "requirement-driven research" sub-heading to the LeadVault-model card) —
+  both light copy edits to existing, already-good structures, not rewrites.
+- **Not deployed.** Per this round's explicit instruction to stop and report before the
+  next phase, none of this is committed or pushed — it's local and build-validated
+  only (`npm run build`: 17/17 routes, 0 errors, run twice across this round). Round 10
+  is still what's live in production as of this entry.
+
+## Round 12 (correction pass — the hero slogan and plain-language section were missed)
+
+The client caught, correctly, that Round 11 renamed CTAs and added an ICP section but
+never touched the actual homepage hero headline ("Every Business Needs Leads. Every
+Lead Starts Here.") or the "What Is Lead Generation?" explainer beneath it — both of
+which still centered generic lead-gen positioning above everything Round 11 built.
+That's a real miss, not a difference of judgment.
+
+- **Root cause, not just symptom, fixed.** The old slogan turned out to be a genuinely
+  unused exported constant — `PRIMARY_TAGLINE` in `site.ts` was defined but never
+  imported anywhere; `index.astro`'s H1 and `Footer.astro`'s tagline each hardcoded
+  their own separate copy of the same string. That's *why* it was so easy to miss:
+  there was no single place a search-and-replace or a "did I update the tagline"
+  check would have caught both copies at once. Fixed the value **and** the structure —
+  both files now `import { PRIMARY_TAGLINE }` from the one constant, so this specific
+  failure mode (two copies silently drifting) can't recur for this string.
+- **New hero**: "Tell Us Who You Need to Reach. We'll Research the Prospects That
+  Match." — adapted from the client's own suggested direction. Subheadline and both
+  body paragraphs rewritten to lead with the research/verification/delivery mechanism
+  rather than "leads," while keeping the real geographic claim (country names, no
+  count) and the CTA pair from Round 11 untouched.
+- **"What Is Lead Generation? (In Plain English)" → "What Does LeadVault Actually
+  Do?"** — replaced the generic lead-gen definition (which implied buying-intent
+  scoring the service doesn't do — "people most likely to buy") with the client's
+  own supplied copy almost verbatim, since it was already well-written and explicitly
+  provided as the intended replacement.
+- **Globe caption added** — the hero globe (`HeroWorldGraphic.astro`) had no
+  supporting text under it at all before this round. Added two lines directly in
+  `index.astro` (not inside the component, which stays a pure SVG-inlining concern):
+  "Prospect research across markets worldwide" + "From North America and Europe to
+  Africa, the Middle East, Asia, and beyond" — descriptive geography, no customer or
+  country count attached.
+- **Sample Data section's own CTA renamed** "View Sample Data" → "Explore Sample
+  Data," matching the client's explicit contextual-CTA vocabulary (distinct from the
+  sitewide "Request Sample Data" used in the header/hero).
+- **Two more SEO titles fixed for the same reason as the hero**: the homepage's own
+  `<title>` and the Services page's `<title>` both led with "B2B Leads"/"Lead
+  Generation" — the exact category language the whole pass is moving away from.
+  Neither was touched in Round 11 because that round's SEO edits targeted five
+  specific pages (Contact/About/Industries/Pricing/Why LeadVault) without a
+  fresh sweep of title tags sitewide; this round's more thorough term search caught
+  both.
+- **Classified rather than blanket-changed** every remaining "recommendation" mention
+  (thank-you page, Terms of Service, Privacy Policy, Services' named "Data Strategy &
+  Recommendations") as **keep, specialist/contextual** — each describes a real,
+  accurate part of the process in a place a visitor only reaches after already
+  committing to a request, not a top-level marketing CTA. Recorded explicitly in the
+  audit table delivered before implementation, per instruction, rather than silently
+  left alone.
+- **Not deployed.** Same as Round 11 — stopped after implementing and reporting, per
+  explicit instruction. `npm run build`: 17/17 routes, 0 errors. Round 10 remains what's
+  live in production.

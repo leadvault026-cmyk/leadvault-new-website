@@ -15,7 +15,7 @@ const services = [
     id: 'managed-email-campaigns',
     icon: MailCheck,
     title: 'Managed Email Campaigns & Deliverability Engineering',
-    body: "Sending bulk email like it's 2010 is why your campaigns disappear. Most businesses gather a list and blast every address in one campaign — Gmail, Office 365, IONOS, and every other provider mixed together. That approach is dead. Today's mailbox providers use machine-learning filters, and each one judges your email differently: a message that lands perfectly in a Gmail inbox can vanish silently at Office 365. Send to them all identically, and your results — and sender reputation — suffer everywhere at once.",
+    body: "For agencies and outbound teams running client or in-house campaigns: sending bulk email like it's 2010 is why your campaigns disappear. Most businesses gather a list and blast every address in one campaign — Gmail, Office 365, IONOS, and every other provider mixed together. That approach is dead. Today's mailbox providers use machine-learning filters, and each one judges your email differently: a message that lands perfectly in a Gmail inbox can vanish silently at Office 365. Send to them all identically, and your results — and sender reputation — suffer everywhere at once.",
     listIntro: 'LeadVault runs your campaigns the way deliverability professionals do, using our own in-house engineered tools:',
     list: [
       'Clean & verify first — every address passes our verification pipeline before anything is sent.',
@@ -32,7 +32,7 @@ const services = [
   {
     icon: Sparkles,
     title: 'Email List Cleaning & Hygiene',
-    body: 'Lists age fast — roughly a quarter of B2B contacts go stale every year. Send us any list (bought anywhere, or built in-house) and we return it healthy:',
+    body: 'Lists age fast — independent research puts B2B contact decay at roughly 22–23% per year (see the citation on our homepage). Send us any list (bought anywhere, or built in-house) and we return it healthy:',
     list: [
       'MX record verification across Office 365, Google Workspace, and every provider type',
       'Bounce and dead-address removal before you ever hit "send"',
@@ -44,7 +44,7 @@ const services = [
   {
     icon: Handshake,
     title: 'Verified Buyer–Seller Matching',
-    subtitle: 'The Trade Desk — our original service',
+    subtitle: 'The Trade Desk — our specialized research service for international trade',
     body: 'The service that built LeadVault. For importers, exporters, and freight forwarders: we locate and verify genuine counterparties — buyers for your goods, suppliers you can trust, shippers who need forwarding — across international markets. Includes a strategist consultation on your trade lane.',
     price: 'From $449 per engagement.',
     cta: { label: 'Full details →', href: '/trade' },
@@ -78,8 +78,8 @@ const services = [
 ---
 
 <BaseLayout
-  title="B2B Lead Generation, List Cleaning & Custom Data Services | LeadVault"
-  description="Fresh verified leads, email list cleaning, custom Python-filtered datasets, buyer–seller matching, and data strategy — LeadVault's complete service suite for businesses worldwide."
+  title="B2B Prospect Research & Custom Data Services | LeadVault"
+  description="Custom prospect research, email list cleaning, custom-filtered datasets, buyer–seller matching, and data strategy — LeadVault's complete research and sourcing suite for businesses worldwide."
   path="/services"
 >
   <section class="section text-center">
@@ -137,7 +137,7 @@ const services = [
       ))}
       </div>
       <div class="mt-12 text-center">
-        <a href="/contact" class="btn-primary">Not Sure Where to Start? Take the Survey <ArrowRight size={18} /></a>
+        <a href="/contact" data-cta="services-not-sure" class="btn-primary">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>
