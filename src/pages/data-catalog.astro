@@ -34,14 +34,7 @@ const PREVIEW_ROW_COUNT = 4;
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {CATALOG_CATEGORIES.map((cat) => (
           <div class="card flex min-w-0 flex-col gap-4">
-            <div class="flex items-start justify-between gap-2">
-              <h2 class="text-lg font-semibold text-white">{cat.name}</h2>
-              {cat.highDemand && (
-                <span class="shrink-0 rounded-full bg-[var(--color-lime)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--color-lime-dark)]">
-                  High demand
-                </span>
-              )}
-            </div>
+            <h2 class="text-lg font-semibold text-white">{cat.name}</h2>
             <p class="text-sm leading-relaxed text-white/70">{cat.description}</p>
             <ComparisonTable
               headers={cat.sample.headers}

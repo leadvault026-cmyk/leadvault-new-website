@@ -3,9 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroWorldGraphic from '../components/HeroWorldGraphic.astro';
 import PipelineGraphic from '../components/PipelineGraphic.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
-import StatsSection from '../components/StatsSection.astro';
+import SampleDataSection from '../components/SampleDataSection.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
-import Testimonial from '../components/Testimonial.astro';
 import { ArrowRight, Check } from '@lucide/astro';
 
 const industries = [
@@ -29,32 +28,22 @@ const industries = [
 const trustItems = [
   'Verified Before Delivery',
   'Fresh — As Recent As 3 Days',
-  'Bounce-Free Guarantee',
+  'Replacement Guarantee',
   'Decision-Makers Only',
   'Worldwide Coverage',
 ];
 
-const testimonials = [
-  {
-    quote:
-      "I run an export business from Houston, and for years my biggest headache was finding genuine buyers back home and verified suppliers I could trust. Steven connected me with both. The contacts were real, the businesses were active, and deals actually closed. I've recommended him to everyone in my circle.",
-    attribution: 'A.O., Exporter — Houston, USA',
-  },
-  {
-    quote:
-      "Finding verified buyers for international trade is nearly impossible on your own — most contacts online are dead ends or scams. LeadVault's data was different: fresh, verified, and exactly the type of businesses I asked for.",
-    attribution: 'C.E., Freight Forwarder — Atlanta, USA',
-  },
-  {
-    quote:
-      "Every list I bought elsewhere was half dead — bounced emails, disconnected numbers. LeadVault's data connects. You can tell it was verified days before delivery, not years.",
-    attribution: 'T.M., Digital Marketing Agency Owner — Lagos',
-  },
-  {
-    quote:
-      'We needed decision-maker contacts in a very specific niche. LeadVault built a custom dataset to our exact specification and delivered it clean, in days. The response rate spoke for itself.',
-    attribution: 'R.A., B2B Sales Director — Dubai, UAE',
-  },
+// Replaces the removed testimonials section (see ASSUMPTIONS.md — no
+// consent trail could be confirmed for the previous quotes, so rather than
+// publish unverified social proof this explains the real, factual process
+// instead. Every step here matches what the site already states elsewhere
+// (verification pipeline on /tools, the 5%/14-day guarantee on /pricing).
+const processSteps = [
+  'You tell us exactly who you need to reach — industry, role, location, company size, or any custom criteria.',
+  'We source the records fresh for your order — not pulled from a stored, aging database.',
+  'Every record passes our verification pipeline: MX checks, bounce and hygiene screening, duplicate removal.',
+  'You receive a clean CSV, plus a short summary of what was checked and how.',
+  'If more than 5% of a delivery proves invalid within 14 days, we replace it — see our Refund & Replacement Policy.',
 ];
 ---
 
@@ -80,11 +69,12 @@ const testimonials = [
       </p>
       <p class="mt-4 text-white/75">
         From importers and freight forwarders to e-commerce brands and marketing agencies —
-        businesses on four continents trust LeadVault to find the customers they can't find themselves.
+        businesses across the USA, UK, Canada, Nigeria, and beyond trust LeadVault to find the
+        customers they can't find themselves.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact" class="btn-primary">Get Your Data <ArrowRight size={18} /></a>
-        <a href="#how-it-works" class="btn-outline">See How It Works</a>
+        <a href="/data-catalog" data-cta="hero-sample-data" class="btn-primary">Request Sample Data <ArrowRight size={18} /></a>
+        <a href="/contact" data-cta="hero-custom-recommendation" class="btn-outline">Request a Custom Recommendation</a>
       </div>
       <p class="mt-6 text-sm italic text-white/50">
         Serving businesses across the USA, UK, Canada, Nigeria, and worldwide.
@@ -124,8 +114,9 @@ const testimonials = [
       <p class="mt-5 text-white/75">
         Here's the industry's open secret: the big data platforms — the ones where you log in,
         search a giant database, and download a list — collected many of those records months or
-        years ago. People change jobs. Companies close. Emails die. Industry research consistently
-        shows B2B contact data decays by roughly a quarter to a third <strong class="text-white">every year</strong>.
+        years ago. People change jobs. Companies close. Emails die. Independent research puts B2B
+        contact data decay at roughly <strong class="text-white">22–23% every year</strong> —
+        <a href="https://www.cleanlist.ai/blog/2026-01-22-b2b-data-decay-statistics" target="_blank" rel="noopener noreferrer" class="underline hover:text-[var(--color-lime)]">see the research</a>.
       </p>
       <p class="mt-4 text-white/75">
         So when your emails bounce, your calls hit dead numbers, and your "decision-maker" left the
@@ -168,79 +159,6 @@ const testimonials = [
     </div>
   </section>
 
-  <!-- Born From Real Trade -->
-  <section class="section grid items-center gap-12 lg:grid-cols-2">
-    <div>
-      <p class="eyebrow">Our Origin</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">This Company Began With Real Deals — Not a Business Plan.</h2>
-      <p class="mt-5 text-white/75">
-        Before LeadVault had a name, our founder <strong class="text-white">Steven Ehimigbai</strong> spent
-        years doing one difficult thing extremely well: connecting Nigerian import/export businesses —
-        many run by Nigerians in the American diaspora — with <strong class="text-white">verified buyers
-        and sellers</strong> across borders.
-      </p>
-      <p class="mt-4 text-white/75">
-        International traders face a brutal problem: most "buyer lists" online are dead ends or
-        outright scams. Steven solved it the hard way — sourcing, checking, and matching real
-        counterparties, deal after deal, year after year. The reviews and referrals piled up. The
-        method became a system. The system became LeadVault.
-      </p>
-      <p class="mt-4 text-white/75">
-        Today, that same fresh-sourcing discipline serves every industry that runs on data — worldwide.
-      </p>
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/about" class="btn-primary">Read Our Story <ArrowRight size={18} /></a>
-        <a href="/trade" class="btn-outline">For Importers & Freight Forwarders</a>
-      </div>
-    </div>
-    <ImagePlaceholder
-      caption="IMAGE: container port at dusk with data-line overlay"
-      alt="Container port at dusk, cranes loading cargo containers"
-      ratio="aspect-[4/3]"
-      src="/photos/container-port-dusk.jpg"
-      width={1400}
-      height={933}
-    />
-  </section>
-
-  <!-- Data In Numbers -->
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
-    <div class="section">
-      <div class="mx-auto max-w-3xl text-center">
-        <p class="eyebrow">By The Numbers</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">The Numbers Behind the Vault</h2>
-      </div>
-      <div class="mt-12">
-        <StatsSection />
-      </div>
-    </div>
-  </section>
-
-  <!-- Who Buys From Us -->
-  <section class="section">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="eyebrow">Who We Serve</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Built for Businesses That Run on Data.</h2>
-      <p class="mt-5 text-white/75">
-        Some businesses need data occasionally. Others live on it daily. We serve both — but we're
-        built for the second kind:
-      </p>
-    </div>
-    <div class="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
-      {industries.map((industry) => (
-        <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
-          {industry}
-        </span>
-      ))}
-    </div>
-    <p class="mx-auto mt-6 max-w-2xl text-center text-white/60">
-      …and every other business that needs to reach the right people, reliably.
-    </p>
-    <div class="mt-8 text-center">
-      <a href="/industries" class="btn-primary">Explore Industries <ArrowRight size={18} /></a>
-    </div>
-  </section>
-
   <!-- Why Not Just Use The Big Platforms -->
   <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section">
@@ -271,14 +189,90 @@ const testimonials = [
     </div>
   </section>
 
-  <!-- Testimonials -->
+  <!-- Sample Data -->
+  <section id="sample-data" class="section scroll-mt-24">
+    <SampleDataSection />
+  </section>
+
+  <!-- Born From Real Trade -->
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+    <div class="section grid items-center gap-12 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow">Our Origin</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">This Company Began With Real Deals — Not a Business Plan.</h2>
+        <p class="mt-5 text-white/75">
+          Before LeadVault had a name, our founder <strong class="text-white">Steven Ehimigbai</strong> spent
+          years doing one difficult thing extremely well: connecting Nigerian import/export businesses —
+          many run by Nigerians in the American diaspora — with <strong class="text-white">verified buyers
+          and sellers</strong> across borders.
+        </p>
+        <p class="mt-4 text-white/75">
+          International traders face a brutal problem: most "buyer lists" online are dead ends or
+          outright scams. Steven solved it the hard way — sourcing, checking, and matching real
+          counterparties, deal after deal, year after year. The reviews and referrals piled up. The
+          method became a system. The system became LeadVault.
+        </p>
+        <p class="mt-4 text-white/75">
+          Today, that same fresh-sourcing discipline serves every industry that runs on data — worldwide.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/about" class="btn-primary">Read Our Story <ArrowRight size={18} /></a>
+          <a href="/trade" class="btn-outline">For Importers & Freight Forwarders</a>
+        </div>
+      </div>
+      <ImagePlaceholder
+        caption="IMAGE: container port at dusk with data-line overlay"
+        alt="Container port at dusk, cranes loading cargo containers"
+        ratio="aspect-[4/3]"
+        src="/photos/container-port-dusk.jpg"
+        width={1400}
+        height={933}
+      />
+    </div>
+  </section>
+
+  <!-- Who Buys From Us -->
   <section class="section">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="eyebrow">Testimonials</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Trusted by Traders, Agencies, and Growth Teams Worldwide</h2>
+      <p class="eyebrow">Who We Serve</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Built for Businesses That Run on Data.</h2>
+      <p class="mt-5 text-white/75">
+        Some businesses need data occasionally. Others live on it daily. We serve both — but we're
+        built for the second kind:
+      </p>
     </div>
-    <div class="mt-12 grid gap-6 sm:grid-cols-2">
-      {testimonials.map((t) => <Testimonial quote={t.quote} attribution={t.attribution} />)}
+    <div class="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
+      {industries.map((industry) => (
+        <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
+          {industry}
+        </span>
+      ))}
+    </div>
+    <p class="mx-auto mt-6 max-w-2xl text-center text-white/60">
+      …and every other business that needs to reach the right people, reliably.
+    </p>
+    <div class="mt-8 text-center">
+      <a href="/industries" class="btn-primary">Explore Industries <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">What Working With LeadVault Looks Like</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">No Guesswork. Just A Clear Process.</h2>
+      </div>
+      <ol class="mx-auto mt-10 max-w-2xl space-y-5">
+        {processSteps.map((item, i) => (
+          <li class="flex gap-4">
+            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-lime)] text-sm font-bold text-[var(--color-lime-dark)]">
+              {i + 1}
+            </span>
+            <p class="text-white/80">{item}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -290,8 +284,9 @@ const testimonials = [
         Tell us who you're looking for. A LeadVault strategist will come back within 24 hours with a
         free recommendation — the right data, the right volume, the right price. No obligation.
       </p>
-      <div class="mt-8">
-        <a href="/contact" class="btn-primary">Get My Free Recommendation <ArrowRight size={18} /></a>
+      <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a href="/data-catalog" data-cta="final-sample-data" class="btn-primary">Request Sample Data <ArrowRight size={18} /></a>
+        <a href="/contact" data-cta="final-custom-recommendation" class="btn-outline">Request a Custom Recommendation</a>
       </div>
     </div>
   </section>

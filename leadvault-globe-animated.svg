@@ -29,6 +29,10 @@
 <animate attributeName="stroke-dashoffset" from="0" to="-300" dur="1.8s" begin="2.3s" repeatCount="indefinite"/></path>
 <path d="M 1317 1183 Q 1620 700 1750 550" stroke="#29B6F6" stroke-width="12" stroke-dasharray="60 40" stroke-dashoffset="0">
 <animate attributeName="stroke-dashoffset" from="0" to="-900" dur="3.6s" begin="2.7s" repeatCount="indefinite"/></path>
+<path d="M 408 489 Q 1020 230 1750 550" stroke="#00D9FF" stroke-width="10" stroke-dasharray="60 40" stroke-dashoffset="0" opacity="0.85">
+<animate attributeName="stroke-dashoffset" from="0" to="-1500" dur="5.6s" begin="3.1s" repeatCount="indefinite"/></path>
+<path d="M 338 567 Q 850 500 1520 950" stroke="#B7FF00" stroke-width="10" stroke-dasharray="60 40" stroke-dashoffset="0" opacity="0.85">
+<animate attributeName="stroke-dashoffset" from="0" to="-1350" dur="5.3s" begin="3.5s" repeatCount="indefinite"/></path>
 </g>
 <g>
 <circle cx="1317" cy="1183" r="80" fill="#1DBF9F" opacity="0.25">

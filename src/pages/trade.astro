@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
-import Testimonial from '../components/Testimonial.astro';
 import { ArrowRight, Ship, Package, Truck, Globe, Warehouse } from '@lucide/astro';
 
 const audience = [
@@ -20,28 +19,11 @@ const receive = [
   'Guidance on approach — how to make contact, what to verify further, and red flags to watch',
 ];
 
-const testimonials = [
-  {
-    quote:
-      "I run an export business from Houston, and for years my biggest headache was finding genuine buyers back home and verified suppliers I could trust. Steven connected me with both. The contacts were real, the businesses were active, and deals actually closed. I've recommended him to everyone in my circle.",
-    attribution: 'A.O., Exporter — Houston, USA',
-  },
-  {
-    quote:
-      "Finding verified buyers for international trade is nearly impossible on your own — most contacts online are dead ends or scams. LeadVault's data was different: fresh, verified, and exactly the type of businesses I asked for.",
-    attribution: 'C.E., Freight Forwarder — Atlanta, USA',
-  },
-  {
-    quote:
-      "Every list I bought elsewhere was half dead — bounced emails, disconnected numbers. LeadVault's data connects. You can tell it was verified days before delivery, not years.",
-    attribution: 'T.M., Digital Marketing Agency Owner — Lagos',
-  },
-];
 ---
 
 <BaseLayout
   title="Verified Buyers, Sellers & Freight Leads for Importers & Exporters | LeadVault Trade Desk"
-  description="Stop chasing fake buyers. LeadVault finds and verifies genuine international buyers, suppliers, and freight clients — the service diaspora traders have trusted for years."
+  description="Stop chasing fake buyers. LeadVault finds and verifies genuine international buyers, suppliers, and freight clients — built on the founder's own hands-on trade experience."
   path="/trade"
 >
   <section class="section grid items-center gap-12 lg:grid-cols-2">
@@ -56,7 +38,7 @@ const testimonials = [
       <p class="mt-4 text-white/75">
         LeadVault solves the problem the way it must be solved: <strong class="text-white">human-verified,
         freshly-sourced counterparty data</strong> — the service our founder built his name on,
-        trusted for years by importers, exporters, and freight forwarders across the USA, UK, Canada, and Nigeria.
+        serving importers, exporters, and freight forwarders across the USA, UK, Canada, and Nigeria.
       </p>
       <div class="mt-8">
         <a href="/contact?need=trade-desk" class="btn-primary">Find My Buyers/Suppliers <ArrowRight size={18} /></a>
@@ -92,8 +74,8 @@ const testimonials = [
         system that now powers everything LeadVault does.
       </p>
       <p class="mt-4 text-white/75">
-        When you use the Trade Desk, you're not trying a new product. You're joining a service with
-        years of closed deals behind it.
+        When you use the Trade Desk, you're not trying a new product. You're joining a service built
+        directly on that hands-on trade experience.
       </p>
     </div>
   </section>
@@ -123,19 +105,10 @@ const testimonials = [
         rows={[
           ['Anonymous, unverifiable, often scams', 'Every counterparty checked before delivery'],
           ['Sold to hundreds of buyers', 'Sourced for your specification'],
-          ['No accountability', 'A named company with years of testimonials'],
+          ['No accountability', 'A named company you can contact directly'],
           ['List only', 'Data + strategy + approach guidance'],
         ]}
       />
-    </div>
-  </section>
-
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
-    <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Trade Testimonials</h2>
-      <div class="mt-10 grid gap-6 sm:grid-cols-3">
-        {testimonials.map((t) => <Testimonial quote={t.quote} attribution={t.attribution} />)}
-      </div>
     </div>
   </section>
 

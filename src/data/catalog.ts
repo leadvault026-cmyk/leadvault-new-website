@@ -25,7 +25,6 @@ export interface CatalogCategory {
   name: string;
   description: string;
   turnaround: string;
-  highDemand?: boolean;
   sample: ParsedCsv;
 }
 
@@ -77,7 +76,6 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
     name: 'Investment & Investor Leads',
     description: 'Verified investors, HNW prospects, financial advisors, and capital-seeking businesses',
     turnaround: '3–5 days',
-    highDemand: true,
     sample: parseCsv(investmentInvestorLeadsCsv),
   },
   {

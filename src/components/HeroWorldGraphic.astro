@@ -1,13 +1,18 @@
 ---
 // Hero visual centerpiece. Inlines leadvault-globe-animated.svg (project
 // root) — accurate geography, multicolor countries, labeled nodes for
-// USA/UK/Canada/Nigeria/Worldwide. Geography, colors, and labels are
-// untouched from the delivered file; the 5 connection-arc animations were
-// changed from a one-time draw-and-freeze to a continuous flowing loop
-// (repeatCount="indefinite") per follow-up feedback asking for continuous
-// arc movement — see ASSUMPTIONS.md. Globe rotation (also requested) is
-// added below as pure CSS on the country-shapes group only, with zero
-// changes to the SVG file itself.
+// USA/UK/Canada/Nigeria/Worldwide/UAE/Asia. Geography, colors, and labels
+// on the original 7 delivered nodes are untouched; the connection-arc
+// animations were changed from a one-time draw-and-freeze to a continuous
+// flowing loop (repeatCount="indefinite") per follow-up feedback asking for
+// continuous arc movement — see ASSUMPTIONS.md. Two additional arcs
+// (Canada<->Asia, USA<->UAE, in the site's own cyan/lime accent colors)
+// were added later, connecting existing labeled nodes to each other rather
+// than only to the Nigeria hub, so the graphic reads as a genuine network
+// rather than a single hub-and-spoke — same path/animate pattern as the
+// other 7 arcs, no new geography or nodes introduced. Globe rotation (also
+// requested) is added below as pure CSS on the country-shapes group only,
+// with zero changes to the SVG file's own markup beyond the two new arcs.
 // Vite's `?raw` suffix inlines the file's contents as a string at build
 // time (resolved relative to this file, not the runtime output location) —
 // unlike a runtime fs.readFileSync, this survives production builds, where

@@ -65,7 +65,7 @@ const faqs = [
   },
   {
     question: 'How do I pay?',
-    answer: 'USD, via [payment methods — confirm: card / PayPal / bank transfer]. Custom projects: 50% deposit, balance on delivery.',
+    answer: 'USD, via international bank transfer or PayPal. Payment instructions are provided directly with your order. Custom projects: 50% deposit, balance on delivery.',
   },
   {
     question: 'Do you offer refunds?',
@@ -228,8 +228,18 @@ const faqs = [
         <FaqAccordion items={faqs} />
       </div>
       <div class="mt-10 text-center">
-        <a href="/contact" class="btn-primary">Get My Free Recommendation <ArrowRight size={18} /></a>
+        <a href="/contact" class="btn-primary">Request a Custom Recommendation <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+})} />

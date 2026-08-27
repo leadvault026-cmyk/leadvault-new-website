@@ -153,5 +153,23 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
     </main>
     <Footer />
     <WhatsAppButton />
+    <script>
+      // Sitewide CTA click tracking (credibility-pass round — see ASSUMPTIONS.md).
+      // Any element with data-cta="..." fires a GA4/Meta event on click, guarded
+      // exactly like the /thank-you conversion events: gtag/fbq only exist once
+      // BaseLayout's real GA4_MEASUREMENT_ID/META_PIXEL_ID replace the
+      // placeholders, so this silently no-ops until analytics is actually live.
+      document.addEventListener('click', (e) => {
+        const el = (e.target as HTMLElement)?.closest<HTMLElement>('[data-cta]');
+        if (!el) return;
+        const cta = el.dataset.cta;
+        if (typeof (window as any).gtag === 'function') {
+          (window as any).gtag('event', 'cta_click', { cta_id: cta });
+        }
+        if (typeof (window as any).fbq === 'function') {
+          (window as any).fbq('trackCustom', 'CTAClick', { cta_id: cta });
+        }
+      });
+    </script>
   </body>
 </html>

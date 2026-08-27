@@ -18,78 +18,110 @@ import {
   ArrowRight,
 } from '@lucide/astro';
 
-const industries = [
+// Grouped rather than a flat list (credibility-pass round — see ASSUMPTIONS.md).
+// The "Sales & Growth Teams" group leads because it contains the three ICPs
+// this acquisition push is prioritizing (marketing/lead-gen agencies, SaaS,
+// and — pending validation — recruitment sits in its own group below rather
+// than folded in here). This is a strategic ordering choice, not a claim
+// about actual demand: nothing on this page says these are "highest-demand"
+// or "most popular," since that isn't something we can currently prove.
+const groups = [
   {
-    icon: ShoppingCart,
-    title: 'E-commerce & Online Retail',
-    body: 'Reach suppliers, wholesale buyers, affiliates, and B2B customers. Clean data powers your cold campaigns and partnership outreach.',
+    label: 'Sales & Growth Teams',
+    items: [
+      {
+        icon: Megaphone,
+        title: 'Marketing & Advertising Agencies',
+        body: "Buy verified data for your clients' campaigns and white-label our delivery. One agency partner, unlimited client use cases.",
+        note: '(Ask about Agency Partner Plans.)',
+      },
+      {
+        icon: Mail,
+        title: 'Cold Email & Outreach Teams',
+        body: 'Deliverability is your lifeblood. Freshly verified prospects and our own MX-sorting and cleaning pipeline protect your domains and reply rates.',
+      },
+      {
+        icon: Code,
+        title: 'SaaS & Software Companies',
+        body: 'Decision-maker data filtered by role, company size, and tech-relevant signals for your outbound engine.',
+      },
+      {
+        icon: ShoppingCart,
+        title: 'E-commerce & Online Retail',
+        body: 'Reach suppliers, wholesale buyers, affiliates, and B2B customers. Clean data powers your cold campaigns and partnership outreach.',
+      },
+    ],
   },
   {
-    icon: Megaphone,
-    title: 'Marketing & Advertising Agencies',
-    body: "Buy verified data for your clients' campaigns and white-label our delivery. One agency partner, unlimited client use cases.",
-    note: '(Ask about Agency Partner Plans.)',
+    label: 'Talent & Recruitment',
+    items: [
+      {
+        icon: Users,
+        title: 'Recruitment & Staffing',
+        body: 'Source both sides: hiring decision-makers as clients, and candidate pools by profession and region.',
+      },
+    ],
   },
   {
-    icon: Mail,
-    title: 'Cold Email & Outreach Teams',
-    body: 'Deliverability is your lifeblood. Bounce-free, freshly verified prospects protect your domains and multiply reply rates.',
+    label: 'Professional & Financial Services',
+    items: [
+      {
+        icon: TrendingUp,
+        title: 'Investment & Financial Services',
+        body: 'Verified investor leads, high-net-worth prospects, financial advisors, and capital-seeking businesses — for firms raising funds, selling investment products, or building client books.',
+      },
+      {
+        icon: CreditCard,
+        title: 'Fintech, Lending & Payments',
+        body: 'Verified SME and merchant data for product outreach — compliant and current.',
+      },
+      {
+        icon: Shield,
+        title: 'Insurance Brokers & Agents',
+        body: 'Individuals and businesses matching your policy products, fresh enough to still be shopping.',
+      },
+      {
+        icon: HomeIcon,
+        title: 'Real Estate & Property Marketing',
+        body: 'Investor lists, buyer prospects, and developer contacts in your target locations.',
+      },
+      {
+        icon: BarChart3,
+        title: 'Market Research & Consulting',
+        body: "Custom datasets built to your study's exact specification, delivered research-ready.",
+      },
+    ],
   },
   {
-    icon: Ship,
-    title: 'Importers, Exporters & Freight Forwarders',
-    body: 'Our founding specialty.',
-    cta: { label: 'Dedicated page →', href: '/trade' },
+    label: 'Trade & Distribution',
+    items: [
+      {
+        icon: Ship,
+        title: 'Importers, Exporters & Freight Forwarders',
+        body: 'Our founding specialty.',
+        cta: { label: 'Dedicated page →', href: '/trade' },
+      },
+      {
+        icon: Package,
+        title: 'Wholesalers & Distributors',
+        body: 'Retailer and reseller contacts across your product categories and territories.',
+      },
+    ],
   },
   {
-    icon: Code,
-    title: 'SaaS & Software Companies',
-    body: 'Decision-maker data filtered by role, company size, and tech-relevant signals for your outbound engine.',
-  },
-  {
-    icon: Users,
-    title: 'Recruitment & Staffing',
-    body: 'Source both sides: hiring decision-makers as clients, and candidate pools by profession and region.',
-  },
-  {
-    icon: HomeIcon,
-    title: 'Real Estate & Property Marketing',
-    body: 'Investor lists, buyer prospects, and developer contacts in your target locations.',
-  },
-  {
-    icon: CreditCard,
-    title: 'Fintech, Lending & Payments',
-    body: 'Verified SME and merchant data for product outreach — compliant and current.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Investment & Financial Services',
-    body: 'One of the highest-demand data categories in the vault. Verified investor leads, high-net-worth prospects, financial advisors, and capital-seeking businesses — for firms raising funds, selling investment products, or building client books.',
-  },
-  {
-    icon: Shield,
-    title: 'Insurance Brokers & Agents',
-    body: 'Individuals and businesses matching your policy products, fresh enough to still be shopping.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Market Research & Consulting',
-    body: "Custom datasets built to your study's exact specification, delivered research-ready.",
-  },
-  {
-    icon: Phone,
-    title: 'Call Centers & Telemarketing',
-    body: 'Volume with validity: contact data that keeps agents talking to real people.',
-  },
-  {
-    icon: Calendar,
-    title: 'Events & Trade Shows',
-    body: 'Fill rooms and exhibitor lists with verified industry contacts.',
-  },
-  {
-    icon: Package,
-    title: 'Wholesalers & Distributors',
-    body: 'Retailer and reseller contacts across your product categories and territories.',
+    label: 'Outreach & Events',
+    items: [
+      {
+        icon: Phone,
+        title: 'Call Centers & Telemarketing',
+        body: 'Volume with validity: contact data that keeps agents talking to real people.',
+      },
+      {
+        icon: Calendar,
+        title: 'Events & Trade Shows',
+        body: 'Fill rooms and exhibitor lists with verified industry contacts.',
+      },
+    ],
   },
 ];
 ---
@@ -101,7 +133,7 @@ const industries = [
 >
   <section class="section text-center">
     <p class="eyebrow">Industries We Serve</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">If Your Business Runs on Reaching People, We're Built for You.</h1>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Built for Teams That Need Targeted Prospect Data.</h1>
     <p class="mx-auto mt-5 max-w-3xl text-white/75">
       Every industry below shares one trait: growth depends on contacting the right people, at
       scale, reliably. Here's what fresh, verified data does for each.
@@ -109,26 +141,31 @@ const industries = [
   </section>
 
   <section class="section-alt">
-    <div class="section">
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {industries.map((ind) => (
-          <div class="card flex flex-col gap-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-              <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
-            </div>
-            <h2 class="text-lg font-semibold text-white">{ind.title}</h2>
-            <p class="text-sm leading-relaxed text-white/70">{ind.body}</p>
-            {ind.note && <p class="text-xs italic text-white/50">{ind.note}</p>}
-            {ind.cta && (
-              <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">
-                {ind.cta.label}
-              </a>
-            )}
+    <div class="section space-y-14">
+      {groups.map((group) => (
+        <div>
+          <h2 class="text-xl font-bold text-white sm:text-2xl">{group.label}</h2>
+          <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {group.items.map((ind) => (
+              <div class="card flex flex-col gap-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+                  <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
+                </div>
+                <h3 class="text-lg font-semibold text-white">{ind.title}</h3>
+                <p class="text-sm leading-relaxed text-white/70">{ind.body}</p>
+                {ind.note && <p class="text-xs italic text-white/50">{ind.note}</p>}
+                {ind.cta && (
+                  <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">
+                    {ind.cta.label}
+                  </a>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
 
-      <div class="card mt-10 flex flex-col items-center gap-4 text-center">
+      <div class="card flex flex-col items-center gap-4 text-center">
         <h2 class="text-xl font-bold text-white">Don't see your industry?</h2>
         <p class="max-w-xl text-white/70">If your growth depends on reaching people, we can source for you.</p>
         <a href="/contact" class="btn-primary">Ask Us <ArrowRight size={18} /></a>

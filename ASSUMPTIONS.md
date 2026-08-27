@@ -445,3 +445,137 @@ than for design judgment calls.
   `<style>` block into `global.css`** as a shared utility, since the Removal Request
   form's fields needed the identical styling — kept the one definition rather than
   duplicating the block onto a second page.
+
+## Round 10 (credibility pass — unverified claims removed ahead of acquisition push)
+
+Prompted by a formal audit (see the published audit artifact referenced in conversation)
+that flagged every specific, unverifiable claim on the live site as a liability going
+into real client acquisition. The owner directly confirmed, for the record: no consent
+trail exists for the four published testimonials; no specific founding year can be
+named; no real methodology/data exists behind the 96% deliverability figure; and the
+only currently-operational payment channels are bank transfer and PayPal, arranged
+manually (not a live automated checkout). Every change below follows directly from
+those answers — nothing here is a guess.
+
+- **Removed all four homepage stats (5+ years, 80,000+ datasets, 96% deliverability,
+  4 continents) — no replacement numbers invented.** `StatsSection.astro` is deleted
+  entirely (not repurposed under the same name — the component's whole reason for
+  existing was those four numbers). Replaced by `SampleDataSection.astro`, a new
+  component surfacing a real sample-CSV preview pulled directly from
+  `CATALOG_CATEGORIES` (the same parsed data the Data Catalog page uses) plus a
+  `CATALOG_CATEGORIES.length`-derived count — the one number on the new section is
+  computed from real data at build time, not typed in by hand.
+- **Removed all four testimonials** (2 shared between `index.astro` and `trade.astro`,
+  1 more on trade) and deleted the now-fully-unused `Testimonial.astro` component
+  (confirmed zero remaining imports repo-wide before deleting — same "don't leave a
+  stale, misleading asset in the repo" standard applied to `/logo/logo.svg` in the
+  design-review round). Index's testimonial slot is replaced with a 5-step "What
+  Working With LeadVault Looks Like" process list — reusing the numbered-lime-circle
+  pattern already established in `trade.astro`'s "What You Receive" section rather than
+  inventing new visual language — describing only steps already true and already stated
+  elsewhere on the site (the verification pipeline on `/tools`, the 5%/14-day
+  replacement guarantee on `/pricing`). Trade's testimonial slot needed no replacement:
+  its existing "What You Receive" numbered list already served the same
+  mechanism-over-adjectives role.
+- **Softened every remaining unanchored company-level "years"/duration claim** that
+  wasn't personally attributed to the founder: `trade.astro`'s hero ("trusted for
+  years by...") and meta description (same phrase), its comparison-table cell ("A named
+  company with years of testimonials" → "...you can contact directly," since the
+  testimonials it was citing as evidence no longer exist), its "years of closed deals
+  behind it" line, and `about.astro`'s "years of closed deals and testimonials before
+  this website ever existed" differentiator. Founder-personal narrative — "our founder
+  worked with... for years," "Steven built LeadVault on years of hands-on work," "For
+  years before this website existed, Steven Ehimigbai personally..." — was left
+  untouched throughout: it's attributed to a named individual's real work history, not
+  an unverifiable company-wide stat, and keeping it was an explicit instruction.
+- **"Bounce-Free Guarantee" → "Replacement Guarantee"** in the homepage trust bar,
+  matching the actual policy (`refund-replacement-policy.astro`, `pricing.astro`'s "Our
+  Replacement Guarantee" heading), which allows up to 5% invalid records within 14
+  days — "bounce-free" is absolute language the real policy doesn't back. Left the
+  unrelated "bounce-free CSV" phrasing on `pricing.astro`/`data-catalog.astro`/
+  `PipelineGraphic.astro` alone — those describe the delivered file's state at time of
+  send (the actual output of the verification pipeline), not a forward-looking
+  guarantee, which is a materially different claim.
+- **Removed the "High demand" badge from Investment & Investor Leads** (`catalog.ts`'s
+  `highDemand` flag and its rendering in `data-catalog.astro`) and the matching "one of
+  the highest-demand data categories" line on `industries.astro` — same unverifiable
+  pattern as the removed stats, just smaller. `industries.astro`'s new "Sales & Growth
+  Teams" group is ordered first (it contains the acquisition push's priority ICPs) but
+  the page explicitly does not claim this reflects actual demand — see its own code
+  comment — per the owner's instruction that recruitment's priority is a hypothesis to
+  validate, not a settled fact, and shouldn't be asserted as one anywhere on the site.
+- **B2B data-decay stat corrected from an uncited "25–30%" to a cited "22–23%."**
+  Web-searched for the actual widely-cited source rather than keeping the site's
+  existing unsourced figure or inventing a citation: MarketingSherpa's decay research
+  (via HubSpot's Database Decay Simulation) and Cleanlist's 2026 report both land on
+  ~22–23%/year, which is what's now stated on `index.astro` and `why-leadvault.astro`,
+  each linked to Cleanlist's report. Deliberately did not link ZoomInfo's own
+  data-decay research, despite it being the most prominent search result, since
+  ZoomInfo is named as a competitor elsewhere on the same pages — citing a competitor's
+  blog as the evidentiary source for an argument against that competitor's model would
+  undercut the citation's credibility.
+- **Payment-methods bracket resolved using the owner's actual confirmed answer**, not a
+  guess: `pricing.astro`'s FAQ now says "USD, via international bank transfer or
+  PayPal. Payment instructions are provided directly with your order" — naming only
+  the two channels the owner confirmed as real, and "payment instructions provided
+  directly" rather than implying a live automated checkout, since the owner also
+  confirmed nothing is automated yet.
+- **Contact page's privacy line rewritten to match the Privacy Policy exactly.**
+  "We never share your information with third parties" (false — the policy discloses
+  Netlify/Google/Meta as recipients) is now "We don't sell your personal information
+  — your submission is handled in accordance with our Privacy Policy," linked, using
+  the policy's own "we do not sell...for their own marketing purposes" language rather
+  than a new claim invented for the contact page.
+- **Primary CTA changed sitewide: "Get My Free Recommendation" → "Request Sample
+  Data"** (linking to `/data-catalog`, not a new/fake free-sample flow — the real,
+  already-functional path is viewing real sample CSVs and requesting one via the
+  existing contact-form pre-fill), with **"Request a Custom Recommendation"** (→
+  `/contact`) kept as the explicit secondary path for buyers who need something the
+  catalog doesn't cover. Changed in the one place this is genuinely the sitewide
+  primary CTA — the sticky header button (desktop + mobile) — plus the homepage hero
+  and final CTA and the new Sample Data section's own buttons. Page-specific CTAs
+  (Trade's "Find My Buyers/Suppliers," Services' "Take the Survey," the contact form's
+  own submit button) were deliberately left alone: they're contextually distinct
+  actions, not the generic top-level CTA the instruction targeted, and shortening them
+  wasn't asked for.
+- **Homepage section order changed**: Comparison table moved before the origin story
+  (was after); the new Sample Data section sits right after Comparison, ahead of the
+  origin story, so a first-time visitor reaches concrete proof before the founder's
+  personal history. This is the one deliberately non-mechanical judgment call in this
+  round — the instruction's suggested 13-section order would have produced a second,
+  redundant "how it works" block (the page already had one: the pipeline-graphic
+  Solution section), so rather than force every suggested slot to exist literally, the
+  reorder keeps the site's existing sections but sequences them buyer-understanding
+  → proof → origin, which was the stated intent.
+- **World map: 2 new arcs added, connecting existing labeled nodes to each other
+  (Canada↔Asia, USA↔UAE) instead of only to the Nigeria hub** — makes the graphic read
+  as a genuine network rather than a single hub-and-spoke, per the explicit instruction
+  to strengthen the arcs without touching geography, colors, or labels. Colors are the
+  site's own cyan/lime accent tokens (`#00D9FF`, `#B7FF00`) rather than a new palette —
+  a restrained, on-brand touch rather than a new visual language. Both arcs follow the
+  exact `<path>`/`<animate>` pattern already used by the file's original 7 arcs (same
+  stroke-dasharray draw-in technique, same "bow toward the top" curvature the other 7
+  already share), added as pure markup inside the existing arc `<g>` — no country
+  geometry, gradient, or node data touched. This is the one place this round edited the
+  delivered SVG asset directly, which every prior round avoided; done narrowly (2 new
+  self-contained elements, zero edits to existing ones) specifically because the
+  instruction explicitly asked for stronger arcs and explicitly forbade a redraw.
+- **Added FAQPage structured data to `/pricing`** (from the page's own real `faqs`
+  array — no content invented for the schema) and **Service/ItemList structured data to
+  `/services`** (from the real `services` array). Both were flagged as missing in the
+  original audit; added now since they're low-risk, additive, and directly requested.
+- **Added sitewide CTA click tracking** (`data-cta` attributes + one delegated listener
+  in `BaseLayout.astro`, firing `gtag('event','cta_click',...)` / `fbq('trackCustom',
+  'CTAClick',...)`) — guarded by the same `typeof gtag === 'function'` pattern already
+  used for the `/thank-you` conversion events, so it's a genuine no-op until GA4/Pixel
+  are confirmed live, not new tracking infrastructure bolted on separately. Tags the
+  header (desktop + mobile), hero, Sample Data section, and final-CTA buttons.
+- **What was not done, and why**: no Content-Security-Policy header was added — the
+  instruction explicitly warned against introducing one without thoroughly testing it
+  against analytics/fonts/forms first, and this round had no live-browser session
+  available to do that testing safely. No live Netlify Forms submission test, no
+  Search Console re-check beyond what Round 7's postmortem and the prior conversation's
+  domain/firewall/WAF investigation already covered, and no real-device mobile QA —
+  all four require live infrastructure or a driven browser this round didn't have
+  access to; each is called out explicitly, not silently skipped, in the implementation
+  report delivered alongside this round.

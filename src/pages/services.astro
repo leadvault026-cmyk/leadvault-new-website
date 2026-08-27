@@ -142,3 +142,15 @@ const services = [
     </div>
   </section>
 </BaseLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: services.map((s, i) => ({
+    '@type': 'Service',
+    position: i + 1,
+    name: s.title,
+    description: s.body,
+    provider: { '@type': 'Organization', name: 'LeadVault' },
+  })),
+})} />
