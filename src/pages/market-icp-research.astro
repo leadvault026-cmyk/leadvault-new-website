@@ -1,0 +1,163 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { CTA_PRIMARY } from '../data/site';
+import {
+  ArrowRight,
+  Compass,
+  MapPin,
+  Building2,
+  Target,
+  UserCheck,
+  BarChart3,
+  Database,
+  Sparkles,
+} from '@lucide/astro';
+
+// Repositioning master brief §9 — the "zoom out" page of the four research
+// tiers: about defining and sizing the addressable market BEFORE prospecting
+// begins, distinct from Qualified Prospect Data (specification already
+// defined) and Decision-Maker Intelligence (companies already identified).
+
+const capabilities = [
+  'ICP interpretation',
+  'Market mapping',
+  'Geographic segmentation',
+  'Company qualification',
+  'Segment sizing where evidence supports it',
+  'Account prioritization',
+  'Decision-maker mapping',
+  'Custom research criteria',
+];
+
+const useCases = [
+  { icon: MapPin, title: 'New Territory Entry', body: 'Translate a target region into a defined, addressable set of companies before you commit resources to it.' },
+  { icon: Target, title: 'Niche Market Validation', body: "Test whether a niche market is large enough, and well-defined enough, to prospect systematically." },
+  { icon: BarChart3, title: 'Vertical Expansion', body: 'Map an adjacent industry vertical before your sales team starts cold-calling it.' },
+  { icon: Building2, title: 'Sales Territory Creation', body: 'Build evidence-based territories your reps can actually work, not an arbitrary geographic split.' },
+  { icon: UserCheck, title: 'Partnership Research', body: 'Identify companies that fit a partnership or channel profile, not just a sales-prospect profile.' },
+  { icon: Compass, title: 'Campaign Planning', body: 'Size and map a market before a campaign launches, so targeting decisions are evidence-based.' },
+];
+
+const related = [
+  { icon: Database, title: 'Already have a defined specification?', body: "If you already know exactly who you need, skip market mapping and go straight to the data.", cta: { label: 'See Qualified Prospect Data', href: '/qualified-prospect-data' } },
+  { icon: Sparkles, title: 'Need evidence-backed qualification too?', body: "If your market is defined but you need each company individually qualified against specific criteria, that's the flagship service.", cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
+  { icon: UserCheck, title: 'Market is mapped — need the people?', body: 'Once your target companies are set, decision-maker research identifies who inside them matters.', cta: { label: 'See Decision-Maker Intelligence', href: '/decision-maker-intelligence' } },
+];
+
+const faqs = [
+  {
+    question: 'What does "mapping a market" actually produce?',
+    answer: 'A defined, addressable set of companies matching your ICP within a specified geography or vertical — the universe you\'d then prospect into, not a prospect list itself (though it can lead directly into one).',
+  },
+  {
+    question: 'Can you tell me how big a market is?',
+    answer: "Where public evidence supports a defensible estimate, yes. We don't publish invented market-size figures — segment sizing is provided only where the underlying research actually supports it.",
+  },
+  {
+    question: "What's the difference between this and Prospect Intelligence?",
+    answer: 'Market & ICP Research defines the addressable market — the companies that exist within your target definition. Prospect Intelligence goes further: qualifying each company against specific commercial criteria with supporting evidence. Many projects use both, in sequence.',
+  },
+  {
+    question: 'Do you cover international markets?',
+    answer: 'Yes — LeadVault researches markets worldwide, with particular depth in the USA, UK, Canada, Nigeria, and other African markets.',
+  },
+];
+---
+
+<BaseLayout
+  title="B2B Market Mapping & ICP Prospect Research | LeadVault"
+  description="Map a target B2B market, define the addressable prospect universe, and identify companies matching your ideal-customer criteria."
+  path="/market-icp-research"
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Market & ICP Research',
+    name: 'Market & ICP Research',
+    description: 'B2B market mapping and ideal-customer-profile research to define an addressable target market.',
+    provider: { '@type': 'Organization', name: 'LeadVault', url: 'https://leadvaultdata.com' },
+  })} />
+
+  <section class="section text-center">
+    <p class="eyebrow">Market & ICP Research</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Map the Market Before You Chase the Market</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      LeadVault helps companies translate an ideal-customer description into a researched target
+      market — the addressable set of companies worth prospecting, before the prospecting starts.
+    </p>
+    <div class="mt-8">
+      <a href="/contact?need=market-icp-research" data-cta="micp-hero" class="btn-primary">Map My Target Market <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Capabilities</h2>
+      <ul class="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-2">
+        {capabilities.map((c) => (
+          <li class="card text-sm text-white/80">{c}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Use Cases</h2>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {useCases.map((u) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <u.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-semibold text-white">{u.title}</h3>
+          <p class="text-sm leading-relaxed text-white/70">{u.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+      <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+        {related.map((r) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-base font-semibold text-white">{r.title}</h3>
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+            <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <FaqAccordion items={faqs} />
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Not Sure Your Target Market Is Well-Defined Yet?</h2>
+      <div class="mt-8">
+        <a href="/contact?need=market-icp-research" data-cta="micp-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  })} />
+</BaseLayout>

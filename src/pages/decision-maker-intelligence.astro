@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { CTA_PRIMARY } from '../data/site';
+import {
+  ArrowRight,
+  UserCheck,
+  Crown,
+  Briefcase,
+  ShoppingCart,
+  Settings,
+  Handshake,
+  Code,
+  Users,
+  Database,
+  Globe,
+} from '@lucide/astro';
+
+// Repositioning master brief §10 — the "zoom in" page of the four research
+// tiers: role-relevance research once the target companies are already
+// known, distinct from Market & ICP Research (defining the company universe)
+// and Prospect Intelligence (qualifying companies against criteria).
+
+const roles = [
+  { icon: Crown, label: 'Owners and founders' },
+  { icon: Briefcase, label: 'C-suite executives' },
+  { icon: Settings, label: 'Department heads' },
+  { icon: ShoppingCart, label: 'Procurement' },
+  { icon: Settings, label: 'Operations' },
+  { icon: Handshake, label: 'Practice/office administrators' },
+  { icon: Users, label: 'Sales/channel leadership' },
+  { icon: Code, label: 'Technical or functional buyers' },
+];
+
+const related = [
+  { icon: Globe, title: 'Companies not identified yet?', body: "Decision-maker research assumes the target companies are already set. If they aren't, map the market first.", cta: { label: 'See Market & ICP Research', href: '/market-icp-research' } },
+  { icon: Database, title: 'Just need the data delivered?', body: 'If you already know both the companies and the roles you need, the data-delivery service may be simpler.', cta: { label: 'See Qualified Prospect Data', href: '/qualified-prospect-data' } },
+  { icon: UserCheck, title: 'Need the companies qualified too?', body: "If you also need evidence that each company fits a commercial opportunity, that's the flagship service.", cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
+];
+
+const faqs = [
+  {
+    question: 'How do you determine who the "relevant" decision-maker is?',
+    answer: "Role relevance comes first, not availability. We research who is actually responsible for or influential in the specific commercial decision your project targets, rather than defaulting to whichever contact happens to have a public email address.",
+  },
+  {
+    question: 'What if a company has multiple relevant roles?',
+    answer: 'We identify the roles relevant to your specific objective — sometimes that\'s one person, sometimes a short list where a decision genuinely involves more than one function (e.g. procurement plus a department head).',
+  },
+  {
+    question: 'Do you verify the contact information you find?',
+    answer: 'Yes — available business contact information is verified at the time of research using the applicable verification process, the same standard used across every LeadVault service.',
+  },
+  {
+    question: "Can this be combined with a company list I already have?",
+    answer: "Yes — this is commonly run against a company list you already have (from your own CRM, a prior LeadVault project, or Market & ICP Research), rather than as a standalone discovery project.",
+  },
+];
+---
+
+<BaseLayout
+  title="B2B Decision-Maker Research & Contact Intelligence | LeadVault"
+  description="Identify the people most relevant to a B2B buying, partnership, or commercial decision, and research available verified contact channels."
+  path="/decision-maker-intelligence"
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Decision-Maker Intelligence',
+    name: 'Decision-Maker Intelligence',
+    description: 'Research identifying the roles and people most relevant to a B2B commercial decision, with verified contact enrichment.',
+    provider: { '@type': 'Organization', name: 'LeadVault', url: 'https://leadvaultdata.com' },
+  })} />
+
+  <section class="section text-center">
+    <p class="eyebrow">Decision-Maker Intelligence</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Reach the Person Relevant to the Decision</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      A valid email is not valuable if it belongs to the wrong person. LeadVault researches the
+      roles and people most relevant to your commercial objective, then enriches the record with
+      available business contact information.
+    </p>
+    <div class="mt-8">
+      <a href="/contact?need=decision-maker-intelligence" data-cta="dmi-hero" class="btn-primary">Find My Decision-Makers <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Research Can Cover</h2>
+      <ul class="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2">
+        {roles.map((r) => (
+          <li class="card flex items-center gap-3 text-sm font-medium text-white/85">
+            <r.icon size={20} class="shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            {r.label}
+          </li>
+        ))}
+      </ul>
+      <p class="mx-auto mt-6 max-w-2xl text-center text-sm text-white/50">Plus other project-specific roles not listed above.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card mx-auto max-w-2xl text-center">
+      <h2 class="text-xl font-bold text-white">Relevance Before Availability</h2>
+      <p class="mt-4 text-sm leading-relaxed text-white/75">
+        We don't choose a contact merely because an email address is easy to find. Role relevance
+        comes first — the objective is to identify who is actually responsible for or influential
+        in the decision, then verify how to reach them.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+      <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+        {related.map((r) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-base font-semibold text-white">{r.title}</h3>
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+            <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <FaqAccordion items={faqs} />
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Know the Company. Need the Right Person?</h2>
+      <div class="mt-8">
+        <a href="/contact?need=decision-maker-intelligence" data-cta="dmi-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  })} />
+</BaseLayout>

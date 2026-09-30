@@ -21,6 +21,7 @@ import {
   CheckCircle2,
   Database,
 } from '@lucide/astro';
+import { CTA_HIGH_INTENT } from '../data/site';
 
 // "One method, many markets" visual (commercial-completion round — see
 // ASSUMPTIONS.md) — reinforces that the research process is constant even
@@ -49,9 +50,22 @@ const researchChain = [
 // than folded in here). This is a strategic ordering choice, not a claim
 // about actual demand: nothing on this page says these are "highest-demand"
 // or "most popular," since that isn't something we can currently prove.
+//
+// Repositioning master brief §18 — deepened with genuine, per-GROUP (not
+// per-item) decision-maker types and example intelligence questions, editorial
+// judgment applied deliberately here: adding this depth per individual item
+// (17 of them) would produce exactly the repetitive, keyword-swapped padding
+// the brief warns against. Per-group is real depth without the padding —
+// each group's decisionMakers/canInvestigate are genuinely different, not a
+// template with the industry name swapped in.
 const groups = [
   {
     label: 'Sales & Growth Teams',
+    decisionMakers: ['VP Sales', 'Head of Growth/Demand Gen', 'Marketing Director'],
+    canInvestigate: [
+      'Which companies show public evidence of scaling their outbound or ad spend right now',
+      'Which prospects match a defined ICP across industry, size, and geography',
+    ],
     items: [
       {
         icon: Megaphone,
@@ -78,6 +92,11 @@ const groups = [
   },
   {
     label: 'Talent & Recruitment',
+    decisionMakers: ['Head of Talent Acquisition', 'Hiring Manager', 'HR Director'],
+    canInvestigate: [
+      'Which employers show public hiring signals matching a role you place into',
+      'Which companies in a target industry are actively expanding headcount',
+    ],
     items: [
       {
         icon: Users,
@@ -88,6 +107,11 @@ const groups = [
   },
   {
     label: 'Professional & Financial Services',
+    decisionMakers: ['Principal/Partner', 'Head of Underwriting', 'Practice Administrator'],
+    canInvestigate: [
+      'Which businesses show public evidence of a specific insurable or financing need',
+      'Which individuals or companies match defined wealth, size, or policy criteria',
+    ],
     items: [
       {
         icon: TrendingUp,
@@ -118,6 +142,11 @@ const groups = [
   },
   {
     label: 'Trade & Distribution',
+    decisionMakers: ['Procurement Lead', 'Trade/Export Manager', 'Owner/Founder'],
+    canInvestigate: [
+      'Which companies are verified, active buyers or suppliers for a specific product category',
+      'Which counterparties operate in a defined trade lane or target market',
+    ],
     items: [
       {
         icon: Ship,
@@ -134,6 +163,11 @@ const groups = [
   },
   {
     label: 'Outreach & Events',
+    decisionMakers: ['Operations Manager', 'Events Director'],
+    canInvestigate: [
+      'Which companies match a defined target profile for a calling campaign',
+      'Which industry contacts are relevant to a specific trade show or event',
+    ],
     items: [
       {
         icon: Phone,
@@ -151,18 +185,17 @@ const groups = [
 ---
 
 <BaseLayout
-  title="Prospect Research Examples by Industry | LeadVault"
-  description="From marketing agencies and recruiters to SaaS, insurance, and real estate — examples of the prospect research LeadVault can support, industry by industry."
+  title="B2B Prospect Intelligence by Industry | LeadVault"
+  description="From marketing agencies and recruiters to SaaS, insurance, and real estate — examples of the prospect intelligence, decision-maker research, and target criteria LeadVault can investigate, industry by industry."
   path="/industries"
 >
   <section class="section text-center">
-    <p class="eyebrow">Prospect Research Examples</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Examples of the Research We Support.</h1>
+    <p class="eyebrow">Prospect Intelligence by Industry</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Examples of the Prospect Intelligence We Support.</h1>
     <p class="mx-auto mt-5 max-w-3xl text-white/75">
-      LeadVault can research prospects across industries — this page shows what that looks like for
-      the businesses we work with most. Every example below shares one trait: growth depends on
-      reaching the right people, reliably. Don't see your exact situation? We can still likely help —
-      tell us the requirement.
+      LeadVault can research and qualify prospects across industries — this page shows what that
+      looks like for the businesses we work with most, including who to target and what we can
+      investigate. Don't see your exact situation? We can still likely help — tell us the requirement.
     </p>
   </section>
 
@@ -202,6 +235,26 @@ const groups = [
       {groups.map((group) => (
         <div>
           <h2 class="text-xl font-bold text-white sm:text-2xl">{group.label}</h2>
+          {(group.decisionMakers || group.canInvestigate) && (
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+              {group.decisionMakers && (
+                <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+                  <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Decision-makers we typically research</p>
+                  <p class="mt-1.5 text-sm text-white/80">{group.decisionMakers.join(' · ')}</p>
+                </div>
+              )}
+              {group.canInvestigate && (
+                <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+                  <p class="text-xs font-semibold uppercase tracking-wide text-white/50">What we can investigate</p>
+                  <ul class="mt-1.5 space-y-1">
+                    {group.canInvestigate.map((q) => (
+                      <li class="text-sm text-white/80">{q}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
           <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {group.items.map((ind) => (
               <div class="card flex flex-col gap-3">
@@ -225,7 +278,7 @@ const groups = [
       <div class="card flex flex-col items-center gap-4 text-center">
         <h2 class="text-xl font-bold text-white">Don't see your industry?</h2>
         <p class="max-w-xl text-white/70">If your growth depends on reaching people, we can source for you.</p>
-        <a href="/contact" class="btn-primary">Ask Us <ArrowRight size={18} /></a>
+        <a href="/contact" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>

@@ -65,16 +65,29 @@ const ogImageURL = new URL(ogImage, SITE_URL).toString();
     <meta name="twitter:image" content={ogImageURL} />
 
     {includeOrgSchema && (
-      <script type="application/ld+json" set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'LeadVault',
-        url: 'https://leadvaultdata.com',
-        founder: {
-          '@type': 'Person',
-          name: 'Steven Ehimigbai',
-        },
-      })} />
+      <>
+        <script type="application/ld+json" set:html={JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Organization',
+          name: 'LeadVault',
+          url: 'https://leadvaultdata.com',
+          founder: {
+            '@type': 'Person',
+            name: 'Steven Ehimigbai',
+          },
+        })} />
+        {/* Final pre-production audit (repositioning phase) — WebSite schema was
+            recommended in the original repositioning audit (brief §20K) but never
+            added. Homepage-only, alongside Organization, same as most sites pair
+            them. No BreadcrumbList was added: the site has no visible breadcrumb
+            UI, and structured data should only describe what's actually visible. */}
+        <script type="application/ld+json" set:html={JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'LeadVault',
+          url: 'https://leadvaultdata.com',
+        })} />
+      </>
     )}
 
     <!--

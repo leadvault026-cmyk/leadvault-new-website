@@ -1,0 +1,177 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { CTA_HIGH_INTENT } from '../data/site';
+import {
+  ArrowRight,
+  Target,
+  Search,
+  ShieldCheck,
+  PenLine,
+  Settings,
+  Send,
+  BarChart3,
+  Database,
+  Sparkles,
+} from '@lucide/astro';
+
+// Repositioning master brief §11 — reworks the existing Managed Email
+// Campaigns offering into its own page. Content (compliance framing,
+// capability list) is carried over from services.astro/pricing.astro rather
+// than invented fresh — this is a real, already-offered service, just given
+// its own dedicated page instead of one card among eight. Deliberately
+// avoids MX/provider/infrastructure jargon in the primary copy (brief §11
+// "Important Positioning") — that detail already lives on /tools for anyone
+// who wants it.
+
+const workflow = [
+  { icon: Target, label: 'Define the audience and objective' },
+  { icon: Search, label: 'Research and qualify prospects' },
+  { icon: ShieldCheck, label: 'Prepare and verify contact data' },
+  { icon: PenLine, label: 'Develop messaging and campaign structure' },
+  { icon: Settings, label: 'Configure appropriate sending/deliverability controls' },
+  { icon: Send, label: 'Launch controlled outreach' },
+  { icon: BarChart3, label: 'Monitor and report' },
+];
+
+const includes = ['Campaign setup', 'Data verification', 'Deliverability sorting', 'Provider-aware testing', 'Sending infrastructure', 'Campaign execution', 'Reporting'];
+
+const related = [
+  { icon: Database, title: 'Just need the research, not the sending?', body: "If you want the prospect data or intelligence delivered and will run outreach yourself, start with the research service directly.", cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
+  { icon: Sparkles, title: "Already have a list, need it cleaned?", body: 'If your list already exists and just needs verification and hygiene before you send to it.', cta: { label: 'See Services Overview', href: '/services#data-cleaning' } },
+];
+
+const faqs = [
+  {
+    question: 'Do you guarantee my campaign will comply with anti-spam law?',
+    answer: 'No service can guarantee universal legal compliance — requirements vary by jurisdiction and change over time. LeadVault configures campaigns according to permission-appropriate, regulation-aware sending practices (including CAN-SPAM and applicable anti-spam law) and declines campaigns designed to deceive, but you remain responsible for your own compliance obligations.',
+  },
+  {
+    question: "What's included in campaign setup?",
+    answer: 'Campaign setup, data verification, deliverability sorting, provider-aware testing, sending infrastructure, campaign execution, and reporting. Pricing is provided based on your specific campaign requirements.',
+  },
+  {
+    question: 'Can I combine this with a Prospect Intelligence or Qualified Prospect Data project?',
+    answer: "Yes — this is the most common path: LeadVault researches and qualifies the prospects first, then executes the outreach using that same verified data, so the campaign starts from qualified prospects rather than a generic list.",
+  },
+  {
+    question: 'Do you write the campaign messaging?',
+    answer: 'We develop messaging and campaign structure as part of the workflow, working from your offer and positioning — this is a collaborative step, not something delivered without your input.',
+  },
+];
+---
+
+<BaseLayout
+  title="Managed B2B Outreach & Prospect Research | LeadVault"
+  description="Combine LeadVault prospect intelligence with campaign preparation, controlled B2B email outreach, and reporting."
+  path="/managed-outreach"
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Managed B2B Outreach',
+    name: 'Intelligence-Led Outreach',
+    description: 'Research-led campaign preparation and controlled B2B email outreach, built on qualified prospect data.',
+    provider: { '@type': 'Organization', name: 'LeadVault', url: 'https://leadvaultdata.com' },
+  })} />
+
+  <section class="section text-center">
+    <p class="eyebrow">Intelligence-Led Outreach</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Research First. Outreach Second.</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      LeadVault's managed outreach begins with the target — not with a giant list. We research and
+      qualify the prospects, identify relevant contacts, prepare the campaign, and execute
+      controlled outreach around your offer.
+    </p>
+    <div class="mt-8">
+      <a href="/contact?need=managed-outreach" data-cta="mo-hero" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Workflow</h2>
+      <div class="mx-auto mt-10 grid max-w-2xl gap-3">
+        {workflow.map((step, i) => (
+          <div class="card flex items-center gap-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <step.icon size={20} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <p class="text-sm font-medium text-white">{i + 1}. {step.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-2xl">
+      <h2 class="text-center text-xl font-bold text-white">Services May Include</h2>
+      <ul class="mt-6 grid grid-cols-2 gap-x-4 gap-y-2.5">
+        {includes.map((item) => (
+          <li class="flex items-start gap-2 text-sm text-white/75">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 text-center text-sm text-white/60">Pricing is provided based on campaign requirements.</p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="card mx-auto max-w-2xl text-center">
+        <h2 class="text-lg font-bold text-white">Compliance</h2>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          We run permission-appropriate, regulation-aware B2B outreach only (CAN-SPAM and
+          applicable anti-spam law) and decline campaigns designed to deceive. No service can
+          promise universal legal compliance — campaigns must be configured according to
+          applicable laws, your own requirements, and appropriate sending practices.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+      {related.map((r) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-semibold text-white">{r.title}</h3>
+          <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+          <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-2xl font-bold text-white sm:text-3xl">Ready to Put the Research Into Action?</h2>
+    <div class="mt-8">
+      <a href="/contact?need=managed-outreach" data-cta="mo-final" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  })} />
+</BaseLayout>

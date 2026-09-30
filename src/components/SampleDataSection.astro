@@ -10,6 +10,7 @@
 // CATALOG_CATEGORIES.length, not typed in by hand.
 import ComparisonTable from './ComparisonTable.astro';
 import { CATALOG_CATEGORIES } from '../data/catalog';
+import { CTA_PRIMARY, CTA_SECONDARY } from '../data/site';
 import { ArrowRight } from '@lucide/astro';
 
 const featured = CATALOG_CATEGORIES.find((c) => c.slug === 'business-decision-makers') ?? CATALOG_CATEGORIES[0];
@@ -26,8 +27,8 @@ const PREVIEW_ROWS = 3;
       {featured.name}.
     </p>
     <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-      <a href="/data-catalog" data-cta="sample-section-view-catalog" class="btn-primary">Explore Sample Data <ArrowRight size={18} /></a>
-      <a href="/contact" data-cta="sample-section-custom-dataset" class="btn-outline">Request a Custom Dataset</a>
+      <a href="/data-catalog" data-cta="sample-section-view-catalog" class="btn-primary">{CTA_SECONDARY} <ArrowRight size={18} /></a>
+      <a href="/contact" data-cta="sample-section-custom-dataset" class="btn-outline">{CTA_PRIMARY}</a>
     </div>
   </div>
   <div class="min-w-0">

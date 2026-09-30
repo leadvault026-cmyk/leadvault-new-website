@@ -1,72 +1,80 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
-import { ShieldCheck, ListFilter, Search, Database, Send, Terminal, Wrench, Sparkles, MailCheck, ArrowRight } from '@lucide/astro';
+import { ShieldCheck, ListFilter, Search, Database, UserCheck, Terminal, Wrench, Sparkles, MailCheck, ArrowRight } from '@lucide/astro';
 
-// Titles renamed to the category names used sitewide for the pipeline stages
-// (commercial-completion round — see ASSUMPTIONS.md); underlying descriptions
-// unchanged where they already answered the buyer's question.
+// Repositioning master brief §15 — reframed around outcomes (multi-source
+// discovery, qualification, evidence capture, decision-maker enrichment,
+// verification, normalization, deduplication, quality control, human review)
+// rather than email/campaign infrastructure. "Campaign Infrastructure" was
+// removed from this list — sending infrastructure is now Managed Outreach's
+// own domain (/managed-outreach); two new cards (Qualification & Evidence
+// Capture, Decision-Maker Enrichment) were added in its place so the count
+// stays at 7. No vendor names, credentials, or proprietary architecture named.
 const tools = [
   {
+    icon: Database,
+    title: 'Multi-Source Discovery',
+    body: 'We research companies and public business information from multiple sources rather than treating any single source as authoritative.',
+  },
+  {
     icon: ShieldCheck,
+    title: 'Qualification & Evidence Capture',
+    body: 'Where a project requires it, we apply qualification rules and capture the public evidence supporting why a company fits — not just whether it matches a filter.',
+  },
+  {
+    icon: UserCheck,
+    title: 'Decision-Maker Enrichment',
+    body: 'We identify the roles relevant to the commercial decision, then enrich the record with available business contact and company information.',
+  },
+  {
+    icon: MailCheck,
     title: 'Email Verification',
     body: 'Confirms every address is real and deliverable — checked across all provider types (Office 365, Google Workspace, independent and broker mail servers), so "verified" means exactly that.',
   },
   {
     icon: ListFilter,
-    title: 'Deliverability Segmentation',
-    body: 'Separates any verified list into per-provider segments (Gmail, Office 365, IONOS, and others) — the foundation of provider-by-provider deliverability testing and professional campaign sending.',
-  },
-  {
-    icon: Search,
-    title: 'Bounce & Hygiene',
-    body: 'Detects likely bounces, dormant mailboxes, and dead domains; automatically retires aging records.',
-  },
-  {
-    icon: Database,
-    title: 'Public Business Data Research',
-    body: 'Responsibly researches publicly available business contact information at scale, feeding the verification pipeline under our compliance standards.',
-  },
-  {
-    icon: Send,
-    title: 'Campaign Infrastructure',
-    body: 'Controlled, configurable sending systems used to validate deliverability and run client campaigns under strict best practices.',
+    title: 'Deliverability & Hygiene',
+    body: 'Separates any verified list into per-provider segments and detects likely bounces, dormant mailboxes, and dead domains before anything reaches you.',
   },
   {
     icon: Terminal,
-    title: 'Precision Filtering',
-    body: 'The heart of client work: a purpose-built filtering process that narrows large datasets to precise specifications — roles, industries, geographies, company sizes — output as a clean, structured Google Sheet, CSV, or Excel file.',
+    title: 'Precision Filtering & Normalization',
+    body: 'A purpose-built filtering process that narrows large datasets to precise specifications — roles, industries, geographies, company sizes — with deduplication and normalization before delivery.',
   },
   {
     icon: Wrench,
-    title: 'Custom Tools',
-    body: "Some projects need instruments that don't exist yet. We design and build them. Then the next challenge teaches us something new, and the vault gets stronger.",
+    title: 'Human Review & Custom Tools',
+    body: "Ambiguous cases get human review, not an automated guess. Some projects also need instruments that don't exist yet — we design and build them, and the next challenge teaches us something new.",
   },
 ];
 
 const pipelineStages = [
-  { icon: Search, label: 'RESEARCH', desc: 'Prospects gathered to your exact specification' },
-  { icon: ListFilter, label: 'FILTER', desc: 'Narrowed to your criteria — role, industry, geography, size' },
+  { icon: Search, label: 'RESEARCH', desc: 'Companies and prospects discovered to your exact specification' },
+  { icon: ListFilter, label: 'QUALIFY', desc: 'Checked against your criteria — not just an industry label' },
+  { icon: Sparkles, label: 'ENRICH', desc: 'Decision-makers identified, contact and company details added' },
   { icon: ShieldCheck, label: 'VERIFY', desc: 'Deliverability checks, bounce & activity screening' },
-  { icon: Sparkles, label: 'CLEAN', desc: 'Duplicates & dead entries removed' },
   { icon: MailCheck, label: 'DELIVER', desc: 'Clean Google Sheet or CSV, straight to your inbox' },
 ];
 ---
 
 <BaseLayout
-  title="Custom Data Tools & Verification Process | LeadVault"
-  description="The engineering behind LeadVault: in-house email verification, deliverability testing, and custom-built research tools designed for every challenge."
+  title="Research & Verification Engine | LeadVault"
+  description="The research and verification engine behind LeadVault: multi-source discovery, qualification, decision-maker enrichment, email verification, and human review — built in-house, not rented."
   path="/tools"
 >
   <section class="section grid items-center gap-12 lg:grid-cols-2">
     <div>
-      <p class="eyebrow">Tools & Technology</p>
-      <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">We Don't Just Use Tools. We Build Them.</h1>
+      <p class="eyebrow">Research & Verification Engine</p>
+      <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">The Research & Verification Engine Behind LeadVault</h1>
       <p class="mt-5 text-white/75">
-        Most data companies rent their capabilities. LeadVault engineers its own — and when a
-        client's challenge doesn't fit an existing tool, we build a new one. Every challenge brings
-        a different scripting strategy; constant research and construction is our culture. It's why
-        our data behaves differently in the field.
+        A LeadVault project can combine multiple discovery, qualification, enrichment,
+        verification, and quality-control methods depending on the assignment. Most data companies
+        rent their capabilities. LeadVault engineers its own — and when a client's challenge doesn't
+        fit an existing method, we build a new one.
+      </p>
+      <p class="mt-4 text-sm text-white/50">
+        No single source has to determine the final result.
       </p>
     </div>
     <ImagePlaceholder

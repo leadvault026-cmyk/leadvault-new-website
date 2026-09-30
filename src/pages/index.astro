@@ -1,249 +1,346 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroWorldGraphic from '../components/HeroWorldGraphic.astro';
-import PipelineGraphic from '../components/PipelineGraphic.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import SampleDataSection from '../components/SampleDataSection.astro';
-import ComparisonTable from '../components/ComparisonTable.astro';
-import { PRIMARY_TAGLINE } from '../data/site';
-import { ArrowRight, Check, Megaphone, Ship, Code, Compass } from '@lucide/astro';
+import {
+  PRIMARY_TAGLINE,
+  CTA_PRIMARY,
+  CTA_SECONDARY,
+  CTA_HIGH_INTENT,
+} from '../data/site';
+import {
+  ArrowRight,
+  Check,
+  Search,
+  ClipboardCheck,
+  Layers,
+  Target,
+  Send,
+  MapPin,
+  UserCheck,
+  Lightbulb,
+  Ship,
+  Globe,
+  Database,
+  Sparkles,
+  Megaphone,
+} from '@lucide/astro';
 
-// Positioning-pass round (see ASSUMPTIONS.md) — lets the three priority ICPs
-// self-identify near the top of the page, before Problem/Solution. No card
-// links to a dedicated landing page (none exist yet — that's a later phase);
-// all three point at the same real next step everyone else on the page uses.
-// Pre-launch completion round: swapped Recruitment Agencies for International
-// Traders/Importers/Exporters — the current, explicitly-stated Phase 3 ICP
-// priority is Agencies / SaaS / Trade, not Agencies / Recruitment / SaaS.
-// Recruitment remains a real, supported use case (Data Catalog category,
-// Industries page, the "Other" card below) — just no longer one of the three
-// featured here, matching where it currently ranks.
-const icpGroups = [
+// Repositioning master brief (2026-09-30) — full homepage rebuild around the
+// B2B Prospect Intelligence positioning. Replaces the prior "harvest fresh
+// data" framing (brief §2 explicitly asks to retire that language) with a
+// research/qualification framing. See ASSUMPTIONS.md for the judgment calls
+// made while adapting the brief's supplied copy to this page's components.
+
+// Section 4 — the research process. Supersedes the old 4-stage
+// Source/Verify/Clean/Deliver pipeline strip (that pipeline still exists
+// conceptually as the operational process behind delivery — see /tools —
+// but this is the customer-facing framing of what a project does for them).
+const processSteps = [
+  { icon: Search, label: 'Discover', body: 'We search for companies that could match the commercial opportunity — not merely businesses carrying an industry label.' },
+  { icon: ClipboardCheck, label: 'Qualify', body: 'We investigate whether each company actually satisfies the criteria that matter to the project.' },
+  { icon: Layers, label: 'Enrich', body: 'We identify relevant decision-makers and add available business contact and company information.' },
+  { icon: Target, label: 'Prioritize', body: 'Where the project requires it, we distinguish stronger opportunities from weaker matches using fit, evidence and relevance.' },
+  { icon: Send, label: 'Act', body: 'Use the intelligence in your own sales process, or engage LeadVault to support the outreach.' },
+];
+
+// Section 5 — the three-level commercial ladder, now linking to the
+// dedicated pages built in the core-commercial-pages phase.
+const waysToWork = [
+  {
+    icon: Database,
+    title: 'Qualified Prospect Data',
+    body: 'Already know exactly whom you need? Give us the specification and we will research and prepare the prospect data.',
+    cta: { label: 'Explore Prospect Data', href: '/qualified-prospect-data' },
+  },
+  {
+    icon: Sparkles,
+    title: 'Prospect Intelligence',
+    body: 'Need to determine which companies truly match an opportunity and why? We investigate the market and qualify the prospects.',
+    cta: { label: 'Explore Prospect Intelligence', href: '/prospect-intelligence' },
+  },
   {
     icon: Megaphone,
-    title: 'Marketing & Lead-Generation Agencies',
-    body: "Give us a client's ICP — industry, geography, company size, role — and we research the matching prospect list, ready for outreach.",
-  },
-  {
-    icon: Code,
-    title: 'B2B SaaS & Sales Teams',
-    body: 'Define your ideal customer by industry, company size, role, and geography — we research and deliver the matching prospect data.',
-  },
-  {
-    icon: Ship,
-    title: 'International Traders, Importers & Exporters',
-    body: 'Tell us your product, trade lane, and target market — we research and verify genuine buyers, suppliers, or shipper prospects for you.',
-  },
-  {
-    icon: Compass,
-    title: 'Other B2B Research Needs',
-    body: "Doesn't fit a category above? Tell us what you need — if it can be defined, we can research it.",
+    title: 'Intelligence-Led Outreach',
+    body: 'Want the research put into action? LeadVault can combine prospect intelligence with campaign preparation, controlled outreach and reporting.',
+    cta: { label: 'Explore Managed Outreach', href: '/managed-outreach' },
   },
 ];
 
-const industries = [
-  'E-commerce & online retail',
-  'Marketing & advertising agencies',
-  'Cold email & outreach teams',
-  'Importers, exporters & freight forwarders',
-  'SaaS & software companies',
-  'Recruitment agencies',
-  'Real estate marketers',
-  'Fintech & lending',
-  'Investment & financial services',
-  'Insurance brokers',
-  'B2B sales teams',
-  'Market research firms',
-  'Call centers',
-  'Event & trade show organizers',
-  'Wholesalers & distributors',
+// Section 6 — real-world use cases where ordinary database filters fall short.
+const useCases = [
+  { icon: Search, title: 'Specialized Prospect Discovery', body: 'Find businesses matching criteria that do not exist as a simple database filter.' },
+  { icon: MapPin, title: 'Market & ICP Mapping', body: 'Map a target market and identify companies that match a defined ideal-customer profile.' },
+  { icon: UserCheck, title: 'Decision-Maker Research', body: 'Identify the people most relevant to a purchasing, partnership or commercial decision.' },
+  { icon: Lightbulb, title: 'Opportunity Intelligence', body: 'Research public evidence indicating that a company may fit a particular commercial opportunity.' },
+  { icon: Ship, title: 'Trade & Counterparty Intelligence', body: 'Research buyers, suppliers, importers, exporters, distributors and other commercial counterparties.' },
+  { icon: Globe, title: 'Geographic Prospect Mapping', body: 'Build qualified prospect coverage around defined cities, states, countries or regions.' },
 ];
 
-const trustItems = [
-  'Verified Before Delivery',
-  'Fresh — As Recent As 3 Days',
-  'Replacement Guarantee',
-  'Decision-Makers Only',
-  'Worldwide Coverage',
+// Section 7 — a single fictional, illustrative intelligence record. Ties back
+// to Section 2's own example question ("which medical providers publicly
+// indicate they work with personal-injury patients?") so the page shows one
+// coherent scenario from problem to deliverable, rather than a disconnected
+// sample. Never real customer data — masked/fictional per this site's
+// established sample-data convention (see Data Catalog).
+const exampleRecord = [
+  { field: 'Company Name', value: 'Meridian Behavioral Health Group' },
+  { field: 'Website', value: 'meridianbhg-example.com' },
+  { field: 'Contact Name', value: 'Daniel Whitfield' },
+  { field: 'Contact Title', value: 'Director of Patient Intake' },
+  { field: 'Email Address', value: 'd.****@mer*****.com' },
+  { field: 'Phone Number', value: '+1 (XXX) XXX-4471' },
+  { field: 'Address', value: '1200 Harborview Drive, Suite 300' },
+  { field: 'City', value: 'Charlotte' },
+  { field: 'State/Region', value: 'North Carolina' },
+  { field: 'Provider/Company Type', value: 'Multi-location outpatient clinic' },
+  { field: 'Qualification Basis', value: 'Publicly lists personal-injury case coordination as a service line' },
+  { field: 'Evidence', value: 'Public service-line page (illustrative)' },
+  { field: 'Priority/Fit', value: 'High — matches all 3 target criteria' },
+  { field: 'Recommended Approach', value: 'Lead with the referral-coordination angle, not a general sales pitch' },
 ];
 
-// Replaces the removed testimonials section (see ASSUMPTIONS.md — no
-// consent trail could be confirmed for the previous quotes, so rather than
-// publish unverified social proof this explains the real, factual process
-// instead. Every step here matches what the site already states elsewhere
-// (verification pipeline on /tools, the 5%/14-day guarantee on /pricing).
-const processSteps = [
-  'You tell us exactly who you need to reach — industry, role, location, company size, or any custom criteria.',
-  'We source the records fresh for your order — not pulled from a stored, aging database.',
-  'Every record passes our verification pipeline: deliverability checks, bounce and hygiene screening, duplicate removal.',
-  'You receive a clean Google Sheet (CSV and Excel also available), plus a short summary of what was checked and how.',
-  'If more than 5% of a delivery proves invalid within 14 days, we replace it — see our Refund & Replacement Policy.',
+// Section 11 — quality principles. Deliberately does not name vendors, a
+// scoring algorithm, or pipeline architecture (brief §15/§11).
+const qualityPrinciples = [
+  'Project-specific research — not a prebuilt list treated as the finished answer',
+  'Multi-source discovery where appropriate',
+  'Evidence-backed qualification',
+  'Relevant decision-maker research',
+  'Contact verification where available',
+  'Deduplication and normalization',
+  'Human review for ambiguous cases',
+  'Clear delivery structure, built around the decision you need to make',
 ];
 ---
 
 <BaseLayout
-  title="B2B Prospect Research & Custom Data Sourcing | LeadVault"
-  description="Tell LeadVault who you need to reach. We research the companies and decision-makers that match, verify them, and deliver a usable dataset — sourced fresh, not pulled from a stale database."
+  title="LeadVault — B2B Prospect Intelligence Company"
+  description="LeadVault researches your target market, qualifies the companies that match your opportunity, identifies relevant decision-makers, and delivers prospect intelligence your team can act on."
   path="/"
   includeOrgSchema
 >
-  <!-- Hero -->
+  <!-- Section 1: Hero -->
   <section class="section grid gap-12 lg:grid-cols-2 lg:items-center">
     <div>
-      <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+      <p class="eyebrow">B2B Prospect Intelligence</p>
+      <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
         {PRIMARY_TAGLINE}
       </h1>
-      <p class="mt-5 text-lg font-semibold text-[var(--color-lime)]">
-        B2B prospect research and custom data sourcing — verified, and delivered in a usable format.
-      </p>
-      <p class="mt-4 text-white/75">
-        Give us your target industry, company size, job roles, location, or any other criteria. We
-        research the companies and decision-makers that match, verify what we find, and deliver a
-        clean dataset — not pulled from storage, <strong class="text-white">sourced fresh for your
-        request.</strong>
-      </p>
-      <p class="mt-4 text-white/75">
-        From marketing agencies and SaaS sales teams to importers and exporters — businesses across
-        the USA, UK, Canada, Nigeria, and beyond trust LeadVault to research the prospects they can't
-        find themselves.
+      <p class="mt-5 text-white/75">
+        LeadVault researches your target market, identifies and qualifies the companies that match
+        your opportunity, finds the relevant decision-makers, verifies available contact data, and
+        delivers prospect intelligence your team can act on.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/data-catalog" data-cta="hero-sample-data" class="btn-primary">Request Sample Data <ArrowRight size={18} /></a>
-        <a href="/contact" data-cta="hero-custom-dataset" class="btn-outline">Request a Custom Dataset</a>
+        <a href="/contact" data-cta="hero-start-project" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+        <a href="/data-catalog" data-cta="hero-sample-intelligence" class="btn-outline">{CTA_SECONDARY}</a>
       </div>
-      <p class="mt-6 text-sm italic text-white/50">
-        Serving businesses across the USA, UK, Canada, Nigeria, and worldwide.
-      </p>
-    </div>
-    <div>
-      <HeroWorldGraphic />
-      <p class="mt-4 text-center text-sm font-semibold text-white">Prospect research across markets worldwide.</p>
-      <p class="mt-1 text-center text-xs text-white/50">From North America and Europe to Africa, the Middle East, Asia, and beyond.</p>
-    </div>
-  </section>
-
-  <!-- Plain-language bar -->
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
-    <div class="section !py-12 text-center">
-      <h2 class="text-2xl font-bold text-white sm:text-3xl">First — What Does LeadVault Actually Do?</h2>
-      <p class="mx-auto mt-4 max-w-3xl text-white/80">
-        <strong class="text-white">You tell us who you need to reach. We research the companies and
-        decision-makers that match your criteria and deliver the data in a usable format.</strong>
-      </p>
-      <p class="mx-auto mt-3 max-w-3xl text-white/70">
-        Tell us your target industry, location, company size, job roles, or other requirements. We
-        research the right prospects, verify the available contact details, and build a dataset
-        around your actual prospecting needs — so your team spends less time searching and more time
-        selling.
-      </p>
-      <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-white/10 pt-8">
-        {trustItems.map((item) => (
-          <li class="flex items-center gap-2 text-sm font-medium text-white/85">
-            <Check size={16} class="text-[var(--color-lime)]" aria-hidden="true" />
+      <ul class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-6">
+        {['Fresh Research', 'Evidence-Backed Qualification', 'Decision-Maker Research', 'Verified Contact Data', 'Worldwide Coverage'].map((item) => (
+          <li class="flex items-center gap-1.5 text-sm font-medium text-white/80">
+            <Check size={15} class="text-[var(--color-lime)]" aria-hidden="true" />
             {item}
           </li>
         ))}
       </ul>
     </div>
+    <div>
+      <HeroWorldGraphic />
+      <p class="mt-4 text-center text-sm font-semibold text-white">Prospect intelligence across markets worldwide.</p>
+      <p class="mt-1 text-center text-xs text-white/50">From North America and Europe to Africa, the Middle East, Asia, and beyond.</p>
+    </div>
   </section>
 
-  <!-- Built For The Way You Prospect -->
-  <section class="section">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="eyebrow">Who We Research For</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Built for the Way You Prospect.</h2>
-      <p class="mt-5 text-white/75">
-        Whatever you're selling, recruiting for, or building — tell us the prospects you need, and we
-        research them to your specification.
+  <!-- Section 2: The Problem -->
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">The Problem</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">A Contact Is Not the Same as a Qualified Opportunity.</h2>
+        <p class="mt-5 text-white/75">
+          Finding a company name and email address is easy. Knowing whether that company genuinely
+          matches a commercial objective is harder.
+        </p>
+        <p class="mt-4 text-white/75">
+          Standard databases are useful when your target can be described by ordinary filters such as
+          industry, location, company size, or job title. But many real prospecting assignments are
+          more specific:
+        </p>
+      </div>
+      <ul class="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-2">
+        {[
+          'Which medical providers publicly indicate that they work with personal-injury patients?',
+          'Which manufacturers appear capable of supplying a particular product?',
+          'Which companies are expanding into a defined market?',
+          'Which businesses show evidence of a particular operational need?',
+          'Who inside each company is most relevant to the decision?',
+        ].map((q) => (
+          <li class="card text-sm leading-relaxed text-white/80">{q}</li>
+        ))}
+      </ul>
+      <p class="mx-auto mt-8 max-w-2xl text-center text-white/80">
+        That is where <strong class="text-white">LeadVault Prospect Intelligence</strong> begins.
       </p>
     </div>
-    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {icpGroups.map((g) => (
+  </section>
+
+  <!-- Section 3: Lead vs Intelligence -->
+  <section class="section">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">The Distinction</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">A Lead Is a Contact. Intelligence Tells You Why to Contact Them.</h2>
+    </div>
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+      <div class="card">
+        <h3 class="text-lg font-bold text-white">Traditional B2B Data</h3>
+        <ul class="mt-4 space-y-2.5">
+          {['Company', 'Contact name', 'Job title', 'Email', 'Phone', 'Industry/location'].map((item) => (
+            <li class="flex gap-2 text-sm text-white/70">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white/40"></span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="card ring-1 ring-[var(--color-lime)]/50">
+        <h3 class="text-lg font-bold text-white">LeadVault Prospect Intelligence</h3>
+        <p class="mt-1 text-xs text-white/50">Includes the contact data above, plus — depending on the project:</p>
+        <ul class="mt-4 space-y-2.5">
+          {['ICP/fit qualification', 'Qualification basis', 'Supporting evidence/source', 'Relevant business signals', 'Decision-maker relevance', 'Prospect priority', 'Recommended outreach angle'].map((item) => (
+            <li class="flex gap-2 text-sm text-white/85">
+              <Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Process -->
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">How It Works</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">From a Target Description to Actionable Prospect Intelligence.</h2>
+      </div>
+      <div class="mt-12 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr]">
+        {processSteps.map((step, i) => (
+          <>
+            <div class="card flex flex-col items-center gap-3 text-center">
+              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+                <step.icon size={24} stroke-width={1.75} aria-hidden="true" />
+              </div>
+              <div class="eyebrow">{i + 1}. {step.label}</div>
+              <p class="text-sm text-white/70">{step.body}</p>
+            </div>
+            {i < processSteps.length - 1 && (
+              <div class="hidden items-center justify-center lg:flex" aria-hidden="true">
+                <ArrowRight size={18} class="text-white/30" />
+              </div>
+            )}
+          </>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Three Ways to Work With LeadVault -->
+  <section class="section">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">Three Ways to Work With LeadVault</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Choose the Level of Research Your Project Needs.</h2>
+    </div>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+      {waysToWork.map((w) => (
         <div class="card flex flex-col gap-3">
           <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-            <g.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            <w.icon size={22} stroke-width={1.75} aria-hidden="true" />
           </div>
-          <h3 class="text-base font-semibold text-white">{g.title}</h3>
-          <p class="text-sm leading-relaxed text-white/70">{g.body}</p>
+          <h3 class="text-lg font-bold text-white">{w.title}</h3>
+          <p class="flex-1 text-sm leading-relaxed text-white/70">{w.body}</p>
+          <a href={w.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{w.cta.label} →</a>
         </div>
       ))}
     </div>
-    <div class="mt-8 text-center">
-      <a href="/contact" data-cta="icp-section-custom-dataset" class="btn-primary">Tell Us What You Need <ArrowRight size={18} /></a>
-    </div>
   </section>
 
-  <!-- The Problem -->
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+  <!-- Section 6: Real-World Research Use Cases -->
+  <section class="section-alt">
     <div class="section">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="eyebrow">The Problem</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">The Data You're Buying Is Older Than You Think.</h2>
-      <p class="mt-5 text-white/75">
-        Here's the industry's open secret: the big data platforms — the ones where you log in,
-        search a giant database, and download a list — collected many of those records months or
-        years ago. People change jobs. Companies close. Emails die. Independent research puts B2B
-        contact data decay at roughly <strong class="text-white">22–23% every year</strong> —
-        <a href="https://www.cleanlist.ai/blog/2026-01-22-b2b-data-decay-statistics" target="_blank" rel="noopener noreferrer" class="underline hover:text-[var(--color-lime)]">see the research</a>.
-      </p>
-      <p class="mt-4 text-white/75">
-        So when your emails bounce, your calls hit dead numbers, and your "decision-maker" left the
-        company in 2024 — that's not bad luck. That's the warehouse model doing what warehouses do:
-        storing things that age.
-      </p>
-      <p class="mt-4 text-white/75">
-        Meanwhile, the customers you actually need — the active buyer, the genuine supplier, the
-        decision-maker with budget right now — are out there. Somebody just has to go find them.
-        <strong class="text-white"> Freshly.</strong>
-      </p>
-    </div>
-    </div>
-  </section>
-
-  <!-- The Solution -->
-  <section id="how-it-works" class="section">
       <div class="mx-auto max-w-3xl text-center">
-        <p class="eyebrow">The Solution</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">We Don't Store Data. We Harvest It Fresh — For You.</h2>
-        <p class="mt-5 text-white/75">
-          LeadVault works on request. Your order triggers our pipeline:
-        </p>
+        <p class="eyebrow">When Database Filters Are Not Enough</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Real-World Research Use Cases.</h2>
       </div>
-      <div class="mt-12">
-        <PipelineGraphic />
+      <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {useCases.map((u) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <u.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-base font-semibold text-white">{u.title}</h3>
+            <p class="text-sm leading-relaxed text-white/70">{u.body}</p>
+          </div>
+        ))}
       </div>
-      <p class="mx-auto mt-10 max-w-2xl text-center text-lg text-white/80">
-        Think of the big platforms as a warehouse of tinned goods.
-        <strong class="text-[var(--color-lime)]"> LeadVault is the farmer's market.</strong>
-      </p>
-      <div class="mt-8 text-center">
-        <a href="/contact" class="btn-primary">Order Fresh Data <ArrowRight size={18} /></a>
-      </div>
+    </div>
   </section>
 
-  <!-- Why Not Just Use The Big Platforms -->
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+  <!-- Section 7: Example Intelligence Output -->
+  <section class="section">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">See the Difference in the Deliverable</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">What an Intelligence Record Actually Looks Like.</h2>
+      <p class="mt-4 text-white/75">
+        Continuing the example above — here is the kind of record a Prospect Intelligence project
+        would deliver for one qualifying business.
+      </p>
+    </div>
+    <div class="card mx-auto mt-10 max-w-3xl">
+      <p class="mb-4 text-xs font-medium text-white/50">Illustrative example record — not real customer data.</p>
+      <dl class="grid gap-x-6 gap-y-4 sm:grid-cols-2">
+        {exampleRecord.map((r) => (
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-wide text-white/50">{r.field}</dt>
+            <dd class="mt-0.5 text-sm text-white/85">{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+    <p class="mx-auto mt-6 max-w-2xl text-center text-sm text-white/60">
+      The exact fields depend on the assignment. LeadVault structures the deliverable around the
+      decision the customer needs to make — not around a rigid database export.
+    </p>
+  </section>
+
+  <!-- Section 8: Database Platform vs LeadVault -->
+  <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">The Comparison</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">"Can't I Just Log Into a Database Platform?"</h2>
-        <p class="mt-5 text-white/75">You can. Millions do. Here's the difference:</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Software Gives You the Search Tools. LeadVault Does the Research.</h2>
       </div>
-      <div class="mt-10">
-        <ComparisonTable
-          caption="Database platforms versus LeadVault"
-          headers={['', 'Database Platforms (Apollo, ZoomInfo, RocketReach & similar)', 'LeadVault']}
-          rows={[
-            ['How it works', 'Log in, search a stored database, download', 'We source your data fresh, on request'],
-            ['Data age', 'Verified months or years ago', 'Sourced & verified within days — as fresh as 3 days'],
-            ['Verification', 'Periodic bulk checks; bounces included', 'Every batch re-verified before delivery; bounces removed'],
-            ['Guidance', "Software only — you're on your own", 'A strategist reviews your need and recommends the right data'],
-            ['Emerging markets', 'Thin, outdated coverage', 'Deep, current coverage — including African markets others can\'t reach'],
-          ]}
-        />
+      <div class="mx-auto mt-10 grid max-w-4xl gap-8 lg:grid-cols-2">
+        <div class="card">
+          <h3 class="font-semibold text-white">Self-Service Database Platform</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">
+            You define filters → search → export → investigate → determine fit → verify →
+            prioritize → conduct outreach.
+          </p>
+        </div>
+        <div class="card ring-1 ring-[var(--color-lime)]/50">
+          <h3 class="font-semibold text-white">LeadVault</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">
+            You give us the commercial brief → we discover → investigate → qualify → enrich →
+            verify → prioritize → deliver.
+          </p>
+        </div>
       </div>
-      <p class="mx-auto mt-8 max-w-2xl text-center text-lg text-white/80">
-        The platforms sell access to a warehouse. <strong class="text-[var(--color-lime)]">We deliver the fresh harvest.</strong>
+      <p class="mx-auto mt-8 max-w-2xl text-center text-white/75">
+        LeadVault is not intended to replace every sales database. It is for assignments where
+        human judgment, evidence, multi-source research, or unusual qualification criteria matter.
       </p>
       <div class="mt-8 text-center">
         <a href="/why-leadvault" class="btn-primary">See the Full Comparison <ArrowRight size={18} /></a>
@@ -251,45 +348,81 @@ const processSteps = [
     </div>
   </section>
 
-  <!-- Sample Data -->
+  <!-- Sample Data (existing, real evidence) -->
   <section id="sample-data" class="section scroll-mt-24">
     <SampleDataSection />
   </section>
 
-  <!-- Born From Real Trade -->
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
-    <div class="section grid items-center gap-12 lg:grid-cols-2">
-      <div>
-        <p class="eyebrow">Our Origin</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">This Company Began With Real Deals — Not a Business Plan.</h2>
+  <!-- Section 9: Fresh Research -->
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Fresh Research</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Research Initiated Around Your Requirement.</h2>
         <p class="mt-5 text-white/75">
-          Before LeadVault had a name, our founder <strong class="text-white">Steven Ehimigbai</strong> spent
-          years doing one difficult thing extremely well: connecting Nigerian import/export businesses —
-          many run by Nigerians in the American diaspora — with <strong class="text-white">verified buyers
-          and sellers</strong> across borders.
+          We do not treat a prebuilt contact list as the finished answer. LeadVault starts from
+          your specification and uses appropriate research, enrichment, verification and
+          quality-control methods to build the deliverable.
         </p>
         <p class="mt-4 text-white/75">
-          International traders face a brutal problem: most "buyer lists" online are dead ends or
-          outright scams. Steven solved it the hard way — sourcing, checking, and matching real
-          counterparties, deal after deal, year after year. The reviews and referrals piled up. The
-          method became a system. The system became LeadVault.
+          Freshness matters because people change roles and companies over time — independent
+          research puts B2B contact data decay at roughly <strong class="text-white">22–23%
+          every year</strong> —
+          <a href="https://www.cleanlist.ai/blog/2026-01-22-b2b-data-decay-statistics" target="_blank" rel="noopener noreferrer" class="underline hover:text-[var(--color-lime)]">see the research</a>.
+          That's the case for research initiated for your request, not merely retrieved from a
+          prebuilt list — not a claim that any particular platform's data is stale.
         </p>
-        <p class="mt-4 text-white/75">
-          Today, that same fresh-sourcing discipline serves every industry that runs on data — worldwide.
-        </p>
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="/about" class="btn-primary">Read Our Story <ArrowRight size={18} /></a>
-          <a href="/trade" class="btn-outline">For Importers & Freight Forwarders</a>
-        </div>
       </div>
-      <ImagePlaceholder
-        caption="IMAGE: container port at dusk with data-line overlay"
-        alt="Container port at dusk, cranes loading cargo containers"
-        ratio="aspect-[4/3]"
-        src="/photos/container-port-dusk.jpg"
-        width={1400}
-        height={933}
-      />
+    </div>
+  </section>
+
+  <!-- Trade / Origin story -->
+  <section class="section grid items-center gap-12 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">Our Origin — Trade & Counterparty Intelligence</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">This Company Began With Real Deals — Not a Business Plan.</h2>
+      <p class="mt-5 text-white/75">
+        Before LeadVault had a name, our founder <strong class="text-white">Steven Ehimigbai</strong> spent
+        years doing one difficult thing extremely well: researching and qualifying genuine buyers,
+        suppliers, and counterparties for Nigerian import/export businesses — many run by Nigerians
+        in the American diaspora.
+      </p>
+      <p class="mt-4 text-white/75">
+        International trade prospecting often requires more than finding a company in the right
+        industry. Steven's method — researching counterparties against real commercial
+        requirements, not just an industry label — became the discipline behind everything
+        LeadVault does today, across every market it serves.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="/about" class="btn-primary">Read Our Story <ArrowRight size={18} /></a>
+        <a href="/trade" class="btn-outline">Explore the Trade Desk</a>
+      </div>
+    </div>
+    <ImagePlaceholder
+      caption="IMAGE: container port at dusk with data-line overlay"
+      alt="Container port at dusk, cranes loading cargo containers"
+      ratio="aspect-[4/3]"
+      src="/photos/container-port-dusk.jpg"
+      width={1400}
+      height={933}
+    />
+  </section>
+
+  <!-- Section 11: Quality -->
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Quality</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Built for Decisions, Not Just Downloads.</h2>
+      </div>
+      <ul class="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2">
+        {qualityPrinciples.map((item) => (
+          <li class="flex items-start gap-2 text-sm text-white/80">
+            <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            {item}
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -299,56 +432,26 @@ const processSteps = [
       <p class="eyebrow">Who We Serve</p>
       <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Built for Businesses That Run on Data.</h2>
       <p class="mt-5 text-white/75">
-        Some businesses need data occasionally. Others live on it daily. We serve both — but we're
-        built for the second kind:
+        Some businesses need prospect intelligence occasionally. Others live on it daily. We serve
+        both — see the research examples industry by industry.
       </p>
     </div>
-    <div class="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-3">
-      {industries.map((industry) => (
-        <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
-          {industry}
-        </span>
-      ))}
-    </div>
-    <p class="mx-auto mt-6 max-w-2xl text-center text-white/60">
-      …and every other business that needs to reach the right people, reliably.
-    </p>
     <div class="mt-8 text-center">
       <a href="/industries" class="btn-primary">Explore Industries <ArrowRight size={18} /></a>
     </div>
   </section>
 
-  <!-- How It Works -->
-  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
-    <div class="section">
-      <div class="mx-auto max-w-3xl text-center">
-        <p class="eyebrow">What Working With LeadVault Looks Like</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">No Guesswork. Just A Clear Process.</h2>
-      </div>
-      <ol class="mx-auto mt-10 max-w-2xl space-y-5">
-        {processSteps.map((item, i) => (
-          <li class="flex gap-4">
-            <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-lime)] text-sm font-bold text-[var(--color-lime-dark)]">
-              {i + 1}
-            </span>
-            <p class="text-white/80">{item}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <!-- Final CTA -->
+  <!-- Section 12: Final CTA -->
   <section class="section-alt">
     <div class="section text-center">
-      <h2 class="text-3xl font-bold text-white sm:text-4xl">Your Next Customer Exists. We'll Find Them This Week.</h2>
+      <h2 class="text-3xl font-bold text-white sm:text-4xl">Tell Us the Market You Want to Reach.</h2>
       <p class="mx-auto mt-5 max-w-2xl text-white/75">
-        Tell us who you're looking for. A LeadVault strategist will review the specification and
-        respond within 24 hours with the right data, the right volume, the right price. No obligation.
+        Describe the companies, people, geography, or commercial opportunity you are targeting.
+        LeadVault will assess the requirement and determine the appropriate research approach.
       </p>
       <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-        <a href="/data-catalog" data-cta="final-sample-data" class="btn-primary">Request Sample Data <ArrowRight size={18} /></a>
-        <a href="/contact" data-cta="final-custom-dataset" class="btn-outline">Request a Custom Dataset</a>
+        <a href="/contact" data-cta="final-start-project" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+        <a href="/contact" data-cta="final-talk-strategist" class="btn-outline">{CTA_HIGH_INTENT}</a>
       </div>
     </div>
   </section>

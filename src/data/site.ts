@@ -35,26 +35,34 @@ export function isNavGroup(entry: NavEntry): entry is NavGroup {
   return 'items' in entry;
 }
 
+// Repositioning master brief (2026-09-30), §4 — replaces the old flat
+// Solutions/Company groups with the brief's proposed architecture. All six
+// Solutions items now have real destinations (the 5 dedicated commercial
+// pages built in the "core commercial pages" phase, plus /trade, which
+// already existed) — the interim /services placeholders from Phase 1 are
+// gone. "Data Catalog" is deliberately removed from primary nav per the
+// brief's explicit instruction (§4) — reachable via the footer and CTAs
+// instead. "Tools & Technology" (the former "Company" group) isn't in the
+// brief's proposed nav bar either — kept reachable via the footer and
+// cross-links instead of primary nav.
 export const HEADER_NAV: NavEntry[] = [
   { label: 'Home', href: '/' },
+  { label: 'Prospect Intelligence', href: '/prospect-intelligence' },
   {
     label: 'Solutions',
     items: [
-      { label: 'Services', href: '/services' },
-      { label: 'Trade Desk', href: '/trade' },
-      { label: 'Industries', href: '/industries' },
-      { label: 'Data Catalog', href: '/data-catalog' },
+      { label: 'Qualified Prospect Data', href: '/qualified-prospect-data' },
+      { label: 'Market & ICP Research', href: '/market-icp-research' },
+      { label: 'Decision-Maker Intelligence', href: '/decision-maker-intelligence' },
+      { label: 'Trade & Counterparty Intelligence', href: '/trade' },
+      { label: 'Intelligence-Led Outreach', href: '/managed-outreach' },
+      { label: 'Data Cleaning & Enrichment', href: '/services#data-cleaning' },
     ],
   },
+  { label: 'Industries', href: '/industries' },
   { label: 'Why LeadVault', href: '/why-leadvault' },
-  {
-    label: 'Company',
-    items: [
-      { label: 'About', href: '/about' },
-      { label: 'Tools & Technology', href: '/tools' },
-    ],
-  },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'About', href: '/about' },
 ];
 
 // Legal pages — drafted directly (not by outside counsel); see ASSUMPTIONS.md for
@@ -75,8 +83,21 @@ export const SITE_URL = 'https://leadvaultdata.com';
 // their own hardcoded copy of the same string, so updating it here alone
 // wouldn't have changed anything live. Both now import PRIMARY_TAGLINE
 // directly, so there's exactly one place to change this going forward.
-export const PRIMARY_TAGLINE = "Tell Us Who You Need to Reach. We'll Research the Prospects That Match.";
-export const SECONDARY_TAGLINE = 'Every Business Needs Us — Or Our Data.';
+// Repositioning master brief §2/§6 — replaces the "Tell Us Who You Need to
+// Reach..." research-service framing with the new B2B Prospect Intelligence
+// umbrella proposition. Imported directly into both the homepage H1 and the
+// footer tagline (see PRIMARY_TAGLINE's original note above) so there's still
+// exactly one place to change this.
+export const PRIMARY_TAGLINE = 'Know Who to Target. Know Why They Matter. Know How to Reach Them.';
+
+// Sitewide CTA system (repositioning master brief §5) — centralized so every
+// page uses the same button text for the same intent instead of ~15 separate
+// hand-typed variants ("Request Sample Data", "Get Started", "Order Fresh
+// Data", "Ask Us"...) drifting apart over time.
+export const CTA_PRIMARY = 'Start a Research Project'; // general contact-intent CTA, any offering
+export const CTA_SECONDARY = 'See Sample Intelligence'; // → /data-catalog's live sample previews
+export const CTA_HIGH_INTENT = 'Talk to a Strategist'; // complex/managed-outreach-style projects
+export const CTA_SAMPLE_DATA = 'Request Sample Data'; // reserved for pages where the visitor is evaluating Qualified Prospect Data specifically (brief §5)
 
 // Real contact details supplied by the client. WHATSAPP_NUMBER_INTL is digits-only
 // (no "+", spaces, or leading zeros) — the format wa.me links require.

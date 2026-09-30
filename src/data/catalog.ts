@@ -131,6 +131,16 @@ export const NEED_SLUG_TO_OPTION: Record<string, string> = {
   'international-trade-counterparties': 'Find buyers/suppliers (Trade Desk)',
   'fully-custom-specification': 'Custom data project',
   'managed-email-campaigns': 'Managed email campaigns',
+  // Repositioning's 5 new commercial pages (2026-09-30) — mapped onto the
+  // closest existing NEED_OPTIONS value rather than adding new dropdown
+  // options, since reworking the Contact form's own field set is a later,
+  // separately-scoped phase (brief §19). This keeps today's pre-fill working
+  // without touching the form itself.
+  'prospect-intelligence': 'Custom data project',
+  'qualified-prospect-data': 'Fresh custom dataset',
+  'market-icp-research': 'Custom data project',
+  'decision-maker-intelligence': 'Custom data project',
+  'managed-outreach': 'Managed email campaigns',
 };
 
 // The fixed-price, one-time dataset tiers shown on /pricing. Single source of

@@ -1,131 +1,161 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { Database, Sparkles, Handshake, CalendarCheck, Terminal, Compass, Send, MailCheck, ArrowRight } from '@lucide/astro';
+import {
+  Database,
+  Sparkles,
+  Handshake,
+  CalendarCheck,
+  Compass,
+  UserCheck,
+  Send,
+  MailCheck,
+  Filter,
+  Lightbulb,
+  ArrowRight,
+} from '@lucide/astro';
 
-const services = [
+// Repositioning master brief §13 — reworked from a flat 8-card catalogue into
+// the Solutions overview hub connecting the five new dedicated pages plus the
+// services that don't need one of their own (owner-approved architecture).
+// "Data Cleaning & Enrichment" stays here rather than getting a dedicated
+// page — its content is real but narrower in scope than the four research
+// tiers, and a full hero/use-cases/FAQ page would be padding, not substance
+// (owner's explicit "do not create a thin page merely to satisfy the menu").
+
+const solutions = [
   {
-    id: 'custom-fresh-datasets',
-    icon: Database,
-    title: 'Custom Fresh Datasets',
+    id: 'prospect-intelligence',
+    icon: Sparkles,
     flagship: true,
-    who: "Anyone who needs a prospect list matching specific, real criteria — not whatever a database happens to have on file.",
-    problem: "Off-the-shelf databases give you what's already in storage, not necessarily who you actually need to reach.",
-    body: "Tell us exactly who you need — industry, job titles, locations, company sizes, buying signals. We research it against your specification, verify every record, and deliver a clean Google Sheet within days (CSV and Excel also available). Not pulled from storage; harvested for you.",
-    detail: 'What you receive per record: name, job title, company, verified email, phone (where available), location, industry — plus any custom fields you specify.',
-    price: 'From $29 per 100 verified prospects — see the full ladder on Pricing.',
-    cta: { label: 'See pricing tiers →', href: '/pricing' },
+    title: 'Prospect Intelligence',
+    who: 'Teams whose requirement cannot be solved by ordinary database filters.',
+    problem: 'Standard filters tell you who exists. They don\'t tell you which companies actually fit, or who inside them matters.',
+    body: 'We investigate target markets, qualify companies against project-specific criteria, identify relevant decision-makers, and verify available contact data — with supporting evidence where the assignment requires it.',
+    price: 'Custom quote, scoped to research complexity.',
+    cta: { label: 'See full Prospect Intelligence page →', href: '/prospect-intelligence' },
   },
   {
-    id: 'monthly-prospect-research',
+    id: 'qualified-prospect-data',
+    icon: Database,
+    title: 'Qualified Prospect Data',
+    who: 'Teams that already know exactly whom they need to reach.',
+    problem: "Off-the-shelf databases give you what's already in storage, not necessarily who you actually need.",
+    body: 'Tell us the industry, geography, company profile, and roles. We research it against your specification, verify every record, and deliver a clean Google Sheet (CSV and Excel also available).',
+    price: 'From $29 per 100 verified prospects — see the full ladder on Pricing.',
+    cta: { label: 'See full Qualified Prospect Data page →', href: '/qualified-prospect-data' },
+  },
+  {
+    id: 'market-icp-research',
+    icon: Compass,
+    title: 'Market & ICP Research',
+    who: 'Teams entering a new territory or validating a niche market before they prospect it.',
+    problem: "You can't prospect a market you haven't defined yet.",
+    body: 'We translate an ideal-customer description into a researched, addressable target market — geographic segmentation, company qualification, and decision-maker mapping included.',
+    price: 'Custom quote.',
+    cta: { label: 'See full Market & ICP Research page →', href: '/market-icp-research' },
+  },
+  {
+    id: 'decision-maker-intelligence',
+    icon: UserCheck,
+    title: 'Decision-Maker Intelligence',
+    who: 'Teams that already have the companies, but need the right person inside each one.',
+    problem: 'A valid email is not valuable if it belongs to the wrong person.',
+    body: 'We research the roles and people most relevant to your commercial objective — owners, executives, procurement, technical buyers — then enrich with available verified contact information.',
+    price: 'Custom quote.',
+    cta: { label: 'See full Decision-Maker Intelligence page →', href: '/decision-maker-intelligence' },
+  },
+  {
+    id: 'monthly-research',
     icon: CalendarCheck,
-    title: 'Monthly Prospect Research',
-    who: 'Teams with an ongoing, recurring need for fresh prospects — not a one-time list.',
+    title: 'Monthly Research Retainer',
+    who: 'Teams with an ongoing, recurring need for fresh prospects — not a one-time project.',
     problem: 'A single dataset ages; a team that prospects continuously needs a continuous supply, freshly researched each cycle.',
-    body: 'A recurring research engagement, not access to a static database. Fresh prospects matching your ICP, researched and delivered on schedule — with a strategy report and priority support on higher tiers.',
+    body: 'A recurring research engagement covering Qualified Prospect Data or Prospect Intelligence on a monthly cycle — with a strategy report and priority support on higher tiers.',
     price: 'From $199/month.',
     cta: { label: 'See plans →', href: '/pricing' },
   },
   {
-    icon: Terminal,
-    title: 'Custom Data Projects (Precision-Engineered)',
-    who: 'Teams with a research requirement too specific or unusual for a standard category.',
-    problem: "Standard filters don't cover every real-world specification — unusual geographies, niche industries, or custom output formats.",
-    body: 'Our team builds a purpose-fit research and filtering process for every complex project — narrowing massive datasets to your precise specification: decision-makers only, niche industries, unusual geographies, special formats. If it can be defined, it can be delivered.',
-    price: 'Custom quote.',
-    cta: { label: 'Discuss your project →', href: '/contact' },
+    id: 'trade-desk',
+    icon: Handshake,
+    title: 'Trade & Counterparty Intelligence',
+    subtitle: 'Powered by the LeadVault Trade Desk',
+    body: 'For importers, exporters, and freight forwarders: we research and verify genuine counterparties — buyers, suppliers, and shippers — across international markets, with a strategist consultation on your trade lane.',
+    price: 'From $449 per engagement.',
+    cta: { label: 'See full Trade Desk page →', href: '/trade' },
   },
   {
-    icon: Sparkles,
-    title: 'Email List Cleaning & Hygiene',
+    id: 'managed-outreach',
+    icon: MailCheck,
+    title: 'Intelligence-Led Outreach',
+    subtitle: 'Managed campaign execution',
+    body: 'For businesses that want the research put into action: campaign preparation, controlled B2B email outreach, and reporting — built on qualified prospect data, not a generic list.',
+    price: 'Custom quote, based on campaign requirements.',
+    cta: { label: 'See full Managed Outreach page →', href: '/managed-outreach' },
+  },
+  {
+    id: 'data-cleaning',
+    icon: Filter,
+    title: 'Data Cleaning & Enrichment',
     who: 'Anyone holding a list — bought, inherited, or built in-house — that has started to bounce.',
     problem: 'An aging or unverified list damages sender reputation before you ever see the results.',
-    body: 'Lists age fast — independent research puts B2B contact decay at roughly 22–23% per year (see the citation on our homepage). Send us any list (bought anywhere, or built in-house) and we return it healthy:',
+    body: 'Independent research puts B2B contact decay at roughly 22–23% per year (see the citation on our homepage). Send us any list and we return it healthy:',
     list: [
       'Deliverability verification across Office 365, Google Workspace, and every provider type',
       'Bounce and dead-address removal before you ever hit "send"',
       'Duplicate & error scrubbing',
-      'Your sender reputation, protected.',
     ],
     price: 'From $39 per 5,000 contacts cleaned.',
     cta: { label: 'Clean my list →', href: '/contact' },
   },
   {
-    id: 'trade-desk',
-    icon: Handshake,
-    title: 'Verified Buyer–Seller Matching',
-    subtitle: 'The Trade Desk — our specialized research service for international trade',
-    body: 'The service that built LeadVault. For importers, exporters, and freight forwarders: we locate and verify genuine counterparties — buyers for your goods, suppliers you can trust, shippers who need forwarding — across international markets. Includes a strategist consultation on your trade lane.',
-    price: 'From $449 per engagement.',
-    cta: { label: 'Full details →', href: '/trade' },
-  },
-  {
-    // Repositioned as a secondary/advanced capability, not a primary
-    // 90-day acquisition offer (pricing-positioning round — see
-    // ASSUMPTIONS.md). Condensed from a long body + 6-item list + body2
-    // into the same compact, quote-based framing used on /pricing, moved
-    // later in the list, and no specific price points advertised.
-    id: 'managed-email-campaigns',
-    icon: MailCheck,
-    title: 'Managed Email Campaigns',
-    subtitle: 'Advanced Managed Service',
-    body: "For businesses that need more than the dataset itself, LeadVault can also provide managed campaign execution using its email infrastructure and verification workflow. Available for qualified projects.",
-    listIntro: 'Services may include:',
-    list: [
-      'Campaign setup',
-      'Data verification',
-      'Deliverability sorting',
-      'Provider-aware testing',
-      'Sending infrastructure',
-      'Campaign execution',
-      'Reporting',
-    ],
-    detail: 'Compliance note: we run permission-appropriate, regulation-compliant B2B outreach only (CAN-SPAM and applicable laws). We decline campaigns designed to deceive.',
-    price: 'Pricing is provided based on campaign requirements.',
-    cta: { label: 'Discuss a managed campaign →', href: '/contact' },
-  },
-  {
-    icon: Compass,
+    icon: Lightbulb,
     title: 'Data Strategy & Recommendations',
-    body: 'Not sure what data you need? Complete our 10-minute survey. A strategist analyses your business, market, and goals — then delivers a written recommendation: what to buy, how much, and how to use it for maximum response.',
-    price: 'Free with any order; $49 standalone (credited back if you purchase within 30 days).',
+    body: 'Not sure what you need? Complete our short survey. A strategist reviews your business, market, and goals, then delivers a written recommendation — what to order, how much, and how to use it for maximum response.',
+    price: 'Free with any order; $49 standalone (credited back if you order within 30 days).',
   },
   {
     icon: Send,
     title: 'Outreach Best-Practice Support',
     subtitle: 'Add-on',
-    body: 'Clean data deserves clean usage. We advise on sending best practices, warm-up schedules, message templates, and follow-up sequences — so your campaigns land in inboxes, not spam folders, and comply with the rules of every market you contact.',
+    body: 'Clean data deserves clean usage. We advise on sending best practices, warm-up schedules, message templates, and follow-up sequences — so your campaigns land in inboxes, not spam folders.',
   },
+];
+
+const decisionGuide = [
+  { text: 'Already know exactly who you need — industry, roles, geography?', href: '#qualified-prospect-data', label: 'Qualified Prospect Data' },
+  { text: "Requirement involves evidence or criteria a standard filter can't test?", href: '#prospect-intelligence', label: 'Prospect Intelligence' },
+  { text: "Haven't defined your target market yet?", href: '#market-icp-research', label: 'Market & ICP Research' },
+  { text: 'Know the companies, need the right person inside each one?', href: '#decision-maker-intelligence', label: 'Decision-Maker Intelligence' },
+  { text: 'Need an ongoing supply of prospects, not a one-time list?', href: '#monthly-research', label: 'Monthly Research Retainer' },
+  { text: 'Need a verified buyer, supplier, or trade counterparty?', href: '#trade-desk', label: 'Trade Desk' },
+  { text: 'Want the research put into an actual outreach campaign?', href: '#managed-outreach', label: 'Intelligence-Led Outreach' },
+  { text: 'Have an existing list that needs cleaning and verification?', href: '#data-cleaning', label: 'Data Cleaning & Enrichment' },
 ];
 ---
 
 <BaseLayout
-  title="B2B Prospect Research & Custom Data Services | LeadVault"
-  description="Custom prospect research, email list cleaning, custom-filtered datasets, buyer–seller matching, and data strategy — LeadVault's complete research and sourcing suite for businesses worldwide."
+  title="B2B Prospect Intelligence Solutions | LeadVault"
+  description="The complete LeadVault solution architecture — Prospect Intelligence, Qualified Prospect Data, Market & ICP Research, Decision-Maker Intelligence, Trade & Counterparty Intelligence, and Managed Outreach."
   path="/services"
 >
   <section class="section text-center">
-    <p class="eyebrow">Services</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">One Vault. Every Data Service Your Business Needs.</h1>
+    <p class="eyebrow">Solutions</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">One Vault. Every Way to Reach the Right Prospects.</h1>
     <p class="mx-auto mt-5 max-w-3xl text-white/75">
-      We don't just hand over lists. We source, verify, clean, filter, match, and advise — and when
-      your challenge is unusual, we build the tool that solves it.
+      LeadVault researches, qualifies, enriches, and — where you want it — acts on prospect
+      intelligence. Every solution below starts with the same discipline: research initiated for
+      your request, not retrieved from a prebuilt list.
     </p>
 
     <div class="card mx-auto mt-10 max-w-3xl text-left">
       <h2 class="text-lg font-bold text-white">Not Sure Where to Start?</h2>
       <ul class="mt-4 space-y-3">
-        <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
-          <span>Need a prospect list for a specific campaign — from a small test batch to a fully custom, hard-to-find specification?</span>
-          <a href="#custom-fresh-datasets" class="font-semibold text-[var(--color-lime)] hover:underline">Custom Fresh Datasets →</a>
-        </li>
-        <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
-          <span>Need an ongoing, recurring supply of prospects rather than a one-time list?</span>
-          <a href="#monthly-prospect-research" class="font-semibold text-[var(--color-lime)] hover:underline">Monthly Prospect Research →</a>
-        </li>
-        <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
-          <span>Need to verify a buyer, supplier, or trade counterparty?</span>
-          <a href="#trade-desk" class="font-semibold text-[var(--color-lime)] hover:underline">Trade Desk →</a>
-        </li>
+        {decisionGuide.map((d) => (
+          <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
+            <span>{d.text}</span>
+            <a href={d.href} class="font-semibold text-[var(--color-lime)] hover:underline">{d.label} →</a>
+          </li>
+        ))}
       </ul>
       <p class="mt-4 text-xs text-white/50">Still not sure? <a href="/contact" class="underline hover:text-[var(--color-lime)]">Tell us what you need</a> and a strategist will point you to the right one.</p>
     </div>
@@ -134,7 +164,7 @@ const services = [
   <section class="section-alt">
     <div class="section">
       <div class="columns-1 gap-6 lg:columns-2">
-      {services.map((service) => (
+      {solutions.map((service) => (
         <div id={service.id} class:list={['card mb-6 flex flex-col gap-4 break-inside-avoid-column scroll-mt-28', service.flagship && 'ring-1 ring-[var(--color-lime)]/50']}>
           <div class="flex items-start justify-between gap-3">
             <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
@@ -159,7 +189,6 @@ const services = [
             </dl>
           )}
           <p class="text-sm leading-relaxed text-white/75">{service.body}</p>
-          {service.listIntro && <p class="text-sm font-medium text-white">{service.listIntro}</p>}
           {service.list && (
             <ul class="space-y-2">
               {service.list.map((item) => (
@@ -170,12 +199,9 @@ const services = [
               ))}
             </ul>
           )}
-          {service.body2 && <p class="text-sm leading-relaxed text-white/75">{service.body2}</p>}
-          {service.detail && <p class="text-xs italic text-white/50">{service.detail}</p>}
           <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-2">
             <div>
               {service.price && <p class="font-semibold text-white">{service.price}</p>}
-              {service.priceNote && <p class="text-xs text-white/50">{service.priceNote}</p>}
             </div>
             {service.cta && (
               <a href={service.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">
@@ -196,7 +222,7 @@ const services = [
 <script type="application/ld+json" set:html={JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  itemListElement: services.map((s, i) => ({
+  itemListElement: solutions.map((s, i) => ({
     '@type': 'Service',
     position: i + 1,
     name: s.title,

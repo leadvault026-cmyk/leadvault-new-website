@@ -1,0 +1,202 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { DATASET_TIERS } from '../data/catalog';
+import { CTA_PRIMARY } from '../data/site';
+import {
+  ArrowRight,
+  Database,
+  MapPin,
+  Building2,
+  UserCheck,
+  Calendar,
+  Globe,
+  Layers,
+  ShieldCheck,
+  Sparkles,
+  UserCog,
+} from '@lucide/astro';
+
+// Repositioning master brief §8 — narrower than the Prospect Intelligence
+// flagship: for customers who already know their specification and need the
+// data delivered, not the market investigated. Ties directly into the
+// existing, unchanged DATASET_TIERS pricing ladder rather than repeating it.
+
+const bestFor = [
+  { icon: Building2, label: 'Defined ICPs' },
+  { icon: MapPin, label: 'Territory building' },
+  { icon: Layers, label: 'Account-list development' },
+  { icon: UserCheck, label: 'Decision-maker lists' },
+  { icon: Calendar, label: 'Event or campaign targeting' },
+  { icon: Globe, label: 'Geographic expansion' },
+  { icon: Database, label: 'Niche industry prospecting' },
+];
+
+const fields = [
+  'Company name',
+  'Website',
+  'Contact name',
+  'Contact title',
+  'Business email, where available',
+  'Phone, where available',
+  'Address/location',
+  'Company/provider type',
+  'Other agreed fields',
+];
+
+const related = [
+  { icon: Sparkles, title: 'Requirement too specific for a filter?', body: 'If fit depends on evidence or qualitative criteria a standard filter can\'t test, the flagship service is the better starting point.', cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
+  { icon: Globe, title: "Don't know your target market yet?", body: "If you're still translating an ICP into a defined, addressable market, map it first.", cta: { label: 'See Market & ICP Research', href: '/market-icp-research' } },
+  { icon: UserCog, title: 'Need help acting on the data?', body: 'If you want the research put into a controlled outreach campaign, not just delivered.', cta: { label: 'See Intelligence-Led Outreach', href: '/managed-outreach' } },
+];
+
+const faqs = [
+  {
+    question: 'How is this different from buying access to a database platform?',
+    answer: "You don't get a login to search yourself. You give us the specification — industry, geography, company profile, roles — and we research, verify, and deliver a dataset built specifically for that request, rather than an export from a stored, aging database.",
+  },
+  {
+    question: 'What fields do I get with each record?',
+    answer: 'Standard fields are company name, website, contact name, contact title, business email where available, phone where available, location, industry, and company/provider type — plus any custom fields you specify.',
+  },
+  {
+    question: 'How accurate is the contact data?',
+    answer: 'Every record is verified at the time of research using the applicable verification process. We don\'t claim permanent deliverability — people change roles and companies over time — which is why every delivery carries our replacement guarantee. See the full pricing tiers below.',
+  },
+  {
+    question: 'Can I start small and scale up?',
+    answer: 'Yes — the pricing ladder below is built around testing a specification at a small volume before committing to a larger order.',
+  },
+];
+---
+
+<BaseLayout
+  title="Custom B2B Prospect Data & Decision-Maker Research | LeadVault"
+  description="Get custom B2B prospect data researched to your specification, including relevant companies, decision-makers, and verified contact information where available."
+  path="/qualified-prospect-data"
+>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Qualified Prospect Data',
+    name: 'Qualified Prospect Data',
+    description: 'Custom B2B prospect data researched to a defined specification, including company, contact, and decision-maker fields.',
+    provider: { '@type': 'Organization', name: 'LeadVault', url: 'https://leadvaultdata.com' },
+  })} />
+
+  <section class="section text-center">
+    <p class="eyebrow">Qualified Prospect Data</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Custom B2B Prospect Data, Researched to Your Specification</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      For teams that already know exactly whom they want to reach. Tell LeadVault the industry,
+      geography, company profile, roles, and other targeting requirements. We research and prepare a
+      clean prospect dataset around the specification.
+    </p>
+    <div class="mt-8">
+      <a href="/contact?need=qualified-prospect-data" data-cta="qpd-hero" class="btn-primary">Request Prospect Data <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Best For</h2>
+      <ul class="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {bestFor.map((b) => (
+          <li class="card flex items-center gap-3 text-sm font-medium text-white/85">
+            <b.icon size={20} class="shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            {b.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto grid max-w-4xl gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="text-xl font-bold text-white">Typical Data Fields</h2>
+        <ul class="mt-4 space-y-2.5">
+          {fields.map((f) => (
+            <li class="flex gap-2 text-sm text-white/75">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-white">Why Custom Research</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          The value isn't merely exporting records. LeadVault combines research and verification
+          methods, normalizes the data, and delivers it in a structure ready for your workflow —
+          not a raw dump from someone else's database.
+        </p>
+        <h2 class="mt-6 text-xl font-bold text-white">Data Quality</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          Every record is verified at the time of research using the applicable verification
+          process. We don't claim any email is permanently deliverable — people change roles and
+          companies — which is why every delivery carries a replacement guarantee.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Pricing Tiers</h2>
+      <p class="mx-auto mt-3 max-w-xl text-center text-sm text-white/60">Start small and scale up as a specification proves out.</p>
+      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-3">
+        {DATASET_TIERS.map((t) => (
+          <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
+            {t.name} — {t.records} · <strong class="text-white">{t.price}</strong>
+          </span>
+        ))}
+      </div>
+      <div class="mt-8 text-center">
+        <a href="/pricing" class="btn-outline">See Full Pricing <ArrowRight size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+      {related.map((r) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-semibold text-white">{r.title}</h3>
+          <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+          <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-2xl font-bold text-white sm:text-3xl">Know Exactly Who You Need? Let's Build the List.</h2>
+    <div class="mt-8">
+      <a href="/contact?need=qualified-prospect-data" data-cta="qpd-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  })} />
+</BaseLayout>

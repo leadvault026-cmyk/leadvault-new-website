@@ -1166,3 +1166,366 @@ smallest possible correction for anything genuinely wrong, no redesign.
   or structural redesign performed on any page, per this round's explicit instruction.
 - **Not deployed.** Consistent with recent rounds, pending explicit approval to
   commit/push.
+
+## Repositioning — Phase 1 (Shared Foundation) + Homepage + Why LeadVault
+
+Website freeze (established after the Round 14-19 deployment) was explicitly lifted by
+the owner as an approved exception, per `LEADVAULT_WEBSITE_REPOSITIONING_MASTER_BRIEF.md`
+— a new strategic phase repositioning LeadVault from "B2B prospect research" to "B2B
+Prospect Intelligence." A full pre-implementation audit was delivered and approved first
+(routes, SEO, GA4/Search-Console evidence, Netlify config, conflicts/recommendations,
+5 owner decisions) before any code changed. This entry covers the first two phases the
+owner authorized: Shared Foundation (nav/footer/CTA system) and the Homepage, plus Why
+LeadVault's rework (bundled in since it's a contained single-page change tied to the
+same "software vs. research" thesis the new homepage introduces).
+
+- **Navigation restructured** (`src/data/site.ts`, `Header.astro`) to the brief's
+  proposed architecture: Home / Prospect Intelligence / Solutions▾ / Industries / Why
+  LeadVault / Pricing / About. Six of the Solutions-dropdown destinations (Qualified
+  Prospect Data, Market & ICP Research, Decision-Maker Intelligence, Intelligence-Led
+  Outreach, Data Cleaning & Enrichment, plus the top-level "Prospect Intelligence" link)
+  don't have dedicated pages yet — those are the next implementation phase (core
+  commercial pages). Rather than 404, they interim-link to `/services`, which itself
+  becomes the Solutions overview page in that same next phase. This is flagged, not
+  silent — the nav will point at real dedicated URLs once those pages exist.
+  "Data Catalog" was deliberately removed from primary nav per the brief's explicit
+  instruction (§4); "Tools & Technology" (formerly the "Company" dropdown, now gone) also
+  isn't in the brief's proposed nav bar — both stay reachable via the footer and internal
+  cross-links, per "do not remove working features merely because they are not
+  described here" (brief §1).
+- **Sitewide CTA system introduced** (`CTA_PRIMARY` "Start a Research Project",
+  `CTA_SECONDARY` "See Sample Intelligence", `CTA_HIGH_INTENT` "Talk to a Strategist",
+  `CTA_SAMPLE_DATA` "Request Sample Data" reserved for data-specific evaluation contexts)
+  as centralized constants in `site.ts` rather than ~15 hand-typed button strings —
+  the same single-source-of-truth pattern used for `PRIMARY_TAGLINE` and
+  `DATASET_TIERS` earlier in this project, chosen specifically to avoid the exact kind
+  of copy-drift bug those fixes were for. Swept across Header, About, Data Catalog,
+  Pricing, and Industries (the pages not being content-reworked this phase); Home and
+  Why LeadVault got the new CTAs as part of their own full rewrites. Data Catalog's own
+  per-category "Request This Dataset" buttons were deliberately left unchanged — already
+  appropriately data-specific per the brief's own carve-out (§5).
+- **`PRIMARY_TAGLINE` updated** to "Know Who to Target. Know Why They Matter. Know How
+  to Reach Them." (brief §2/§6) — same single-import pattern as before, so Home's H1 and
+  the footer tagline can't drift apart. Footer's secondary description line updated to
+  match ("B2B prospect intelligence — researched, qualified, and verified.").
+- **Homepage fully rebuilt** (`index.astro`) around the brief's 12-section structure:
+  Hero, The Problem, Lead-vs-Intelligence, Process (Discover→Qualify→Enrich→Prioritize→
+  Act), Three Ways to Work With LeadVault, six Real-World Research Use Cases, a fictional
+  Example Intelligence Output record, Database-Platform-vs-LeadVault, Fresh Research,
+  Quality principles, and the Final CTA — plus the existing Sample Data section, the
+  founder-origin/Trade story, and the Industries cross-link, all preserved rather than
+  cut (brief §1's "do not remove working features" applied even though the homepage
+  itself was a full rewrite).
+  - **The old homepage's audience-segmentation ICP cards (Agencies/SaaS/Trade/Other
+    self-identification) were deliberately dropped**, not an oversight — the new brief
+    organizes the homepage around product tier (what you need), with audience-specific
+    depth now living on `/industries` instead. Noted as a judgment call, not implied by
+    an explicit brief instruction either way.
+  - **The old "harvest"/"warehouse" framing was fully retired** from the homepage (the
+    brief explicitly prohibits it, §2) — replaced with the "software vs. research"
+    framing the owner approved. The cited 22–23%/year B2B data-decay statistic was kept
+    (it's real, sourced, and the brief only objects to *unsupported* staleness claims
+    about named competitors, not the citation itself) but reframed as "why freshness
+    matters" rather than implying any specific platform's data is stale.
+  - **A new fictional "Example Intelligence Output" record was written** for Section 7,
+    deliberately tied back to Section 2's own example question (a medical-provider/
+    personal-injury scenario) so the page tells one coherent story from problem to
+    deliverable rather than a disconnected sample. Follows this project's established
+    fictional/masked-data convention (masked email/phone, clearly labeled "illustrative
+    example record — not real customer data," visibly — not screen-reader-only, per the
+    fix from the Data Catalog audit two weeks ago) — no real customer data, no invented
+    statistics.
+- **Why LeadVault fully reworked** (`why-leadvault.astro`) per the owner's explicit
+  decision: retired "The Warehouse vs. The Harvest" as the page's central thesis,
+  replaced with "Software Gives You the Search Tools. LeadVault Does the Research." —
+  developed *substantially* on this page (a new 6-reason grid drawn from the brief's §14
+  content, a "category distinction" flow comparison, and an added "Qualification depth"
+  row on the existing comparison table) rather than just repeating the homepage's
+  compact version, per the owner's explicit instruction not to duplicate. Named
+  competitor list extended from Apollo/ZoomInfo/RocketReach/Lusha to also include
+  Hunter/Cognism/Clay, matching the brief's §14 list. The already-hedged comparison-table
+  rows and disclaimer from the earlier credibility audit were kept as-is (still accurate,
+  still defensible) rather than rewritten without reason.
+- **`PipelineGraphic.astro` component is now unused** — the homepage's new 5-stage
+  Process section (Discover/Qualify/Enrich/Prioritize/Act) needed different stages and
+  meaning than its hardcoded 4-stage Source/Verify/Clean/Deliver content, so it was
+  rebuilt inline rather than repurposing the shared component (which nothing else on the
+  site imports). Left in place rather than deleted — not broken, just orphaned pending a
+  decision on whether it's wanted elsewhere later.
+- **Verified via `npm run build` (zero errors, 17 pages), a static link/asset/SEO
+  checker (zero broken links, zero missing assets, exactly one `<h1>` everywhere), and a
+  live Playwright pass**: zero console errors and zero horizontal overflow across 11 key
+  pages at 320/375/768/1280px; desktop Solutions dropdown and mobile accordion both open
+  and correctly reveal the Trade & Counterparty Intelligence link; header CTA confirmed
+  "Start a Research Project" → `/contact`; homepage confirmed to contain the new H1,
+  zero "harvest"/"warehouse vs" language, the visible example-record disclaimer, and the
+  preserved data-decay citation; Why LeadVault confirmed to show the new thesis H1, zero
+  trace of the old H1, and all 6 named competitors present. Screenshotted the header at
+  1280/1440px specifically to check for the nav-crowding risk flagged in the audit — it
+  does not crowd in practice.
+- **Not deployed.** Pending explicit owner review of this phase before continuing to the
+  next (the five new commercial pages + `/services` rework).
+
+## Repositioning — Core Commercial Pages (5 new pages + Services rework)
+
+Phase 1 approved as-is (including the ICP-card removal, confirmed rather than reverted).
+This phase: the five dedicated commercial pages the brief specifies, plus a comprehensive
+rework of `/services` into the Solutions overview hub, plus updating every interim nav/
+homepage link from Phase 1 to its real destination.
+
+- **Five new pages created**: `/prospect-intelligence` (flagship), `/qualified-prospect-data`,
+  `/market-icp-research`, `/decision-maker-intelligence`, `/managed-outreach`. Built as flat
+  `.astro` files (`src/pages/prospect-intelligence.astro`, etc.) rather than the brief's
+  literally-suggested trailing-slash directory URLs (`/prospect-intelligence/`) — matches
+  every other page on the site and the sitemap/canonical trailing-slash normalization fixed
+  earlier this project specifically to stop Google seeing two URL shapes per page. Flagged
+  as a deliberate departure from the brief's literal suggestion, not the objective, per §34.
+- **Differentiation strategy to avoid keyword cannibalization** between the four closely
+  related research-tier pages (owner's explicit requirement): Prospect Intelligence is the
+  broad flagship/umbrella (use when unsure which angle fits); Qualified Prospect Data is
+  for an *already-defined* specification (closest to a standard data order); Market & ICP
+  Research is "zoom out" — defining/sizing the addressable market *before* prospect-level
+  work starts; Decision-Maker Intelligence is "zoom in" — role-relevance research once the
+  target *companies* are already known. Each page's own "Is This the Right Service?" section
+  cross-links to the other three by this exact distinction, so a visitor on the wrong page
+  self-routes instead of reading duplicate content.
+- **Each page carries**: a unique, brief-derived but expanded hero, a real capability/use-case
+  section, a tailored process flow (not the same steps copy-pasted across pages), a
+  cross-link section, a page-specific FAQ (4-5 questions each, no overlap between pages),
+  and both `Service` and `FAQPage` JSON-LD. Verified all five carry correct self-referencing
+  canonicals and both schema types in the built HTML.
+- **Qualified Prospect Data pulls its pricing tiers directly from the existing
+  `DATASET_TIERS`** (Round 15) rather than restating numbers — same single-source-of-truth
+  discipline as everywhere else in this project. No prices were changed anywhere in this
+  phase, per the explicit instruction.
+- **Managed Outreach's content is the existing Managed Email Campaigns offering**, carried
+  over from `services.astro`/`pricing.astro` (capability list, compliance framing) rather
+  than invented fresh — real, already-offered, just given a dedicated page. Kept the
+  "no infrastructure jargon in primary copy" discipline from an earlier audit; the
+  compliance FAQ answer deliberately avoids promising "universal legal compliance" (brief
+  §11/§25), matching this project's established claims discipline.
+- **Data Cleaning & Enrichment deliberately did *not* get a dedicated page** — the owner's
+  instruction was to judge this case specifically, not default to "build one for menu
+  completeness." Its real content (list hygiene, deliverability verification, bounce
+  removal) is narrower in scope than the four research-tier pages and doesn't need a
+  hero/use-cases/process/FAQ treatment to be useful; it stays as a well-developed anchor
+  section (`/services#data-cleaning`) on the reworked Services overview instead. Reasoning
+  recorded here per the owner's explicit request to explain this specific call.
+- **`/services` reworked from a flat 8-card catalogue into the Solutions overview hub**:
+  the "Flagship" badge moved from the old "Custom Fresh Datasets" card to the new
+  "Prospect Intelligence" card (the brief names Prospect Intelligence, not Qualified
+  Prospect Data, as flagship — the old page had mislabeled this before the repositioning).
+  Two services that never had a corresponding old card — Market & ICP Research and
+  Decision-Maker Intelligence — were added as new cards linking to their dedicated pages.
+  "Custom Data Projects" was folded into the Prospect Intelligence card's framing rather
+  than kept as a separate thin card (it was always describing the same "requirement too
+  complex for a standard category" idea). The "Not Sure Where to Start?" decision guide
+  was rewritten with new IF/THEN logic covering all eight solutions, each answer routing
+  to the correct in-page anchor.
+- **Navigation updated from Phase 1's interim state to real destinations**: the top-level
+  "Prospect Intelligence" link and all six Solutions-dropdown items now point at their
+  real pages (`/trade` unchanged, `/services#data-cleaning` for Data Cleaning &
+  Enrichment, the other five at their new dedicated URLs). Homepage's "Three Ways to Work
+  With LeadVault" CTAs (Explore Prospect Data / Explore Prospect Intelligence / Explore
+  Managed Outreach) updated from their Phase 1 `/services` placeholders to the same real
+  URLs. Checked for any other stale `/services` anchor references site-wide (old
+  `#custom-fresh-datasets`/`#monthly-prospect-research` ids no longer exist after the
+  services.astro restructure) — found none; the two remaining plain `/services` links
+  (Trade's cross-link, Thank-you's post-conversion link) are legitimate general
+  "see our services" links, unaffected by the restructure.
+- **Contact form's `?need=` pre-fill extended to the 5 new slugs** via
+  `NEED_SLUG_TO_OPTION` in `catalog.ts` — mapped onto the *closest existing* NEED_OPTIONS
+  value (e.g. `qualified-prospect-data` → "Fresh custom dataset", `managed-outreach` →
+  "Managed email campaigns") rather than adding new dropdown options, since reworking the
+  Contact form's own field set is explicitly a separate, later-scoped phase (brief §19).
+  Verified all 5 pre-fill correctly.
+- **GA4, Meta Pixel, Search Console verification, canonical normalization, sitemap,
+  robots.txt, and Netlify Forms were not touched** — confirmed via the build (all 5 new
+  pages appear in the sitemap automatically through the existing Astro/BaseLayout
+  architecture, no new config needed) and via the link/canonical checker.
+- **Verified via `npm run build` (zero errors, 22 pages — up from 17), the static link/
+  asset/SEO checker (zero broken links, zero missing assets, one `<h1>` everywhere across
+  all 22 pages), and a live Playwright pass**: all 16 key pages load with zero console
+  errors; zero horizontal overflow at 320/375/768/1280px; every nav destination (top-level
+  and all 6 Solutions-dropdown items) resolves to its intended real URL; cross-link
+  click-throughs between all four research-tier pages and from Services confirmed working;
+  all 5 `?need=` pre-fills confirmed correct; FAQPage + Service schema and correct
+  canonicals confirmed present on all 5 new pages. One test-script bug caught and fixed
+  along the way (an unscoped Playwright locator matched the header's own now-real
+  Solutions-dropdown link of the same href before the page's own visible cross-link card —
+  not a site defect, confirmed by screenshot and fixed by scoping the locator to `<main>`).
+- **Not deployed.** Stopping here for owner review, per instruction.
+
+## Repositioning — Final Pre-Production Audit
+
+Supporting pages phase approved as-is. This round was explicitly audit-only — "do not
+perform another broad rewrite... make only clearly justified corrections discovered
+during the audit" — so every change below is tied to a specific defect found, not a
+style pass.
+
+- **Real defect #1 — duplicate `<title>` tag.** Homepage and `/prospect-intelligence`
+  both used the exact string "B2B Prospect Intelligence & Research | LeadVault" (the
+  homepage's Phase 1 title was never revisited after the flagship page was built in a
+  later phase using the same phrase). Direct keyword-cannibalization risk between the
+  two most important pages on the site. Fixed by retitling the homepage to "LeadVault —
+  B2B Prospect Intelligence Company" — brand-forward, distinct from the flagship page's
+  service-specific title. Confirmed via a full duplicate-title scan across all 22 pages
+  afterward: zero duplicates remain (descriptions were already unique).
+- **Real defect #2 — the most significant one: horizontal page overflow at 1024px on
+  every single page.** Not caught by any earlier phase because none of them tested this
+  exact width (prior phases used 320/375/768/1280). This audit's expanded 6-breakpoint
+  set (320/375/768/1024/1280/1440) caught it immediately. Root cause: adding
+  "Prospect Intelligence" as a 7th top-level nav item in the Shared Foundation phase
+  made the desktop header wider; at exactly Tailwind's `lg` breakpoint (1024px) the full
+  desktop nav + logo + "Start a Research Project" button no longer fit, pushing the
+  header (and therefore the whole page) to ~1207px wide inside a 1024px viewport — a
+  genuine, sitewide layout bug at a common tablet/small-laptop width. Confirmed via
+  direct DOM measurement (`documentElement.scrollWidth` 1207 vs `clientWidth` 1024)
+  before touching anything. Fixed by moving the desktop-nav/mobile-nav switchover from
+  `lg:` to `xl:` in `Header.astro` (4 class changes: the desktop `<nav>`, the header CTA
+  button wrapper, and both mobile-nav triggers) — the full desktop nav now only appears
+  at 1280px+, where it was already confirmed to fit correctly; 1024–1279px now shows the
+  same mobile hamburger/accordion nav already proven to work well, screenshotted to
+  confirm it renders cleanly at 1024px. Re-ran the full 6-breakpoint sweep afterward:
+  zero overflow anywhere.
+- **Two small content-quality fixes** from a fresh read of all 5 new commercial pages
+  (the brief's "read the actual rendered copy, not just the source structure"
+  instruction): Qualified Prospect Data's cross-link card title "Requirement isn't a
+  simple filter away?" was awkward on first read — reworded to "Requirement too specific
+  for a filter?"; Decision-Maker Intelligence's FAQ answer "commonly ordered against a
+  company list" → "commonly run against a company list" (more natural phrasing). Neither
+  changes meaning, both are minor clarity fixes, not a rewrite.
+- **One structured-data gap addressed**: `WebSite` schema was recommended in the
+  original repositioning audit (brief §20K) but never actually added. Added it alongside
+  the existing `Organization` schema on the homepage only (the two are conventionally
+  paired). Deliberately did **not** add `BreadcrumbList` — the site has no visible
+  breadcrumb UI, and schema should only describe what's actually visible, per the
+  brief's own instruction not to add structured data solely to chase rich results.
+- **Everything else in the audit came back clean, confirmed rather than assumed**: zero
+  broken links, zero missing assets, one H1 per page, unique meta descriptions, complete
+  OG/Twitter metadata on all 22 pages, zero orphan pages (every real page has multiple
+  inbound internal links), zero unsupported-claim patterns in a full-site grep (the two
+  regex hits were both correctly-hedged negations — "we don't claim... permanently
+  deliverable" and "we can't guarantee results" — confirmed by reading their actual
+  context, not just the match), all 6 customer journeys (A–F) click through correctly,
+  all 4 Netlify Forms present and functional, all 3 pre-fill paths (`?need=` old and new
+  slugs, `?tier=`) correct, zero console errors across 21 pages, landmarks/alt-text/
+  form-labels all present (the one flagged "unlabeled" field is the honeypot, which is
+  deliberately structured that way and irrelevant to real users), GA4/Meta Pixel
+  unchanged and real, no GTM introduced, all 4 product-architecture distinctions
+  (Prospect Intelligence / Qualified Prospect Data / Market & ICP Research /
+  Decision-Maker Intelligence) read as genuinely distinct on a fresh page-by-page read,
+  and every original price confirmed present and unchanged.
+- **One performance observation reported, not fixed**, per this round's explicit
+  instruction not to risk an optimization pass merely for a synthetic score: Tools'
+  hero image uses `loading="lazy"` despite likely being that page's LCP element — a
+  pre-existing pattern from the shared `ImagePlaceholder` component (applied uniformly,
+  not introduced this round). Flagged for a future, deliberate fix rather than touched
+  here.
+- **Not deployed.** Stopping here for owner review, per instruction.
+
+## Repositioning — Supporting Pages (Data Catalog, Tools, Trade, About, Pricing, Contact, Industries)
+
+Core commercial pages phase approved as-is (product differentiation, URLs, internal
+linking, no-trailing-slash format, Data Cleaning & Enrichment staying anchor-only — all
+confirmed rather than revisited). This phase reworks the seven supporting pages plus a
+sitewide terminology sweep, per the owner's detailed per-page instructions.
+
+- **Data Catalog**: kept the exact URL, all 11 categories, sample previews, `?need=`
+  pre-fill, and the portal waitlist form completely untouched. Repositioned only the
+  hero copy — "Data Catalog" → "Research Capabilities," removed "harvested on request —
+  not stored in a warehouse," replaced with "researched on request — not retrieved from
+  a prebuilt list" (the brief's own preferred phrase). Added one natural cross-link to
+  `/prospect-intelligence` for visitors who need qualification/evidence work the
+  catalog's category browse doesn't represent.
+- **Tools**: reframed as "The Research & Verification Engine Behind LeadVault" (brief
+  §15's own heading, used verbatim). Removed "Campaign Infrastructure" (sending
+  infrastructure is now Managed Outreach's own domain) and added two new cards —
+  Qualification & Evidence Capture, Decision-Maker Enrichment — so the toolbox still
+  reads 7 cards, now covering the brief's full checklist (multi-source discovery,
+  qualification, evidence capture, decision-maker enrichment, verification,
+  normalization, deduplication, human review) without naming any vendor, credential, or
+  proprietary architecture. Pipeline stages renamed RESEARCH→QUALIFY→ENRICH→VERIFY→
+  DELIVER (from RESEARCH→FILTER→VERIFY→CLEAN→DELIVER), aligning with the homepage's own
+  Discover/Qualify/Enrich/Prioritize/Act process language.
+- **Trade**: preserved the entire page structure and specialist content untouched.
+  Added "Trade & Counterparty Intelligence" as the public eyebrow heading with "Powered
+  by the LeadVault Trade Desk" as a sub-brand line under it (brief §12's exact
+  preference) — did not touch the H1 itself ("Verified Buyers. Genuine Suppliers. Real
+  Deals.") since it makes no guarantee of a transaction or outcome, just describes
+  verification quality. Fixed the one real "warehouse" leftover: "not recycled from a
+  warehouse" → "not retrieved from a prebuilt list."
+- **About**: fixed "the anti-warehouse model" → "not a stored, aging database," and
+  retired the "leads are water" philosophy metaphor (exactly the lead-list-seller
+  framing this phase's instruction named) for "a business can't act on an opportunity it
+  hasn't found yet" — keeps the same farm/rain follow-on sentence, which still works
+  unchanged. Added two new paragraphs to the Founding Story explicitly walking the
+  evolution from trade-specific research into the full ladder (custom prospect data →
+  qualification/verification → market & ICP research → intelligence-led outreach) —
+  **no new facts invented**: no founding date, team size, customer count, office count,
+  or award was added, per the explicit instruction. The founder's direct-quote
+  blockquote and the three Vision/Mission/Philosophy cards' factual content were left
+  alone — authentic, already-approved material, not touched merely because positioning
+  language changed elsewhere on the page.
+- **Pricing — the most sensitive page, zero monetary amounts changed.** Verified this
+  directly: every dollar figure ($29/$59/$99/$179/$299/$199/$399/$799/$39/$129/$399/
+  $449) confirmed present, unchanged, in both the build output and a live render.
+  Restructured presentation only: "Custom Fresh Datasets" → "Qualified Prospect Data"
+  (section header only, same table, same numbers); added a new "Prospect Intelligence"
+  card in the same section — **Custom Quote — Discuss Your Project, no price shown**,
+  per the explicit instruction not to invent a $249 figure the owner hasn't approved;
+  "Email List Cleaning" → "Data Cleaning & Enrichment," "Trade Desk (Buyer–Seller
+  Matching)" → "Trade & Counterparty Intelligence" (sub-brand line added), "Managed
+  Email Campaigns" → "Intelligence-Led Outreach" (added a second link to the new
+  dedicated page alongside the existing Talk-to-a-Strategist CTA). FAQ's payment answer
+  updated to name all the new service labels explicitly. No checkout/payment logic
+  touched anywhere.
+- **Contact — reconciled fields against the brief rather than rebuilding.** Two labels
+  renamed to the brief's own wording without adding new fields: "Your biggest challenge
+  in reaching customers right now" → "What are you trying to achieve?" (same textarea,
+  same `name` attribute); "Who is your ideal customer or counterparty?" → "...or
+  decision-maker?" (same input). Two fields genuinely added, both optional, both
+  low-friction: **Website** (brief-recommended, paired into the existing Business Name
+  row rather than lengthening the form) and **"Do you need outreach support too?"**
+  (directly serves routing between the research-only and Managed-Outreach paths the new
+  product ladder introduces — not scope creep, a genuine gap the old form had no way to
+  capture). Eyebrow changed to "Research Project Brief." **Deliberately did not**
+  rename `NEED_OPTIONS` dropdown values or add a "Desired timeline" field — the former
+  risks breaking the `?need=`/`?tier=` pre-fill string-matching for no positioning
+  benefit (those are descriptive labels, not harvest/warehouse-style claims), the
+  latter would add friction for marginal first-touch value; both reasoned trade-offs,
+  not oversights. Verified honeypot, Netlify config, required-field set, and both
+  pre-fill paths (`?need=`, `?tier=`) all still work correctly, plus tested a full
+  submission with the two new fields filled.
+- **Industries — kept the single hub page, did not manufacture individual industry
+  URLs**, per the brief's own explicit permission to do so when it's the better
+  architecture. The real editorial judgment call: added genuine depth **per group** (5
+  groups), not per individual item (17 items) — a "Decision-makers we typically
+  research" + "What we can investigate" callout for each group, each one actually
+  different (VP Sales/Head of Growth for Sales & Growth Teams vs. Head of Talent
+  Acquisition/Hiring Manager for Talent & Recruitment, etc.), not a template with the
+  industry name swapped in. Per-item padding at that scale would have produced exactly
+  the repetitive, keyword-swapped doorway content the instruction warned against; per-
+  group depth adds real, distinct information without it. Title/H1/meta updated to
+  "Prospect Intelligence by Industry" framing.
+- **Sitewide terminology sweep performed before finishing**, not just within the 7
+  pages: grepped every `.astro`/`.ts` file for "harvest," "warehouse," "leads are
+  water," and old CTA wording, excluding code comments. Found and fixed exactly the 3
+  real content hits (about.astro, data-catalog.astro, trade.astro — all already listed
+  above); the only other "Warehouse" hits are a Lucide *icon name* representing
+  wholesalers/distributors as a business type (a real icon for a real business
+  category, not positioning language) — left alone. Legal pages were not touched; none
+  contained the flagged terms, so there was nothing requiring the "flag separately"
+  carve-out this round.
+- **Verified via `npm run build` (zero errors, 22 pages), the static link/asset/SEO
+  checker (zero broken links, zero missing assets, one `<h1>` everywhere), and a live
+  Playwright pass**: all 16 key pages load with zero console errors; zero horizontal
+  overflow at 320/375/768/1280px; Contact's new fields present and a full submission
+  with them filled works end-to-end; all three pre-fill paths (`?need=` old catalog
+  slugs, `?need=` new page slugs, `?tier=`) confirmed still correct; Pricing confirmed
+  to show every original dollar figure with no invented $249; Trade's sub-brand line
+  and Industries' new per-group depth confirmed present in the rendered page (one
+  test-script false negative along the way — a case-sensitivity oversight against the
+  `uppercase` CSS class on the new labels, not a real defect — caught by checking the
+  raw rendered text directly before concluding anything was broken).
+- **Not deployed.** Stopping here for owner review, per instruction.

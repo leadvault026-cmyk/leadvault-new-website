@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import { CATALOG_CATEGORIES } from '../data/catalog';
+import { CTA_PRIMARY } from '../data/site';
 import { ArrowRight, Clock } from '@lucide/astro';
 
 // Preview tables show a few rows from each category's sample CSV — enough to
@@ -10,23 +11,27 @@ const PREVIEW_ROW_COUNT = 4;
 ---
 
 <BaseLayout
-  title="Browse Data Categories — Request Verified B2B Datasets | LeadVault"
-  description="Explore LeadVault's data categories — trade & logistics, e-commerce, executives, insurance, real estate and more. Request any dataset; sourced fresh and delivered by email."
+  title="Research Capabilities — What Can LeadVault Research? | LeadVault"
+  description="Browse LeadVault's research capabilities by category — trade & logistics, e-commerce, executives, insurance, real estate and more. See a sample of each, then request your specification."
   path="/data-catalog"
 >
   <section class="section text-center">
-    <p class="eyebrow">Data Catalog</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">The Catalog: Tell Us What You Need. We Source It Fresh.</h1>
+    <p class="eyebrow">Research Capabilities</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">What Can LeadVault Research? Browse by Category.</h1>
     <p class="mx-auto mt-5 max-w-3xl text-white/75">
-      Because LeadVault data is harvested on request — not stored in a warehouse — this catalog
-      shows what we source, not what's sitting on a shelf. Choose a category, tell us your
-      specification, and receive a quote within 24 hours. Datasets are delivered to your email as
-      a verified, bounce-free Google Sheet — CSV and Excel are also available.
+      Every category below is researched on request — not retrieved from a prebuilt list. This
+      page shows what we can research, not what's sitting on a shelf. Choose a category, tell us
+      your specification, and receive a quote within 24 hours. Datasets are delivered to your
+      email as a verified, bounce-free Google Sheet — CSV and Excel are also available.
     </p>
     <p class="mx-auto mt-3 max-w-2xl text-sm italic text-white/50">
       Self-serve portal planned for a future phase. LeadVault currently handles each research
       request directly so we can tailor the specification, sourcing, and verification to your
       needs. Join the waitlist at the bottom of this page if you'd like to be notified when it launches.
+    </p>
+    <p class="mx-auto mt-3 max-w-2xl text-sm text-white/60">
+      Looking for evidence-backed qualification or decision-maker research, not just a category
+      match? See <a href="/prospect-intelligence" class="font-medium text-[var(--color-lime)] hover:underline">Prospect Intelligence</a>.
     </p>
   </section>
 
@@ -91,7 +96,7 @@ const PREVIEW_ROW_COUNT = 4;
       </div>
 
       <div class="mt-8 text-center">
-        <a href="/contact" class="btn-outline">Request a Dataset <ArrowRight size={18} /></a>
+        <a href="/contact" class="btn-outline">{CTA_PRIMARY} <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>

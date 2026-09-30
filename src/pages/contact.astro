@@ -24,23 +24,24 @@ const industries = [
 
 const volumes = ['Under 500', '500–2,500', '2,500–10,000', '10,000+'];
 const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
+const outreachOptions = ['Not sure yet', 'No — data/intelligence only', 'Yes — discuss managed outreach'];
 ---
 
 <BaseLayout
-  title="Request Prospect Research — Custom B2B Data in 24 Hours | LeadVault"
-  description="Tell LeadVault the prospects you need to reach. A strategist responds within 24 hours with a tailored, no-obligation research plan and quote."
+  title="Research Project Brief — Start a B2B Prospect Intelligence Project | LeadVault"
+  description="Tell LeadVault the market, companies, or people you need to reach. A strategist reviews your brief and responds within 24 hours with the appropriate research approach and quote."
   path="/contact"
 >
   <section class="section grid gap-12 lg:grid-cols-2">
     <div>
-      <p class="eyebrow">Get Started</p>
+      <p class="eyebrow">Research Project Brief</p>
       <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
         Tell Us Who You Need. We'll Tell You Exactly How to Reach Them.
       </h1>
       <p class="mt-5 text-white/75">
-        Tell us who you need to reach — it takes under 10 minutes. A LeadVault strategist will
-        review the specification and respond within 24 hours with the appropriate research
-        approach, volume, and price. No obligation.
+        Describe the market, companies, or people you need to reach — it takes under 10 minutes. A
+        LeadVault strategist will review the brief and respond within 24 hours with the appropriate
+        research approach, volume, and price. No obligation.
       </p>
 
       <div class="mt-8 hidden lg:block">
@@ -113,9 +114,15 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
           <input id="full-name" name="Full Name" type="text" required class="lv-input" />
         </div>
 
-        <div>
-          <label for="business-name" class="mb-1.5 block text-sm font-medium text-white">Business Name</label>
-          <input id="business-name" name="Business Name" type="text" class="lv-input" />
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="business-name" class="mb-1.5 block text-sm font-medium text-white">Business Name</label>
+            <input id="business-name" name="Business Name" type="text" class="lv-input" />
+          </div>
+          <div>
+            <label for="website" class="mb-1.5 block text-sm font-medium text-white">Website</label>
+            <input id="website" name="Website" type="text" placeholder="yourcompany.com" class="lv-input" />
+          </div>
         </div>
 
         <div class="grid gap-5 sm:grid-cols-2">
@@ -158,7 +165,7 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
 
         <div>
           <label for="ideal-customer" class="mb-1.5 block text-sm font-medium text-white">
-            Who is your ideal customer or counterparty?
+            Who is your ideal customer, counterparty, or decision-maker?
           </label>
           <input id="ideal-customer" name="Ideal Customer" type="text" placeholder="e.g. VP of Sales at 50–200 person SaaS companies" class="lv-input" />
         </div>
@@ -186,10 +193,18 @@ const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
         </div>
 
         <div>
+          <label for="outreach-support" class="mb-1.5 block text-sm font-medium text-white">Do you need outreach support too?</label>
+          <select id="outreach-support" name="Outreach Support" class="lv-input">
+            <option value="" disabled selected>Select an option</option>
+            {outreachOptions.map((o) => <option value={o}>{o}</option>)}
+          </select>
+        </div>
+
+        <div>
           <label for="challenge" class="mb-1.5 block text-sm font-medium text-white">
-            Your biggest challenge in reaching customers right now
+            What are you trying to achieve?
           </label>
-          <textarea id="challenge" name="Biggest Challenge" rows="4" class="lv-input"></textarea>
+          <textarea id="challenge" name="Biggest Challenge" rows="4" class="lv-input" placeholder="e.g. your biggest challenge in reaching these prospects right now"></textarea>
         </div>
 
         <button type="submit" class="btn-primary w-[calc(100%-2rem)] !px-4 text-sm sm:text-base">Submit My Data Request <ArrowRight size={18} /></button>

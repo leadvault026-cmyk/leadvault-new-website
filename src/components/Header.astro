@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { HEADER_NAV, isNavGroup } from '../data/site';
+import { HEADER_NAV, isNavGroup, CTA_PRIMARY } from '../data/site';
 import { ChevronDown } from '@lucide/astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
@@ -20,7 +20,7 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       <Logo class="h-14 sm:h-16 lg:h-20" />
     </a>
 
-    <nav class="hidden items-center gap-7 lg:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-7 xl:flex" aria-label="Primary">
       {HEADER_NAV.map((entry) =>
         isNavGroup(entry) ? (
           <div class="group relative" data-dropdown>
@@ -73,14 +73,14 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       )}
     </nav>
 
-    <div class="hidden shrink-0 lg:block">
-      <a href="/data-catalog" data-cta="header-sample-data" class="btn-primary !px-5 !py-2.5 text-sm">Request Sample Data</a>
+    <div class="hidden shrink-0 xl:block">
+      <a href="/contact" data-cta="header-start-project" class="btn-primary !px-5 !py-2.5 text-sm">{CTA_PRIMARY}</a>
     </div>
 
     <button
       id="mobile-nav-toggle"
       type="button"
-      class="inline-flex items-center justify-center rounded-md p-2 text-white lg:hidden"
+      class="inline-flex items-center justify-center rounded-md p-2 text-white xl:hidden"
       aria-expanded="false"
       aria-controls="mobile-nav"
       aria-label="Toggle navigation menu"
@@ -99,7 +99,7 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
   <nav
     id="mobile-nav"
-    class="hidden flex-col gap-1 border-t border-white/10 bg-[var(--color-bg-mid)] px-6 py-4 lg:hidden"
+    class="hidden flex-col gap-1 border-t border-white/10 bg-[var(--color-bg-mid)] px-6 py-4 xl:hidden"
     aria-label="Mobile"
   >
     {HEADER_NAV.map((entry) =>
@@ -140,7 +140,7 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         </a>
       )
     )}
-    <a href="/data-catalog" data-cta="header-sample-data-mobile" class="btn-primary mt-3 w-full">Request Sample Data</a>
+    <a href="/contact" data-cta="header-start-project-mobile" class="btn-primary mt-3 w-full">{CTA_PRIMARY}</a>
   </nav>
 </header>
 
