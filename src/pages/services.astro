@@ -28,6 +28,7 @@ const solutions = [
     icon: Sparkles,
     flagship: true,
     title: 'Prospect Intelligence',
+    frame: "We know what makes a prospect valuable, but it cannot be found with simple filters.",
     who: 'Teams whose requirement cannot be solved by ordinary database filters.',
     problem: 'Standard filters tell you who exists. They don\'t tell you which companies actually fit, or who inside them matters.',
     body: 'We investigate target markets, qualify companies against project-specific criteria, identify relevant decision-makers, and verify available contact data — with supporting evidence where the assignment requires it.',
@@ -38,6 +39,7 @@ const solutions = [
     id: 'qualified-prospect-data',
     icon: Database,
     title: 'Qualified Prospect Data',
+    frame: 'We know the ICP. We need the companies and contacts.',
     who: 'Teams that already know exactly whom they need to reach.',
     problem: "Off-the-shelf databases give you what's already in storage, not necessarily who you actually need.",
     body: 'Tell us the industry, geography, company profile, and roles. We research it against your specification, verify every record, and deliver a clean Google Sheet (CSV and Excel also available).',
@@ -48,6 +50,7 @@ const solutions = [
     id: 'market-icp-research',
     icon: Compass,
     title: 'Market & ICP Research',
+    frame: "We're not completely sure who the best target is.",
     who: 'Teams entering a new territory or validating a niche market before they prospect it.',
     problem: "You can't prospect a market you haven't defined yet.",
     body: 'We translate an ideal-customer description into a researched, addressable target market — geographic segmentation, company qualification, and decision-maker mapping included.',
@@ -58,6 +61,7 @@ const solutions = [
     id: 'decision-maker-intelligence',
     icon: UserCheck,
     title: 'Decision-Maker Intelligence',
+    frame: 'We know the companies. We need the right people.',
     who: 'Teams that already have the companies, but need the right person inside each one.',
     problem: 'A valid email is not valuable if it belongs to the wrong person.',
     body: 'We research the roles and people most relevant to your commercial objective — owners, executives, procurement, technical buyers — then enrich with available verified contact information.',
@@ -78,6 +82,7 @@ const solutions = [
     id: 'trade-desk',
     icon: Handshake,
     title: 'Trade & Counterparty Intelligence',
+    frame: 'We need to identify potential buyers, suppliers, importers, distributors or other commercial counterparties.',
     subtitle: 'Powered by the LeadVault Trade Desk',
     body: 'For importers, exporters, and freight forwarders: we research and verify genuine counterparties — buyers, suppliers, and shippers — across international markets, with a strategist consultation on your trade lane.',
     price: 'From $449 per engagement.',
@@ -87,6 +92,7 @@ const solutions = [
     id: 'managed-outreach',
     icon: MailCheck,
     title: 'Intelligence-Led Outreach',
+    frame: 'We have the audience. We need help taking it to market.',
     subtitle: 'Managed campaign execution',
     body: 'For businesses that want the research put into action: campaign preparation, controlled B2B email outreach, and reporting — built on qualified prospect data, not a generic list.',
     price: 'Custom quote, based on campaign requirements.',
@@ -96,6 +102,7 @@ const solutions = [
     id: 'data-cleaning',
     icon: Filter,
     title: 'Data Cleaning & Enrichment',
+    frame: 'We already have the records. We need better data.',
     who: 'Anyone holding a list — bought, inherited, or built in-house — that has started to bounce.',
     problem: 'An aging or unverified list damages sender reputation before you ever see the results.',
     body: 'Independent research puts B2B contact decay at roughly 22–23% per year (see the citation on our homepage). Send us any list and we return it healthy:',
@@ -178,6 +185,7 @@ const decisionGuide = [
             <h2 class="text-xl font-bold text-white">{service.title}</h2>
             {service.subtitle && <p class="text-sm font-medium text-[var(--color-lime)]">{service.subtitle}</p>}
           </div>
+          {service.frame && <p class="text-sm font-medium italic text-white/60">{service.frame}</p>}
           {(service.who || service.problem) && (
             <dl class="space-y-1.5 border-l-2 border-[var(--color-lime)]/40 pl-3 text-xs">
               {service.who && (
@@ -213,7 +221,11 @@ const decisionGuide = [
       ))}
       </div>
       <div class="mt-12 text-center">
-        <a href="/contact" data-cta="services-not-sure" class="btn-primary">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
+        <p class="mx-auto max-w-xl text-sm text-white/60">
+          Or skip the labels entirely. Tell us what you are trying to accomplish and we will help
+          determine the appropriate research approach.
+        </p>
+        <a href="/contact" data-cta="services-not-sure" class="btn-primary mt-5">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
       </div>
     </div>
   </section>

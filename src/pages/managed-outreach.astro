@@ -13,16 +13,18 @@ import {
   BarChart3,
   Database,
   Sparkles,
+  Building2,
+  Briefcase,
+  MessageSquare,
+  Globe,
+  CheckCircle2,
 } from '@lucide/astro';
 
-// Repositioning master brief §11 — reworks the existing Managed Email
-// Campaigns offering into its own page. Content (compliance framing,
-// capability list) is carried over from services.astro/pricing.astro rather
-// than invented fresh — this is a real, already-offered service, just given
-// its own dedicated page instead of one card among eight. Deliberately
-// avoids MX/provider/infrastructure jargon in the primary copy (brief §11
-// "Important Positioning") — that detail already lives on /tools for anyone
-// who wants it.
+// Master commercial copy package (2026-10-01) — content-depth implementation.
+// Content (compliance framing, capability list) carried over from
+// services.astro/pricing.astro rather than invented fresh — this is a real,
+// already-offered service. Deliberately avoids MX/provider/infrastructure
+// jargon in the primary copy — that detail already lives on /tools.
 
 const workflow = [
   { icon: Target, label: 'Define the audience and objective' },
@@ -35,6 +37,29 @@ const workflow = [
 ];
 
 const includes = ['Campaign setup', 'Data verification', 'Deliverability sorting', 'Provider-aware testing', 'Sending infrastructure', 'Campaign execution', 'Reporting'];
+
+const whoFor = [
+  'Businesses that do not want to assemble separate research and outreach workflows',
+  'Agencies or service businesses entering a defined market',
+  'Teams that need a small, focused outbound campaign',
+  'Clients whose targeting requires research before messages can be sent responsibly',
+];
+
+const weNeed = [
+  'A clear offer',
+  'Target geography/market',
+  'Any known ICP criteria',
+  'Exclusions',
+  'The action you want recipients to take',
+  'Brand/domain information required for the agreed campaign',
+  'Timely approval of messaging or strategic decisions',
+];
+
+const notFirstStep = [
+  { icon: Globe, text: 'If you are unsure who should be targeted, begin with Market & ICP Research.', href: '/market-icp-research', label: 'Market & ICP Research' },
+  { icon: Database, text: 'If the audience is clear but the records do not exist, begin with Qualified Prospect Data.', href: '/qualified-prospect-data', label: 'Qualified Prospect Data' },
+  { icon: Sparkles, text: 'If the qualification itself requires investigation, begin with Prospect Intelligence.', href: '/prospect-intelligence', label: 'Prospect Intelligence' },
+];
 
 const related = [
   { icon: Database, title: 'Just need the research, not the sending?', body: "If you want the prospect data or intelligence delivered and will run outreach yourself, start with the research service directly.", cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
@@ -58,12 +83,16 @@ const faqs = [
     question: 'Do you write the campaign messaging?',
     answer: 'We develop messaging and campaign structure as part of the workflow, working from your offer and positioning — this is a collaborative step, not something delivered without your input.',
   },
+  {
+    question: 'Do you guarantee opens, replies, or meetings?',
+    answer: 'No. Campaign results depend on the offer, market, timing, deliverability, targeting, message, and recipient behavior. The purpose of intelligence-led outreach is to improve the quality of the inputs and execute the agreed campaign professionally — not to manufacture certainty where none exists.',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Managed B2B Outreach & Prospect Research | LeadVault"
-  description="Combine LeadVault prospect intelligence with campaign preparation, controlled B2B email outreach, and reporting."
+  title="Managed B2B Email Outreach & Prospect Research | LeadVault"
+  description="Turn qualified prospect research into structured B2B email outreach. LeadVault combines audience research with managed campaign execution for businesses that want one connected workflow."
   path="/managed-outreach"
 >
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -77,11 +106,12 @@ const faqs = [
 
   <section class="section text-center">
     <p class="eyebrow">Intelligence-Led Outreach</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Research First. Outreach Second.</h1>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Better Outreach Starts Before the First Email Is Sent.</h1>
     <p class="mx-auto mt-5 max-w-2xl text-white/75">
-      LeadVault's managed outreach begins with the target — not with a giant list. We research and
-      qualify the prospects, identify relevant contacts, prepare the campaign, and execute
-      controlled outreach around your offer.
+      Outreach performance depends on more than copy. It depends on who is being contacted, why they
+      were selected, whether the contact is relevant and whether the campaign reflects the audience.
+      LeadVault's managed outreach service begins with prospect intelligence and carries that work
+      into campaign execution.
     </p>
     <div class="mt-8">
       <a href="/contact?need=managed-outreach" data-cta="mo-hero" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
@@ -90,16 +120,56 @@ const faqs = [
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Workflow</h2>
-      <div class="mx-auto mt-10 grid max-w-2xl gap-3">
-        {workflow.map((step, i) => (
-          <div class="card flex items-center gap-4">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-              <step.icon size={20} stroke-width={1.75} aria-hidden="true" />
-            </div>
-            <p class="text-sm font-medium text-white">{i + 1}. {step.label}</p>
+      <div class="card mx-auto max-w-3xl text-center">
+        <h2 class="text-xl font-bold text-white">Research First. Outreach Second.</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          We do not treat outreach as a substitute for targeting. Before a campaign is launched, the
+          audience should have a defined ICP or qualification basis, appropriate contacts and a
+          usable dataset. Where the audience does not yet exist, LeadVault can research it first.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Workflow</h2>
+    <div class="mx-auto mt-10 grid max-w-2xl gap-3">
+      {workflow.map((step, i) => (
+        <div class="card flex items-center gap-4">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <step.icon size={20} stroke-width={1.75} aria-hidden="true" />
           </div>
-        ))}
+          <p class="text-sm font-medium text-white">{i + 1}. {step.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
+        <div>
+          <h2 class="flex items-center gap-2 text-lg font-bold text-white"><Briefcase size={20} class="text-[var(--color-lime)]" /> Who It Is For</h2>
+          <ul class="mt-4 space-y-2.5">
+            {whoFor.map((w) => (
+              <li class="flex items-start gap-2 text-sm text-white/75">
+                <CheckCircle2 size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+                {w}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h2 class="flex items-center gap-2 text-lg font-bold text-white"><MessageSquare size={20} class="text-[var(--color-lime)]" /> What We Need From You</h2>
+          <ul class="mt-4 space-y-2.5">
+            {weNeed.map((w) => (
+              <li class="flex items-start gap-2 text-sm text-white/75">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+                {w}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -122,28 +192,30 @@ const faqs = [
   <section class="section-alt">
     <div class="section">
       <div class="card mx-auto max-w-2xl text-center">
-        <h2 class="text-lg font-bold text-white">Compliance</h2>
+        <h2 class="text-lg font-bold text-white">What We Do Not Guarantee</h2>
         <p class="mt-3 text-sm leading-relaxed text-white/75">
-          We run permission-appropriate, regulation-aware B2B outreach only (CAN-SPAM and
-          applicable anti-spam law) and decline campaigns designed to deceive. No service can
-          promise universal legal compliance — campaigns must be configured according to
-          applicable laws, your own requirements, and appropriate sending practices.
+          LeadVault does not guarantee opens, replies, meetings, revenue or a specific conversion
+          rate. Campaign results depend on the offer, market, timing, deliverability, targeting,
+          message and recipient behavior. We run permission-appropriate, regulation-aware B2B
+          outreach only (CAN-SPAM and applicable anti-spam law) and decline campaigns designed to
+          deceive, but no service can promise universal legal compliance. The purpose of
+          intelligence-led outreach is to improve the quality of the inputs and execute the agreed
+          campaign professionally — not to manufacture certainty where none exists.
         </p>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
-    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
-      {related.map((r) => (
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">When Outreach Is Not the First Step</h2>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+      {notFirstStep.map((n) => (
         <div class="card flex flex-col gap-3">
           <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-            <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            <n.icon size={22} stroke-width={1.75} aria-hidden="true" />
           </div>
-          <h3 class="text-base font-semibold text-white">{r.title}</h3>
-          <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
-          <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+          <p class="flex-1 text-sm leading-relaxed text-white/75">{n.text}</p>
+          <a href={n.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">See {n.label} →</a>
         </div>
       ))}
     </div>
@@ -151,17 +223,35 @@ const faqs = [
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
-      <div class="mx-auto mt-10 max-w-3xl">
-        <FaqAccordion items={faqs} />
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+      <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+        {related.map((r) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-base font-semibold text-white">{r.title}</h3>
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+            <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="section text-center">
-    <h2 class="text-2xl font-bold text-white sm:text-3xl">Ready to Put the Research Into Action?</h2>
-    <div class="mt-8">
-      <a href="/contact?need=managed-outreach" data-cta="mo-final" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <FaqAccordion items={faqs} />
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Ready to Put the Research Into Action?</h2>
+      <div class="mt-8">
+        <a href="/contact?need=managed-outreach" data-cta="mo-final" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
+      </div>
     </div>
   </section>
 

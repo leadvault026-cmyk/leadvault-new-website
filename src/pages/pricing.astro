@@ -4,7 +4,7 @@ import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { DATASET_TIERS } from '../data/catalog';
 import { CTA_PRIMARY, CTA_HIGH_INTENT } from '../data/site';
-import { ArrowRight, Check } from '@lucide/astro';
+import { ArrowRight, Check, Globe, UserCheck, Sliders, HelpCircle } from '@lucide/astro';
 
 // Recurring prospect-research plans, not access to a static database — each
 // cycle's prospects are freshly researched to the client's specification.
@@ -46,7 +46,38 @@ const managedCampaignIncludes = [
   'Reporting',
 ];
 
+const customQuoteFactors = [
+  'Research complexity', 'Specificity of qualification criteria', 'Evidence requirements', 'Geography',
+  'Number of companies', 'Number of contacts per company', 'Custom fields', 'Source difficulty',
+  'Verification depth', 'Turnaround', 'Whether the engagement is one-time or recurring',
+];
+
+const whichOption = [
+  { condition: 'Defined ICP + standard company/contact fields', service: 'Qualified Prospect Data', href: '/qualified-prospect-data' },
+  { condition: 'Ongoing supply of similar prospects', service: 'Recurring Prospect Research', href: '#monthly' },
+  { condition: 'Unclear target market', service: 'Market & ICP Research', href: '/market-icp-research' },
+  { condition: 'Complex qualification/evidence', service: 'Prospect Intelligence', href: '/prospect-intelligence' },
+  { condition: 'Known companies + unclear stakeholders', service: 'Decision-Maker Intelligence', href: '/decision-maker-intelligence' },
+  { condition: 'Research + campaign execution', service: 'Intelligence-Led Outreach', href: '/managed-outreach' },
+];
+
 const faqs = [
+  {
+    question: 'Do I need a subscription?',
+    answer: 'No — not for one-time research packages. Monthly plans are available for teams that want a continuing supply of fresh prospect research, but a one-time order never requires a subscription.',
+  },
+  {
+    question: 'Why is Prospect Intelligence custom-quoted?',
+    answer: 'Because the effort is driven by the research question, not simply the number of rows — qualification depth, evidence requirements, and decision-maker investigation vary project to project.',
+  },
+  {
+    question: 'Can I request custom fields?',
+    answer: 'Yes, subject to feasibility and the agreed scope — the final schema is agreed with you before delivery.',
+  },
+  {
+    question: 'Does a qualified prospect guarantee a sale?',
+    answer: 'No. Qualification means the record matches the agreed research criteria — it does not guarantee buyer intent or a response.',
+  },
   {
     question: 'What does "fresh" actually mean?',
     answer: 'Records are sourced and verified for your specific order — typically within days of delivery, in some cases as recently as 72 hours before.',
@@ -148,10 +179,33 @@ const faqs = [
           <a href="/prospect-intelligence" class="text-sm font-semibold text-[var(--color-lime)] hover:underline">See full Prospect Intelligence page →</a>
         </div>
       </div>
+
+      <div class="mt-6 grid max-w-2xl gap-6 sm:grid-cols-2">
+        <div class="card">
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]"><Globe size={20} aria-hidden="true" /></div>
+          <h3 class="mt-3 text-base font-bold text-white">Market & ICP Research</h3>
+          <p class="mt-2 text-sm leading-relaxed text-white/70">
+            Routes to a project discussion when the work involves defining the market, segmenting
+            opportunities, building inclusion/exclusion rules or creating a researchable target
+            specification. We don't force strategic research into a per-contact price.
+          </p>
+          <a href="/market-icp-research" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See Market & ICP Research →</a>
+        </div>
+        <div class="card">
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]"><UserCheck size={20} aria-hidden="true" /></div>
+          <h3 class="mt-3 text-base font-bold text-white">Decision-Maker Intelligence</h3>
+          <p class="mt-2 text-sm leading-relaxed text-white/70">
+            Can range from straightforward contact enrichment to multi-stakeholder account research.
+            Complex requirements route to a project discussion rather than assuming every account
+            needs the same effort.
+          </p>
+          <a href="/decision-maker-intelligence" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See Decision-Maker Intelligence →</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="section !pt-0">
+  <section id="monthly" class="section !pt-0">
     <h2 class="text-2xl font-bold text-white">Monthly Prospect Research</h2>
     <p class="mt-2 max-w-2xl text-sm text-white/60">
       A recurring research engagement, not access to a static database — each cycle's prospects
@@ -252,7 +306,35 @@ const faqs = [
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">FAQ</h2>
+      <h2 class="flex items-center justify-center gap-2 text-center text-2xl font-bold text-white sm:text-3xl"><Sliders size={22} class="text-[var(--color-lime)]" /> What Affects a Custom Quote?</h2>
+      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-2">
+        {customQuoteFactors.map((f) => (
+          <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{f}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Which Option Should I Choose?</h2>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <ComparisonTable
+        caption="Matching your situation to a LeadVault service"
+        headers={['If this is your situation...', '...this is the service']}
+        rows={whichOption.map((w) => [w.condition, w.service])}
+      />
+      <p class="mt-5 text-center text-sm text-white/60">If unsure, send the requirement instead of guessing a package.</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-2">
+        {whichOption.map((w) => (
+          <a href={w.href} class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-[var(--color-lime)] hover:underline">{w.service} →</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="flex items-center justify-center gap-2 text-center text-2xl font-bold text-white sm:text-3xl"><HelpCircle size={22} class="text-[var(--color-lime)]" /> FAQ</h2>
       <div class="mx-auto mt-10 max-w-3xl">
         <FaqAccordion items={faqs} />
       </div>

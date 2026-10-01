@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
-import { ArrowRight, ArrowDown, Ship, Package, Truck, Globe, Warehouse, Search, ShieldCheck, Database, Compass } from '@lucide/astro';
+import { ArrowRight, ArrowDown, Ship, Package, Truck, Globe, Warehouse, Search, ShieldCheck, Database, Compass, FileSearch, AlertTriangle, Factory, Users2, Send } from '@lucide/astro';
 
 const audience = [
   { icon: Ship, text: 'Exporters seeking verified international buyers for commodities and goods' },
@@ -29,6 +29,12 @@ const receive = [
   'Guidance on approach — how to make contact, what to verify further, and red flags to watch',
 ];
 
+const whatWeResearch = [
+  'Buyers for a specific product or product category',
+  'Suppliers and manufacturers for a specific product',
+  'Freight forwarders and customs brokers active on a given trade lane',
+  'Distributors and wholesalers operating in a target market',
+];
 ---
 
 <BaseLayout
@@ -96,8 +102,88 @@ const receive = [
   </section>
 
   <section class="section">
+    <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
+      <div>
+        <h2 class="flex items-center gap-2 text-xl font-bold text-white"><FileSearch size={20} class="text-[var(--color-lime)]" /> What We Research</h2>
+        <ul class="mt-4 space-y-2.5">
+          {whatWeResearch.map((w) => (
+            <li class="flex items-start gap-2 text-sm text-white/75">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+              {w}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-white">Product and Market Relevance</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          "A buyer of textiles" is not specific enough to research well. Relevant criteria include the
+          product sub-category, import or export volume signals, the target market or country, the
+          trade lane, and the company type — wholesaler, manufacturer, distributor, or retailer. We
+          research against the specific product and market combination you give us, not a generic
+          industry label.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+    <div class="section">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">Counterparty Research</h2>
+        <p class="mt-5 text-white/75">
+          We verify that a counterparty exists, is active, and is contactable — checking company
+          registration signals, trade activity indicators, and direct confirmation where possible,
+          rather than passing through an unverified listing.
+        </p>
+        <div class="card mt-6 flex items-start gap-3">
+          <AlertTriangle size={20} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+          <p class="text-sm leading-relaxed text-white/70">
+            This is not legal, sanctions-screening, or credit-diligence advice. LeadVault's
+            counterparty research confirms existence and activity — it does not replace your own
+            legal, compliance, sanctions, or credit-risk due diligence before entering a transaction.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card mx-auto max-w-3xl">
+      <p class="eyebrow flex items-center gap-2"><Factory size={16} /> Example Assignment</p>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">
+        Suppose you export parboiled rice and want to find importers in West Africa actively bringing
+        in that product. "Food importers in Nigeria" is too broad — most import categories are
+        unrelated to rice. We narrow the brief to the product (parboiled rice), import activity
+        (recent or active), geography (Nigeria, with optional expansion to Ghana or Senegal), and
+        company type (wholesale importer, not retail).
+      </p>
+      <p class="mt-3 text-sm font-medium text-white">
+        The result: a shorter, more relevant list of importers actually positioned to buy that
+        specific product — not every food company in the country.
+      </p>
+      <p class="mt-4 text-xs italic text-white/50">Illustrative example — not a real customer engagement.</p>
+    </div>
+  </section>
+
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="flex items-center justify-center gap-2 text-2xl font-bold text-white sm:text-3xl"><Send size={22} class="text-[var(--color-lime)]" /> From Discovery to Commercial Outreach</h2>
+        <p class="mt-5 text-white/75">
+          A Trade Desk engagement can stop at delivery of the verified counterparty dataset, or
+          continue into outreach — introducing your business to the researched buyers or suppliers
+          through LeadVault's managed outreach process. The same research-first discipline applies:
+          outreach is built on researched, qualified contacts, not a generic list.
+        </p>
+        <a href="/managed-outreach" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See Intelligence-Led Outreach →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="mx-auto max-w-3xl">
-      <h2 class="text-2xl font-bold text-white sm:text-3xl">The Story Behind This Service</h2>
+      <h2 class="flex items-center gap-2 text-2xl font-bold text-white sm:text-3xl"><Users2 size={22} class="text-[var(--color-lime)]" /> Powered by the LeadVault Trade Desk</h2>
       <p class="mt-5 text-white/75">
         LeadVault was born here. For years before this website existed, Steven Ehimigbai personally
         helped diaspora-run import/export businesses in the United States find what they could not
@@ -144,13 +230,15 @@ const receive = [
     </div>
   </section>
 
-  <section class="section text-center">
-    <h2 class="text-3xl font-bold text-white sm:text-4xl">Your Next Trade Partner Is Verifiable. Let's Find Them.</h2>
-    <div class="mt-8">
-      <a href="/contact?need=trade-desk" data-cta="trade-final" class="btn-primary">Start With the Trade Survey <ArrowRight size={18} /></a>
+  <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
+    <div class="section text-center">
+      <h2 class="text-3xl font-bold text-white sm:text-4xl">Your Next Trade Partner Is Verifiable. Let's Find Them.</h2>
+      <div class="mt-8">
+        <a href="/contact?need=trade-desk" data-cta="trade-final" class="btn-primary">Start With the Trade Survey <ArrowRight size={18} /></a>
+      </div>
+      <p class="mx-auto mt-4 max-w-xl text-sm text-white/60">
+        Tell us your product, your lane, and your target market. We respond within 24 hours.
+      </p>
     </div>
-    <p class="mx-auto mt-4 max-w-xl text-sm text-white/60">
-      Tell us your product, your lane, and your target market. We respond within 24 hours.
-    </p>
   </section>
 </BaseLayout>

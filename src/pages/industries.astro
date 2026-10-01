@@ -3,38 +3,83 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   ShoppingCart,
   Megaphone,
-  Mail,
   Ship,
   Code,
   Users,
-  Home as HomeIcon,
-  CreditCard,
   TrendingUp,
-  Shield,
-  BarChart3,
-  Phone,
-  Calendar,
-  Package,
+  Stethoscope,
   ArrowRight,
   Building2,
   UserCheck,
   CheckCircle2,
   Database,
 } from '@lucide/astro';
-import { CTA_HIGH_INTENT } from '../data/site';
+import { CTA_PRIMARY } from '../data/site';
 
-// "One method, many markets" visual (commercial-completion round — see
-// ASSUMPTIONS.md) — reinforces that the research process is constant even
-// though the market examples vary; not decorative, ties directly to the
-// grouped examples below it.
-const exampleMarkets = [
-  { icon: Megaphone, label: 'Marketing Agencies' },
-  { icon: Code, label: 'SaaS' },
-  { icon: Users, label: 'Recruitment' },
-  { icon: TrendingUp, label: 'Financial Services' },
-  { icon: Ship, label: 'Trade' },
-  { icon: ShoppingCart, label: 'E-commerce' },
+// Master commercial copy package (2026-10-01) — this page is now structured
+// to match the master's 7 named industry sections exactly (title, body,
+// "Typical research," "Relevant roles") rather than the earlier 5-group,
+// 17-item hub. The earlier grouped approach was a deliberate choice against
+// per-item padding (see prior ASSUMPTIONS.md entries), but the master
+// supplies real per-industry depth for exactly 7 named markets — including a
+// Healthcare & Specialist Services section with a concrete example that
+// didn't exist on this page before — so master wins on structure here.
+// Markets the master doesn't name individually (fintech, insurance, real
+// estate, market research, call centers, events, wholesalers) are preserved
+// as a compact link-out list rather than dropped, since they're genuine,
+// already-served markets (see Data Catalog) — full card treatment for each
+// would reintroduce the templated-padding problem the master guards against.
+const industries = [
+  {
+    icon: Megaphone,
+    title: 'Marketing Agencies',
+    body: "Agencies often need audiences for clients whose ICPs change from campaign to campaign. LeadVault can research target companies, relevant stakeholders and campaign-specific enrichment fields without forcing every client into the same template.",
+    typical: ['Client-specific ICP lists', 'Local or national businesses', 'Industry segmentation', 'Decision-maker mapping', 'Custom qualification criteria', 'Recurring campaign data'],
+    roles: 'Owners, founders, marketing leaders, operations leaders, sales leaders and other functions defined by the campaign.',
+  },
+  {
+    icon: Code,
+    title: 'SaaS & Technology',
+    body: 'Technology companies frequently need to distinguish between companies that merely belong to an industry and companies whose operating model, size, technology environment or commercial profile actually fits the product.',
+    typical: ['ICP account lists', 'Market segments', 'Relevant technology/business signals where publicly observable', 'Department and stakeholder mapping', 'Recurring outbound datasets'],
+    roles: 'IT, engineering, security, operations, finance, revenue, marketing and executive leadership depending on the solution.',
+  },
+  {
+    icon: Users,
+    title: 'Recruitment & Staffing',
+    body: "Recruitment research can involve two distinct markets: organizations likely to hire and people relevant to a search. LeadVault's commercial research focuses on company and decision-maker intelligence that helps recruitment businesses identify potential employer accounts and appropriate hiring or business contacts.",
+    typical: ['Target employers', 'Industry/location segmentation', 'Hiring-related company signals where appropriate', 'HR/talent contacts', 'Department leadership', 'Company enrichment'],
+  },
+  {
+    icon: TrendingUp,
+    title: 'Financial & Professional Services',
+    body: 'Professional-service providers often need targeting based on business characteristics rather than simple industry labels.',
+    typical: ['Companies within defined operating profiles', 'Owners or finance stakeholders', 'Professional practices', 'Location and size criteria', 'Qualification evidence', 'Specialist niche research'],
+    note: 'The exact criteria should reflect the service being sold and the type of organization most likely to need it.',
+  },
+  {
+    icon: Ship,
+    title: 'Trade, Import, Export & Distribution',
+    body: 'Trade research is often less about job-title lists and more about commercial relationships: who imports, distributes, wholesales, supplies, purchases or operates in a particular product market.',
+    typical: ['Importers', 'Exporters', 'Distributors', 'Wholesalers', 'Commercial buyers', 'Suppliers', 'Counterparties', 'Company verification', 'Relevant commercial contacts'],
+    note: 'Where appropriate, LeadVault can document the evidence supporting why a company appears relevant to the product or trade requirement.',
+    cta: { label: 'See the dedicated Trade Desk page', href: '/trade' },
+  },
+  {
+    icon: ShoppingCart,
+    title: 'E-commerce & Consumer-Facing Businesses',
+    body: 'B2B vendors selling into e-commerce and consumer-facing businesses may need to segment targets by product category, channel, geography, store footprint, operating model or other observable characteristics.',
+    typical: ['Brands', 'Retailers', 'Online sellers', 'Service providers', 'Operators', 'Relevant marketing, operations, e-commerce or executive contacts'],
+  },
+  {
+    icon: Stethoscope,
+    title: 'Healthcare & Specialist Services',
+    body: 'Some of the most valuable healthcare targeting requirements cannot be reduced to "medical company + location." The relevant condition may be a specialty, treatment model, payment arrangement, referral relationship or other publicly researchable characteristic.',
+    example: 'Identify medical providers in selected U.S. states that publicly indicate they accept Letters of Protection, medical liens or attorney-referred injury cases; document the qualification basis and identify a relevant business contact where available.',
+  },
 ];
+
+const otherMarkets = ['Fintech, Lending & Payments', 'Insurance Brokers & Agents', 'Real Estate & Property Marketing', 'Market Research & Consulting', 'Call Centers & Telemarketing', 'Events & Trade Shows'];
 
 const researchChain = [
   { icon: Building2, label: 'Company' },
@@ -42,178 +87,29 @@ const researchChain = [
   { icon: CheckCircle2, label: 'Verified Contact' },
   { icon: Database, label: 'Research Dataset' },
 ];
-
-// Grouped rather than a flat list (credibility-pass round — see ASSUMPTIONS.md).
-// The "Sales & Growth Teams" group leads because it contains the three ICPs
-// this acquisition push is prioritizing (marketing/lead-gen agencies, SaaS,
-// and — pending validation — recruitment sits in its own group below rather
-// than folded in here). This is a strategic ordering choice, not a claim
-// about actual demand: nothing on this page says these are "highest-demand"
-// or "most popular," since that isn't something we can currently prove.
-//
-// Repositioning master brief §18 — deepened with genuine, per-GROUP (not
-// per-item) decision-maker types and example intelligence questions, editorial
-// judgment applied deliberately here: adding this depth per individual item
-// (17 of them) would produce exactly the repetitive, keyword-swapped padding
-// the brief warns against. Per-group is real depth without the padding —
-// each group's decisionMakers/canInvestigate are genuinely different, not a
-// template with the industry name swapped in.
-const groups = [
-  {
-    label: 'Sales & Growth Teams',
-    decisionMakers: ['VP Sales', 'Head of Growth/Demand Gen', 'Marketing Director'],
-    canInvestigate: [
-      'Which companies show public evidence of scaling their outbound or ad spend right now',
-      'Which prospects match a defined ICP across industry, size, and geography',
-    ],
-    items: [
-      {
-        icon: Megaphone,
-        title: 'Marketing & Advertising Agencies',
-        body: "Buy verified data for your clients' campaigns and white-label our delivery. One agency partner, many client campaigns.",
-        note: '(Ask about Agency Partner Plans.)',
-      },
-      {
-        icon: Mail,
-        title: 'Cold Email & Outreach Teams',
-        body: 'Deliverability is your lifeblood. Freshly verified prospects and our own sorting and cleaning pipeline protect your domains and reply rates.',
-      },
-      {
-        icon: Code,
-        title: 'SaaS & Software Companies',
-        body: 'Decision-maker data filtered by role, company size, and tech-relevant signals for your outbound engine.',
-      },
-      {
-        icon: ShoppingCart,
-        title: 'E-commerce & Online Retail',
-        body: 'Reach suppliers, wholesale buyers, affiliates, and B2B customers. Clean data powers your cold campaigns and partnership outreach.',
-      },
-    ],
-  },
-  {
-    label: 'Talent & Recruitment',
-    decisionMakers: ['Head of Talent Acquisition', 'Hiring Manager', 'HR Director'],
-    canInvestigate: [
-      'Which employers show public hiring signals matching a role you place into',
-      'Which companies in a target industry are actively expanding headcount',
-    ],
-    items: [
-      {
-        icon: Users,
-        title: 'Recruitment & Staffing',
-        body: 'Hiring decision-makers to approach for business development, by industry and hiring signal — candidate sourcing available as a separate custom request.',
-      },
-    ],
-  },
-  {
-    label: 'Professional & Financial Services',
-    decisionMakers: ['Principal/Partner', 'Head of Underwriting', 'Practice Administrator'],
-    canInvestigate: [
-      'Which businesses show public evidence of a specific insurable or financing need',
-      'Which individuals or companies match defined wealth, size, or policy criteria',
-    ],
-    items: [
-      {
-        icon: TrendingUp,
-        title: 'Investment & Financial Services',
-        body: 'Verified investor leads, high-net-worth prospects, financial advisors, and capital-seeking businesses — for firms raising funds, selling investment products, or building client books.',
-      },
-      {
-        icon: CreditCard,
-        title: 'Fintech, Lending & Payments',
-        body: 'Verified SME and merchant data for product outreach — compliant and current.',
-      },
-      {
-        icon: Shield,
-        title: 'Insurance Brokers & Agents',
-        body: 'Individuals and businesses matching your policy products, fresh enough to still be shopping.',
-      },
-      {
-        icon: HomeIcon,
-        title: 'Real Estate & Property Marketing',
-        body: 'Investor lists, buyer prospects, and developer contacts in your target locations.',
-      },
-      {
-        icon: BarChart3,
-        title: 'Market Research & Consulting',
-        body: "Custom datasets built to your study's exact specification, delivered research-ready.",
-      },
-    ],
-  },
-  {
-    label: 'Trade & Distribution',
-    decisionMakers: ['Procurement Lead', 'Trade/Export Manager', 'Owner/Founder'],
-    canInvestigate: [
-      'Which companies are verified, active buyers or suppliers for a specific product category',
-      'Which counterparties operate in a defined trade lane or target market',
-    ],
-    items: [
-      {
-        icon: Ship,
-        title: 'Importers, Exporters & Freight Forwarders',
-        body: 'Our founding specialty.',
-        cta: { label: 'Dedicated page →', href: '/trade' },
-      },
-      {
-        icon: Package,
-        title: 'Wholesalers & Distributors',
-        body: 'Retailer and reseller contacts across your product categories and territories.',
-      },
-    ],
-  },
-  {
-    label: 'Outreach & Events',
-    decisionMakers: ['Operations Manager', 'Events Director'],
-    canInvestigate: [
-      'Which companies match a defined target profile for a calling campaign',
-      'Which industry contacts are relevant to a specific trade show or event',
-    ],
-    items: [
-      {
-        icon: Phone,
-        title: 'Call Centers & Telemarketing',
-        body: 'Volume with validity: contact data that keeps agents talking to real people.',
-      },
-      {
-        icon: Calendar,
-        title: 'Events & Trade Shows',
-        body: 'Fill rooms and exhibitor lists with verified industry contacts.',
-      },
-    ],
-  },
-];
 ---
 
 <BaseLayout
-  title="B2B Prospect Intelligence by Industry | LeadVault"
-  description="From marketing agencies and recruiters to SaaS, insurance, and real estate — examples of the prospect intelligence, decision-maker research, and target criteria LeadVault can investigate, industry by industry."
+  title="Prospect Intelligence by Industry | LeadVault"
+  description="See how LeadVault applies B2B prospect intelligence, decision-maker research and qualification across agencies, SaaS, recruitment, financial services, trade, e-commerce and specialist markets."
   path="/industries"
 >
   <section class="section text-center">
     <p class="eyebrow">Prospect Intelligence by Industry</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Examples of the Prospect Intelligence We Support.</h1>
-    <p class="mx-auto mt-5 max-w-3xl text-white/75">
-      LeadVault can research and qualify prospects across industries — this page shows what that
-      looks like for the businesses we work with most, including who to target and what we can
-      investigate. Don't see your exact situation? We can still likely help — tell us the requirement.
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Different Markets. One Research Discipline.</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      Industry tells us where to look. Your commercial requirement tells us what to research.
+      LeadVault adapts the same discover, qualify, enrich, verify and deliver method to different
+      markets without pretending that every industry can be prospected the same way.
     </p>
+    <div class="mt-8">
+      <a href="/contact" data-cta="industries-hero" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+    </div>
   </section>
 
-  <section class="section">
-      <p class="eyebrow text-center">One Method, Every Market</p>
-      <h2 class="mt-2 text-center text-2xl font-bold text-white sm:text-3xl">One Research Method. Many Markets.</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-center text-white/70">
-        The market changes. The process behind every delivery doesn't.
-      </p>
-      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-3">
-        {exampleMarkets.map((m) => (
-          <span class="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
-            <m.icon size={16} class="text-[var(--color-lime)]" aria-hidden="true" />
-            {m.label}
-          </span>
-        ))}
-      </div>
-      <div class="mx-auto mt-8 grid max-w-4xl grid-cols-1 items-stretch gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr]">
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto grid max-w-4xl grid-cols-1 items-stretch gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr]">
         {researchChain.map((step, i) => (
           <>
             <div class="card flex flex-col items-center gap-2 py-4 text-center">
@@ -228,58 +124,71 @@ const groups = [
           </>
         ))}
       </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
+      {industries.map((ind) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h2 class="text-lg font-bold text-white">{ind.title}</h2>
+          <p class="text-sm leading-relaxed text-white/75">{ind.body}</p>
+          {ind.example ? (
+            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Example</p>
+              <p class="mt-1.5 text-sm text-white/80">{ind.example}</p>
+            </div>
+          ) : (
+            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Typical research</p>
+              <p class="mt-1.5 text-sm text-white/80">{ind.typical.join('; ')}</p>
+            </div>
+          )}
+          {ind.roles && (
+            <p class="text-xs text-white/60"><span class="font-semibold text-white/80">Relevant roles:</span> {ind.roles}</p>
+          )}
+          {ind.note && <p class="text-xs italic text-white/50">{ind.note}</p>}
+          {ind.cta && (
+            <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">{ind.cta.label} →</a>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="card mx-auto mt-10 max-w-3xl text-center">
+      <h3 class="text-sm font-semibold uppercase tracking-wide text-white/50">Other Markets We Support</h3>
+      <p class="mt-3 text-sm text-white/70">{otherMarkets.join(' · ')}</p>
+      <a href="/data-catalog" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Browse Research Capabilities →</a>
+    </div>
   </section>
 
   <section class="section-alt">
-    <div class="section space-y-14">
-      {groups.map((group) => (
-        <div>
-          <h2 class="text-xl font-bold text-white sm:text-2xl">{group.label}</h2>
-          {(group.decisionMakers || group.canInvestigate) && (
-            <div class="mt-4 grid gap-4 sm:grid-cols-2">
-              {group.decisionMakers && (
-                <div class="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Decision-makers we typically research</p>
-                  <p class="mt-1.5 text-sm text-white/80">{group.decisionMakers.join(' · ')}</p>
-                </div>
-              )}
-              {group.canInvestigate && (
-                <div class="rounded-lg border border-white/10 bg-white/5 p-4">
-                  <p class="text-xs font-semibold uppercase tracking-wide text-white/50">What we can investigate</p>
-                  <ul class="mt-1.5 space-y-1">
-                    {group.canInvestigate.map((q) => (
-                      <li class="text-sm text-white/80">{q}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-          <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {group.items.map((ind) => (
-              <div class="card flex flex-col gap-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-                  <ind.icon size={22} stroke-width={1.75} aria-hidden="true" />
-                </div>
-                <h3 class="text-lg font-semibold text-white">{ind.title}</h3>
-                <p class="text-sm leading-relaxed text-white/70">{ind.body}</p>
-                {ind.note && <p class="text-xs italic text-white/50">{ind.note}</p>}
-                {ind.cta && (
-                  <a href={ind.cta.href} class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">
-                    {ind.cta.label}
-                  </a>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-
-      <div class="card flex flex-col items-center gap-4 text-center">
-        <h2 class="text-xl font-bold text-white">Don't see your industry?</h2>
-        <p class="max-w-xl text-white/70">If your growth depends on reaching people, we can source for you.</p>
-        <a href="/contact" class="btn-primary">{CTA_HIGH_INTENT} <ArrowRight size={18} /></a>
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="text-xl font-bold text-white">What Changes by Industry — and What Does Not</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          The sources, terminology, qualification signals and relevant roles can change dramatically
+          between markets. What does not change is the discipline: define the requirement, discover
+          candidates, qualify fit, enrich the record, verify available information and deliver a
+          usable result.
+        </p>
       </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card mx-auto flex max-w-2xl flex-col items-center gap-4 text-center">
+      <h2 class="text-xl font-bold text-white">Do Not See Your Industry?</h2>
+      <p class="text-white/70">
+        This page shows examples, not the boundaries of LeadVault's research. If your market is
+        legitimate B2B and the qualification can be researched responsibly from business and public
+        information, send us the requirement — we will assess whether the project is feasible and
+        what research depth it needs.
+      </p>
+      <a href="/contact" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
     </div>
   </section>
 </BaseLayout>

@@ -84,6 +84,7 @@ const pipelineStages = [
       src="/photos/engineering-desk.jpg"
       width={1400}
       height={933}
+      priority
     />
   </section>
 
@@ -123,30 +124,61 @@ const pipelineStages = [
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
-      <p class="mx-auto mt-5 max-w-3xl text-center text-white/75">
-        Every dataset is researched against your exact specification, then reviewed before it
-        reaches you. When you buy from a reseller, you inherit their shortcuts. When you buy from
-        LeadVault, your data has passed through a process we designed, understand, and
-        continuously improve. Quality isn't a promise on a website — it's built into the process.
-      </p>
-      <div class="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-3">
-        <div class="card text-center">
-          <h3 class="font-semibold text-white">Precision</h3>
-          <p class="mt-2 text-sm text-white/70">Every record is filtered to your specific criteria, not a generic category.</p>
+      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-3">
+        <div>
+          <h2 class="text-lg font-bold text-white">Why Multiple Sources Matter</h2>
+          <p class="mt-3 text-sm leading-relaxed text-white/70">
+            No single public source is complete or current for every company. A record that relies on
+            one source inherits that source's blind spots. Cross-referencing multiple sources
+            surfaces gaps, contradictions, and stale information that a single-source lookup would
+            simply pass through.
+          </p>
         </div>
-        <div class="card text-center">
-          <h3 class="font-semibold text-white">Freshness</h3>
-          <p class="mt-2 text-sm text-white/70">Sourced and verified for your order — not pulled from a stored, aging database.</p>
+        <div>
+          <h2 class="text-lg font-bold text-white">Human Judgment Still Matters</h2>
+          <p class="mt-3 text-sm leading-relaxed text-white/70">
+            Automation handles scale; it does not handle ambiguity well. When a record is unclear —
+            a company that could fit two categories, a title that doesn't map cleanly to a role — a
+            person reviews it rather than letting an automated guess stand in for a judgment call.
+          </p>
         </div>
-        <div class="card text-center">
-          <h3 class="font-semibold text-white">Quality Control</h3>
-          <p class="mt-2 text-sm text-white/70">Deliverability checks, bounce screening, and duplicate removal happen before anything reaches you.</p>
+        <div>
+          <h2 class="text-lg font-bold text-white">Quality Is Project-Specific</h2>
+          <p class="mt-3 text-sm leading-relaxed text-white/70">
+            "High quality" means something different for a 100-record sample than for a 10,000-record
+            campaign list, and something different again for a project requiring documented
+            qualification evidence. The process is adapted to what the project actually requires, not
+            applied the same way regardless of the assignment.
+          </p>
         </div>
       </div>
-      <div class="mt-10 text-center">
-        <a href="/about#data-standards" class="btn-primary">See Our Data Standards <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Why This Matters to You</h2>
+    <p class="mx-auto mt-5 max-w-3xl text-center text-white/75">
+      Every dataset is researched against your exact specification, then reviewed before it
+      reaches you. When you buy from a reseller, you inherit their shortcuts. When you buy from
+      LeadVault, your data has passed through a process we designed, understand, and
+      continuously improve. Quality isn't a promise on a website — it's built into the process.
+    </p>
+    <div class="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-3">
+      <div class="card text-center">
+        <h3 class="font-semibold text-white">Precision</h3>
+        <p class="mt-2 text-sm text-white/70">Every record is filtered to your specific criteria, not a generic category.</p>
       </div>
+      <div class="card text-center">
+        <h3 class="font-semibold text-white">Freshness</h3>
+        <p class="mt-2 text-sm text-white/70">Sourced and verified for your order — not pulled from a stored, aging database.</p>
+      </div>
+      <div class="card text-center">
+        <h3 class="font-semibold text-white">Quality Control</h3>
+        <p class="mt-2 text-sm text-white/70">Deliverability checks, bounce screening, and duplicate removal happen before anything reaches you.</p>
+      </div>
+    </div>
+    <div class="mt-10 text-center">
+      <a href="/about#data-standards" class="btn-primary">See Our Data Standards <ArrowRight size={18} /></a>
     </div>
   </section>
 </BaseLayout>

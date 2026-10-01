@@ -14,12 +14,13 @@ import {
   Users,
   Database,
   Globe,
+  Building2,
+  Target,
 } from '@lucide/astro';
 
-// Repositioning master brief §10 — the "zoom in" page of the four research
-// tiers: role-relevance research once the target companies are already
-// known, distinct from Market & ICP Research (defining the company universe)
-// and Prospect Intelligence (qualifying companies against criteria).
+// Master commercial copy package (2026-10-01) — content-depth implementation.
+// The "zoom in" page of the four research tiers: role-relevance research
+// once the target companies are already known.
 
 const roles = [
   { icon: Crown, label: 'Owners and founders' },
@@ -32,10 +33,18 @@ const roles = [
   { icon: Code, label: 'Technical or functional buyers' },
 ];
 
+const definitions = [
+  { icon: Building2, title: 'ICP', body: 'The company that fits.' },
+  { icon: UserCheck, title: 'Persona', body: 'The type of person relevant to the sale.' },
+  { icon: Users, title: 'Buying Group', body: 'The stakeholders who may influence, evaluate, approve, use or purchase the solution.' },
+];
+
+const exampleStakeholders = ['Operations', 'Compliance', 'Quality', 'IT', 'Procurement', 'Finance', 'Executive Leadership'];
+
 const related = [
   { icon: Globe, title: 'Companies not identified yet?', body: "Decision-maker research assumes the target companies are already set. If they aren't, map the market first.", cta: { label: 'See Market & ICP Research', href: '/market-icp-research' } },
   { icon: Database, title: 'Just need the data delivered?', body: 'If you already know both the companies and the roles you need, the data-delivery service may be simpler.', cta: { label: 'See Qualified Prospect Data', href: '/qualified-prospect-data' } },
-  { icon: UserCheck, title: 'Need the companies qualified too?', body: "If you also need evidence that each company fits a commercial opportunity, that's the flagship service.", cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
+  { icon: Target, title: 'Need the companies qualified too?', body: "If you also need evidence that each company fits a commercial opportunity, that's the flagship service.", cta: { label: 'See Prospect Intelligence', href: '/prospect-intelligence' } },
 ];
 
 const faqs = [
@@ -45,7 +54,7 @@ const faqs = [
   },
   {
     question: 'What if a company has multiple relevant roles?',
-    answer: 'We identify the roles relevant to your specific objective — sometimes that\'s one person, sometimes a short list where a decision genuinely involves more than one function (e.g. procurement plus a department head).',
+    answer: 'We identify the roles relevant to your specific objective — sometimes that\'s one person, sometimes a short list where a decision genuinely involves more than one function (e.g. procurement plus a department head). For complex accounts, the objective may be to identify several relevant people rather than force one person into the label of "the decision-maker."',
   },
   {
     question: 'Do you verify the contact information you find?',
@@ -59,8 +68,8 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="B2B Decision-Maker Research & Contact Intelligence | LeadVault"
-  description="Identify the people most relevant to a B2B buying, partnership, or commercial decision, and research available verified contact channels."
+  title="B2B Decision-Maker & Buying Committee Research | LeadVault"
+  description="Identify the people who own, influence or evaluate a B2B buying decision. LeadVault researches roles, seniority, stakeholders and available contact data."
   path="/decision-maker-intelligence"
 >
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -74,15 +83,49 @@ const faqs = [
 
   <section class="section text-center">
     <p class="eyebrow">Decision-Maker Intelligence</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Reach the Person Relevant to the Decision</h1>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">The Right Company Is Only Half the Target.</h1>
     <p class="mx-auto mt-5 max-w-2xl text-white/75">
-      A valid email is not valuable if it belongs to the wrong person. LeadVault researches the
-      roles and people most relevant to your commercial objective, then enriches the record with
-      available business contact information.
+      You can identify the perfect account and still waste the opportunity by contacting the wrong
+      person. LeadVault Decision-Maker Intelligence researches the people and functions most
+      relevant to your proposition inside target organizations.
     </p>
     <div class="mt-8">
       <a href="/contact?need=decision-maker-intelligence" data-cta="dmi-hero" class="btn-primary">Find My Decision-Makers <ArrowRight size={18} /></a>
     </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">Job Title Is a Clue — Not Always the Answer</h2>
+        <p class="mt-5 text-white/75">
+          Responsibilities vary from company to company. The person responsible for a function might
+          be a founder in a small business, a director in a mid-market company, a VP in a larger
+          organization, a procurement specialist, an operations leader, a technical evaluator, or
+          several people forming a buying group.
+        </p>
+        <p class="mt-4 text-white/75">That is why decision-maker research can require more than searching for one exact title.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">ICP vs. Persona vs. Buying Group</h2>
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-3">
+      {definitions.map((d) => (
+        <div class="card flex flex-col gap-3 text-center">
+          <div class="mx-auto flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <d.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-bold uppercase tracking-wide text-white">{d.title}</h3>
+          <p class="text-sm leading-relaxed text-white/70">{d.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mx-auto mt-8 max-w-2xl text-center text-sm text-white/60">
+      For complex accounts, the objective may be to identify several relevant people rather than
+      force one person into the label of "the decision-maker."
+    </p>
   </section>
 
   <section class="section-alt">
@@ -96,52 +139,73 @@ const faqs = [
           </li>
         ))}
       </ul>
-      <p class="mx-auto mt-6 max-w-2xl text-center text-sm text-white/50">Plus other project-specific roles not listed above.</p>
+      <p class="mx-auto mt-6 max-w-2xl text-center text-sm text-white/50">Plus other project-specific contact fields and additional stakeholders not listed above.</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="card mx-auto max-w-2xl text-center">
-      <h2 class="text-xl font-bold text-white">Relevance Before Availability</h2>
-      <p class="mt-4 text-sm leading-relaxed text-white/75">
-        We don't choose a contact merely because an email address is easy to find. Role relevance
-        comes first — the objective is to identify who is actually responsible for or influential
-        in the decision, then verify how to reach them.
+    <div class="card mx-auto max-w-3xl">
+      <p class="eyebrow">Example</p>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">
+        Suppose you sell specialized compliance software to manufacturing businesses. Searching only
+        for "CEO" may produce senior contacts but not necessarily the people evaluating the product.
+      </p>
+      <p class="mt-3 text-sm text-white/75">Depending on the organization, relevant stakeholders could include:</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {exampleStakeholders.map((s) => (
+          <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">{s}</span>
+        ))}
+      </div>
+      <p class="mt-5 font-medium text-white">
+        Decision-Maker Intelligence asks a better question: Who is relevant to this particular buying
+        problem inside this particular type of company?
       </p>
     </div>
   </section>
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
-      <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
-        {related.map((r) => (
-          <div class="card flex flex-col gap-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-              <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
-            </div>
-            <h3 class="text-base font-semibold text-white">{r.title}</h3>
-            <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
-            <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
-          </div>
-        ))}
+      <div class="card mx-auto max-w-2xl text-center">
+        <h2 class="text-xl font-bold text-white">When This Service Fits</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          Use Decision-Maker Intelligence when you already know the target accounts but need
+          stronger contact mapping; when titles vary significantly between companies; when several
+          stakeholders may influence a purchase; or when a contact list needs role-level enrichment
+          before outreach.
+        </p>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
-    <div class="mx-auto mt-10 max-w-3xl">
-      <FaqAccordion items={faqs} />
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+      {related.map((r) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-semibold text-white">{r.title}</h3>
+          <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+          <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+        </div>
+      ))}
     </div>
   </section>
 
   <section class="section-alt">
-    <div class="section text-center">
-      <h2 class="text-2xl font-bold text-white sm:text-3xl">Know the Company. Need the Right Person?</h2>
-      <div class="mt-8">
-        <a href="/contact?need=decision-maker-intelligence" data-cta="dmi-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
       </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-2xl font-bold text-white sm:text-3xl">Know the Company. Need the Right Person?</h2>
+    <div class="mt-8">
+      <a href="/contact?need=decision-maker-intelligence" data-cta="dmi-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
     </div>
   </section>
 

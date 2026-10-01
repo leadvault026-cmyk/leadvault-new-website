@@ -12,22 +12,31 @@ import {
   BarChart3,
   Database,
   Sparkles,
+  Map,
+  ListFilter,
+  Crosshair,
+  Ban,
+  ClipboardList,
 } from '@lucide/astro';
 
-// Repositioning master brief §9 — the "zoom out" page of the four research
-// tiers: about defining and sizing the addressable market BEFORE prospecting
-// begins, distinct from Qualified Prospect Data (specification already
-// defined) and Decision-Maker Intelligence (companies already identified).
+// Master commercial copy package (2026-10-01) — content-depth implementation.
+// The "zoom out" page of the four research tiers: defining the addressable
+// market before prospecting begins.
 
 const capabilities = [
-  'ICP interpretation',
-  'Market mapping',
-  'Geographic segmentation',
-  'Company qualification',
-  'Segment sizing where evidence supports it',
-  'Account prioritization',
-  'Decision-maker mapping',
-  'Custom research criteria',
+  { icon: Map, label: 'Market Definition', body: 'Clarify the commercial market represented by your offer.' },
+  { icon: ListFilter, label: 'Segment Identification', body: 'Break a broad market into meaningful target groups.' },
+  { icon: Crosshair, label: 'ICP Criteria', body: 'Translate the opportunity into observable qualification criteria.' },
+  { icon: Ban, label: 'Exclusions', body: 'Identify categories that should be removed before prospecting.' },
+  { icon: Compass, label: 'Candidate Market Mapping', body: 'Research companies that appear to fit.' },
+  { icon: UserCheck, label: 'Decision-Maker Direction', body: 'Determine which functions or roles are likely to matter.' },
+  { icon: ClipboardList, label: 'Data Requirements', body: 'Define the fields the sales or outreach workflow actually needs.' },
+];
+
+const icpVariables = [
+  'Industry and sub-industry', 'Geography', 'Company size', 'Business model', 'Customer type',
+  'Products/services', 'Operating characteristics', 'Relevant capability signals',
+  'Location footprint', 'Positive qualification criteria', 'Exclusions',
 ];
 
 const useCases = [
@@ -37,6 +46,15 @@ const useCases = [
   { icon: Building2, title: 'Sales Territory Creation', body: 'Build evidence-based territories your reps can actually work, not an arbitrary geographic split.' },
   { icon: UserCheck, title: 'Partnership Research', body: 'Identify companies that fit a partnership or channel profile, not just a sales-prospect profile.' },
   { icon: Compass, title: 'Campaign Planning', body: 'Size and map a market before a campaign launches, so targeting decisions are evidence-based.' },
+];
+
+const exampleQuestions = [
+  'Which segments of this broad industry are most aligned with our offer?',
+  'Which company characteristics are observable and researchable?',
+  'What should disqualify an account?',
+  'Which states or markets should be prioritized?',
+  'Which functions inside these companies are likely to own the problem?',
+  'What fields will our sales team need to act on the research?',
 ];
 
 const related = [
@@ -62,12 +80,16 @@ const faqs = [
     question: 'Do you cover international markets?',
     answer: 'Yes — LeadVault researches markets worldwide, with particular depth in the USA, UK, Canada, Nigeria, and other African markets.',
   },
+  {
+    question: "What's the difference between a positive ICP and a negative ICP?",
+    answer: "A positive ICP defines the characteristics that indicate fit. A negative ICP defines the characteristics that make a company unsuitable for the campaign. Those exclusions prevent broad research from becoming wasted outreach — knowing who to exclude can be as valuable as knowing who to include.",
+  },
 ];
 ---
 
 <BaseLayout
-  title="B2B Market Mapping & ICP Prospect Research | LeadVault"
-  description="Map a target B2B market, define the addressable prospect universe, and identify companies matching your ideal-customer criteria."
+  title="B2B Market Research & Ideal Customer Profile Research | LeadVault"
+  description="Define your target market before you prospect. LeadVault researches market segments, ICP criteria, exclusions and target-account opportunities for B2B teams."
   path="/market-icp-research"
 >
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -81,10 +103,11 @@ const faqs = [
 
   <section class="section text-center">
     <p class="eyebrow">Market & ICP Research</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Map the Market Before You Chase the Market</h1>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Before You Build the List, Make Sure You're Targeting the Right Market.</h1>
     <p class="mx-auto mt-5 max-w-2xl text-white/75">
-      LeadVault helps companies translate an ideal-customer description into a researched target
-      market — the addressable set of companies worth prospecting, before the prospecting starts.
+      A prospecting campaign can fail even when every email address is correct. The problem may be
+      the audience. LeadVault Market & ICP Research helps businesses turn a broad market idea into a
+      clearer definition of the companies they should — and should not — target.
     </p>
     <div class="mt-8">
       <a href="/contact?need=market-icp-research" data-cta="micp-hero" class="btn-primary">Map My Target Market <ArrowRight size={18} /></a>
@@ -93,12 +116,62 @@ const faqs = [
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Capabilities</h2>
-      <ul class="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-2">
-        {capabilities.map((c) => (
-          <li class="card text-sm text-white/80">{c}</li>
-        ))}
-      </ul>
+      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
+        <div>
+          <h2 class="text-xl font-bold text-white">What Is an Ideal Customer Profile?</h2>
+          <p class="mt-4 text-sm leading-relaxed text-white/75">
+            An Ideal Customer Profile, or ICP, describes the type of company most likely to fit your
+            commercial proposition. It is different from a buyer persona.
+          </p>
+          <p class="mt-4 text-sm text-white/75"><strong class="text-white">The ICP answers:</strong> What kind of organization should we target?</p>
+          <p class="mt-2 text-sm text-white/75"><strong class="text-white">The persona or decision-maker model answers:</strong> Who inside that organization should we engage?</p>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-white">An Industry Is Not an ICP</h2>
+          <p class="mt-4 text-sm leading-relaxed text-white/75">
+            "Healthcare companies." "Manufacturers." "Technology companies." "Businesses in Texas."
+            Those are markets, not yet precise prospect definitions. A useful ICP may consider
+            combinations of:
+          </p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {icpVariables.map((v) => (
+              <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">{v}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">What We Can Research</h2>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {capabilities.map((c) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <c.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-semibold text-white">{c.label}</h3>
+          <p class="text-sm leading-relaxed text-white/70">{c.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="card mx-auto max-w-3xl">
+        <h2 class="text-xl font-bold text-white">From "Who Could Buy?" to "Who Should We Research?"</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          Market research does not need to become a 100-page consultancy report. For many LeadVault
+          projects, the useful outcome is practical: a clearer target definition, inclusion and
+          exclusion rules, a researchable ICP, an initial market map or prospect universe, and a
+          recommendation for the next data/research step.
+        </p>
+        <p class="mt-4 text-sm font-medium text-white">
+          That creates a stronger foundation for Qualified Prospect Data or Prospect Intelligence.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -119,35 +192,45 @@ const faqs = [
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
-      <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
-        {related.map((r) => (
-          <div class="card flex flex-col gap-3">
-            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-              <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
-            </div>
-            <h3 class="text-base font-semibold text-white">{r.title}</h3>
-            <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
-            <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
-          </div>
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Example Research Questions</h2>
+      <ul class="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2">
+        {exampleQuestions.map((q) => (
+          <li class="card text-sm leading-relaxed text-white/80">{q}</li>
         ))}
-      </div>
+      </ul>
+      <p class="mx-auto mt-6 max-w-2xl text-center text-white/70">The goal is to turn uncertainty into a usable targeting specification.</p>
     </div>
   </section>
 
   <section class="section">
-    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
-    <div class="mx-auto mt-10 max-w-3xl">
-      <FaqAccordion items={faqs} />
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+      {related.map((r) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+            <r.icon size={22} stroke-width={1.75} aria-hidden="true" />
+          </div>
+          <h3 class="text-base font-semibold text-white">{r.title}</h3>
+          <p class="flex-1 text-sm leading-relaxed text-white/70">{r.body}</p>
+          <a href={r.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{r.cta.label} →</a>
+        </div>
+      ))}
     </div>
   </section>
 
   <section class="section-alt">
-    <div class="section text-center">
-      <h2 class="text-2xl font-bold text-white sm:text-3xl">Not Sure Your Target Market Is Well-Defined Yet?</h2>
-      <div class="mt-8">
-        <a href="/contact?need=market-icp-research" data-cta="micp-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
       </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-2xl font-bold text-white sm:text-3xl">Not Sure Your Target Market Is Well-Defined Yet?</h2>
+    <div class="mt-8">
+      <a href="/contact?need=market-icp-research" data-cta="micp-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
     </div>
   </section>
 

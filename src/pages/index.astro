@@ -15,7 +15,7 @@ import {
   Search,
   ClipboardCheck,
   Layers,
-  Target,
+  ShieldCheck,
   Send,
   MapPin,
   UserCheck,
@@ -25,65 +25,109 @@ import {
   Database,
   Sparkles,
   Megaphone,
+  Stethoscope,
+  Code,
+  Handshake,
 } from '@lucide/astro';
 
-// Repositioning master brief (2026-09-30) — full homepage rebuild around the
-// B2B Prospect Intelligence positioning. Replaces the prior "harvest fresh
-// data" framing (brief §2 explicitly asks to retire that language) with a
-// research/qualification framing. See ASSUMPTIONS.md for the judgment calls
-// made while adapting the brief's supplied copy to this page's components.
+// Master commercial copy package (2026-10-01) — content-depth implementation
+// pass. Builds on the repositioning phase's structure/positioning (unchanged)
+// with the master's fuller explanations, example briefs, and field-level
+// detail. See ASSUMPTIONS.md for section-by-section notes.
 
-// Section 4 — the research process. Supersedes the old 4-stage
-// Source/Verify/Clean/Deliver pipeline strip (that pipeline still exists
-// conceptually as the operational process behind delivery — see /tools —
-// but this is the customer-facing framing of what a project does for them).
-const processSteps = [
-  { icon: Search, label: 'Discover', body: 'We search for companies that could match the commercial opportunity — not merely businesses carrying an industry label.' },
-  { icon: ClipboardCheck, label: 'Qualify', body: 'We investigate whether each company actually satisfies the criteria that matter to the project.' },
-  { icon: Layers, label: 'Enrich', body: 'We identify relevant decision-makers and add available business contact and company information.' },
-  { icon: Target, label: 'Prioritize', body: 'Where the project requires it, we distinguish stronger opportunities from weaker matches using fit, evidence and relevance.' },
-  { icon: Send, label: 'Act', body: 'Use the intelligence in your own sales process, or engage LeadVault to support the outreach.' },
+// "Your Target Market Is More Specific Than a Database Filter" — master's
+// opening expansion of the problem statement.
+const specificExamples = [
+  'Healthcare providers that accept a particular type of case',
+  'Distributors handling a specific product',
+  'Manufacturers using a particular process',
+  'Businesses serving a defined customer group',
+  'Companies showing evidence of a certain capability',
+  'Decision-makers whose responsibilities cannot be identified from a job title alone',
 ];
 
-// Section 5 — the three-level commercial ladder, now linking to the
-// dedicated pages built in the core-commercial-pages phase.
+// "A Lead Tells You Who Exists. Intelligence Tells You Why They Matter." —
+// the chain + the questions evidence is meant to answer.
+const intelligenceChain = ['Company', 'Qualification', 'Evidence', 'Relevant Person', 'Role', 'Contact Data', 'Research Context'];
+const intelligenceQuestions = [
+  'Does this company actually match our requirement?',
+  'What evidence supports the match?',
+  'Who inside the company is most relevant?',
+  'What information do we have for reaching them?',
+  'What context should our team know before taking action?',
+];
+
 const waysToWork = [
   {
     icon: Database,
     title: 'Qualified Prospect Data',
-    body: 'Already know exactly whom you need? Give us the specification and we will research and prepare the prospect data.',
-    cta: { label: 'Explore Prospect Data', href: '/qualified-prospect-data' },
+    body: 'When you already know exactly who you want. Give us the geography, industries, company characteristics, job functions, seniority, exclusions and required fields. We research matching companies and contacts and deliver a clean prospect dataset.',
+    cta: { label: 'Explore Qualified Prospect Data', href: '/qualified-prospect-data' },
   },
   {
     icon: Sparkles,
     title: 'Prospect Intelligence',
-    body: 'Need to determine which companies truly match an opportunity and why? We investigate the market and qualify the prospects.',
+    body: 'When qualification requires investigation. If the requirement cannot be solved reliably with ordinary filters, we research the condition itself — including relevant public evidence, capabilities, services, market activity and other signals.',
     cta: { label: 'Explore Prospect Intelligence', href: '/prospect-intelligence' },
   },
   {
     icon: Megaphone,
     title: 'Intelligence-Led Outreach',
-    body: 'Want the research put into action? LeadVault can combine prospect intelligence with campaign preparation, controlled outreach and reporting.',
-    cta: { label: 'Explore Managed Outreach', href: '/managed-outreach' },
+    body: 'When you want the research carried into execution. LeadVault can take qualified prospect intelligence further by helping structure and manage B2B email outreach around the audience we researched.',
+    cta: { label: 'Explore Intelligence-Led Outreach', href: '/managed-outreach' },
   },
 ];
 
-// Section 6 — real-world use cases where ordinary database filters fall short.
+// "How LeadVault Research Works" — master's 5-stage process (Discover,
+// Qualify, Enrich, Verify, Deliver). Supersedes the repositioning phase's
+// Discover/Qualify/Enrich/Prioritize/Act wording with the master's version.
+const processSteps = [
+  { icon: Search, label: 'Discover', body: 'Define the search universe and identify potential companies from relevant public and business sources.' },
+  { icon: ClipboardCheck, label: 'Qualify', body: 'Check candidates against the agreed criteria and exclude companies that do not fit.' },
+  { icon: Layers, label: 'Enrich', body: 'Research company details and, where required, identify relevant people or roles.' },
+  { icon: ShieldCheck, label: 'Verify', body: 'Check and normalize available contact information and key fields.' },
+  { icon: Send, label: 'Deliver', body: 'Provide structured data in a practical format, with project-specific fields and supporting evidence where required.' },
+];
+
+// "What a LeadVault Research Brief Can Look Like" — 4 example briefs,
+// clearly labeled as examples, not named customer case studies.
+const exampleBriefs = [
+  {
+    icon: Stethoscope,
+    label: 'Healthcare',
+    body: 'Identify medical providers in selected U.S. states that publicly indicate they accept Letters of Protection, medical liens or attorney-referred injury cases. Qualify the practice, identify a relevant business contact where available and provide the public source supporting qualification.',
+  },
+  {
+    icon: Code,
+    label: 'SaaS',
+    body: 'Identify U.S. companies within an agreed size range that match a defined business model and operating profile. Research relevant commercial or technology stakeholders and provide the fields required for outbound prospecting.',
+  },
+  {
+    icon: Ship,
+    label: 'Trade & Distribution',
+    body: 'Identify importers, distributors, wholesalers or commercial buyers associated with a specified product and market. Distinguish relevant counterparties from unrelated companies and research available commercial contacts.',
+  },
+  {
+    icon: Megaphone,
+    label: 'Agencies',
+    body: "Build a campaign-ready audience for a client's exact ICP, including company criteria, relevant decision-makers, available business contact information and campaign-specific enrichment fields.",
+  },
+];
+
 const useCases = [
   { icon: Search, title: 'Specialized Prospect Discovery', body: 'Find businesses matching criteria that do not exist as a simple database filter.' },
   { icon: MapPin, title: 'Market & ICP Mapping', body: 'Map a target market and identify companies that match a defined ideal-customer profile.' },
   { icon: UserCheck, title: 'Decision-Maker Research', body: 'Identify the people most relevant to a purchasing, partnership or commercial decision.' },
   { icon: Lightbulb, title: 'Opportunity Intelligence', body: 'Research public evidence indicating that a company may fit a particular commercial opportunity.' },
-  { icon: Ship, title: 'Trade & Counterparty Intelligence', body: 'Research buyers, suppliers, importers, exporters, distributors and other commercial counterparties.' },
+  { icon: Handshake, title: 'Trade & Counterparty Intelligence', body: 'Research buyers, suppliers, importers, exporters, distributors and other commercial counterparties.' },
   { icon: Globe, title: 'Geographic Prospect Mapping', body: 'Build qualified prospect coverage around defined cities, states, countries or regions.' },
 ];
 
-// Section 7 — a single fictional, illustrative intelligence record. Ties back
-// to Section 2's own example question ("which medical providers publicly
-// indicate they work with personal-injury patients?") so the page shows one
-// coherent scenario from problem to deliverable, rather than a disconnected
-// sample. Never real customer data — masked/fictional per this site's
-// established sample-data convention (see Data Catalog).
+// A single fictional, illustrative intelligence record — ties back to the
+// Problem section's own healthcare example and the Healthcare example brief
+// above, so the page tells one coherent story from problem to deliverable.
+// Never real customer data — masked/fictional per this site's established
+// sample-data convention (see Data Catalog).
 const exampleRecord = [
   { field: 'Company Name', value: 'Meridian Behavioral Health Group' },
   { field: 'Website', value: 'meridianbhg-example.com' },
@@ -101,8 +145,14 @@ const exampleRecord = [
   { field: 'Recommended Approach', value: 'Lead with the referral-coordination angle, not a general sales pitch' },
 ];
 
-// Section 11 — quality principles. Deliberately does not name vendors, a
-// scoring algorithm, or pipeline architecture (brief §15/§11).
+// "Research Designed for Action" — the field list a project's schema is
+// drawn from, agreed per project.
+const deliverableFields = [
+  'Company name', 'Website', 'Contact name', 'Contact title', 'Business email',
+  'Phone number', 'Address', 'City', 'State/region', 'Industry/provider type',
+  'Qualification basis', 'Evidence/source URL', 'Custom project fields',
+];
+
 const qualityPrinciples = [
   'Project-specific research — not a prebuilt list treated as the finished answer',
   'Multi-source discovery where appropriate',
@@ -116,12 +166,12 @@ const qualityPrinciples = [
 ---
 
 <BaseLayout
-  title="LeadVault — B2B Prospect Intelligence Company"
-  description="LeadVault researches your target market, qualifies the companies that match your opportunity, identifies relevant decision-makers, and delivers prospect intelligence your team can act on."
+  title="LeadVault - B2B Prospect Intelligence & Prospect Research"
+  description="LeadVault researches target markets, qualifies companies, identifies decision-makers and delivers verified B2B prospect intelligence built around your exact requirements."
   path="/"
   includeOrgSchema
 >
-  <!-- Section 1: Hero -->
+  <!-- Hero -->
   <section class="section grid gap-12 lg:grid-cols-2 lg:items-center">
     <div>
       <p class="eyebrow">B2B Prospect Intelligence</p>
@@ -129,9 +179,10 @@ const qualityPrinciples = [
         {PRIMARY_TAGLINE}
       </h1>
       <p class="mt-5 text-white/75">
-        LeadVault researches your target market, identifies and qualifies the companies that match
-        your opportunity, finds the relevant decision-makers, verifies available contact data, and
-        delivers prospect intelligence your team can act on.
+        LeadVault researches the companies that match your opportunity, determines why they
+        qualify, identifies the people who matter inside those organizations, and delivers
+        structured prospect intelligence your team can use for sales, outreach, market development
+        and business research.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a href="/contact" data-cta="hero-start-project" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
@@ -153,121 +204,158 @@ const qualityPrinciples = [
     </div>
   </section>
 
-  <!-- Section 2: The Problem -->
+  <!-- Your Target Market Is More Specific Than a Database Filter -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">The Problem</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">A Contact Is Not the Same as a Qualified Opportunity.</h2>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Your Target Market Is More Specific Than a Database Filter.</h2>
         <p class="mt-5 text-white/75">
-          Finding a company name and email address is easy. Knowing whether that company genuinely
-          matches a commercial objective is harder.
-        </p>
-        <p class="mt-4 text-white/75">
-          Standard databases are useful when your target can be described by ordinary filters such as
-          industry, location, company size, or job title. But many real prospecting assignments are
-          more specific:
+          Finding companies is easy when the requirement is simply an industry, location or job
+          title. Real prospecting is often harder. You may need:
         </p>
       </div>
       <ul class="mx-auto mt-8 grid max-w-3xl gap-3 sm:grid-cols-2">
-        {[
-          'Which medical providers publicly indicate that they work with personal-injury patients?',
-          'Which manufacturers appear capable of supplying a particular product?',
-          'Which companies are expanding into a defined market?',
-          'Which businesses show evidence of a particular operational need?',
-          'Who inside each company is most relevant to the decision?',
-        ].map((q) => (
+        {specificExamples.map((q) => (
           <li class="card text-sm leading-relaxed text-white/80">{q}</li>
         ))}
       </ul>
-      <p class="mx-auto mt-8 max-w-2xl text-center text-white/80">
-        That is where <strong class="text-white">LeadVault Prospect Intelligence</strong> begins.
-      </p>
+      <div class="mx-auto mt-8 max-w-2xl space-y-4 text-center text-white/75">
+        <p>
+          LeadVault works from your actual business requirement. We translate that requirement into
+          research criteria, investigate potential companies, qualify the ones that fit, identify
+          relevant contacts, verify available business contact information and structure the
+          findings for action.
+        </p>
+        <p>You do not have to reduce a complex opportunity to whatever filters happen to exist inside a database.</p>
+        <p class="text-lg font-semibold text-white">You tell us what makes a prospect valuable. We research for that.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Section 3: Lead vs Intelligence -->
+  <!-- A Lead Tells You Who Exists. Intelligence Tells You Why They Matter. -->
   <section class="section">
     <div class="mx-auto max-w-3xl text-center">
       <p class="eyebrow">The Distinction</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">A Lead Is a Contact. Intelligence Tells You Why to Contact Them.</h2>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">A Lead Tells You Who Exists. Intelligence Tells You Why They Matter.</h2>
+      <p class="mt-5 text-white/75">
+        A conventional prospect record might contain Company, Contact, Job Title, Email and Phone.
+        Those fields are useful, and sometimes they are all you need. When the targeting requirement
+        is more complex, LeadVault can go further:
+      </p>
     </div>
-    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
-      <div class="card">
-        <h3 class="text-lg font-bold text-white">Traditional B2B Data</h3>
-        <ul class="mt-4 space-y-2.5">
-          {['Company', 'Contact name', 'Job title', 'Email', 'Phone', 'Industry/location'].map((item) => (
-            <li class="flex gap-2 text-sm text-white/70">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-white/40"></span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div class="card ring-1 ring-[var(--color-lime)]/50">
-        <h3 class="text-lg font-bold text-white">LeadVault Prospect Intelligence</h3>
-        <p class="mt-1 text-xs text-white/50">Includes the contact data above, plus — depending on the project:</p>
-        <ul class="mt-4 space-y-2.5">
-          {['ICP/fit qualification', 'Qualification basis', 'Supporting evidence/source', 'Relevant business signals', 'Decision-maker relevance', 'Prospect priority', 'Recommended outreach angle'].map((item) => (
-            <li class="flex gap-2 text-sm text-white/85">
-              <Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div class="mx-auto mt-8 flex max-w-4xl flex-wrap items-center justify-center gap-2">
+      {intelligenceChain.map((step, i) => (
+        <>
+          <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm font-medium text-white/85">{step}</span>
+          {i < intelligenceChain.length - 1 && <ArrowRight size={14} class="text-white/30" aria-hidden="true" />}
+        </>
+      ))}
+    </div>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <p class="text-center text-sm font-medium text-white">That additional layer helps answer the questions that matter before your team spends time on outreach:</p>
+      <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+        {intelligenceQuestions.map((q) => (
+          <li class="flex items-start gap-2 text-sm text-white/80">
+            <Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            {q}
+          </li>
+        ))}
+      </ul>
+      <p class="mt-6 text-center text-white/75">That is the difference between receiving records and receiving prospect intelligence.</p>
     </div>
   </section>
 
-  <!-- Section 4: Process -->
+  <!-- Three Ways to Work With LeadVault -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
-        <p class="eyebrow">How It Works</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">From a Target Description to Actionable Prospect Intelligence.</h2>
+        <p class="eyebrow">Three Ways to Work With LeadVault</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Choose the Level of Research Your Project Needs.</h2>
       </div>
-      <div class="mt-12 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr]">
-        {processSteps.map((step, i) => (
-          <>
-            <div class="card flex flex-col items-center gap-3 text-center">
-              <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-                <step.icon size={24} stroke-width={1.75} aria-hidden="true" />
-              </div>
-              <div class="eyebrow">{i + 1}. {step.label}</div>
-              <p class="text-sm text-white/70">{step.body}</p>
+      <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+        {waysToWork.map((w) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <w.icon size={22} stroke-width={1.75} aria-hidden="true" />
             </div>
-            {i < processSteps.length - 1 && (
-              <div class="hidden items-center justify-center lg:flex" aria-hidden="true">
-                <ArrowRight size={18} class="text-white/30" />
-              </div>
-            )}
-          </>
+            <h3 class="text-lg font-bold text-white">{w.title}</h3>
+            <p class="flex-1 text-sm leading-relaxed text-white/70">{w.body}</p>
+            <a href={w.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{w.cta.label} →</a>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Section 5: Three Ways to Work With LeadVault -->
+  <!-- How LeadVault Research Works -->
   <section class="section">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="eyebrow">Three Ways to Work With LeadVault</p>
-      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Choose the Level of Research Your Project Needs.</h2>
+      <p class="eyebrow">How It Works</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">How LeadVault Research Works.</h2>
     </div>
-    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
-      {waysToWork.map((w) => (
-        <div class="card flex flex-col gap-3">
-          <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
-            <w.icon size={22} stroke-width={1.75} aria-hidden="true" />
+    <div class="mt-12 grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr]">
+      {processSteps.map((step, i) => (
+        <>
+          <div class="card flex flex-col items-center gap-3 text-center">
+            <div class="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <step.icon size={24} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <div class="eyebrow">{i + 1}. {step.label}</div>
+            <p class="text-sm text-white/70">{step.body}</p>
           </div>
-          <h3 class="text-lg font-bold text-white">{w.title}</h3>
-          <p class="flex-1 text-sm leading-relaxed text-white/70">{w.body}</p>
-          <a href={w.cta.href} class="text-sm font-semibold text-[var(--color-lime)] hover:underline">{w.cta.label} →</a>
+          {i < processSteps.length - 1 && (
+            <div class="hidden items-center justify-center lg:flex" aria-hidden="true">
+              <ArrowRight size={18} class="text-white/30" />
+            </div>
+          )}
+        </>
+      ))}
+    </div>
+  </section>
+
+  <!-- What Can We Research? -->
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Scope</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">What Can We Research?</h2>
+        <p class="mt-5 text-white/75">
+          Projects can be defined by combinations of industry and niche, geography, company
+          characteristics, capabilities and services, decision-makers, qualification signals and
+          custom fields.
+        </p>
+        <p class="mt-4 text-white/75">
+          LeadVault is not limited to one industry or one type of prospect. The research
+          specification should reflect the business decision or campaign you're trying to support.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What a LeadVault Research Brief Can Look Like -->
+  <section class="section">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">Illustrative Examples</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">What a LeadVault Research Brief Can Look Like.</h2>
+      <p class="mt-4 text-sm text-white/50">The following are illustrative examples of project types, not named customer case studies.</p>
+    </div>
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2">
+      {exampleBriefs.map((b) => (
+        <div class="card flex flex-col gap-3">
+          <div class="flex items-center gap-3">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <b.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-base font-bold uppercase tracking-wide text-white">{b.label}</h3>
+          </div>
+          <p class="text-sm leading-relaxed text-white/75">{b.body}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <!-- Section 6: Real-World Research Use Cases -->
+  <!-- Real-World Research Use Cases -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
@@ -288,14 +376,14 @@ const qualityPrinciples = [
     </div>
   </section>
 
-  <!-- Section 7: Example Intelligence Output -->
+  <!-- Example Intelligence Output -->
   <section class="section">
     <div class="mx-auto max-w-3xl text-center">
       <p class="eyebrow">See the Difference in the Deliverable</p>
       <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">What an Intelligence Record Actually Looks Like.</h2>
       <p class="mt-4 text-white/75">
-        Continuing the example above — here is the kind of record a Prospect Intelligence project
-        would deliver for one qualifying business.
+        Continuing the Healthcare example above — here is the kind of record a Prospect Intelligence
+        project would deliver for one qualifying business.
       </p>
     </div>
     <div class="card mx-auto mt-10 max-w-3xl">
@@ -315,32 +403,38 @@ const qualityPrinciples = [
     </p>
   </section>
 
-  <!-- Section 8: Database Platform vs LeadVault -->
+  <!-- Software Gives You Search Tools -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">The Comparison</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Software Gives You the Search Tools. LeadVault Does the Research.</h2>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Software Gives You Search Tools. LeadVault Does the Research.</h2>
+        <p class="mt-5 text-white/75">
+          Self-service sales intelligence platforms can be extremely useful when your team wants
+          direct access to large databases, filters and prospecting software. LeadVault serves a
+          different need: you give us the business question or targeting specification, and we
+          perform the research and deliver the result.
+        </p>
       </div>
       <div class="mx-auto mt-10 grid max-w-4xl gap-8 lg:grid-cols-2">
         <div class="card">
-          <h3 class="font-semibold text-white">Self-Service Database Platform</h3>
+          <h3 class="font-semibold text-white">Self-Service Platform</h3>
           <p class="mt-3 text-sm leading-relaxed text-white/75">
-            You define filters → search → export → investigate → determine fit → verify →
-            prioritize → conduct outreach.
+            Your team operates the search tools. Filter-driven discovery. Your team reviews
+            candidates. Subscription/software workflow.
           </p>
         </div>
         <div class="card ring-1 ring-[var(--color-lime)]/50">
           <h3 class="font-semibold text-white">LeadVault</h3>
           <p class="mt-3 text-sm leading-relaxed text-white/75">
-            You give us the commercial brief → we discover → investigate → qualify → enrich →
-            verify → prioritize → deliver.
+            Our team performs the research. Criteria-driven qualification. LeadVault researches
+            candidate fit. Project or recurring research deliverable.
           </p>
         </div>
       </div>
       <p class="mx-auto mt-8 max-w-2xl text-center text-white/75">
-        LeadVault is not intended to replace every sales database. It is for assignments where
-        human judgment, evidence, multi-source research, or unusual qualification criteria matter.
+        Sometimes a database is exactly what you need. Sometimes you need someone to do the
+        research.
       </p>
       <div class="mt-8 text-center">
         <a href="/why-leadvault" class="btn-primary">See the Full Comparison <ArrowRight size={18} /></a>
@@ -353,7 +447,50 @@ const qualityPrinciples = [
     <SampleDataSection />
   </section>
 
-  <!-- Section 9: Fresh Research -->
+  <!-- Built Around Your Requirement -->
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Not a Prebuilt List</p>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Built Around Your Requirement — Not Around a Prebuilt List.</h2>
+        <p class="mt-5 text-white/75">
+          LeadVault does not start by asking which prepackaged list you want. We start by asking
+          what makes a company relevant to your business.
+        </p>
+        <p class="mt-4 text-white/75">
+          For straightforward requirements, that may lead to a clean qualified dataset. For complex
+          requirements, it may involve deeper investigation, evidence capture, company-level
+          qualification and decision-maker research.
+        </p>
+        <p class="mt-4 font-medium text-white">
+          Two projects in the same industry can require completely different research. The industry
+          may be the same. The prospect definition is not.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research Designed for Action -->
+  <section class="section">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">Deliverable Fields</p>
+      <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">Research Designed for Action.</h2>
+      <p class="mt-5 text-white/75">
+        Depending on the project, fields may include:
+      </p>
+    </div>
+    <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-2">
+      {deliverableFields.map((f) => (
+        <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{f}</span>
+      ))}
+    </div>
+    <p class="mx-auto mt-8 max-w-2xl text-center text-white/75">
+      The exact schema is agreed according to the project. The goal is to deliver information your
+      team can review, import, prioritize and use.
+    </p>
+  </section>
+
+  <!-- Fresh Research -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
@@ -408,7 +545,7 @@ const qualityPrinciples = [
     />
   </section>
 
-  <!-- Section 11: Quality -->
+  <!-- Quality -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
@@ -441,7 +578,7 @@ const qualityPrinciples = [
     </div>
   </section>
 
-  <!-- Section 12: Final CTA -->
+  <!-- Final CTA -->
   <section class="section-alt">
     <div class="section text-center">
       <h2 class="text-3xl font-bold text-white sm:text-4xl">Tell Us the Market You Want to Reach.</h2>

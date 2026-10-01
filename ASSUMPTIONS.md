@@ -1529,3 +1529,188 @@ sitewide terminology sweep, per the owner's detailed per-page instructions.
   `uppercase` CSS class on the new labels, not a real defect — caught by checking the
   raw rendered text directly before concluding anything was broken).
 - **Not deployed.** Stopping here for owner review, per instruction.
+
+## Full Commercial Content Implementation (master copy package, all 15 pages — not yet deployed)
+
+Driven by `LEADVAULT_MASTER_COMMERCIAL_COPY_PACKAGE.md`, placed in the project root as the
+binding source of truth for this round. Scope: implement its content across all 15 existing
+page areas without thinning the supplied copy, inventing claims, or changing pricing/forms/
+infra. Full validation run at the end; nothing committed or deployed.
+
+- **Treated the master MD as the copy authority, not a copy-paste source.** Every page below
+  carries the master's actual sentences and structure, but laid out through this site's
+  existing component vocabulary (cards, pill lists, numbered steps, comparison tables,
+  callout panels) rather than as a single scrolling wall of prose — consistent with the
+  instruction that visual presentation is my discretion, the substance is not.
+- **Homepage, Prospect Intelligence, Qualified Prospect Data, Market & ICP Research,
+  Decision-Maker Intelligence**: rewritten in a prior part of this same session (see the
+  conversation's own running log) before this ASSUMPTIONS entry was written; each gained the
+  master's examples, process breakdowns, and FAQ depth without touching pricing or routing.
+- **Managed Outreach**: added "Who It Is For" and "What We Need From You" (both previously
+  absent), and expanded "What We Do Not Guarantee" to state plainly that LeadVault cannot
+  promise universal legal compliance — only permission-appropriate, regulation-aware sending
+  — matching the master's more cautious claims language exactly rather than the page's prior,
+  slightly more confident compliance wording.
+- **Data Catalog**: added a new "What Kind of Fields Can Be Included?" section (8 field-
+  category cards: Company Identity & Location, Industry/Niche/Business Type, Company
+  Characteristics, Decision-Makers & Stakeholders, Business Contact Information,
+  Qualification & Evidence, Trade & Counterparty Fields, Custom Project Fields) plus a
+  "Capability Is Not a Guarantee of Availability" disclaimer card. This sits *above* the
+  existing 11 vertical sample-preview cards, which were left completely untouched — same
+  CSVs, same `?need=<slug>` links, same waitlist form. The two sections answer different
+  questions (what fields exist vs. what verticals we cover) so there's no duplication.
+- **Tools**: added three new explanatory sections — "Why Multiple Sources Matter," "Human
+  Judgment Still Matters," "Quality Is Project-Specific" — matching the master's RESEARCH/
+  QUALIFY/ENRICH/VERIFY/DELIVER narrative, which the page already had as a 5-stage pipeline
+  diagram from the repositioning phase. **Fixed the flagged lazy-loading/LCP issue**: added
+  an optional `priority` prop to `ImagePlaceholder.astro` (sets `loading="eager"` +
+  `fetchpriority="high"` instead of the hardcoded `loading="lazy"`) and set it on Tools' hero
+  image only, since that's the one actually above the fold and likely the LCP element. Every
+  other `ImagePlaceholder` usage site-wide is unaffected — the prop defaults to `false`, so
+  every other photo slot keeps lazy-loading exactly as before.
+- **Trade & Counterparty Intelligence**: added "What We Research" / "Product and Market
+  Relevance" (two-column), "Counterparty Research" with an explicit not-legal/not-sanctions-
+  screening/not-credit-diligence disclaimer card, an "Example Assignment" callout (rice
+  importers into West Africa, labeled illustrative), "From Discovery to Commercial Outreach"
+  linking to Managed Outreach, and expanded the founder-story section with a "Powered by the
+  LeadVault Trade Desk" heading to match the badge text already in the hero. Six new sections
+  meant re-deriving the section-background alternation for the rest of the page — the
+  comparison table and final CTA both needed their tier flipped (default→mid, mid→default)
+  to keep the alternation correct all the way to the bottom; verified by eye after the edit,
+  not just by habit.
+- **Industries — the one page restructured rather than extended.** The existing page (5
+  grouped sections, 17 items, built in Round 19/the Industries repositioning round) was a
+  deliberate anti-padding design, documented at the time as superior to per-item depth. But
+  the master supplies genuine, specific, non-templated depth for exactly 7 *named* industries
+  (Marketing Agencies, SaaS & Technology, Recruitment & Staffing, Financial & Professional
+  Services, Trade/Import/Export & Distribution, E-commerce & Consumer-Facing Businesses, and
+  — new, didn't exist on this page before — Healthcare & Specialist Services with its own
+  Letters-of-Protection/medical-lien example) with real "Typical research" and "Relevant
+  roles" lines per industry. Per the master-wins-on-conflict rule, I replaced the 5-group
+  structure with these 7 named sections verbatim. The markets the master doesn't name
+  individually (fintech, insurance, real estate, market research, call centers, events,
+  wholesalers) were not dropped — they're real, already-served markets with their own Data
+  Catalog categories — but kept as a compact link-out line rather than full card treatment,
+  since giving each one the same depth as the master's 7 would mean inventing content the
+  master never supplied, which is exactly the kind of fabrication this phase prohibits.
+  Updated H1/eyebrow/meta to the master's exact text ("Different Markets. One Research
+  Discipline.").
+- **Why LeadVault**: replaced the prior "6 reasons" card copy (which covered similar ground
+  but in different words) with the master's actual 6 numbered points verbatim (We Start With
+  the Business Requirement → Deliverables Are Built to Be Used), added the "What We Will Not
+  Claim" claims-discipline section and the "A Research Partner for Difficult Requirements"
+  closer, and added the master's one-line even-handed framing ("These are different operating
+  models. One is not automatically better than the other.") next to the existing, more
+  detailed comparison table — kept the richer existing table rather than replacing it with
+  the master's shorter prose version, since the table adds real information the prose
+  summary doesn't and doesn't conflict with it.
+- **Pricing — zero dollar amounts touched.** Added: Market & ICP Research and Decision-Maker
+  Intelligence routing cards next to the existing Prospect Intelligence custom-quote block;
+  a "What Affects a Custom Quote?" factor list; a "Which Option Should I Choose?" router
+  table with direct links to each service; and 4 new FAQ items (subscription requirement,
+  why Prospect Intelligence is custom-quoted, custom fields, qualified-prospect-does-not-
+  guarantee-a-sale) alongside the 7 already on the page. Added an `id="monthly"` anchor on
+  the existing Monthly Prospect Research section so the new router's "ongoing supply" row
+  can link to it. Every existing price, tier name, and record count is byte-for-byte
+  unchanged.
+- **Services/Solutions**: added the master's exact "We're not completely sure.../We know..."
+  one-line framing to each of the 7 service cards (rendered as a short italic lede above the
+  existing "who it's for / the problem" block, not a replacement for it) and added the
+  master's closing line ("Or skip the labels entirely...") above the existing bottom CTA.
+  Left the existing decision-guide-at-the-top, flagship badge, and card layout exactly as
+  built in the repositioning phase — the master's own routing logic ("If you do not know the
+  market -> Market & ICP Research...") is the same logic already encoded in that guide, just
+  phrased differently, so this was additive rather than a conflict.
+- **About**: added "From Data Delivery to Prospect Intelligence" (folded into the end of the
+  existing founding-story paragraph, since it's a direct continuation of that narrative, not
+  a separate topic), a new "What We Believe" section (4 numbered beliefs, verbatim from the
+  master), "What LeadVault Is Becoming" + "How We Work With Customers" (two-column), and "A
+  Note on Trust" (claims-discipline framing). The founder bio section — photo, blockquote,
+  "His experience spans" list — was left completely untouched, per the explicit instruction
+  to preserve the authentic founder story. Adding 4 new sections meant re-flipping the
+  section-background tier on 3 existing sections (founding story, differentiators, founder
+  bio) to keep the alternation correct through a now-9-section page; verified end to end
+  after the edit.
+- **Contact**: added a "What to Include" checklist card (10 items, left column, above Direct
+  Contact) and, below the existing hero/form grid, "What Happens After You Submit" (5-step
+  numbered process), "You Can Start With an Imperfect Brief" (links to Market & ICP
+  Research), and a "Privacy and Responsible Use" callout. **The form itself — all 12 fields,
+  Netlify config, honeypot, `?need=`/`?tier=` pre-fill script — was not touched in any way.**
+  Per the instruction's explicit carve-out, I did not add any new form fields even though the
+  master's "What to Include" checklist covers a couple of items the form doesn't directly
+  capture (e.g. "what should be excluded," "do you need supporting evidence") — those are
+  presented as guidance text for the free-text fields instead. Flagged as an owner decision
+  below rather than silently expanding the form.
+- **Legal/utility pages**: read all 7 (privacy-policy, terms-of-service, data-sourcing-
+  policy, removal-request, refund-replacement-policy, thank-you, 404). Only
+  `terms-of-service.astro` needed a change — its "Our Services" intro paragraph and meta
+  description still named only the pre-repositioning service list ("custom fresh datasets,"
+  "managed email campaigns," "monthly lead subscriptions"). Updated that one paragraph and
+  the meta description to list the current service names (Qualified Prospect Data, Prospect
+  Intelligence, Market & ICP Research, Decision-Maker Intelligence, Intelligence-Led
+  Outreach, Recurring Prospect Research) alongside the still-accurate Trade Desk and list-
+  cleaning references — a terminology correction, not a rewrite of the legal terms
+  themselves, which are otherwise unchanged. The other 6 pages had no stale terminology, no
+  broken nav references, and needed no changes.
+- **Sitewide terminology sweep**: grepped for harvest/warehouse/leads-are-water/old
+  Managed-Email-Campaign wording/old CTA wording across `src/`. Remaining hits are: (1) the
+  Lucide `Warehouse` icon component name on Trade (a real icon for a real business category,
+  not positioning language), (2) `NEED_OPTIONS` dropdown values in `src/data/catalog.ts`
+  ("Monthly lead subscription," "Managed email campaigns") — these are literal values
+  submitted via the live Netlify form, so changing their on-page label text would change
+  what's recorded in form submissions; left untouched and flagged as an owner decision below
+  rather than silently changed, and (3) the terms-of-service fix already described above.
+- **Validation performed**: `npm run build` (zero errors, 22 pages, confirmed via tool
+  output); a static checker across every built HTML file confirming zero duplicate
+  `<title>`/meta-description pairs, exactly one `<h1>` per page, a canonical tag on every
+  page, zero broken internal links, and valid JSON-LD on every page that has it; a live
+  Playwright sweep of all 15 reworked pages at 320/375/768/1024/1280/1440px confirming zero
+  horizontal overflow and zero console errors; a second Playwright pass confirming the
+  Solutions dropdown opens/closes correctly (click + Escape), the mobile nav accordion opens,
+  and all three pre-fill paths still work correctly post-edit (`?need=prospect-intelligence`
+  → "Custom data project"; `?need=international-trade-counterparties` → "Find
+  buyers/suppliers (Trade Desk)" + ideal-customer text; `?tier=targeted-list` → "Fresh custom
+  dataset" + "Under 500" + "$59" named correctly). All temporary verification scripts
+  (`_tmp-*.mjs`) deleted before this write.
+- **Not deployed, not pushed, no Google indexing requested.** Per explicit instruction, this
+  round stops here for the owner's local review before any production step.
+
+### Correction round — NEED_OPTIONS visible-label fix
+
+Owner-approved implementation report flagged two stale visible dropdown labels ("Monthly lead
+subscription," "Managed email campaigns") as needing a fix, with an explicit requirement to
+preserve the underlying submitted values if the option system allows separating the two.
+
+- **Split `NEED_OPTIONS` into `{ value, label }` pairs** in `src/data/catalog.ts` instead of a
+  flat string array. `value` is untouched — the exact same 7 strings the form has submitted to
+  Netlify since the original spec — so historical submissions and the `NEED_SLUG_TO_OPTION`
+  pre-fill map both keep working with no further changes needed there. `label` is new,
+  customer-facing-only text. `contact.astro`'s select now renders `<option value={n.value}>
+  {n.label}</option>` instead of using the same string for both.
+- **Label changes**: "Monthly lead subscription" → "Recurring Prospect Research"; "Managed
+  email campaigns" → "Intelligence-Led Outreach"; also retitled the other 4 non-"not sure"
+  labels to current architecture terms for consistency, since leaving them in old wording next
+  to the two corrected ones would have looked inconsistent: "Fresh custom dataset" → "Qualified
+  Prospect Data"; "Clean my existing list" → "Data Cleaning & Enrichment"; "Find
+  buyers/suppliers (Trade Desk)" → "Trade & Counterparty Intelligence (Trade Desk)"; "Custom
+  data project" → "Prospect Intelligence (Custom Research Project)". "Not sure — advise me" was
+  left as-is (never stale).
+- **"Custom data project" kept as one option, not split into three.** It already maps from
+  three different `?need=` page slugs (prospect-intelligence, market-icp-research,
+  decision-maker-intelligence) via `NEED_SLUG_TO_OPTION`. Splitting it into three dropdown
+  entries would mean either inventing new submitted values with no historical data behind them
+  or re-routing the pre-fill map — more change than asked for, and the instruction explicitly
+  warned against "duplicate or confusing options if existing values already map to these
+  services." Labeled it "Prospect Intelligence (Custom Research Project)" since Prospect
+  Intelligence is the flagship/umbrella service and the parenthetical signals it also covers
+  market/ICP and decision-maker work without listing all three.
+- **Verified after the fix**: `npm run build` (22 pages, zero errors); Playwright dump of every
+  rendered `<option>` confirming all 7 visible labels now match current terminology; all 8
+  `?need=` pre-fill paths re-tested (5 page slugs + 3 catalog slugs) confirming the *visible*
+  label updates while the underlying submitted `value` for each is byte-for-byte the same as
+  before this round; all 4 `?tier=` pre-fill paths re-tested, unaffected; Netlify form attributes
+  (`name="lead-survey"`, `data-netlify="true"`, `netlify-honeypot="bot-field"`,
+  `action="/thank-you"`) and the honeypot field confirmed present and unchanged; zero horizontal
+  overflow and zero console errors on Contact across all 6 breakpoints; zero broken links
+  sitewide (22 pages). Temp verification scripts deleted before this write.
+- **Not deployed, not pushed, no Google indexing requested.**

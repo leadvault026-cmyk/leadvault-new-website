@@ -113,15 +113,28 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
   },
 ];
 
-// "What do you need?" dropdown values — verbatim from the copy doc's contact form spec.
-export const NEED_OPTIONS = [
-  'Fresh custom dataset',
-  'Clean my existing list',
-  'Find buyers/suppliers (Trade Desk)',
-  'Monthly lead subscription',
-  'Managed email campaigns',
-  'Custom data project',
-  'Not sure — advise me',
+// "What do you need?" dropdown. `value` is the literal string submitted to
+// Netlify Forms — unchanged since the form's original spec, so historical
+// submissions and the NEED_SLUG_TO_OPTION pre-fill map below both keep
+// working untouched. `label` is the customer-facing text only, updated
+// during the full commercial content implementation (2026-10-01 correction
+// round) to retire two labels ("Monthly lead subscription," "Managed email
+// campaigns") that no longer matched the current service architecture —
+// see ASSUMPTIONS.md. Submitted values were deliberately left exactly as
+// they were; only what the visitor sees in the dropdown changed.
+export interface NeedOption {
+  value: string;
+  label: string;
+}
+
+export const NEED_OPTIONS: NeedOption[] = [
+  { value: 'Fresh custom dataset', label: 'Qualified Prospect Data' },
+  { value: 'Clean my existing list', label: 'Data Cleaning & Enrichment' },
+  { value: 'Find buyers/suppliers (Trade Desk)', label: 'Trade & Counterparty Intelligence (Trade Desk)' },
+  { value: 'Monthly lead subscription', label: 'Recurring Prospect Research' },
+  { value: 'Managed email campaigns', label: 'Intelligence-Led Outreach' },
+  { value: 'Custom data project', label: 'Prospect Intelligence (Custom Research Project)' },
+  { value: 'Not sure — advise me', label: 'Not sure — advise me' },
 ];
 
 // Maps every ?need= slug (catalog categories + the Trade Desk shortcut used on

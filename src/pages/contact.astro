@@ -4,7 +4,7 @@ import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { PRIORITY_COUNTRIES, OTHER_COUNTRIES } from '../data/countries';
 import { NEED_OPTIONS } from '../data/catalog';
 import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_LINK, OFFICE_ADDRESSES } from '../data/site';
-import { ArrowRight } from '@lucide/astro';
+import { ArrowRight, ListChecks, ClipboardCheck, MessageCircleQuestion, ShieldCheck } from '@lucide/astro';
 
 const industries = [
   'Import/Export & Trade',
@@ -25,6 +25,27 @@ const industries = [
 const volumes = ['Under 500', '500–2,500', '2,500–10,000', '10,000+'];
 const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
 const outreachOptions = ['Not sure yet', 'No — data/intelligence only', 'Yes — discuss managed outreach'];
+
+const whatToInclude = [
+  'What type of companies are you trying to reach?',
+  'Which countries, states, cities or regions matter?',
+  'What makes a company qualified?',
+  'What should be excluded?',
+  'Which people or departments matter?',
+  'Which fields do you need?',
+  'Approximately how many records/accounts do you need?',
+  'Do you need supporting evidence?',
+  'Do you need outreach support after the research?',
+  'Do you have a target timeline or budget range you want us to consider?',
+];
+
+const afterSubmit = [
+  'We review the requirement.',
+  'We clarify anything that materially affects feasibility or scope.',
+  'For suitable projects, we may research a small sample or explain the proposed approach.',
+  'We confirm the appropriate service, scope, price and delivery expectation before paid work begins.',
+  'Research starts after the project is approved.',
+];
 ---
 
 <BaseLayout
@@ -56,6 +77,19 @@ const outreachOptions = ['Not sure yet', 'No — data/intelligence only', 'Yes �
       </div>
 
       <div class="card mt-8">
+        <h2 class="flex items-center gap-2 text-lg font-bold text-white"><ListChecks size={18} class="text-[var(--color-lime)]" /> What to Include</h2>
+        <p class="mt-2 text-sm text-white/60">The more specific the requirement, the faster we can understand it. Helpful information includes:</p>
+        <ul class="mt-3 space-y-1.5">
+          {whatToInclude.map((item) => (
+            <li class="flex items-start gap-2 text-sm text-white/75">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="card mt-6">
         <h2 class="text-lg font-bold text-white">Direct Contact</h2>
         <dl class="mt-4 space-y-2 text-sm text-white/75">
           <div class="flex gap-2">
@@ -159,7 +193,7 @@ const outreachOptions = ['Not sure yet', 'No — data/intelligence only', 'Yes �
           <label for="need" class="mb-1.5 block text-sm font-medium text-white">What do you need? *</label>
           <select id="need" name="What do you need" required class="lv-input">
             <option value="" disabled selected>Select an option</option>
-            {NEED_OPTIONS.map((n) => <option value={n}>{n}</option>)}
+            {NEED_OPTIONS.map((n) => <option value={n.value}>{n.label}</option>)}
           </select>
         </div>
 
@@ -215,6 +249,43 @@ const outreachOptions = ['Not sure yet', 'No — data/intelligence only', 'Yes �
           <a href="/privacy-policy" class="underline hover:text-[var(--color-lime)]">Privacy Policy</a>.
         </p>
       </form>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
+        <div>
+          <h2 class="flex items-center gap-2 text-lg font-bold text-white"><ClipboardCheck size={20} class="text-[var(--color-lime)]" /> What Happens After You Submit</h2>
+          <ol class="mt-4 space-y-3">
+            {afterSubmit.map((step, i) => (
+              <li class="flex gap-3">
+                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-lime)] text-xs font-bold text-[var(--color-lime-dark)]">{i + 1}</span>
+                <p class="text-sm text-white/75">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h2 class="flex items-center gap-2 text-lg font-bold text-white"><MessageCircleQuestion size={20} class="text-[var(--color-lime)]" /> You Can Start With an Imperfect Brief</h2>
+          <p class="mt-4 text-sm leading-relaxed text-white/75">
+            If you know the market but are unsure how to express the qualification criteria, that is
+            okay — <a href="/market-icp-research" class="font-medium text-[var(--color-lime)] hover:underline">Market & ICP Research</a> exists for exactly that situation.
+          </p>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">
+            Tell us what you sell, who you believe should buy it and what makes those organizations
+            valuable. We can help turn that into a researchable specification.
+          </p>
+          <div class="mt-6 flex items-start gap-3 rounded-lg border border-white/10 bg-white/5 p-4">
+            <ShieldCheck size={18} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            <p class="text-xs leading-relaxed text-white/60">
+              <strong class="text-white/80">Privacy and Responsible Use:</strong> Only request business
+              information you have a legitimate reason to use. LeadVault's research and delivery
+              remain subject to the site's Terms and Privacy Policy and the agreed project scope.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>

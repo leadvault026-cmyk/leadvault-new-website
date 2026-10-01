@@ -3,11 +3,70 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import { CATALOG_CATEGORIES } from '../data/catalog';
 import { CTA_PRIMARY } from '../data/site';
-import { ArrowRight, Clock } from '@lucide/astro';
+import {
+  ArrowRight,
+  Clock,
+  Building2,
+  Tags,
+  Layers,
+  UserCheck,
+  Mail,
+  ShieldCheck,
+  Ship,
+  Settings2,
+} from '@lucide/astro';
 
 // Preview tables show a few rows from each category's sample CSV — enough to
 // demonstrate field structure and quality without a huge card.
 const PREVIEW_ROW_COUNT = 4;
+
+// Master commercial copy package (2026-10-01) — the 8 field-category
+// sections, added above the existing 11 vertical sample-preview cards
+// (which stay untouched, ?need= links and all). This answers "what fields
+// can be in a record," distinct from the cards below answering "what
+// vertical can be researched."
+const fieldCategories = [
+  {
+    icon: Building2,
+    title: 'Company Identity & Location',
+    fields: ['Company name', 'Website', 'Address', 'City', 'State/region', 'Country'],
+  },
+  {
+    icon: Tags,
+    title: 'Industry / Niche / Business Type',
+    fields: ['Industry classification', 'Niche or sub-sector', 'Business/provider type'],
+  },
+  {
+    icon: Layers,
+    title: 'Company Characteristics',
+    fields: ['Size indicators', 'Operating profile', 'Business model', 'Other project-specific attributes'],
+  },
+  {
+    icon: UserCheck,
+    title: 'Decision-Makers & Stakeholders',
+    fields: ['Contact name', 'Title', 'Seniority', 'Function/department', 'Professional profile URL where required'],
+  },
+  {
+    icon: Mail,
+    title: 'Business Contact Information',
+    fields: ['Business email where available', 'Phone number where available'],
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Qualification & Evidence',
+    fields: ['Qualification notes', 'Supporting evidence relevant to the project criteria'],
+  },
+  {
+    icon: Ship,
+    title: 'Trade & Counterparty Fields',
+    fields: ['Product/HS relevance', 'Trade lane', 'Role (buyer/supplier/shipper)', 'Other trade-specific attributes'],
+  },
+  {
+    icon: Settings2,
+    title: 'Custom Project Fields',
+    fields: ['Any additional field your specification requires, agreed before delivery'],
+  },
+];
 ---
 
 <BaseLayout
@@ -37,67 +96,102 @@ const PREVIEW_ROW_COUNT = 4;
 
   <section class="section-alt">
     <div class="section">
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {CATALOG_CATEGORIES.map((cat) => (
-          <div class="card flex min-w-0 flex-col gap-4">
-            <h2 class="text-lg font-semibold text-white">{cat.name}</h2>
-            <p class="text-sm leading-relaxed text-white/70">{cat.description}</p>
-            <ComparisonTable
-              headers={cat.sample.headers}
-              rows={cat.sample.rows.slice(0, PREVIEW_ROW_COUNT)}
-              caption={`Sample preview: ${cat.name} — illustrative, not real customer data`}
-              captionVisible
-              class="!rounded-lg"
-            />
-            <p class="flex flex-1 items-center gap-1.5 text-xs text-white/50">
-              <Clock size={14} aria-hidden="true" /> {cat.turnaround}
-            </p>
-            <a href={`/contact?need=${cat.slug}`} class="btn-primary w-full !py-2.5 text-sm">
-              Request This Dataset
-            </a>
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">What Kind of Fields Can Be Included?</h2>
+      <p class="mx-auto mt-3 max-w-2xl text-center text-sm text-white/60">
+        The categories below browse by vertical. These eight groups describe the kinds of fields a
+        record can contain — the final schema is agreed with you before delivery.
+      </p>
+      <div class="mx-auto mt-10 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {fieldCategories.map((fc) => (
+          <div class="card flex flex-col gap-3">
+            <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <fc.icon size={22} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-sm font-bold text-white">{fc.title}</h3>
+            <ul class="space-y-1.5">
+              {fc.fields.map((f) => (
+                <li class="flex items-start gap-2 text-xs text-white/70">
+                  <span class="mt-1 h-1 w-1 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+                  {f}
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
-
-      <p class="mx-auto mt-10 max-w-2xl text-center text-sm text-white/60">
-        Every delivery includes: verification report summary · replacement guarantee · optional
-        strategist notes.
-      </p>
-
-      <div class="card mx-auto mt-10 flex max-w-2xl flex-col items-center gap-4 text-center">
-        <h2 class="text-xl font-bold text-white">Join the Portal Waitlist</h2>
-        <p class="text-sm text-white/70">
-          Be first to know if a self-serve purchase and download portal launches in a future phase.
+      <div class="card mx-auto mt-10 max-w-2xl text-center">
+        <h3 class="text-base font-bold text-white">Capability Is Not a Guarantee of Availability</h3>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          Listing a field category describes what we are able to research — not a promise that
+          every field will be available for every company or contact in a given project. Public
+          data availability varies by industry, geography, and company size. Where a field cannot
+          be verified, we say so rather than guessing.
         </p>
-        <form
-          name="portal-waitlist"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="company-website"
-          class="flex w-full flex-col gap-3 sm:flex-row"
-        >
-          <input type="hidden" name="form-name" value="portal-waitlist" />
-          <div class="hidden">
-            <label>
-              Don't fill this out if you're human: <input name="company-website" />
-            </label>
-          </div>
-          <label class="sr-only" for="waitlist-email">Email</label>
-          <input
-            id="waitlist-email"
-            name="email"
-            type="email"
-            required
-            placeholder="you@company.com"
-            class="w-full min-w-0 rounded-md border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-[var(--color-lime)] focus:outline-none"
-          />
-          <button type="submit" class="btn-primary whitespace-nowrap text-sm">Join Waitlist <ArrowRight size={16} /></button>
-        </form>
       </div>
+    </div>
+  </section>
 
-      <div class="mt-8 text-center">
-        <a href="/contact" class="btn-outline">{CTA_PRIMARY} <ArrowRight size={18} /></a>
-      </div>
+  <section class="section">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {CATALOG_CATEGORIES.map((cat) => (
+        <div class="card flex min-w-0 flex-col gap-4">
+          <h2 class="text-lg font-semibold text-white">{cat.name}</h2>
+          <p class="text-sm leading-relaxed text-white/70">{cat.description}</p>
+          <ComparisonTable
+            headers={cat.sample.headers}
+            rows={cat.sample.rows.slice(0, PREVIEW_ROW_COUNT)}
+            caption={`Sample preview: ${cat.name} — illustrative, not real customer data`}
+            captionVisible
+            class="!rounded-lg"
+          />
+          <p class="flex flex-1 items-center gap-1.5 text-xs text-white/50">
+            <Clock size={14} aria-hidden="true" /> {cat.turnaround}
+          </p>
+          <a href={`/contact?need=${cat.slug}`} class="btn-primary w-full !py-2.5 text-sm">
+            Request This Dataset
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <p class="mx-auto mt-10 max-w-2xl text-center text-sm text-white/60">
+      Every delivery includes: verification report summary · replacement guarantee · optional
+      strategist notes.
+    </p>
+
+    <div class="card mx-auto mt-10 flex max-w-2xl flex-col items-center gap-4 text-center">
+      <h2 class="text-xl font-bold text-white">Join the Portal Waitlist</h2>
+      <p class="text-sm text-white/70">
+        Be first to know if a self-serve purchase and download portal launches in a future phase.
+      </p>
+      <form
+        name="portal-waitlist"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="company-website"
+        class="flex w-full flex-col gap-3 sm:flex-row"
+      >
+        <input type="hidden" name="form-name" value="portal-waitlist" />
+        <div class="hidden">
+          <label>
+            Don't fill this out if you're human: <input name="company-website" />
+          </label>
+        </div>
+        <label class="sr-only" for="waitlist-email">Email</label>
+        <input
+          id="waitlist-email"
+          name="email"
+          type="email"
+          required
+          placeholder="you@company.com"
+          class="w-full min-w-0 rounded-md border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-[var(--color-lime)] focus:outline-none"
+        />
+        <button type="submit" class="btn-primary whitespace-nowrap text-sm">Join Waitlist <ArrowRight size={16} /></button>
+      </form>
+    </div>
+
+    <div class="mt-8 text-center">
+      <a href="/contact" class="btn-outline">{CTA_PRIMARY} <ArrowRight size={18} /></a>
     </div>
   </section>
 </BaseLayout>

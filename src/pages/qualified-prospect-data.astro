@@ -15,12 +15,13 @@ import {
   ShieldCheck,
   Sparkles,
   UserCog,
+  RefreshCw,
+  FileX,
 } from '@lucide/astro';
 
-// Repositioning master brief §8 — narrower than the Prospect Intelligence
-// flagship: for customers who already know their specification and need the
-// data delivered, not the market investigated. Ties directly into the
-// existing, unchanged DATASET_TIERS pricing ladder rather than repeating it.
+// Master commercial copy package (2026-10-01) — content-depth implementation.
+// Ties into the existing, unchanged DATASET_TIERS pricing ladder (Round 15)
+// rather than repeating numbers.
 
 const bestFor = [
   { icon: Building2, label: 'Defined ICPs' },
@@ -32,16 +33,15 @@ const bestFor = [
   { icon: Database, label: 'Niche industry prospecting' },
 ];
 
+const icpCriteria = [
+  'Industry or niche', 'Geography', 'Company size or operating profile', 'Business model',
+  'Relevant department', 'Job function', 'Seniority', 'Specific titles', 'Required fields', 'Exclusions',
+];
+
 const fields = [
-  'Company name',
-  'Website',
-  'Contact name',
-  'Contact title',
-  'Business email, where available',
-  'Phone, where available',
-  'Address/location',
-  'Company/provider type',
-  'Other agreed fields',
+  'Company name', 'Website', 'Contact name', 'Contact title', 'Business email',
+  'Phone number where available', 'Address', 'City', 'State/region', 'Industry/provider type',
+  'Company attributes', 'Professional profile URL where required', 'Custom fields', 'Qualification notes',
 ];
 
 const related = [
@@ -67,12 +67,16 @@ const faqs = [
     question: 'Can I start small and scale up?',
     answer: 'Yes — the pricing ladder below is built around testing a specification at a small volume before committing to a larger order.',
   },
+  {
+    question: 'Can I get a dataset every month instead of a one-time order?',
+    answer: 'Yes — recurring prospect research is available for teams that need a continuing supply of fresh prospect research rather than one large one-time file. The targeting specification remains the same discipline either way.',
+  },
 ];
 ---
 
 <BaseLayout
-  title="Custom B2B Prospect Data & Decision-Maker Research | LeadVault"
-  description="Get custom B2B prospect data researched to your specification, including relevant companies, decision-makers, and verified contact information where available."
+  title="Qualified B2B Prospect Data & Custom Lead Lists | LeadVault"
+  description="Get qualified B2B prospect data researched to your ICP, including target companies, relevant decision-makers and verified available business contact information."
   path="/qualified-prospect-data"
 >
   <script type="application/ld+json" set:html={JSON.stringify({
@@ -86,11 +90,12 @@ const faqs = [
 
   <section class="section text-center">
     <p class="eyebrow">Qualified Prospect Data</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Custom B2B Prospect Data, Researched to Your Specification</h1>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">You Know Who You Want. We Build the Dataset.</h1>
     <p class="mx-auto mt-5 max-w-2xl text-white/75">
-      For teams that already know exactly whom they want to reach. Tell LeadVault the industry,
-      geography, company profile, roles, and other targeting requirements. We research and prepare a
-      clean prospect dataset around the specification.
+      When your target market is already clear, LeadVault can research the companies and contacts
+      that match it. Define the geography, industry, company profile, relevant roles, exclusions
+      and fields you need. We turn that specification into a clean, structured prospect dataset
+      built for your campaign or workflow.
     </p>
     <div class="mt-8">
       <a href="/contact?need=qualified-prospect-data" data-cta="qpd-hero" class="btn-primary">Request Prospect Data <ArrowRight size={18} /></a>
@@ -112,48 +117,87 @@ const faqs = [
   </section>
 
   <section class="section">
-    <div class="mx-auto grid max-w-4xl gap-10 lg:grid-cols-2">
-      <div>
-        <h2 class="text-xl font-bold text-white">Typical Data Fields</h2>
-        <ul class="mt-4 space-y-2.5">
-          {fields.map((f) => (
-            <li class="flex gap-2 text-sm text-white/75">
-              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
-              {f}
-            </li>
-          ))}
-        </ul>
+    <div class="mx-auto max-w-3xl">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Start With the ICP, Not the Row Count</h2>
+      <p class="mt-4 text-white/75">
+        The quality of a prospect list begins with the definition of a qualified prospect. Criteria
+        may include:
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        {icpCriteria.map((c) => (
+          <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{c}</span>
+        ))}
       </div>
-      <div>
-        <h2 class="text-xl font-bold text-white">Why Custom Research</h2>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">
-          The value isn't merely exporting records. LeadVault combines research and verification
-          methods, normalizes the data, and delivers it in a structure ready for your workflow —
-          not a raw dump from someone else's database.
-        </p>
-        <h2 class="mt-6 text-xl font-bold text-white">Data Quality</h2>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">
-          Every record is verified at the time of research using the applicable verification
-          process. We don't claim any email is permanently deliverable — people change roles and
-          companies — which is why every delivery carries a replacement guarantee.
-        </p>
-      </div>
+      <p class="mt-5 text-white/75">
+        The company-level ICP and the people inside those companies are separate questions.
+        LeadVault applies that distinction when the project requires it.
+      </p>
     </div>
   </section>
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Pricing Tiers</h2>
-      <p class="mx-auto mt-3 max-w-xl text-center text-sm text-white/60">Start small and scale up as a specification proves out.</p>
-      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-3">
-        {DATASET_TIERS.map((t) => (
-          <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
-            {t.name} — {t.records} · <strong class="text-white">{t.price}</strong>
-          </span>
-        ))}
+      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
+        <div>
+          <h2 class="text-xl font-bold text-white">What You Can Receive</h2>
+          <p class="mt-3 text-sm text-white/60">Depending on the specification:</p>
+          <ul class="mt-4 space-y-2">
+            {fields.map((f) => (
+              <li class="flex gap-2 text-sm text-white/75">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <p class="mt-4 text-xs text-white/50">The final schema is agreed before delivery.</p>
+        </div>
+        <div class="space-y-6">
+          <div class="card">
+            <h2 class="flex items-center gap-2 text-lg font-bold text-white"><FileX size={18} class="text-[var(--color-lime)]" /> Not Every Record Belongs in Your Campaign</h2>
+            <p class="mt-3 text-sm leading-relaxed text-white/75">
+              A company can match the industry and still be wrong for your offer. A person can have
+              the right-sounding title and still be irrelevant. A contact record can exist and still
+              be stale. That is why LeadVault combines targeting, research, verification and quality
+              control rather than treating every discovered record as deliverable.
+            </p>
+          </div>
+          <div class="card">
+            <h2 class="flex items-center gap-2 text-lg font-bold text-white"><RefreshCw size={18} class="text-[var(--color-lime)]" /> One-Time or Recurring</h2>
+            <p class="mt-3 text-sm leading-relaxed text-white/75">
+              Need a dataset for a single campaign? Use a one-time prospect research package. Need
+              fresh prospects every month? Use recurring prospect research. The principle remains the
+              same: your targeting specification drives the research.
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="mt-8 text-center">
-        <a href="/pricing" class="btn-outline">See Full Pricing <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Pricing Tiers</h2>
+    <p class="mx-auto mt-3 max-w-xl text-center text-sm text-white/60">Start small and scale up as a specification proves out.</p>
+    <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-3">
+      {DATASET_TIERS.map((t) => (
+        <span class="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/80">
+          {t.name} — {t.records} · <strong class="text-white">{t.price}</strong>
+        </span>
+      ))}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/pricing" class="btn-outline">See Full Pricing <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="card mx-auto max-w-2xl text-center">
+        <h2 class="text-lg font-bold text-white">When You Need More Than a Defined List</h2>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          If your requirement includes conditions that must be investigated, unusual qualification
+          signals, evidence or custom intelligence fields, move up to Prospect Intelligence.
+        </p>
+        <a href="/prospect-intelligence" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See Prospect Intelligence →</a>
       </div>
     </div>
   </section>
