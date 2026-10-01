@@ -18,6 +18,8 @@ import {
   MessageSquare,
   Globe,
   CheckCircle2,
+  Filter,
+  UserCheck,
 } from '@lucide/astro';
 
 // Master commercial copy package (2026-10-01) — content-depth implementation.
@@ -56,9 +58,11 @@ const weNeed = [
 ];
 
 const notFirstStep = [
-  { icon: Globe, text: 'If you are unsure who should be targeted, begin with Market & ICP Research.', href: '/market-icp-research', label: 'Market & ICP Research' },
-  { icon: Database, text: 'If the audience is clear but the records do not exist, begin with Qualified Prospect Data.', href: '/qualified-prospect-data', label: 'Qualified Prospect Data' },
-  { icon: Sparkles, text: 'If the qualification itself requires investigation, begin with Prospect Intelligence.', href: '/prospect-intelligence', label: 'Prospect Intelligence' },
+  { icon: Globe, text: 'When you are unsure who should be targeted, start with Market & ICP Research.', href: '/market-icp-research', label: 'Market & ICP Research' },
+  { icon: Database, text: 'When the ICP is clear but the audience does not exist, start with Qualified Prospect Data.', href: '/qualified-prospect-data', label: 'Qualified Prospect Data' },
+  { icon: Sparkles, text: 'When the companies must be investigated before they can be considered qualified, start with Prospect Intelligence.', href: '/prospect-intelligence', label: 'Prospect Intelligence' },
+  { icon: UserCheck, text: 'When the accounts are known but the relevant people are not, start with Decision-Maker Intelligence.', href: '/decision-maker-intelligence', label: 'Decision-Maker Intelligence' },
+  { icon: Filter, text: 'When you already own the list but it is not campaign-ready, start with Data Cleaning & Enrichment.', href: '/services#data-cleaning', label: 'Data Cleaning & Enrichment' },
 ];
 
 const related = [
@@ -187,6 +191,17 @@ const faqs = [
       </ul>
       <p class="mt-6 text-center text-sm text-white/60">Pricing is provided based on campaign requirements.</p>
     </div>
+
+    <div class="mx-auto mt-12 max-w-2xl">
+      <h2 class="text-center text-lg font-bold text-white">Audience Quality and Message Quality Work Together</h2>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">
+        Good targeting does not remove the need for good messaging. Good messaging does not remove
+        the need for good targeting. The campaign should connect the reason the prospect was
+        selected with the reason the offer may be relevant. For highly specialized audiences,
+        research context can also help avoid generic messages that could have been sent to any
+        company in the industry.
+      </p>
+    </div>
   </section>
 
   <section class="section-alt">
@@ -208,7 +223,7 @@ const faqs = [
 
   <section class="section">
     <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">When Outreach Is Not the First Step</h2>
-    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {notFirstStep.map((n) => (
         <div class="card flex flex-col gap-3">
           <div class="flex h-11 w-11 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">

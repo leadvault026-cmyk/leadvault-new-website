@@ -1714,3 +1714,135 @@ preserve the underlying submitted values if the option system allows separating 
   overflow and zero console errors on Contact across all 6 breakpoints; zero broken links
   sitewide (22 pages). Temp verification scripts deleted before this write.
 - **Not deployed, not pushed, no Google indexing requested.**
+
+## V2 Master Copy Implementation (LEADVAULT_COMPLETE_WEBSITE_COPY_V2.docx — not yet deployed)
+
+A second, more detailed copy document (`LEADVAULT_COMPLETE_WEBSITE_COPY_V2.docx`, converted locally
+to text for reading since it's a binary .docx — the extracted text file was deleted after use and
+never committed) superseded the prior master package as the copywriting source of truth. It
+supplied substantially deeper content than the prior round implemented: worked examples with full
+specificity, explicit multi-part frameworks (the research-brief's 7 criteria, ICP/Persona/Buying
+Group, Account/Contact-criteria split), and a few genuinely new sections (healthcare's
+not-patient-data disclaimer, "When LeadVault Is Probably Not the Right Choice," Industrial/
+Manufacturing as an 8th industry, Market & ICP Fields as a data-catalog category). Implemented
+across all 15 pages plus a corrected Contact-form dropdown; nothing committed or deployed.
+
+- **Treated this as additive deepening on top of the already-implemented prior round**, not a
+  rewrite — every page from the last round already carried real content in the right shape; this
+  pass found the specific gaps against V2's fuller text and filled them (worked examples, frameworks,
+  disclaimers) rather than replacing sections that already said the same thing adequately.
+- **Homepage**: added the 10-item "What Can Define a Target?" list (replacing a 2-sentence summary),
+  a 7-row text-based "Choose the Starting Point That Matches Your Problem" router alongside the
+  existing 3-card "Three Ways to Work With LeadVault" (kept both — the cards sell the top 3 paths
+  visually, the router is the complete reference), a "Research Is Not a Promise of Buyer Intent"
+  claims-discipline callout, and a closing "You Do Not Need to Know the Service Name" reassurance
+  section.
+- **Prospect Intelligence** — the single deepest expansion: the 8 quoted "ordinary filters stop being
+  enough" examples, the full 7-part Research Brief framework (Must-Have Criteria/Exclusions/
+  Geography/Evidence Standard/Contact Requirement/Delivery Fields/Volume and Depth), both V2 worked
+  examples in full (medical providers — the existing compact version was replaced with V2's complete
+  GEOGRAPHY/ORGANIZATION/QUALIFICATION/CONTACT/DELIVERY/EXCLUSION breakdown; product distribution —
+  entirely new), the expanded "Evidence: What It Does and What It Does Not Do," and a new
+  "Decision-Maker Research Inside Qualified Accounts" section. Required re-deriving the section
+  background alternation for roughly a third of the page — caught one unclosed `<div>` from a
+  template edit via the build's own compiler error before it ever reached Playwright.
+- **Qualified Prospect Data**: added "A Good List Starts With a Good Specification" (with the
+  SaaS-specification contrast), "Company Fit and Contact Fit Are Different Questions" (the
+  Account-Criteria/Contact-Criteria split), the 6-step "How the Dataset Is Built" (Define/Research/
+  Contact/Verify/Clean/Deliver), and "What We Exclude" (11 exclusion categories) — the latter two
+  folded into the existing mid-tier "What You Can Receive" section rather than new top-level
+  sections, specifically to avoid a multi-section background-alternation cascade for content that
+  fit naturally as an extension of what was already there.
+- **Market & ICP Research**: expanded the 2-term ICP/persona framing to the full 3-term ICP/Persona/
+  Buying Group definitions table, added explicit "Positive ICP" and "Negative ICP" subsections,
+  "Market Segmentation" (6 questions), the logistics "From Assumption to Researchable Criteria"
+  worked example, an 11-item "What a Deliverable Can Include" list, and a new "Example: Narrowing a
+  Broad Healthcare Market" worked example (distinct from the Homepage's healthcare example — this
+  one is about market narrowing and decision-maker-varies-by-size, not qualification evidence).
+- **Decision-Maker Intelligence**: added the "One Problem, Different Titles" multi-location worked
+  example, "When to Research More Than One Stakeholder" (6-item list), "Decision-Maker Intelligence
+  for Existing Account Lists," and an explicit comparison card against Qualified Prospect Data.
+- **Services/Solutions**: added a full "Data Cleaning & Enrichment, In Depth" section below the main
+  card grid (id="data-cleaning", moved there from the compact card, which is now id=
+  "data-cleaning-card" to avoid a duplicate DOM id) — V2 treats Data Cleaning & Enrichment as its own
+  page-equivalent (route `/services#data-cleaning`) with real depth (10 common problems, the
+  cleaning-vs-enrichment distinction, customer-data-comes-first, routing to Decision-Maker
+  Intelligence) that a single catalogue card couldn't hold without either bloating the grid or
+  thinning the content.
+- **Industries**: added the 8th named industry (Industrial, Manufacturing & B2B Services, not
+  present in the prior round's 7), added a "Common Research Questions" list and, where V2 supplies
+  one, a "When deeper intelligence helps" line to each of the other 7 cards, and added the
+  healthcare card's explicit disclaimer: "LeadVault's work here is B2B prospect research. It is not
+  patient-data research and should not involve private medical information" — an important claims/
+  compliance boundary V2 states explicitly that the prior round's healthcare example didn't carry.
+- **Why LeadVault**: added "Why Not Just Buy More Data?" (the volume-vs-relevance argument) and "When
+  LeadVault Is Probably Not the Right Choice" — a section that names scenarios where LeadVault is
+  explicitly NOT the right fit (wanting unrestricted high-volume self-service access, needing private
+  personal information or deceptive sourcing). This is a genuine credibility signal the prior round
+  didn't have and V2 calls for directly; implemented verbatim rather than softened, since admitting
+  real limits is the entire point of the section.
+- **Pricing**: added the missing "Existing file needs improvement → Data Cleaning & Enrichment" row
+  to the "Which Option Should I Choose?" router (6 rows → 7) and a one-line disclaimer on the
+  Intelligence-Led Outreach card ("Campaign execution does not guarantee replies, meetings or
+  revenue..."). No dollar amount touched — verified by direct string search against all 12 approved
+  figures post-build.
+- **Managed Outreach**: expanded "When Outreach Is Not the First Step" from 3 to V2's full 5 routing
+  entries (added Decision-Maker Intelligence and Data Cleaning & Enrichment) and added "Audience
+  Quality and Message Quality Work Together."
+- **Data Catalog**: added the missing "Market & ICP Fields" category (V2 lists 9 field-category
+  groups; the prior round implemented 8, missing this one), the 5-question custom-field feasibility
+  checklist, and "Required vs. Desirable Fields." Also fixed a real, pre-existing-pattern defect
+  found by this round's own validation sweep (see below).
+- **Tools**: added the explicit "Data Changes — Good Process Acknowledges That" section (the prior
+  round's content implied this via "Quality Is Project-Specific" but didn't state it as its own
+  point).
+- **Trade**: added "Buyer, Supplier, Distributor — Define the Counterparty Role." Left the existing
+  rice-importers-into-West-Africa worked example as is rather than replacing it with V2's "U.S. rice
+  market" variant — both illustrate the identical teaching point (specific product relevance beats a
+  broad industry label), and swapping a correct, already-reviewed example for a geographically
+  different one with no new substance would have been a cosmetic edit, not a content improvement.
+- **About**: expanded "What We Believe" from 4 to V2's full 6 beliefs (added "The Right Contact
+  Depends on the Opportunity" and "Trust Requires Limits") and added an explicit "What LeadVault
+  Does" 7-item service list ahead of the existing "What LeadVault Is Becoming" prose, since V2 treats
+  them as two distinct points (current service lineup vs. the direction the business is heading) that
+  the prior round had partially merged into one section.
+- **Contact**: added "A Useful Brief Can Be Simple" (the three example-requirement quotes) above the
+  existing "What to Include" checklist, and "If You Already Have the Companies" / "If You Need
+  Outreach Too" into the existing "You Can Start With an Imperfect Brief" column. Did not touch any
+  of the 12 form fields, Netlify config, or pre-fill script.
+- **Contact form dropdown — a deliberate, V2-authorized departure from the prior correction round.**
+  V2's own "FORM IMPLEMENTATION NOTE" lists 9 distinct customer-facing labels, naming Market & ICP
+  Research and Decision-Maker Intelligence as their OWN visible options rather than folded into the
+  single "Prospect Intelligence (Custom Research Project)" bucket the previous correction round had
+  consolidated them into. Implemented by giving those two their own new, previously-unused submitted
+  values (`Market and ICP research project`, `Decision-maker research project`) in
+  `src/data/catalog.ts`'s `NEED_OPTIONS`, updating `NEED_SLUG_TO_OPTION` for the two page slugs
+  accordingly, and trimming the Trade label from "Trade & Counterparty Intelligence (Trade Desk)" to
+  V2's exact "Trade & Counterparty Intelligence." Every previously-existing value (`Custom data
+  project`, `Fresh custom dataset`, `Clean my existing list`, `Monthly lead subscription`, `Managed
+  email campaigns`, `Find buyers/suppliers (Trade Desk)`, `Not sure — advise me`) is untouched, so no
+  historical submission or other mapping breaks — only two brand-new values were added and two
+  existing slugs now point at them instead of the shared bucket.
+- **Real defect found and fixed by this round's own validation, not by eyeballing**: the Playwright
+  responsive sweep caught genuine horizontal overflow on `/data-catalog` at 320px (22px) and 1024px
+  (39px) — not present on any other page. Root cause: one new field-category list item read
+  "Counterparty role (buyer/supplier/distributor/importer/exporter)" — a single unbroken
+  slash-joined token with no spaces, which browsers don't wrap by default, forcing that `<li>`'s
+  min-content width past its grid cell and bleeding the whole card out of the viewport. Fixed the
+  text to use natural word breaks ("buyer, supplier, distributor, importer or exporter") and added
+  `min-w-0` + `break-words` to the card/list-item as a defensive backstop, matching the same
+  `min-w-0` idiom already used elsewhere in this codebase for exactly this class of bug. Re-ran the
+  full 15-page × 6-breakpoint sweep afterward: zero issues.
+- **Validation performed**: `npm run build` (zero errors, 22 pages) after every batch of page edits,
+  not just once at the end — caught one unclosed-`<div>` compiler error on Prospect Intelligence
+  immediately rather than letting it surface later. Final pass: a static checker confirming zero
+  duplicate titles/descriptions, one `<h1>` per page, a canonical on every page, zero broken internal
+  links, and valid JSON-LD everywhere present; a live Playwright sweep of all 15 reworked pages at
+  320/375/768/1024/1280/1440px (zero overflow, zero console errors after the data-catalog fix); nav
+  dropdown (click + Escape) and mobile accordion confirmed working; all `?need=` and `?tier=`
+  pre-fill paths re-tested with the new dropdown values and confirmed correct; every approved price
+  figure confirmed present via direct string search; a vendor-name leak check across Home/Tools/
+  Data Catalog/Prospect Intelligence/Qualified Prospect Data (clean). All temporary scripts and the
+  extracted V2 reference text file deleted before this write.
+- **Not deployed, not pushed, no Google indexing requested.** Stopping here for owner review per
+  explicit instruction.

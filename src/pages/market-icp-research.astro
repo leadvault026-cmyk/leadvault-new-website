@@ -17,6 +17,12 @@ import {
   Crosshair,
   Ban,
   ClipboardList,
+  Users,
+  CheckCircle2,
+  XCircle,
+  Layers3,
+  HelpCircle,
+  Stethoscope,
 } from '@lucide/astro';
 
 // Master commercial copy package (2026-10-01) — content-depth implementation.
@@ -55,6 +61,32 @@ const exampleQuestions = [
   'Which states or markets should be prioritized?',
   'Which functions inside these companies are likely to own the problem?',
   'What fields will our sales team need to act on the research?',
+];
+
+const segmentationQuestions = [
+  'Which segment has the clearest need for the offer?',
+  'Which segment can actually be reached through identifiable organizations and contacts?',
+  'Which characteristics distinguish one segment from another?',
+  'Which markets should be tested first?',
+  'Which segments should be excluded from the initial campaign?',
+  'Does the same decision-maker function apply across every segment?',
+];
+
+const logisticsQuestions = [
+  'What counts as mid-sized for this market?',
+  'Which logistics sub-sectors are relevant?',
+  'Which geographies can the business serve?',
+  'What observable company characteristics indicate the problem exists?',
+  'Which organizations should be excluded?',
+  'Which functions are likely to own the issue?',
+  'What information will the sales team need before contact?',
+];
+
+const deliverableIncludes = [
+  'Target-market definition', 'Priority segments', 'Positive ICP criteria', 'Negative/exclusion criteria',
+  'Researchable qualification signals', 'Suggested account categories', 'Relevant decision-maker functions',
+  'Initial candidate companies or market map', 'Recommended data fields', 'Research notes and assumptions',
+  'Suggested next step: Qualified Prospect Data or Prospect Intelligence',
 ];
 
 const related = [
@@ -118,13 +150,26 @@ const faqs = [
     <div class="section">
       <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
         <div>
-          <h2 class="text-xl font-bold text-white">What Is an Ideal Customer Profile?</h2>
+          <h2 class="text-xl font-bold text-white">ICP, Persona and Buying Group</h2>
           <p class="mt-4 text-sm leading-relaxed text-white/75">
-            An Ideal Customer Profile, or ICP, describes the type of company most likely to fit your
-            commercial proposition. It is different from a buyer persona.
+            These concepts answer different questions. A campaign becomes more precise when these
+            layers are not confused — a perfect company with the wrong contact is still a poor
+            outreach record, and a perfect title inside the wrong company is equally weak.
           </p>
-          <p class="mt-4 text-sm text-white/75"><strong class="text-white">The ICP answers:</strong> What kind of organization should we target?</p>
-          <p class="mt-2 text-sm text-white/75"><strong class="text-white">The persona or decision-maker model answers:</strong> Who inside that organization should we engage?</p>
+          <dl class="mt-4 space-y-2.5">
+            <div class="rounded-lg border border-white/10 bg-white/5 p-3">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-white/50">Ideal Customer Profile</dt>
+              <dd class="mt-1 text-sm text-white/80">What kind of organization should we target?</dd>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/5 p-3">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-white/50">Persona</dt>
+              <dd class="mt-1 text-sm text-white/80">What type of person inside that organization is relevant to the problem or purchase?</dd>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/5 p-3">
+              <dt class="text-xs font-semibold uppercase tracking-wide text-white/50">Buying Group</dt>
+              <dd class="mt-1 text-sm text-white/80">Which stakeholders may influence, evaluate, approve, purchase or use the solution?</dd>
+            </div>
+          </dl>
         </div>
         <div>
           <h2 class="text-xl font-bold text-white">An Industry Is Not an ICP</h2>
@@ -138,6 +183,30 @@ const faqs = [
               <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-white/80">{v}</span>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div class="mx-auto mt-12 grid max-w-5xl gap-6 sm:grid-cols-2">
+        <div class="card">
+          <h3 class="flex items-center gap-2 text-base font-bold text-white"><CheckCircle2 size={18} class="text-[var(--color-lime)]" /> Positive ICP: What Indicates Fit?</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/70">
+            Positive criteria describe the observable characteristics that make an organization
+            attractive. For example, a software company may target businesses in a defined industry,
+            within a certain size range, operating in selected states, using a particular operating
+            model and having a department likely to experience the problem the software solves. A
+            professional-service provider may care more about ownership structure, number of
+            locations, customer type, specialty or a specific business activity.
+          </p>
+        </div>
+        <div class="card">
+          <h3 class="flex items-center gap-2 text-base font-bold text-white"><XCircle size={18} class="text-[var(--color-lime)]" /> Negative ICP: Who Should Be Excluded?</h3>
+          <p class="mt-3 text-sm leading-relaxed text-white/70">
+            Knowing who not to target can save as much time as knowing who to target. A negative ICP
+            may exclude government organizations, very small businesses, enterprises above a certain
+            complexity, franchises, agencies, companies outside the service area, businesses with an
+            incompatible model, existing customers, competitors or another category unlikely to
+            convert. Explicit exclusions make later prospect research more efficient.
+          </p>
         </div>
       </div>
     </div>
@@ -155,6 +224,46 @@ const faqs = [
           <p class="text-sm leading-relaxed text-white/70">{c.body}</p>
         </div>
       ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="flex items-center gap-2 text-2xl font-bold text-white sm:text-3xl"><Layers3 size={22} class="text-[var(--color-lime)]" /> Market Segmentation</h2>
+        <p class="mt-4 text-white/75">A broad market often contains several commercially different segments. Market & ICP Research can help separate those groups and ask:</p>
+        <ul class="mt-5 space-y-2">
+          {segmentationQuestions.map((q) => (
+            <li class="flex items-start gap-2 text-sm text-white/80">
+              <HelpCircle size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+              {q}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-white/75">The objective is not to produce academic segmentation for its own sake. It is to make prospecting decisions easier.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card mx-auto max-w-3xl">
+      <p class="eyebrow">From Assumption to Researchable Criteria</p>
+      <p class="mt-4 text-sm leading-relaxed text-white/75">
+        A founder may begin with an assumption such as "mid-sized logistics companies should need
+        this service." Research can turn that into questions:
+      </p>
+      <ul class="mt-4 space-y-2">
+        {logisticsQuestions.map((q) => (
+          <li class="flex items-start gap-2 text-sm text-white/75">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>
+            {q}
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 font-medium text-white">
+        The result is a target definition that can be tested and refined rather than a broad label
+        treated as fact.
+      </p>
     </div>
   </section>
 
@@ -199,6 +308,35 @@ const faqs = [
         ))}
       </ul>
       <p class="mx-auto mt-6 max-w-2xl text-center text-white/70">The goal is to turn uncertainty into a usable targeting specification.</p>
+
+      <div class="mx-auto mt-12 max-w-3xl">
+        <h2 class="text-center text-xl font-bold text-white">What a Deliverable Can Include</h2>
+        <p class="mx-auto mt-3 max-w-xl text-center text-sm text-white/60">
+          This is practical commercial research, not automatically a large formal consulting
+          report. The format should match the decision the customer needs to make. Depending on
+          scope, the deliverable may include:
+        </p>
+        <div class="mt-5 flex flex-wrap justify-center gap-2">
+          {deliverableIncludes.map((d) => (
+            <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{d}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="card mx-auto mt-12 max-w-3xl">
+        <p class="eyebrow flex items-center gap-2"><Stethoscope size={16} /> Example: Narrowing a Broad Healthcare Market</p>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          A business may begin with "medical providers in the United States." The research may
+          reveal that the actual opportunity is concentrated in selected provider types, states and
+          practice models, while hospital systems or unrelated specialties should be excluded.
+        </p>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          The decision-maker may also differ by organization size: owner in one practice,
+          administrator in another, business-development leader in a larger group. That refined
+          definition creates a far stronger prospecting brief than the original industry label.
+        </p>
+        <p class="mt-4 text-xs italic text-white/50">Illustrative example — not a real customer engagement.</p>
+      </div>
     </div>
   </section>
 

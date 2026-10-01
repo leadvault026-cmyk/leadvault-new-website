@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
-import { ArrowRight, Sparkles, Cog, HeartHandshake, Globe, Award, Target, Gem, FileCheck2, Scale, Layers3, Users, ShieldCheck } from '@lucide/astro';
+import { ArrowRight, Sparkles, Cog, HeartHandshake, Globe, Award, Target, Gem, FileCheck2, Scale, Layers3, Users, ShieldCheck, UserCheck, ListChecks } from '@lucide/astro';
 import { CTA_PRIMARY } from '../data/site';
 
 // Rewritten as experience areas, not achievement/demand claims (commercial-
@@ -15,10 +15,18 @@ const founderExperience = [
 ];
 
 const beliefs = [
-  { icon: Target, title: 'Good Research Starts With a Clear Question', body: 'A vague target produces vague results.' },
-  { icon: Gem, title: 'Relevance Matters More Than Empty Volume', body: 'More rows are not useful if the wrong companies are included.' },
-  { icon: FileCheck2, title: 'Evidence Matters When the Qualification Is Complex', body: 'Customers should be able to understand why a company was selected where the project calls for evidence.' },
-  { icon: Scale, title: 'Data Is a Business Input, Not the Business Outcome', body: 'A prospect record does not guarantee a sale; it helps the team make a better targeting decision.' },
+  { icon: Target, title: 'Good Research Starts With a Clear Question', body: 'A vague target produces vague results. Defining the qualification criteria is part of the work.' },
+  { icon: Gem, title: 'Relevance Matters More Than Empty Volume', body: 'More rows do not help when the wrong companies are included.' },
+  { icon: FileCheck2, title: 'Evidence Matters When the Qualification Is Complex', body: 'Where a project requires evidence, the customer should be able to understand the basis for inclusion.' },
+  { icon: UserCheck, title: 'The Right Contact Depends on the Opportunity', body: 'A job title should not replace thinking about responsibility.' },
+  { icon: Scale, title: 'Data Is an Input, Not the Business Outcome', body: 'A prospect record does not guarantee a sale. It helps a business make a better targeting decision.' },
+  { icon: ShieldCheck, title: 'Trust Requires Limits', body: 'We would rather explain what research can and cannot establish than make a promise the data cannot support.' },
+];
+
+const whatWeDo = [
+  'Prospect Intelligence', 'Qualified Prospect Data', 'Market & ICP Research',
+  'Decision-Maker Intelligence', 'Trade & Counterparty Intelligence', 'Data Cleaning & Enrichment',
+  'Intelligence-Led Outreach',
 ];
 
 const becoming = [
@@ -156,6 +164,16 @@ const differentiators = [
 
   <section class="border-y border-white/10 bg-[var(--color-bg-mid)]">
     <div class="section">
+      <div class="mx-auto mb-10 max-w-3xl text-center">
+        <h2 class="flex items-center justify-center gap-2 text-lg font-bold text-white"><ListChecks size={20} class="text-[var(--color-lime)]" /> What LeadVault Does</h2>
+        <p class="mt-3 text-sm text-white/60">LeadVault's commercial research services include:</p>
+        <div class="mt-4 flex flex-wrap justify-center gap-2">
+          {whatWeDo.map((w) => (
+            <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{w}</span>
+          ))}
+        </div>
+        <p class="mt-3 text-sm text-white/60">These services share one foundation: move from a business question to a structured, usable result.</p>
+      </div>
       <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
         <div>
           <h2 class="flex items-center gap-2 text-lg font-bold text-white"><Layers3 size={20} class="text-[var(--color-lime)]" /> What LeadVault Is Becoming</h2>

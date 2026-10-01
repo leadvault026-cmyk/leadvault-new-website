@@ -28,6 +28,9 @@ import {
   Stethoscope,
   Code,
   Handshake,
+  Compass,
+  Filter,
+  MessageCircleQuestion,
 } from '@lucide/astro';
 
 // Master commercial copy package (2026-10-01) — content-depth implementation
@@ -151,6 +154,33 @@ const deliverableFields = [
   'Company name', 'Website', 'Contact name', 'Contact title', 'Business email',
   'Phone number', 'Address', 'City', 'State/region', 'Industry/provider type',
   'Qualification basis', 'Evidence/source URL', 'Custom project fields',
+];
+
+// V2 copy (2026-10-01) — "What Can Define a Target?" input-criteria list,
+// distinct from deliverableFields below (which is the output schema).
+const targetDefinitionFactors = [
+  'Industry, sub-industry, specialty or business type',
+  'Country, state, city, region or multi-market geography',
+  'Company size, operating footprint or observable business characteristics',
+  'Products, services, capabilities or commercial activities',
+  'Customer type or business model',
+  'Public evidence that a company provides, accepts, distributes, manufactures, carries or specializes in something',
+  'Relevant department, function, title, seniority or stakeholder role',
+  'Trade role such as importer, exporter, distributor, wholesaler, supplier or buyer',
+  'Project-specific fields required by your sales process or CRM',
+  'Exclusions that prevent irrelevant companies from entering the final dataset',
+];
+
+// V2 copy — full 7-service router, text-based (distinct presentation from
+// the 3-card "Three Ways to Work With LeadVault" above it).
+const startingPoints = [
+  { label: 'MARKET & ICP RESEARCH', body: 'the market itself is still unclear.', href: '/market-icp-research' },
+  { label: 'QUALIFIED PROSPECT DATA', body: 'the ICP is already clear.', href: '/qualified-prospect-data' },
+  { label: 'PROSPECT INTELLIGENCE', body: 'fit cannot be established reliably through ordinary filters.', href: '/prospect-intelligence' },
+  { label: 'DECISION-MAKER INTELLIGENCE', body: 'you know the target companies but need to understand who inside them is relevant.', href: '/decision-maker-intelligence' },
+  { label: 'TRADE & COUNTERPARTY INTELLIGENCE', body: 'the commercial question concerns buyers, suppliers, importers, exporters, distributors or other counterparties.', href: '/trade' },
+  { label: 'INTELLIGENCE-LED OUTREACH', body: 'you want the researched audience carried into managed B2B email outreach.', href: '/managed-outreach' },
+  { label: 'DATA CLEANING & ENRICHMENT', body: 'you already own the records and need them cleaned, standardized, verified or enriched.', href: '/services#data-cleaning' },
 ];
 
 const qualityPrinciples = [
@@ -285,6 +315,18 @@ const qualityPrinciples = [
           </div>
         ))}
       </div>
+
+      <div class="card mx-auto mt-10 max-w-3xl">
+        <h3 class="flex items-center gap-2 text-base font-bold text-white"><Compass size={18} class="text-[var(--color-lime)]" /> Choose the Starting Point That Matches Your Problem</h3>
+        <ul class="mt-4 space-y-3">
+          {startingPoints.map((s) => (
+            <li class="flex flex-wrap items-baseline gap-x-2 text-sm text-white/75">
+              <a href={s.href} class="font-semibold text-[var(--color-lime)] hover:underline">{s.label}</a>
+              <span>— Use this when {s.body}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -314,22 +356,29 @@ const qualityPrinciples = [
     </div>
   </section>
 
-  <!-- What Can We Research? -->
+  <!-- What Can Define a Target? -->
   <section class="section-alt">
     <div class="section">
       <div class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">Scope</p>
-        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">What Can We Research?</h2>
+        <h2 class="mt-2 text-3xl font-bold text-white sm:text-4xl">What Can Define a Target?</h2>
         <p class="mt-5 text-white/75">
-          Projects can be defined by combinations of industry and niche, geography, company
-          characteristics, capabilities and services, decision-makers, qualification signals and
-          custom fields.
-        </p>
-        <p class="mt-4 text-white/75">
-          LeadVault is not limited to one industry or one type of prospect. The research
-          specification should reflect the business decision or campaign you're trying to support.
+          A target can be defined by more than industry and location. Depending on the assignment,
+          LeadVault can research combinations of:
         </p>
       </div>
+      <ul class="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
+        {targetDefinitionFactors.map((f) => (
+          <li class="flex items-start gap-2 text-sm text-white/80">
+            <Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            {f}
+          </li>
+        ))}
+      </ul>
+      <p class="mx-auto mt-6 max-w-2xl text-center text-white/75">
+        The important question is not whether a field appears in a standard database. It is whether
+        the criterion can be researched responsibly and consistently enough to support the project.
+      </p>
     </div>
   </section>
 
@@ -401,6 +450,21 @@ const qualityPrinciples = [
       The exact fields depend on the assignment. LeadVault structures the deliverable around the
       decision the customer needs to make — not around a rigid database export.
     </p>
+    <div class="card mx-auto mt-10 max-w-2xl">
+      <h3 class="text-sm font-bold uppercase tracking-wide text-white">Research Is Not a Promise of Buyer Intent</h3>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">
+        LeadVault qualifies prospects against research criteria. That is different from guaranteeing
+        that a company is currently shopping for your product, will reply to an email, will agree to
+        a meeting or will become a customer. Business information also changes — people change
+        roles, websites change, companies move and contact details can become obsolete after
+        research is completed.
+      </p>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">
+        Our responsibility is to define the requirement carefully, research it responsibly,
+        communicate the limits honestly and deliver the strongest usable intelligence we can
+        establish within the agreed scope.
+      </p>
+    </div>
   </section>
 
   <!-- Software Gives You Search Tools -->
@@ -578,9 +642,29 @@ const qualityPrinciples = [
     </div>
   </section>
 
-  <!-- Final CTA -->
+  <!-- You Do Not Need to Know the Service Name -->
   <section class="section-alt">
-    <div class="section text-center">
+    <div class="section">
+      <div class="mx-auto flex max-w-2xl flex-col items-center gap-3 text-center">
+        <MessageCircleQuestion size={28} class="text-[var(--color-lime)]" aria-hidden="true" />
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">You Do Not Need to Know the Service Name.</h2>
+        <p class="text-white/75">
+          If you can explain what you are trying to accomplish, that is enough to start. Tell us
+          what you sell, the type of company you believe should buy it, where those companies should
+          be located, what makes one company more valuable than another and what information your
+          team needs before outreach.
+        </p>
+        <p class="text-white/75">
+          We can determine whether the right starting point is ICP research, qualified prospect
+          data, deeper prospect intelligence, decision-maker research, trade intelligence or managed
+          outreach.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section text-center">
       <h2 class="text-3xl font-bold text-white sm:text-4xl">Tell Us the Market You Want to Reach.</h2>
       <p class="mx-auto mt-5 max-w-2xl text-white/75">
         Describe the companies, people, geography, or commercial opportunity you are targeting.
@@ -590,6 +674,5 @@ const qualityPrinciples = [
         <a href="/contact" data-cta="final-start-project" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
         <a href="/contact" data-cta="final-talk-strategist" class="btn-outline">{CTA_HIGH_INTENT}</a>
       </div>
-    </div>
   </section>
 </BaseLayout>

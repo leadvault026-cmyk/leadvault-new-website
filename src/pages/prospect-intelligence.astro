@@ -16,6 +16,12 @@ import {
   Briefcase,
   FileText,
   Settings,
+  Target,
+  XCircle,
+  MapPin,
+  ListChecks,
+  Hash,
+  Users,
 } from '@lucide/astro';
 
 // Master commercial copy package (2026-10-01) — full content-depth
@@ -30,6 +36,32 @@ const whenToUse = [
   'Fit requires evidence',
   'The relevant person is unclear',
   'The required research fields are unique to the project',
+];
+
+// V2 copy (2026-10-01) — the 8 quoted example requirements from "When
+// Ordinary Filters Stop Being Enough," plus the 7-part research-brief
+// framework and both full worked examples. This is the page's deepest
+// content-expansion pass; the shorter 5-item whenToUse list above is kept
+// as a quick-scan summary, these quotes as the fuller illustration.
+const filterLimits = [
+  'Find healthcare providers that accept this particular arrangement.',
+  'Find distributors that actually handle this product.',
+  'Find businesses that serve this specific customer type.',
+  'Find companies with evidence of this capability.',
+  'Find organizations that operate in these locations and meet these additional conditions.',
+  'Find the person responsible for this function even when the title varies.',
+  'Give us the public basis for why each company qualifies.',
+  'Research fields that are unique to our campaign rather than standard contact-data columns.',
+];
+
+const researchBrief = [
+  { icon: Target, label: 'Must-Have Criteria', body: 'Conditions that a company must satisfy to enter the final delivery.' },
+  { icon: XCircle, label: 'Exclusions', body: 'Conditions that disqualify a company even if it belongs to the general market.' },
+  { icon: MapPin, label: 'Geography', body: 'The countries, states, cities or regions that matter.' },
+  { icon: ShieldCheck, label: 'Evidence Standard', body: 'The type of public or legitimate business information sufficient to support a qualification where evidence is required.' },
+  { icon: UserCheck, label: 'Contact Requirement', body: 'The functions, responsibilities, seniority or titles that matter inside a qualified company.' },
+  { icon: ListChecks, label: 'Delivery Fields', body: "The exact columns and research context the customer's team needs." },
+  { icon: Hash, label: 'Volume and Depth', body: 'Whether the objective is a small high-confidence research set, a larger prospect dataset or a recurring workflow.' },
 ];
 
 const process = [
@@ -144,51 +176,96 @@ const faqs = [
   </section>
 
   <section class="section">
-    <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
-      <div>
-        <h2 class="text-xl font-bold text-white">When Do You Need Prospect Intelligence?</h2>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">
-          You probably do not need deep Prospect Intelligence if the requirement is simply "Give me
-          500 marketing directors at U.S. SaaS companies." Qualified Prospect Data may be enough.
-          Prospect Intelligence becomes useful when:
-        </p>
-        <ul class="mt-4 space-y-2">
-          {whenToUse.map((item) => (
-            <li class="flex items-start gap-2 text-sm text-white/80">
-              <ShieldCheck size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-              {item}
-            </li>
-          ))}
-        </ul>
+    <div class="mx-auto max-w-3xl">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">When Ordinary Filters Stop Being Enough</h2>
+      <p class="mt-4 text-white/75">
+        Prospect Intelligence becomes useful when at least one important part of the target cannot
+        be represented reliably by a standard filter. Examples include:
+      </p>
+      <ul class="mt-5 space-y-2.5">
+        {filterLimits.map((item) => (
+          <li class="flex items-start gap-2 text-sm italic text-white/80">
+            <ShieldCheck size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+            “{item}”
+          </li>
+        ))}
+      </ul>
+      <p class="mt-5 text-white/75">
+        In these cases, exporting a broad category and asking a sales representative to investigate
+        every row transfers the research burden back to the customer. Prospect Intelligence is
+        designed to do that qualification work before delivery.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">The Research Brief: Turning a Commercial Idea Into Acceptance Criteria</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-center text-white/75">
+        A strong project begins with a clear definition of what counts as a qualified prospect.
+        Agreeing these rules before production makes the project more consistent and prevents
+        "looks relevant" from becoming the qualification standard.
+      </p>
+      <div class="mx-auto mt-10 grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {researchBrief.map((r) => (
+          <div class="card flex flex-col gap-2">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]">
+              <r.icon size={20} stroke-width={1.75} aria-hidden="true" />
+            </div>
+            <h3 class="text-sm font-bold uppercase tracking-wide text-white">{r.label}</h3>
+            <p class="text-sm leading-relaxed text-white/70">{r.body}</p>
+          </div>
+        ))}
       </div>
-      <div>
-        <h2 class="text-xl font-bold text-white">From Business Question to Research Specification</h2>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">
-          We translate the commercial objective into acceptance criteria: must-have criteria,
-          exclusions, evidence requirements, contact requirements and delivery fields.
-        </p>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">
-          This makes the research auditable and reduces ambiguity before production begins.
-        </p>
-      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="card mx-auto max-w-3xl">
+      <p class="eyebrow">Worked Example: Medical Providers With a Specific Qualification</p>
+      <p class="mt-4 text-sm leading-relaxed text-white/75">
+        <strong class="text-white">Initial request:</strong> “We need medical providers that work
+        with personal injury cases.” That is commercially understandable but still too broad for
+        consistent research.
+      </p>
+      <p class="mt-4 text-sm font-medium text-white">A stronger research brief might become:</p>
+      <dl class="mt-3 space-y-2.5">
+        <div class="flex gap-2 text-sm"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Geography —</dt><dd class="text-white/75">Florida, Georgia, Texas and New York.</dd></div>
+        <div class="flex gap-2 text-sm"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Organization —</dt><dd class="text-white/75">Medical providers or practices within agreed provider categories.</dd></div>
+        <div class="flex gap-2 text-sm"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Qualification —</dt><dd class="text-white/75">Public evidence that the provider accepts Letters of Protection, medical liens, attorney-referred injury patients or another agreed equivalent.</dd></div>
+        <div class="flex gap-2 text-sm"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Contact —</dt><dd class="text-white/75">A relevant owner, administrator, director or business contact where identifiable.</dd></div>
+        <div class="flex gap-2 text-sm"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Delivery —</dt><dd class="text-white/75">Company name, website, contact name, contact title, business email, phone number, address, city, state, provider type, qualification basis and evidence URL.</dd></div>
+        <div class="flex gap-2 text-sm"><dt class="shrink-0 font-semibold uppercase tracking-wide text-white/50">Exclusion —</dt><dd class="text-white/75">Do not include a company merely because it treats injuries; there must be support for the agreed qualification.</dd></div>
+      </dl>
+      <p class="mt-4 font-medium text-white">
+        Now the assignment is no longer "find healthcare leads." It is a defined intelligence
+        problem with a reproducible acceptance standard.
+      </p>
+      <p class="mt-4 text-xs italic text-white/50">Illustrative example — not a real customer engagement.</p>
     </div>
   </section>
 
   <section class="section-alt">
     <div class="section">
       <div class="card mx-auto max-w-3xl">
-        <p class="eyebrow">Example: From Broad Request to Researchable Brief</p>
+        <p class="eyebrow">Worked Example: Product Distribution</p>
         <p class="mt-4 text-sm leading-relaxed text-white/75">
-          <strong class="text-white">Initial request:</strong> "We need medical providers that work
-          with personal injury cases."
+          <strong class="text-white">Initial request:</strong> “Find companies that might buy our
+          product.”
         </p>
         <p class="mt-3 text-sm leading-relaxed text-white/75">
-          A research specification could define geography, organization type, qualification
-          evidence, relevant contact, required delivery fields and exclusions.
+          A useful trade-oriented specification could define the exact product category, target
+          geography, desired counterparty roles, evidence of product relevance, excluded business
+          types, company fields and relevant commercial contacts.
         </p>
-        <p class="mt-4 font-medium text-white">
-          Now the project is not "find healthcare leads." It is a defined intelligence assignment.
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          The research then distinguishes between a company that happens to be classified as a
+          wholesaler and a company that appears genuinely relevant to the product opportunity. This
+          distinction is important because broad classifications can create large lists while still
+          leaving the customer with the hardest question: "Which of these companies actually
+          matters?"
         </p>
+        <p class="mt-4 text-xs italic text-white/50">Illustrative example — not a real customer engagement.</p>
       </div>
     </div>
   </section>
@@ -242,13 +319,18 @@ const faqs = [
         </p>
       </div>
       <div class="card">
-        <h2 class="text-lg font-bold text-white">Evidence Changes the Conversation</h2>
+        <h2 class="text-lg font-bold text-white">Evidence: What It Does and What It Does Not Do</h2>
         <p class="mt-4 text-sm leading-relaxed text-white/75">
-          For projects that require it, LeadVault can include a Qualification Basis and Evidence
-          URL. Instead of a generic category match, your team can see why the company entered the
-          target universe and the public source supporting that conclusion. This does not guarantee
-          that the prospect will buy; it explains why the prospect qualifies for research and
-          outreach.
+          For appropriate projects, LeadVault can provide a Qualification Basis and Evidence URL.
+          The qualification basis explains the reason the company was included. The evidence URL
+          points to the public source supporting the relevant research conclusion — a more
+          transparent deliverable than a broad category label alone.
+        </p>
+        <p class="mt-3 text-sm leading-relaxed text-white/75">
+          Evidence does not prove that a company wants to buy your product. It does not guarantee
+          that a public statement remains unchanged forever. It does not turn an inference into a
+          fact. Its purpose is narrower and more useful: to show the research basis for including
+          the company in the target universe.
         </p>
       </div>
     </div>
@@ -256,6 +338,27 @@ const faqs = [
 
   <section class="section-alt">
     <div class="section">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="flex items-center gap-2 text-2xl font-bold text-white sm:text-3xl"><Users size={22} class="text-[var(--color-lime)]" /> Decision-Maker Research Inside Qualified Accounts</h2>
+        <p class="mt-5 text-white/75">
+          Once a company qualifies, the next question may be who inside the organization matters.
+          Sometimes the answer is predictable. In other cases, responsibility depends on company
+          size, structure and the problem being solved.
+        </p>
+        <p class="mt-4 text-white/75">
+          A small company may place the responsibility with the founder. A mid-market organization
+          may have a director. A larger organization may divide the decision between operational,
+          technical, financial and procurement stakeholders.
+        </p>
+        <p class="mt-4 font-medium text-white">
+          LeadVault can research the relevant function and available professional contact
+          information rather than treating a single job-title search as a universal answer.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
       <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Prospect Intelligence vs. Qualified Prospect Data</h2>
       <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
         <div class="card">
@@ -275,40 +378,56 @@ const faqs = [
           </p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="card mx-auto max-w-3xl text-center">
-      <h2 class="text-xl font-bold text-white">What Prospect Intelligence Does Not Promise</h2>
-      <p class="mt-4 text-sm leading-relaxed text-white/75">
-        Research improves targeting. It does not manufacture buyer intent. A qualified company is
-        not automatically a company that wants to purchase today. An identified decision-maker is
-        not a guaranteed responder. Business contact information and public information can change.
+      <p class="mx-auto mt-6 max-w-2xl text-center text-sm text-white/60">
+        A useful rule is this: if a researcher has to answer "Does this company really do or meet
+        X?" before the record becomes valuable, the assignment is moving into Prospect Intelligence.
       </p>
-      <p class="mt-4 text-sm leading-relaxed text-white/75">
-        Our responsibility is to research the agreed criteria carefully, document the result
-        appropriately and deliver the strongest usable intelligence we can establish at the time of
-        the project.
-      </p>
-    </div>
   </section>
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Who Uses Prospect Intelligence?</h2>
-      <ul class="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2">
-        {whoUses.map((w) => (
-          <li class="flex items-start gap-2 text-sm text-white/80">
-            <Briefcase size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-            {w}
-          </li>
-        ))}
-      </ul>
+      <div class="card mx-auto max-w-3xl text-center">
+        <h2 class="text-xl font-bold text-white">What Prospect Intelligence Does Not Promise</h2>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          Prospect Intelligence improves the quality of the targeting decision. It does not
+          manufacture demand.
+        </p>
+        <ul class="mx-auto mt-4 max-w-md space-y-1.5 text-left">
+          {[
+            'A qualified prospect is not automatically an active buyer.',
+            'A relevant decision-maker is not a guaranteed responder.',
+            'A verified business email can later change.',
+            'A public source can later be edited or removed.',
+            'A well-researched audience can still reject an offer.',
+          ].map((item) => (
+            <li class="flex items-start gap-2 text-sm text-white/75">
+              <XCircle size={14} class="mt-1 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+              {item}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-4 text-sm leading-relaxed text-white/75">
+          LeadVault's role is to reduce avoidable targeting uncertainty and provide a stronger
+          research foundation for the customer's next action.
+        </p>
+      </div>
     </div>
   </section>
 
   <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Who Uses Prospect Intelligence?</h2>
+    <ul class="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2">
+      {whoUses.map((w) => (
+        <li class="flex items-start gap-2 text-sm text-white/80">
+          <Briefcase size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+          {w}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
     <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Is This the Right Service?</h2>
     <div class="mx-auto mt-10 grid max-w-5xl gap-6 sm:grid-cols-3">
       {related.map((r) => (
@@ -322,23 +441,24 @@ const faqs = [
         </div>
       ))}
     </div>
-  </section>
-
-  <section class="section-alt">
-    <div class="section">
-      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
-      <div class="mx-auto mt-10 max-w-3xl">
-        <FaqAccordion items={faqs} />
-      </div>
     </div>
   </section>
 
-  <section class="section text-center">
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Frequently Asked Questions</h2>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <FaqAccordion items={faqs} />
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
     <h2 class="text-2xl font-bold text-white sm:text-3xl">Have a Target That Is Difficult to Search For?</h2>
     <p class="mx-auto mt-4 max-w-xl text-white/75">Tell us what a qualified prospect looks like.</p>
     <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
       <a href="/contact?need=prospect-intelligence" data-cta="pi-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
       <a href="/contact" data-cta="pi-final-strategist" class="btn-outline">{CTA_HIGH_INTENT}</a>
+    </div>
     </div>
   </section>
 

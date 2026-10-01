@@ -46,6 +46,12 @@ const afterSubmit = [
   'We confirm the appropriate service, scope, price and delivery expectation before paid work begins.',
   'Research starts after the project is approved.',
 ];
+
+const briefExamples = [
+  "We sell a service to independent dental practices in Florida and Georgia. We need practice owners or administrators and want to exclude large hospital groups.",
+  "We export a food product and need distributors and wholesalers in Texas that actually handle the product category.",
+  "We know the 150 companies we want to target but do not know which people inside them are responsible for compliance.",
+];
 ---
 
 <BaseLayout
@@ -77,6 +83,17 @@ const afterSubmit = [
       </div>
 
       <div class="card mt-8">
+        <h2 class="text-lg font-bold text-white">A Useful Brief Can Be Simple</h2>
+        <p class="mt-2 text-sm text-white/60">You can start with a few sentences. For example:</p>
+        <ul class="mt-3 space-y-2.5">
+          {briefExamples.map((ex) => (
+            <li class="rounded-lg border border-white/10 bg-white/5 p-3 text-sm italic text-white/75">“{ex}”</li>
+          ))}
+        </ul>
+        <p class="mt-3 text-xs text-white/50">Those are enough to begin a conversation. LeadVault can help turn the request into a more precise research specification.</p>
+      </div>
+
+      <div class="card mt-6">
         <h2 class="flex items-center gap-2 text-lg font-bold text-white"><ListChecks size={18} class="text-[var(--color-lime)]" /> What to Include</h2>
         <p class="mt-2 text-sm text-white/60">The more specific the requirement, the faster we can understand it. Helpful information includes:</p>
         <ul class="mt-3 space-y-1.5">
@@ -276,6 +293,21 @@ const afterSubmit = [
             Tell us what you sell, who you believe should buy it and what makes those organizations
             valuable. We can help turn that into a researchable specification.
           </p>
+
+          <h3 class="mt-6 text-sm font-bold uppercase tracking-wide text-white">If You Already Have the Companies</h3>
+          <p class="mt-2 text-sm leading-relaxed text-white/75">
+            If your account list already exists, describe it and explain what is missing. The
+            project may be <a href="/decision-maker-intelligence" class="font-medium text-[var(--color-lime)] hover:underline">Decision-Maker Intelligence</a>, <a href="/services#data-cleaning" class="font-medium text-[var(--color-lime)] hover:underline">Data Cleaning & Enrichment</a> or another
+            focused research task rather than a new prospect-discovery project.
+          </p>
+
+          <h3 class="mt-6 text-sm font-bold uppercase tracking-wide text-white">If You Need Outreach Too</h3>
+          <p class="mt-2 text-sm leading-relaxed text-white/75">
+            Tell us whether you want the project to end with the research deliverable or continue
+            into <a href="/managed-outreach" class="font-medium text-[var(--color-lime)] hover:underline">managed email outreach</a>. Research and outreach can be connected, but the audience
+            should be qualified before campaign execution begins.
+          </p>
+
           <div class="mt-6 flex items-start gap-3 rounded-lg border border-white/10 bg-white/5 p-4">
             <ShieldCheck size={18} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
             <p class="text-xs leading-relaxed text-white/60">

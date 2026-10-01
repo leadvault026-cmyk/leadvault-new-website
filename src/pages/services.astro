@@ -12,6 +12,8 @@ import {
   Filter,
   Lightbulb,
   ArrowRight,
+  ShieldCheck,
+  Target,
 } from '@lucide/astro';
 
 // Repositioning master brief §13 — reworked from a flat 8-card catalogue into
@@ -99,7 +101,7 @@ const solutions = [
     cta: { label: 'See full Managed Outreach page →', href: '/managed-outreach' },
   },
   {
-    id: 'data-cleaning',
+    id: 'data-cleaning-card',
     icon: Filter,
     title: 'Data Cleaning & Enrichment',
     frame: 'We already have the records. We need better data.',
@@ -126,6 +128,18 @@ const solutions = [
     subtitle: 'Add-on',
     body: 'Clean data deserves clean usage. We advise on sending best practices, warm-up schedules, message templates, and follow-up sequences — so your campaigns land in inboxes, not spam folders.',
   },
+];
+
+// V2 copy (2026-10-01) — Data Cleaning & Enrichment is listed as its own
+// page in the master's inventory (route /services#data-cleaning) with much
+// fuller content than a single catalogue card can hold. Implemented as an
+// expanded section below the grid rather than a 16th dedicated route, per
+// the master's own routing — the compact card above still introduces it.
+const cleaningProblems = [
+  'Duplicate companies or contacts', 'Inconsistent company names', 'Broken or missing websites',
+  'Inconsistent location formats', 'Missing job titles', 'Missing or outdated company/contact fields',
+  'Generic categories that need better classification', 'Existing account lists that need decision-maker research',
+  'Business contact information that needs review', 'Customer-defined fields that need research',
 ];
 
 const decisionGuide = [
@@ -220,13 +234,72 @@ const decisionGuide = [
         </div>
       ))}
       </div>
-      <div class="mt-12 text-center">
-        <p class="mx-auto max-w-xl text-sm text-white/60">
-          Or skip the labels entirely. Tell us what you are trying to accomplish and we will help
-          determine the appropriate research approach.
-        </p>
-        <a href="/contact" data-cta="services-not-sure" class="btn-primary mt-5">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section id="data-cleaning" class="section scroll-mt-28">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="eyebrow">Data Cleaning & Enrichment, In Depth</p>
+      <h2 class="mt-2 text-2xl font-bold text-white sm:text-3xl">Already Have the Records? Make Them More Usable.</h2>
+      <p class="mt-5 text-white/75">
+        You do not always need a new prospect list. If your team already owns a business dataset,
+        LeadVault can help improve its structure, consistency and completeness. The work is scoped
+        around the fields you already have, the fields you need and the quality problems preventing
+        the file from being used effectively.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-10 max-w-3xl">
+      <h3 class="text-center text-lg font-bold text-white">Common Problems We Can Address</h3>
+      <div class="mt-5 flex flex-wrap justify-center gap-2">
+        {cleaningProblems.map((p) => (
+          <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{p}</span>
+        ))}
       </div>
+    </div>
+
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+      <div class="card">
+        <h3 class="flex items-center gap-2 text-base font-bold text-white"><Filter size={18} class="text-[var(--color-lime)]" /> Cleaning and Enrichment Are Different</h3>
+        <p class="mt-3 text-sm leading-relaxed text-white/70">
+          Cleaning improves the structure and consistency of information already present.
+          Enrichment researches additional information to complete or improve the record. A project
+          can involve one or both — the scope should specify which fields are being cleaned, which
+          are being researched and what counts as an acceptable completed record.
+        </p>
+      </div>
+      <div class="card">
+        <h3 class="flex items-center gap-2 text-base font-bold text-white"><ShieldCheck size={18} class="text-[var(--color-lime)]" /> Customer-Owned Data Comes First</h3>
+        <p class="mt-3 text-sm leading-relaxed text-white/70">
+          LeadVault preserves the customer's original identifiers and avoids silently changing
+          important business information without a research basis. Where a field is uncertain, it is
+          better to flag the issue than manufacture certainty.
+        </p>
+      </div>
+    </div>
+
+    <div class="card mx-auto mt-10 max-w-3xl">
+      <h3 class="flex items-center gap-2 text-base font-bold text-white"><Target size={18} class="text-[var(--color-lime)]" /> When Decision-Maker Intelligence Is the Better Fit</h3>
+      <p class="mt-3 text-sm leading-relaxed text-white/75">
+        If the main problem is that the companies are correct but the people are missing, the
+        project may be better framed as <a href="/decision-maker-intelligence" class="font-medium text-[var(--color-lime)] hover:underline">Decision-Maker Intelligence</a>. If the main
+        problem is inconsistent, duplicate or incomplete records across many fields, Data Cleaning &
+        Enrichment is the better starting point.
+      </p>
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="/contact" data-cta="services-data-cleaning" class="btn-primary">Discuss Data Cleaning & Enrichment <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
+      <p class="mx-auto max-w-xl text-sm text-white/60">
+        Or skip the labels entirely. Tell us what you are trying to accomplish and we will help
+        determine the appropriate research approach.
+      </p>
+      <a href="/contact" data-cta="services-not-sure" class="btn-primary mt-5">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
     </div>
   </section>
 </BaseLayout>

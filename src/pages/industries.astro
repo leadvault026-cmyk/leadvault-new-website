@@ -13,6 +13,9 @@ import {
   UserCheck,
   CheckCircle2,
   Database,
+  Factory,
+  AlertTriangle,
+  HelpCircle,
 } from '@lucide/astro';
 import { CTA_PRIMARY } from '../data/site';
 
@@ -33,49 +36,70 @@ const industries = [
   {
     icon: Megaphone,
     title: 'Marketing Agencies',
-    body: "Agencies often need audiences for clients whose ICPs change from campaign to campaign. LeadVault can research target companies, relevant stakeholders and campaign-specific enrichment fields without forcing every client into the same template.",
-    typical: ['Client-specific ICP lists', 'Local or national businesses', 'Industry segmentation', 'Decision-maker mapping', 'Custom qualification criteria', 'Recurring campaign data'],
-    roles: 'Owners, founders, marketing leaders, operations leaders, sales leaders and other functions defined by the campaign.',
+    body: "Agencies rarely have one permanent ICP. Each client can bring a different market, geography, offer, decision-maker and campaign objective. LeadVault can operate as a research layer behind those campaigns: turning the client's targeting brief into account criteria, researching matching companies, identifying relevant stakeholders and delivering the fields the agency needs for outreach or campaign operations.",
+    questions: ['Which businesses fit this client\'s exact niche?', 'Which locations or company characteristics matter?', 'Which titles/functions are appropriate for this offer?', 'What should be excluded before the list reaches campaign production?'],
+    typical: ['Client-specific ICP lists', 'Local or national businesses', 'Industry segmentation', 'Decision-maker mapping', 'Custom qualification criteria', 'Recurring campaign data', 'Enrichment of agency-owned lists'],
+    roles: 'Owners and founders for smaller businesses; marketing, sales, operations or commercial leaders for larger organizations; and other functions defined by the client\'s offer.',
+    deeper: 'When the agency\'s client asks for a niche that cannot be represented cleanly by standard filters, Prospect Intelligence can investigate the condition before records are delivered.',
   },
   {
     icon: Code,
     title: 'SaaS & Technology',
-    body: 'Technology companies frequently need to distinguish between companies that merely belong to an industry and companies whose operating model, size, technology environment or commercial profile actually fits the product.',
-    typical: ['ICP account lists', 'Market segments', 'Relevant technology/business signals where publicly observable', 'Department and stakeholder mapping', 'Recurring outbound datasets'],
-    roles: 'IT, engineering, security, operations, finance, revenue, marketing and executive leadership depending on the solution.',
+    body: 'Technology companies often have access to prospecting software already. The challenge is frequently not finding records; it is defining the right accounts and understanding which organizations have the characteristics that make the product relevant.',
+    questions: ['Which sub-segments of our market are the strongest fit?', 'Which company sizes or operating models should be prioritized?', 'Which publicly observable capabilities or business characteristics matter?', 'Do we need one persona or several stakeholders?'],
+    typical: ['ICP account lists', 'Market segmentation', 'Company-size and geography criteria', 'Business-model research', 'Observable technology or capability signals where appropriate', 'Department mapping', 'Stakeholder research', 'Recurring outbound datasets'],
+    roles: 'Depending on the product: IT, engineering, security, operations, finance, revenue, sales, marketing, customer success, procurement or executive leadership.',
+    example: 'A SaaS company selling compliance software to manufacturers may need more than "manufacturing companies + CEO." The account criteria may require certain operating characteristics, while the relevant buying group could include compliance, quality, operations, IT and procurement.',
+  },
+  {
+    icon: Stethoscope,
+    title: 'Healthcare & Specialist Providers',
+    body: '"Medical providers" can include hospitals, clinics, chiropractors, imaging centers, dental practices, behavioral-health providers and many other organizations with different operating models and decision structures.',
+    questions: ['Which provider types actually fit the offer?', 'Which states or cities matter?', 'Does the provider publicly indicate a specific service, payment arrangement or referral model?', 'Which business or administrative contact is relevant?'],
+    typical: ['Provider-type segmentation', 'Location research', 'Specialty research', 'Practice qualification', 'Public evidence capture', 'Administrator/owner/business contact research', 'Custom healthcare-related fields that are legitimate and commercially relevant'],
+    example: 'Identify providers in selected U.S. states that publicly indicate they accept Letters of Protection, medical liens or attorney-referred injury patients. Include provider type, qualification basis, supporting source and a relevant business contact where available.',
+    important: "LeadVault's work here is B2B prospect research. It is not patient-data research and should not involve private medical information.",
   },
   {
     icon: Users,
     title: 'Recruitment & Staffing',
-    body: "Recruitment research can involve two distinct markets: organizations likely to hire and people relevant to a search. LeadVault's commercial research focuses on company and decision-maker intelligence that helps recruitment businesses identify potential employer accounts and appropriate hiring or business contacts.",
-    typical: ['Target employers', 'Industry/location segmentation', 'Hiring-related company signals where appropriate', 'HR/talent contacts', 'Department leadership', 'Company enrichment'],
+    body: "Recruitment businesses can have two distinct research problems: identifying organizations likely to become clients and researching the people responsible for hiring or workforce decisions.",
+    questions: ['Which companies fit our staffing specialization?', 'Which locations or industries are most relevant?', 'Which organizations show an observable hiring or expansion signal where such research is part of scope?', 'Who owns recruitment, HR, talent acquisition or the relevant department?'],
+    typical: ['Target-employer lists', 'Industry/location segmentation', 'Employer qualification', 'HR and talent contacts', 'Department leadership', 'Company enrichment', 'Recurring business-development datasets'],
+    roles: 'Owners in smaller businesses; HR leaders; talent-acquisition professionals; operations leaders; department heads; and executive stakeholders depending on the staffing proposition.',
+    deeper: 'When the agency wants companies meeting a specific operational or hiring condition rather than every employer in a broad industry.',
   },
   {
     icon: TrendingUp,
     title: 'Financial & Professional Services',
-    body: 'Professional-service providers often need targeting based on business characteristics rather than simple industry labels.',
-    typical: ['Companies within defined operating profiles', 'Owners or finance stakeholders', 'Professional practices', 'Location and size criteria', 'Qualification evidence', 'Specialist niche research'],
-    note: 'The exact criteria should reflect the service being sold and the type of organization most likely to need it.',
+    body: 'Professional-service firms often need targeting based on business characteristics that are more nuanced than industry alone. An accounting service, legal-service provider, insurance-related business, consulting firm or specialist B2B service may each define a valuable account differently.',
+    questions: ['Which ownership or operating profiles fit?', 'Which company sizes or locations are commercially viable?', 'Which specialties or customer types matter?', 'Who controls the relevant financial, operational or executive decision?'],
+    typical: ['Professional practices', 'Owner-led businesses', 'Finance/operations stakeholder research', 'Niche company qualification', 'Location and size criteria', 'Evidence-backed specialist research', 'Custom data projects'],
+    roles: 'Owners, partners, finance leaders, operations leaders, administrators, procurement and executives depending on the offer.',
   },
   {
     icon: Ship,
     title: 'Trade, Import, Export & Distribution',
-    body: 'Trade research is often less about job-title lists and more about commercial relationships: who imports, distributes, wholesales, supplies, purchases or operates in a particular product market.',
-    typical: ['Importers', 'Exporters', 'Distributors', 'Wholesalers', 'Commercial buyers', 'Suppliers', 'Counterparties', 'Company verification', 'Relevant commercial contacts'],
-    note: 'Where appropriate, LeadVault can document the evidence supporting why a company appears relevant to the product or trade requirement.',
+    body: 'Trade research focuses on commercial relationships rather than simply job titles. The customer may need to know who imports a product, who distributes it, who supplies it, who wholesales it or which companies could be credible commercial buyers in a target market.',
+    questions: ['Does the company actually operate in the product category?', 'What commercial role does it appear to play?', 'Is it a buyer, supplier, distributor, wholesaler, importer, exporter or manufacturer?', 'Which business contact is relevant to a commercial approach?'],
+    typical: ['Importers', 'Exporters', 'Distributors', 'Wholesalers', 'Manufacturers', 'Commercial buyers', 'Suppliers', 'Counterparties', 'Product relevance', 'Company verification', 'Public evidence', 'Commercial contact research'],
+    example: 'A request for U.S. rice-related businesses should not become a generic list of food companies. The research should distinguish companies with meaningful relevance to rice import, distribution, wholesale or commercial purchasing from businesses that merely sit inside a broad food category.',
     cta: { label: 'See the dedicated Trade Desk page', href: '/trade' },
   },
   {
     icon: ShoppingCart,
-    title: 'E-commerce & Consumer-Facing Businesses',
-    body: 'B2B vendors selling into e-commerce and consumer-facing businesses may need to segment targets by product category, channel, geography, store footprint, operating model or other observable characteristics.',
-    typical: ['Brands', 'Retailers', 'Online sellers', 'Service providers', 'Operators', 'Relevant marketing, operations, e-commerce or executive contacts'],
+    title: 'E-commerce, Retail & Consumer-Facing Businesses',
+    body: 'Businesses selling services or technology into e-commerce and retail markets often need to segment targets by channel, product category, geography, operating model or footprint.',
+    questions: ['Is the company primarily online, physical retail or omnichannel?', 'Which product category does it operate in?', 'How large or geographically distributed is the business?', 'Which functions own e-commerce, marketing, operations or technology?'],
+    typical: ['Brands', 'Retailers', 'Online sellers', 'Multi-location operators', 'Product/category segmentation', 'Store or location research', 'E-commerce and marketing stakeholders', 'Operations leaders', 'Company enrichment'],
+    roles: 'E-commerce, digital, marketing, operations, technology, merchandising, commercial leadership and executive roles depending on the offer.',
   },
   {
-    icon: Stethoscope,
-    title: 'Healthcare & Specialist Services',
-    body: 'Some of the most valuable healthcare targeting requirements cannot be reduced to "medical company + location." The relevant condition may be a specialty, treatment model, payment arrangement, referral relationship or other publicly researchable characteristic.',
-    example: 'Identify medical providers in selected U.S. states that publicly indicate they accept Letters of Protection, medical liens or attorney-referred injury cases; document the qualification basis and identify a relevant business contact where available.',
+    icon: Factory,
+    title: 'Industrial, Manufacturing & B2B Services',
+    body: 'Industrial markets frequently contain specialized capabilities that broad industry codes do not capture well. A supplier may care about a manufacturing process, certification, product category, facility type, customer market or operating footprint. A service provider may need organizations with a specific physical or operational requirement.',
+    typical: ['Manufacturers by niche', 'Facility or capability research', 'Distributors and suppliers', 'Company-size/location criteria', 'Operations and procurement stakeholders', 'Evidence-backed qualification', 'Custom account fields'],
+    roles: 'Operations, plant/facility leadership, engineering, procurement, supply chain, quality, compliance, finance and executive leadership depending on the proposition.',
   },
 ];
 
@@ -136,19 +160,36 @@ const researchChain = [
           </div>
           <h2 class="text-lg font-bold text-white">{ind.title}</h2>
           <p class="text-sm leading-relaxed text-white/75">{ind.body}</p>
-          {ind.example ? (
-            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
-              <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Example</p>
-              <p class="mt-1.5 text-sm text-white/80">{ind.example}</p>
+          {ind.questions && (
+            <div>
+              <p class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-white/50"><HelpCircle size={13} /> Common research questions</p>
+              <ul class="mt-1.5 space-y-1">
+                {ind.questions.map((q) => (
+                  <li class="text-sm italic text-white/70">“{q}”</li>
+                ))}
+              </ul>
             </div>
-          ) : (
+          )}
+          {ind.typical && (
             <div class="rounded-lg border border-white/10 bg-white/5 p-4">
               <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Typical research</p>
               <p class="mt-1.5 text-sm text-white/80">{ind.typical.join('; ')}</p>
             </div>
           )}
+          {ind.example && (
+            <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Example</p>
+              <p class="mt-1.5 text-sm text-white/80">{ind.example}</p>
+            </div>
+          )}
           {ind.roles && (
             <p class="text-xs text-white/60"><span class="font-semibold text-white/80">Relevant roles:</span> {ind.roles}</p>
+          )}
+          {ind.deeper && (
+            <p class="text-xs text-white/60"><span class="font-semibold text-white/80">When deeper intelligence helps:</span> {ind.deeper}</p>
+          )}
+          {ind.important && (
+            <p class="flex items-start gap-1.5 text-xs italic text-white/50"><AlertTriangle size={13} class="mt-0.5 shrink-0" /> {ind.important}</p>
           )}
           {ind.note && <p class="text-xs italic text-white/50">{ind.note}</p>}
           {ind.cta && (

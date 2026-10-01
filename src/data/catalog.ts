@@ -114,26 +114,30 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
 ];
 
 // "What do you need?" dropdown. `value` is the literal string submitted to
-// Netlify Forms — unchanged since the form's original spec, so historical
-// submissions and the NEED_SLUG_TO_OPTION pre-fill map below both keep
-// working untouched. `label` is the customer-facing text only, updated
-// during the full commercial content implementation (2026-10-01 correction
-// round) to retire two labels ("Monthly lead subscription," "Managed email
-// campaigns") that no longer matched the current service architecture —
-// see ASSUMPTIONS.md. Submitted values were deliberately left exactly as
-// they were; only what the visitor sees in the dropdown changed.
+// Netlify Forms. `label` is the customer-facing text only.
+//
+// V2 copy package (2026-10-01) — the FORM IMPLEMENTATION NOTE explicitly
+// lists 9 distinct visible labels, including Market & ICP Research and
+// Decision-Maker Intelligence as their OWN options rather than folded into a
+// shared "Prospect Intelligence (Custom Research Project)" bucket (the
+// correction made in the prior round). Implemented by giving those two their
+// own new, previously-unused submitted values — existing values already in
+// use ('Fresh custom dataset', 'Custom data project', etc.) are left exactly
+// as they were, so no historical submission or existing mapping is disturbed.
 export interface NeedOption {
   value: string;
   label: string;
 }
 
 export const NEED_OPTIONS: NeedOption[] = [
+  { value: 'Custom data project', label: 'Prospect Intelligence' },
   { value: 'Fresh custom dataset', label: 'Qualified Prospect Data' },
-  { value: 'Clean my existing list', label: 'Data Cleaning & Enrichment' },
-  { value: 'Find buyers/suppliers (Trade Desk)', label: 'Trade & Counterparty Intelligence (Trade Desk)' },
-  { value: 'Monthly lead subscription', label: 'Recurring Prospect Research' },
+  { value: 'Market and ICP research project', label: 'Market & ICP Research' },
+  { value: 'Decision-maker research project', label: 'Decision-Maker Intelligence' },
+  { value: 'Find buyers/suppliers (Trade Desk)', label: 'Trade & Counterparty Intelligence' },
   { value: 'Managed email campaigns', label: 'Intelligence-Led Outreach' },
-  { value: 'Custom data project', label: 'Prospect Intelligence (Custom Research Project)' },
+  { value: 'Clean my existing list', label: 'Data Cleaning & Enrichment' },
+  { value: 'Monthly lead subscription', label: 'Recurring Prospect Research' },
   { value: 'Not sure — advise me', label: 'Not sure — advise me' },
 ];
 
@@ -144,15 +148,10 @@ export const NEED_SLUG_TO_OPTION: Record<string, string> = {
   'international-trade-counterparties': 'Find buyers/suppliers (Trade Desk)',
   'fully-custom-specification': 'Custom data project',
   'managed-email-campaigns': 'Managed email campaigns',
-  // Repositioning's 5 new commercial pages (2026-09-30) — mapped onto the
-  // closest existing NEED_OPTIONS value rather than adding new dropdown
-  // options, since reworking the Contact form's own field set is a later,
-  // separately-scoped phase (brief §19). This keeps today's pre-fill working
-  // without touching the form itself.
   'prospect-intelligence': 'Custom data project',
   'qualified-prospect-data': 'Fresh custom dataset',
-  'market-icp-research': 'Custom data project',
-  'decision-maker-intelligence': 'Custom data project',
+  'market-icp-research': 'Market and ICP research project',
+  'decision-maker-intelligence': 'Decision-maker research project',
   'managed-outreach': 'Managed email campaigns',
 };
 
