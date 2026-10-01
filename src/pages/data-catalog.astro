@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import { CATALOG_CATEGORIES } from '../data/catalog';
-import { CTA_PRIMARY } from '../data/site';
+import { CTA_PRIMARY, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
 import {
   ArrowRight,
   Clock,
@@ -233,8 +233,9 @@ const customFieldChecklist = [
       </form>
     </div>
 
-    <div class="mt-8 text-center">
-      <a href="/contact" class="btn-outline">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href="/contact" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+      <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
     </div>
   </section>
 </BaseLayout>

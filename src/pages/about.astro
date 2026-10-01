@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { ArrowRight, Sparkles, Cog, HeartHandshake, Globe, Award, Target, Gem, FileCheck2, Scale, Layers3, Users, ShieldCheck, UserCheck, ListChecks } from '@lucide/astro';
-import { CTA_PRIMARY } from '../data/site';
+import { CTA_PRIMARY, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
 
 // Rewritten as experience areas, not achievement/demand claims (commercial-
 // completion round — see ASSUMPTIONS.md). The prior list asserted things like
@@ -277,8 +277,9 @@ const differentiators = [
         <a href="/removal-request" class="font-medium text-[var(--color-lime)] hover:underline">Removal Request</a>
       </p>
     </div>
-    <div class="mt-10 text-center">
+    <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
       <a href="/contact" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+      <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
     </div>
   </section>
 </BaseLayout>

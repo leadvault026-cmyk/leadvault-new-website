@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { DATASET_TIERS } from '../data/catalog';
-import { CTA_PRIMARY } from '../data/site';
+import { CTA_PRIMARY, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
 import {
   ArrowRight,
   Database,
@@ -320,8 +320,9 @@ const faqs = [
 
   <section class="section text-center">
     <h2 class="text-2xl font-bold text-white sm:text-3xl">Know Exactly Who You Need? Let's Build the List.</h2>
-    <div class="mt-8">
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
       <a href="/contact?need=qualified-prospect-data" data-cta="qpd-final" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+      <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
     </div>
   </section>
 

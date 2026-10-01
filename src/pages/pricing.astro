@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { DATASET_TIERS } from '../data/catalog';
-import { CTA_PRIMARY, CTA_HIGH_INTENT } from '../data/site';
+import { CTA_PRIMARY, CTA_HIGH_INTENT, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
 import { ArrowRight, Check, Globe, UserCheck, Sliders, HelpCircle } from '@lucide/astro';
 
 // Recurring prospect-research plans, not access to a static database — each
@@ -343,8 +343,9 @@ const faqs = [
       <div class="mx-auto mt-10 max-w-3xl">
         <FaqAccordion items={faqs} />
       </div>
-      <div class="mt-10 text-center">
+      <div class="mt-10 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center">
         <a href="/contact" data-cta="pricing-custom-dataset" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
+        <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
       </div>
     </div>
   </section>

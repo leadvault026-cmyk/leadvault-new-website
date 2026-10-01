@@ -94,10 +94,18 @@ export const PRIMARY_TAGLINE = 'Know Who to Target. Know Why They Matter. Know H
 // page uses the same button text for the same intent instead of ~15 separate
 // hand-typed variants ("Request Sample Data", "Get Started", "Order Fresh
 // Data", "Ask Us"...) drifting apart over time.
-export const CTA_PRIMARY = 'Start a Research Project'; // general contact-intent CTA, any offering
-export const CTA_SECONDARY = 'See Sample Intelligence'; // → /data-catalog's live sample previews
+export const CTA_PRIMARY = 'Start a Research Project'; // decided visitor, any offering
 export const CTA_HIGH_INTENT = 'Talk to a Strategist'; // complex/managed-outreach-style projects
-export const CTA_SAMPLE_DATA = 'Request Sample Data'; // reserved for pages where the visitor is evaluating Qualified Prospect Data specifically (brief §5)
+export const CTA_SECONDARY = 'See Sample Intelligence'; // → /data-catalog's live sample previews; distinct from CTA_SAMPLE_DATA below (browsing vs. requesting)
+// Low-commitment secondary CTA for visitors who aren't sure yet what they
+// need (owner feedback, 2026-10-01: "Start a Research Project" alone assumes
+// the visitor already knows what they want). Routes to /contact?tier=
+// prospect-sample, which reuses the existing tier pre-fill script to set
+// "What do you need?", volume, and the ideal-customer note automatically —
+// no new pre-fill logic needed. Paired with CTA_PRIMARY on every page's
+// closing CTA.
+export const CTA_SAMPLE_DATA = 'Get a Sample';
+export const CTA_SAMPLE_HREF = '/contact?tier=prospect-sample';
 
 // Real contact details supplied by the client. WHATSAPP_NUMBER_INTL is digits-only
 // (no "+", spaces, or leading zeros) — the format wa.me links require.

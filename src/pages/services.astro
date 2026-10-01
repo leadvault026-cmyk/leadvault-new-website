@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
 import {
   Database,
   Sparkles,
@@ -299,7 +300,10 @@ const decisionGuide = [
         Or skip the labels entirely. Tell us what you are trying to accomplish and we will help
         determine the appropriate research approach.
       </p>
-      <a href="/contact" data-cta="services-not-sure" class="btn-primary mt-5">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
+      <div class="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a href="/contact" data-cta="services-not-sure" class="btn-primary">Not Sure Where to Start? Tell Us What You Need <ArrowRight size={18} /></a>
+        <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
+      </div>
     </div>
   </section>
 </BaseLayout>

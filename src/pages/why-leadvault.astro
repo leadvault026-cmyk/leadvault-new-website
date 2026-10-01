@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
-import { CTA_PRIMARY, CTA_SAMPLE_DATA } from '../data/site';
+import { CTA_PRIMARY, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
 import { ArrowRight, Search, Target, UserCheck, ShieldCheck, Layers, ListChecks, XCircle, Compass, Scale, AlertOctagon } from '@lucide/astro';
 
 // Repositioning master brief (2026-09-30) §14 + owner decision on the audit's
@@ -238,7 +238,7 @@ const reasons = [
       </p>
       <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <a href="/contact" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
-        <a href="/pricing" class="btn-outline">{CTA_SAMPLE_DATA}</a>
+        <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
       </div>
       <p class="mx-auto mt-6 max-w-2xl text-xs italic text-white/50">
         This comparison reflects LeadVault's general understanding of how self-serve database

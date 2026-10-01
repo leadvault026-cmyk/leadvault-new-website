@@ -6,7 +6,8 @@ import SampleDataSection from '../components/SampleDataSection.astro';
 import {
   PRIMARY_TAGLINE,
   CTA_PRIMARY,
-  CTA_SECONDARY,
+  CTA_SAMPLE_DATA,
+  CTA_SAMPLE_HREF,
   CTA_HIGH_INTENT,
 } from '../data/site';
 import {
@@ -216,7 +217,7 @@ const qualityPrinciples = [
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a href="/contact" data-cta="hero-start-project" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
-        <a href="/data-catalog" data-cta="hero-sample-intelligence" class="btn-outline">{CTA_SECONDARY}</a>
+        <a href={CTA_SAMPLE_HREF} data-cta="hero-get-sample" class="btn-outline">{CTA_SAMPLE_DATA}</a>
       </div>
       <ul class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-6">
         {['Fresh Research', 'Evidence-Backed Qualification', 'Decision-Maker Research', 'Verified Contact Data', 'Worldwide Coverage'].map((item) => (
