@@ -4,6 +4,8 @@ import HeroWorldGraphic from '../components/HeroWorldGraphic.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import SampleDataSection from '../components/SampleDataSection.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { VIDEOS } from '../data/videos';
 import { CTA_MAIN, WHATSAPP_GET_LEADS_LINK, CTA_SAMPLE_HREF, CTA_SAMPLE_DATA } from '../data/site';
 import { ArrowRight, Check, Database, Sparkles, Mail, MessageCircle, Users, Store, Megaphone, Briefcase } from '@lucide/astro';
 
@@ -38,6 +40,8 @@ const whyPoints = [
   'Free replacement if more than 5% are invalid within 14 days',
 ];
 
+const latestVideo = [...VIDEOS].sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))[0];
+
 const faqs = [
   { question: 'How fresh is the data?', answer: 'Researched and verified for your order, usually within days of delivery.' },
   { question: 'What if some contacts are wrong?', answer: 'If more than 5% of records are invalid within 14 days of delivery, we replace them free.' },
@@ -48,8 +52,8 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="LeadVault - B2B Lead Lists & Custom Prospect Research"
-  description="Researched lists of businesses and the people who decide, with verified emails and phone numbers. For sales teams, agencies, freelancers and exporters in the US, UK, Nigeria and worldwide."
+  title="LeadVault | Verified B2B Leads and Custom Research"
+  description="Tell us who buys from you and we find them. Researched lists of businesses and decision-makers, with verified emails and phone numbers. Start with 100 leads for $29."
   path="/"
   includeOrgSchema
 >
@@ -163,11 +167,20 @@ const faqs = [
           width={800}
           height={1303}
         />
-        <!-- Latest YouTube video slot: populated in Phase 3 from the /learn video list. -->
-        <div id="latest-video" class="mt-8 hidden"></div>
+        {latestVideo && (
+          <div class="mt-8">
+            <p class="mb-3 text-sm font-semibold text-white">Latest video</p>
+            <div class="aspect-video w-full overflow-hidden rounded-lg">
+              <iframe class="h-full w-full" src={`https://www.youtube-nocookie.com/embed/${latestVideo.youtubeId}`} title={latestVideo.title} loading="lazy" allowfullscreen></iframe>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   </section>
+
+  <!-- Testimonials: renders only when real quotes exist (see data/testimonials.ts) -->
+  <Testimonials />
 
   <!-- 7. Pricing teaser + FAQ + final call to action -->
   <section class="section">

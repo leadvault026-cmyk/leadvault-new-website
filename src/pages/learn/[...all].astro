@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { VIDEOS, TOPICS } from '../../data/videos';
+
+// Only generate /learn once there is at least one video. With an empty list
+// this returns no paths, so the route is not built and not in the sitemap.
+export function getStaticPaths() {
+  return VIDEOS.length > 0 ? [{ params: { all: undefined } }] : [];
+}
+
+const groups = TOPICS.map((topic) => ({
+  topic,
+  videos: VIDEOS.filter((v) => v.topic === topic).sort((a, b) => b.publishedDate.localeCompare(a.publishedDate)),
+})).filter((g) => g.videos.length > 0);
+---
+
+<BaseLayout
+  title="Learn B2B Prospecting | LeadVault"
+  description="Short videos on finding leads, reaching the right people, common lead mistakes, who buys and how the data is researched."
+  path="/learn"
+>
+  <section class="section text-center">
+    <h1 class="text-4xl font-extrabold text-white sm:text-5xl">Learn</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">Short videos from the LeadVault team, grouped by topic.</p>
+  </section>
+
+  {groups.map((g) => (
+    <section class="section-alt">
+      <div class="section">
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">{g.topic}</h2>
+        <ul class="mt-8 grid gap-6 md:grid-cols-2">
+          {g.videos.map((v) => (
+            <li class="card">
+              <div class="aspect-video w-full overflow-hidden rounded-lg">
+                <iframe
+                  class="h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}`}
+                  title={v.title}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <h3 class="mt-4 text-base font-semibold text-white">{v.title}</h3>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+</BaseLayout>

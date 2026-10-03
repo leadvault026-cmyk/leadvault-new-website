@@ -1,3 +1,5 @@
+import { VIDEOS } from './videos';
+
 // Central nav/footer data so Header and Footer stay in sync with the copy doc's
 // site-wide footer "Explore" list without duplicating the list in two files.
 export interface NavLink {
@@ -14,6 +16,8 @@ export const EXPLORE_LINKS: NavLink[] = [
   { label: 'For Exporters & Importers', href: '/trade' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Samples', href: '/data-catalog' },
+  // Learn appears only once there are videos (see data/videos.ts).
+  ...(VIDEOS.length > 0 ? [{ label: 'Learn', href: '/learn' }] : []),
   { label: 'About', href: '/about' },
   { label: 'Industries', href: '/industries' },
   { label: 'Why LeadVault', href: '/why-leadvault' },
