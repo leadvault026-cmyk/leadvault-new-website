@@ -20,8 +20,10 @@
     "@lucide/astro": "^1.31.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.1",
-    "cobe": "^2.0.1",
-    "tailwindcss": "^4.3.3"
+    "d3-geo": "^3.1.1",
+    "tailwindcss": "^4.3.3",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "png-to-ico": "^3.0.2",

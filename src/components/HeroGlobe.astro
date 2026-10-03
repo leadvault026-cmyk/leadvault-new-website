@@ -1,5 +1,5 @@
 ---
-// Interactive hero globe (cobe). Loads after the page's load event so the hero
+// Interactive hero globe (country-level, canvas). Loads after the page's load event so the hero
 // text and buttons render first. The container reserves its square space up
 // front, so nothing shifts when the canvas appears.
 const CITIES = [
@@ -52,33 +52,54 @@ const homeDot = fallbackDots.find((c) => c.home);
 </div>
 
 <script>
-  import type { COBEOptions } from 'cobe';
-
+  // Country-level globe: each country gets a colour from the LeadVault palette,
+  // chosen by hashing its numeric ISO code, so colours never change between loads.
+  const LIME = ['#B7FF00', '#8FD12A', '#6BAE1F'];
+  const YELLOW = ['#E9F542', '#CFE02A'];
+  const GREY = ['#3A434C', '#4A5560', '#5E6A75'];
+  const LIME_YELLOW = [...LIME, ...YELLOW];
+  // Key markets, by ISO numeric code.
+  const KEY_COLOURS: Record<number, string> = {
+    566: '#B7FF00', // Nigeria: brightest logo lime
+    840: '#E9F542', // United States
+    826: '#E9F542', // United Kingdom
+    124: '#E9F542', // Canada
+    784: '#E9F542', // United Arab Emirates
+  };
   const CITIES = [
-    { lat: 6.5244, lng: 3.3792, home: true },
-    { lat: 40.7128, lng: -74.006 },
-    { lat: 29.7604, lng: -95.3698 },
-    { lat: 43.6532, lng: -79.3832 },
-    { lat: 51.5074, lng: -0.1278 },
-    { lat: 25.2048, lng: 55.2708 },
-    { lat: -26.2041, lng: 28.0473 },
-    { lat: -1.2921, lng: 36.8219 },
-    { lat: 19.076, lng: 72.8777 },
-    { lat: 1.3521, lng: 103.8198 },
-    { lat: -23.5505, lng: -46.6333 },
-    { lat: -33.8688, lng: 151.2093 },
+    { name: 'Lagos', lat: 6.5244, lng: 3.3792, home: true },
+    { name: 'New York', lat: 40.7128, lng: -74.006 },
+    { name: 'Houston', lat: 29.7604, lng: -95.3698 },
+    { name: 'Toronto', lat: 43.6532, lng: -79.3832 },
+    { name: 'London', lat: 51.5074, lng: -0.1278 },
+    { name: 'Dubai', lat: 25.2048, lng: 55.2708 },
+    { name: 'Johannesburg', lat: -26.2041, lng: 28.0473 },
+    { name: 'Nairobi', lat: -1.2921, lng: 36.8219 },
+    { name: 'Mumbai', lat: 19.076, lng: 72.8777 },
+    { name: 'Singapore', lat: 1.3521, lng: 103.8198 },
+    { name: 'São Paulo', lat: -23.5505, lng: -46.6333 },
+    { name: 'Sydney', lat: -33.8688, lng: 151.2093 },
   ];
-  const LIME: [number, number, number] = [0.718, 1, 0];
-  const CYAN: [number, number, number] = [0, 0.851, 1];
+  const CYAN = '#00D9FF';
+  const INITIAL_LAMBDA = -3.3792; // centre the view on Lagos
+  const INITIAL_PHI = -6.5244;
 
   const root = document.querySelector<HTMLElement>('[data-globe]');
   const canvas = root?.querySelector<HTMLCanvasElement>('[data-globe-canvas]');
   const fallback = root?.querySelector<SVGElement>('[data-globe-fallback]');
 
-  function hasWebGL(): boolean {
+  // Stable colour per country: integer hash of the numeric ISO code.
+  // Roughly 6 in 11 slots are lime or yellow, the rest grey (about 55/45).
+  function colourFor(id: number): string {
+    const key = KEY_COLOURS[id];
+    if (key) return key;
+    const h = Math.abs(Math.imul(id, 2654435761)) % 11;
+    return h < 6 ? LIME_YELLOW[h % LIME_YELLOW.length] : GREY[(h - 6) % GREY.length];
+  }
+
+  function hasCanvas(): boolean {
     try {
-      const c = document.createElement('canvas');
-      return !!(c.getContext('webgl') || c.getContext('experimental-webgl'));
+      return !!document.createElement('canvas').getContext('2d');
     } catch {
       return false;
     }
@@ -86,85 +107,160 @@ const homeDot = fallbackDots.find((c) => c.home);
 
   async function start() {
     if (!root || !canvas || !fallback) return;
-    if (!hasWebGL()) {
+    if (!hasCanvas()) {
       canvas.remove();
       fallback.classList.remove('hidden');
       return;
     }
 
+    const [{ geoOrthographic, geoPath, geoInterpolate, geoDistance }, { feature }, topoModule] = await Promise.all([
+      import('d3-geo'),
+      import('topojson-client'),
+      import('world-atlas/countries-110m.json'),
+    ]);
+    const topo: any = (topoModule as any).default ?? topoModule;
+    const countries = feature(topo, topo.objects.countries).features as any[];
+
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isSmall = window.innerWidth < 768;
     const dpr = isSmall ? 1 : Math.min(2, window.devicePixelRatio || 1);
     const size = Math.round(canvas.getBoundingClientRect().width) || 300;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
 
-    const { default: createGlobe } = await import('cobe');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.scale(dpr, dpr);
 
-    const markers = CITIES.map((c) => ({
-      location: [c.lat, c.lng] as [number, number],
-      size: c.home ? 0.09 : 0.05,
-      color: c.home ? LIME : CYAN,
-    }));
+    const projection = geoOrthographic()
+      .scale(size / 2 - 6)
+      .translate([size / 2, size / 2])
+      .clipAngle(90)
+      .precision(0.5);
+    const path = geoPath(projection, ctx);
+    const sphere = { type: 'Sphere' } as any;
+
+    let lambda = INITIAL_LAMBDA;
+    let phi = INITIAL_PHI;
     const home = CITIES[0];
-    const arcs = CITIES.slice(1).map((c) => ({
-      from: [home.lat, home.lng] as [number, number],
-      to: [c.lat, c.lng] as [number, number],
-    }));
+    const arcs = CITIES.slice(1).map((c) => {
+      const interp = geoInterpolate([home.lng, home.lat], [c.lng, c.lat]);
+      const coords = Array.from({ length: 65 }, (_, i) => interp(i / 64));
+      return { type: 'LineString', coordinates: coords } as any;
+    });
 
-    const options: COBEOptions = {
-      devicePixelRatio: dpr,
-      width: size * dpr,
-      height: size * dpr,
-      phi: -1.57,
-      theta: 0.25,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: isSmall ? 8000 : 16000,
-      mapBrightness: 5,
-      mapBaseBrightness: 0.06,
-      baseColor: [0.22, 0.22, 0.25],
-      markerColor: CYAN,
-      glowColor: CYAN,
-      opacity: 0.9,
-      markers,
-      arcs,
-      arcColor: CYAN,
-      arcWidth: 0.4,
-      arcHeight: 0.25,
-    };
-    const globe = createGlobe(canvas, options);
+    function draw() {
+      projection.rotate([-lambda, -phi]);
+      const centre: [number, number] = [-lambda, -phi];
+      ctx!.clearRect(0, 0, size, size);
 
+      // Ocean
+      ctx!.beginPath();
+      path(sphere);
+      ctx!.fillStyle = '#0A0B0D';
+      ctx!.fill();
+
+      // Countries, each in its own colour
+      ctx!.lineWidth = 0.35;
+      ctx!.strokeStyle = 'rgba(10, 11, 13, 0.7)';
+      for (const f of countries) {
+        const id = +f.id;
+        ctx!.beginPath();
+        path(f);
+        ctx!.globalAlpha = 0.62;
+        ctx!.fillStyle = colourFor(id);
+        ctx!.fill();
+        ctx!.globalAlpha = 1;
+        ctx!.stroke();
+      }
+
+      // Key markets on top: full-strength fill and a bright outline so they stand out
+      ctx!.lineWidth = 1;
+      for (const f of countries) {
+        const id = +f.id;
+        if (!KEY_COLOURS[id]) continue;
+        ctx!.beginPath();
+        path(f);
+        ctx!.fillStyle = KEY_COLOURS[id];
+        ctx!.globalAlpha = 0.95;
+        ctx!.fill();
+        ctx!.globalAlpha = 1;
+        ctx!.strokeStyle = '#F5F7FA';
+        ctx!.stroke();
+      }
+
+      // Arcs from Lagos
+      ctx!.lineWidth = 1.6;
+      ctx!.strokeStyle = CYAN;
+      ctx!.globalAlpha = 0.85;
+      ctx!.shadowColor = CYAN;
+      ctx!.shadowBlur = 6;
+      for (const a of arcs) {
+        ctx!.beginPath();
+        path(a);
+        ctx!.stroke();
+      }
+      ctx!.globalAlpha = 1;
+      ctx!.shadowBlur = 0;
+
+      // City markers, on the visible side only
+      for (const c of CITIES) {
+        const visible = geoDistance([c.lng, c.lat], centre) < Math.PI / 2;
+        if (!visible) continue;
+        const [x, y] = projection([c.lng, c.lat]) as [number, number];
+        ctx!.beginPath();
+        ctx!.arc(x, y, c.home ? 4.5 : 2.6, 0, Math.PI * 2);
+        ctx!.fillStyle = c.home ? '#B7FF00' : '#FFFFFF';
+        ctx!.shadowColor = c.home ? '#B7FF00' : CYAN;
+        ctx!.shadowBlur = c.home ? 14 : 8;
+        ctx!.fill();
+        ctx!.shadowBlur = 0;
+      }
+
+      // Soft cyan atmosphere
+      ctx!.beginPath();
+      path(sphere);
+      ctx!.lineWidth = 2;
+      ctx!.strokeStyle = CYAN;
+      ctx!.shadowColor = CYAN;
+      ctx!.shadowBlur = 16;
+      ctx!.globalAlpha = 0.6;
+      ctx!.stroke();
+      ctx!.globalAlpha = 1;
+      ctx!.shadowBlur = 0;
+    }
+
+    draw();
     if (reduceMotion) return;
 
-    let phi = -1.57;
     let dragging = false;
     let lastX = 0;
     let visible = true;
-
-    const onDown = (e: PointerEvent) => {
+    canvas.addEventListener('pointerdown', (e) => {
       dragging = true;
       lastX = e.clientX;
       canvas.setPointerCapture(e.pointerId);
-    };
-    const onMove = (e: PointerEvent) => {
+    });
+    canvas.addEventListener('pointermove', (e) => {
       if (!dragging) return;
-      phi += (e.clientX - lastX) / 200;
+      lambda += (e.clientX - lastX) * 0.35;
       lastX = e.clientX;
-    };
-    const onUp = () => {
+      draw();
+    });
+    const endDrag = () => {
       dragging = false;
     };
-    canvas.addEventListener('pointerdown', onDown);
-    canvas.addEventListener('pointermove', onMove);
-    canvas.addEventListener('pointerup', onUp);
-    canvas.addEventListener('pointercancel', onUp);
-
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
     new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
     }).observe(canvas);
 
     const tick = () => {
-      if (visible && !dragging) phi += 0.0025;
-      globe.update({ phi });
+      if (visible && !dragging) {
+        lambda -= 0.14;
+        draw();
+      }
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
