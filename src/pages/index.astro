@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroWorldGraphic from '../components/HeroWorldGraphic.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import SampleDataSection from '../components/SampleDataSection.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
@@ -58,10 +57,11 @@ const faqs = [
   includeOrgSchema
 >
   <!-- 1. Hero -->
-  <section class="section grid gap-12 lg:grid-cols-2 lg:items-center">
+  <section class="section grid grid-cols-1 items-start gap-10 !pt-8 lg:grid-cols-2 lg:gap-12 lg:!pt-16">
     <div>
-      <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-        Tell us who buys from you. We'll find them.
+      <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-[2.5rem]">
+        <span class="block sm:whitespace-nowrap">Tell us who buys from you.</span>
+        <span class="block">We'll find them.</span>
       </h1>
       <p class="mt-5 text-white/75">
         Researched lists of businesses and the people who decide, with verified emails and phone
@@ -76,10 +76,34 @@ const faqs = [
         Verified before delivery · Free replacement guarantee · Start with 100 leads for $29
       </p>
     </div>
-    <div>
-      <HeroWorldGraphic />
-      <p class="mt-4 text-center text-sm font-semibold text-white">Prospect intelligence across markets worldwide.</p>
-      <p class="mt-1 text-center text-xs text-white/50">From North America and Europe to Africa, the Middle East, Asia, and beyond.</p>
+    <div class="w-full min-w-0 max-w-md lg:max-w-none">
+      <div class="card">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-white/50">Sample — illustrative data</p>
+        <table class="w-full table-fixed text-left text-[11px] leading-snug sm:text-xs">
+          <thead>
+            <tr class="text-[var(--color-lime)]">
+              <th scope="col" class="w-[28%] py-2 pr-2 font-semibold">Company</th>
+              <th scope="col" class="w-[26%] py-2 pr-2 font-semibold">Contact</th>
+              <th scope="col" class="w-[30%] py-2 pr-2 font-semibold">Email (masked)</th>
+              <th scope="col" class="w-[16%] py-2 font-semibold">Status</th>
+            </tr>
+          </thead>
+          <tbody class="text-white/85">
+            <tr class="border-t border-white/10 align-top">
+              <td class="py-2 pr-2">Harbor Dental Group</td>
+              <td class="py-2 pr-2">D. Whitfield<span class="block text-white/55">Practice Manager</span></td>
+              <td class="break-all py-2 pr-2">d.****@har*****.com</td>
+              <td class="py-2 text-[var(--color-lime)]">✔ Verified</td>
+            </tr>
+            <tr class="border-t border-white/10 align-top">
+              <td class="py-2 pr-2">Coastline Clinics</td>
+              <td class="py-2 pr-2">R. Okafor<span class="block text-white/55">Office Director</span></td>
+              <td class="break-all py-2 pr-2">r.****@coa*****.com</td>
+              <td class="py-2 text-[var(--color-lime)]">✔ Verified</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
