@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { DATASET_TIERS } from '../data/catalog';
-import { CTA_MAIN, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF, WHATSAPP_GET_LEADS_LINK } from '../data/site';
+import { CTA_QUOTE, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF, WHATSAPP_GET_LEADS_LINK } from '../data/site';
 import { ArrowRight, Check, MessageCircle, ShieldCheck } from '@lucide/astro';
 
 // Phase 2 (brief 2.4): three blocks matching the three services, with the $29
@@ -94,7 +94,7 @@ const faqs = [
     </p>
     <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
       <a href={CTA_SAMPLE_HREF} data-cta="pricing-get-sample" class="btn-primary">{CTA_SAMPLE_DATA} <ArrowRight size={18} /></a>
-      <a href="/contact" data-cta="pricing-get-leads" class="btn-outline">{CTA_MAIN}</a>
+      <a href="/contact" data-cta="pricing-request-quote" class="btn-outline">{CTA_QUOTE}</a>
     </div>
   </section>
 
@@ -204,7 +204,7 @@ const faqs = [
                 <li class="flex items-start gap-2 text-sm text-white/75"><Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />{f}</li>
               ))}
             </ul>
-            <a href="/contact" class="btn-primary w-full">{CTA_MAIN}</a>
+            <a href="/contact" class="btn-primary w-full">{CTA_QUOTE}</a>
           </div>
         ))}
       </div>

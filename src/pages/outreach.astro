@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
-import { CTA_MAIN, WHATSAPP_GET_LEADS_LINK } from '../data/site';
+import { CTA_QUOTE, WHATSAPP_GET_LEADS_LINK } from '../data/site';
 import { ArrowRight, MessageCircle, Check } from '@lucide/astro';
 
 // Phase 2 (brief 2.1): merges /managed-outreach and the Data Cleaning section of /services.
@@ -51,7 +51,7 @@ const faqs = [
       audience and run the campaign for you.
     </p>
     <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-      <a href="/contact" data-cta="outreach-hero" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      <a href="/contact" data-cta="outreach-hero" class="btn-primary">{CTA_QUOTE} <ArrowRight size={18} /></a>
       <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="outreach-whatsapp" class="btn-outline"><MessageCircle size={16} aria-hidden="true" /> Chat on WhatsApp</a>
     </div>
   </section>
@@ -133,7 +133,7 @@ const faqs = [
   <section class="section text-center">
     <h2 class="text-2xl font-bold text-white sm:text-3xl">Send the File, or Tell Us the Campaign.</h2>
     <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-      <a href="/contact" data-cta="outreach-final" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      <a href="/contact" data-cta="outreach-final" class="btn-primary">{CTA_QUOTE} <ArrowRight size={18} /></a>
     </div>
   </section>
 

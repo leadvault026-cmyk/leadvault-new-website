@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { HEADER_NAV, isNavGroup, CTA_MAIN } from '../data/site';
+import { HEADER_NAV, isNavGroup, CTA_SAMPLE_LEADS, CTA_SAMPLE_HREF } from '../data/site';
 import { ChevronDown } from '@lucide/astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
@@ -74,7 +74,7 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     </nav>
 
     <div class="hidden shrink-0 items-center gap-3 xl:flex">
-      <a href="/contact" data-cta="header-get-leads" class="btn-primary !px-5 !py-2.5 text-sm">{CTA_MAIN}</a>
+      <a href={CTA_SAMPLE_HREF} data-cta="header-get-sample-leads" class="btn-primary whitespace-nowrap !px-5 !py-2.5 text-sm">{CTA_SAMPLE_LEADS}</a>
     </div>
 
     <button
@@ -140,7 +140,7 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         </a>
       )
     )}
-    <a href="/contact" data-cta="header-get-leads-mobile" class="btn-primary mt-3 w-full">{CTA_MAIN}</a>
+    <a href={CTA_SAMPLE_HREF} data-cta="header-get-sample-leads-mobile" class="btn-primary mt-3 w-full whitespace-nowrap"><span class="min-[400px]:hidden">Sample Leads</span><span class="hidden min-[400px]:inline">Get Sample Leads</span></a>
   </nav>
 </header>
 

@@ -484,8 +484,8 @@ those answers — nothing here is a guess.
   testimonials it was citing as evidence no longer exist), its "years of closed deals
   behind it" line, and `about.astro`'s "years of closed deals and testimonials before
   this website ever existed" differentiator. Founder-personal narrative — "our founder
-  worked with... for years," "Steven built LeadVault on years of hands-on work," "For
-  years before this website existed, Steven Ehimigbai personally..." — was left
+  worked with... for years," "Idowu built LeadVault on years of hands-on work," "For
+  years before this website existed, Idowu Ehimigbai personally..." — was left
   untouched throughout: it's attributed to a named individual's real work history, not
   an unverifiable company-wide stat, and keeping it was an explicit instruction.
 - **"Bounce-Free Guarantee" → "Replacement Guarantee"** in the homepage trust bar,

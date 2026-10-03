@@ -126,4 +126,8 @@ export const LEGAL_OFFICE_ADDRESSES = [
   ...OFFICE_ADDRESSES,
   { label: 'USA', address: '4040 Synott Road, Houston, Texas 77082, USA' },
 ];
-export const CTA_MAIN = 'Get Leads';
+// Main button: sample-led. Pre-selects the 100-lead sample on the contact form.
+export const CTA_SAMPLE_LEADS = 'Get Sample Leads';
+export const CTA_SAMPLE_LEADS_SHORT = 'Sample Leads';
+// Custom and managed work is quoted, not sample-based.
+export const CTA_QUOTE = 'Request a Quote';

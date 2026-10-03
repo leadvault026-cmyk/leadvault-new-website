@@ -31,7 +31,7 @@ You are building the LeadVault marketing website. **Every decision has already b
   - GA4 snippet with `G-XXXXXXXXXX` placeholder constant at the top of the layout file.
   - Meta Pixel snippet with `PIXEL_ID_TBD` placeholder constant.
   - On /thank-you only: fire GA4 `generate_lead` event and Meta `Lead` event (guarded so they no-op while IDs are placeholders).
-- **SEO:** per-page `<title>` + meta description from the copy doc; canonical URLs; Open Graph + Twitter card tags (generate a simple branded OG image as an SVG-rendered PNG or static asset); `@astrojs/sitemap`; `robots.txt`; semantic HTML (one h1 per page); descriptive alt text on all image slots; JSON-LD Organization schema on the homepage (name LeadVault, url https://leadvaultdata.com, founder Steven Ehimigbai).
+- **SEO:** per-page `<title>` + meta description from the copy doc; canonical URLs; Open Graph + Twitter card tags (generate a simple branded OG image as an SVG-rendered PNG or static asset); `@astrojs/sitemap`; `robots.txt`; semantic HTML (one h1 per page); descriptive alt text on all image slots; JSON-LD Organization schema on the homepage (name LeadVault, url https://leadvaultdata.com, founder Idowu Ehimigbai).
 - **Performance/accessibility:** target Lighthouse 90+ all categories. No render-blocking third-party scripts (analytics deferred). Visible focus states; color-contrast-safe text on the dark background tokens (WCAG AA — see Design tokens above).
 - **Git:** initialize repo, sensible `.gitignore`, conventional commit messages, commit in logical increments (scaffold → layout → pages → forms → polish).
 

@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import { CATALOG_CATEGORIES } from '../data/catalog';
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_LINK, OFFICE_ADDRESSES, WHATSAPP_GET_LEADS_LINK, CTA_MAIN } from '../data/site';
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_LINK, OFFICE_ADDRESSES, WHATSAPP_GET_LEADS_LINK } from '../data/site';
 import { ArrowRight, ListChecks, ClipboardCheck, MessageCircleQuestion, ShieldCheck, MessageCircle } from '@lucide/astro';
 
 // Phase 1 (2026-10-03): the form is reduced to five fields. The 100/250/500/1000
@@ -200,7 +200,7 @@ const afterSubmit = [
           </select>
         </div>
 
-        <button type="submit" class="btn-primary w-full text-sm sm:text-base">{CTA_MAIN} <ArrowRight size={18} /></button>
+        <button type="submit" class="btn-primary w-full text-sm sm:text-base">Send My Request <ArrowRight size={18} /></button>
 
         <p class="text-center text-sm text-white/70">We reply within 24 hours with a quote, or questions if we need more detail.</p>
 
