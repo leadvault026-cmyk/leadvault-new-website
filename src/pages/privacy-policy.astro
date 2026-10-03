@@ -1,6 +1,6 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
-import { CONTACT_EMAIL, PHONE_DISPLAY, OFFICE_ADDRESSES } from '../data/site';
+import { CONTACT_EMAIL, PHONE_DISPLAY, LEGAL_OFFICE_ADDRESSES } from '../data/site';
 ---
 
 <LegalLayout
@@ -118,7 +118,7 @@ import { CONTACT_EMAIL, PHONE_DISPLAY, OFFICE_ADDRESSES } from '../data/site';
   <ul>
     <li>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></li>
     <li>Phone / WhatsApp: {PHONE_DISPLAY}</li>
-    {OFFICE_ADDRESSES.map((o) => (
+    {LEGAL_OFFICE_ADDRESSES.map((o) => (
       <li>{o.label} office: {o.address}</li>
     ))}
   </ul>

@@ -1,6 +1,6 @@
 ---
 import Logo from './Logo.astro';
-import { HEADER_NAV, isNavGroup, CTA_PRIMARY } from '../data/site';
+import { HEADER_NAV, isNavGroup, CTA_MAIN, WHATSAPP_GET_LEADS_LINK } from '../data/site';
 import { ChevronDown } from '@lucide/astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
@@ -73,8 +73,20 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       )}
     </nav>
 
-    <div class="hidden shrink-0 xl:block">
-      <a href="/contact" data-cta="header-start-project" class="btn-primary !px-5 !py-2.5 text-sm">{CTA_PRIMARY}</a>
+    <div class="hidden shrink-0 items-center gap-3 xl:flex">
+      <a
+        href={WHATSAPP_GET_LEADS_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with LeadVault on WhatsApp"
+        data-cta="header-whatsapp"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform hover:scale-105"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="h-5 w-5" fill="currentColor" aria-hidden="true">
+          <path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.386.66 4.617 1.807 6.522L4 29l7.66-1.77A11.94 11.94 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.818a9.78 9.78 0 0 1-4.986-1.362l-.358-.213-4.545 1.05 1.08-4.428-.234-.372A9.77 9.77 0 0 1 5.182 15c0-5.968 4.855-10.818 10.822-10.818S26.818 9.032 26.818 15 21.97 24.818 16.004 24.818Zm5.61-8.146c-.307-.154-1.816-.897-2.098-1-.28-.103-.485-.154-.69.154-.204.307-.79 1-.968 1.205-.178.205-.357.23-.664.077-.307-.154-1.296-.478-2.47-1.524-.913-.814-1.53-1.82-1.708-2.127-.178-.307-.019-.473.135-.626.138-.138.307-.358.46-.537.154-.18.205-.307.307-.512.103-.205.051-.384-.026-.538-.077-.154-.69-1.664-.946-2.28-.249-.598-.502-.517-.69-.526l-.588-.01c-.205 0-.538.077-.82.384-.28.307-1.07 1.046-1.07 2.552s1.096 2.96 1.249 3.165c.153.205 2.157 3.293 5.226 4.62.73.315 1.3.503 1.744.644.733.233 1.4.2 1.927.121.588-.088 1.816-.742 2.072-1.46.256-.717.256-1.332.18-1.46-.077-.128-.281-.205-.588-.359Z"/>
+        </svg>
+      </a>
+      <a href="/contact" data-cta="header-get-leads" class="btn-primary !px-5 !py-2.5 text-sm">{CTA_MAIN}</a>
     </div>
 
     <button
@@ -140,7 +152,8 @@ const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         </a>
       )
     )}
-    <a href="/contact" data-cta="header-start-project-mobile" class="btn-primary mt-3 w-full">{CTA_PRIMARY}</a>
+    <a href="/contact" data-cta="header-get-leads-mobile" class="btn-primary mt-3 w-full">{CTA_MAIN}</a>
+    <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="header-whatsapp-mobile" class="btn-outline mt-2 w-full">Chat on WhatsApp</a>
   </nav>
 </header>
 

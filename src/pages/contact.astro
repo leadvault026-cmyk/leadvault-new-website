@@ -1,30 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
-import { PRIORITY_COUNTRIES, OTHER_COUNTRIES } from '../data/countries';
-import { NEED_OPTIONS } from '../data/catalog';
-import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_LINK, OFFICE_ADDRESSES } from '../data/site';
-import { ArrowRight, ListChecks, ClipboardCheck, MessageCircleQuestion, ShieldCheck } from '@lucide/astro';
+import { CATALOG_CATEGORIES } from '../data/catalog';
+import { CONTACT_EMAIL, PHONE_DISPLAY, WHATSAPP_LINK, OFFICE_ADDRESSES, WHATSAPP_GET_LEADS_LINK, CTA_MAIN } from '../data/site';
+import { ArrowRight, ListChecks, ClipboardCheck, MessageCircleQuestion, ShieldCheck, MessageCircle } from '@lucide/astro';
 
-const industries = [
-  'Import/Export & Trade',
-  'Freight & Logistics',
-  'E-commerce',
-  'Marketing Agency',
-  'SaaS/Software',
-  'Recruitment',
-  'Real Estate',
-  'Insurance',
-  'Finance/Fintech',
-  'Market Research',
-  'Events',
-  'Wholesale/Distribution',
-  'Other',
+// Phase 1 (2026-10-03): the form is reduced to five fields. The 100/250/500/1000
+// values are matched to the ?tier= links by the script at the bottom of this file.
+const leadCountOptions = [
+  { value: '100', label: '100 (sample, $29)' },
+  { value: '250', label: '250' },
+  { value: '500', label: '500' },
+  { value: '1000', label: '1,000' },
+  { value: 'ongoing-monthly', label: 'Ongoing every month' },
+  { value: 'not-sure', label: 'Not sure yet' },
 ];
 
-const volumes = ['Under 500', '500–2,500', '2,500–10,000', '10,000+'];
-const budgets = ['Under $200', '$200–$500', '$500–$1,500', '$1,500+'];
-const outreachOptions = ['Not sure yet', 'No — data/intelligence only', 'Yes — discuss managed outreach'];
+const briefExamples = [
+  "We sell a service to independent dental practices in Florida and Georgia. We need practice owners or administrators and want to exclude large hospital groups.",
+  "We export a food product and need distributors and wholesalers in Texas that actually handle the product category.",
+  "We know the 150 companies we want to target but do not know which people inside them are responsible for compliance.",
+];
 
 const whatToInclude = [
   'What type of companies are you trying to reach?',
@@ -45,12 +41,6 @@ const afterSubmit = [
   'For suitable projects, we may research a small sample or explain the proposed approach.',
   'We confirm the appropriate service, scope, price and delivery expectation before paid work begins.',
   'Research starts after the project is approved.',
-];
-
-const briefExamples = [
-  "We sell a service to independent dental practices in Florida and Georgia. We need practice owners or administrators and want to exclude large hospital groups.",
-  "We export a food product and need distributors and wholesalers in Texas that actually handle the product category.",
-  "We know the 150 companies we want to target but do not know which people inside them are responsible for compliance.",
 ];
 ---
 
@@ -122,18 +112,19 @@ const briefExamples = [
             </dd>
           </div>
           <div class="flex gap-2">
-            <dt class="shrink-0 font-medium text-white/50">Offices:</dt>
+            <dt class="shrink-0 font-medium text-white/50">Office:</dt>
             <dd>
               {OFFICE_ADDRESSES.map((o) => (
                 <p>
                   <span class="text-white/50">{o.label}:</span> {o.address}
                 </p>
               ))}
+              <p>Serving clients worldwide</p>
             </dd>
           </div>
           <div class="flex gap-2">
             <dt class="font-medium text-white/50">Hours:</dt>
-            <dd>Mon–Fri, 9am–6pm — Lagos (WAT) &amp; Houston (CST)</dd>
+            <dd>Mon–Fri, 9am–6pm — Lagos (WAT)</dd>
           </div>
         </dl>
       </div>
@@ -144,6 +135,20 @@ const briefExamples = [
         <strong class="text-[var(--color-lime)]">Free, no-obligation quote.</strong> We'll review
         your requirements and recommend the right option — nothing is charged until you approve it.
       </p>
+
+      <div class="mb-6 flex flex-col gap-3 rounded-lg border border-white/10 bg-white/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-sm text-white/80">Prefer WhatsApp? Message us at <strong class="text-white">{PHONE_DISPLAY}</strong>.</p>
+        <a
+          href={WHATSAPP_GET_LEADS_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cta="contact-whatsapp"
+          class="btn-outline shrink-0 !px-4 !py-2 text-sm"
+        >
+          <MessageCircle size={16} aria-hidden="true" /> Chat on WhatsApp
+        </a>
+      </div>
+
       <form
         id="lead-survey-form"
         name="lead-survey"
@@ -161,104 +166,43 @@ const briefExamples = [
         </p>
 
         <div>
-          <label for="full-name" class="mb-1.5 block text-sm font-medium text-white">Full Name *</label>
-          <input id="full-name" name="Full Name" type="text" required class="lv-input" />
-        </div>
-
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="business-name" class="mb-1.5 block text-sm font-medium text-white">Business Name</label>
-            <input id="business-name" name="Business Name" type="text" class="lv-input" />
-          </div>
-          <div>
-            <label for="website" class="mb-1.5 block text-sm font-medium text-white">Website</label>
-            <input id="website" name="Website" type="text" placeholder="yourcompany.com" class="lv-input" />
-          </div>
-        </div>
-
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="email" class="mb-1.5 block text-sm font-medium text-white">Email Address *</label>
-            <input id="email" name="Email Address" type="email" required class="lv-input" />
-          </div>
-          <div>
-            <label for="phone" class="mb-1.5 block text-sm font-medium text-white">Phone / WhatsApp *</label>
-            <input id="phone" name="Phone / WhatsApp" type="tel" required placeholder="+1 555 123 4567" class="lv-input" />
-          </div>
-        </div>
-
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="country" class="mb-1.5 block text-sm font-medium text-white">Country *</label>
-            <select id="country" name="Country" required class="lv-input">
-              <option value="" disabled selected>Select your country</option>
-              {PRIORITY_COUNTRIES.map((c) => <option value={c}>{c}</option>)}
-              <option disabled>──────────</option>
-              {OTHER_COUNTRIES.map((c) => <option value={c}>{c}</option>)}
-            </select>
-          </div>
-          <div>
-            <label for="industry" class="mb-1.5 block text-sm font-medium text-white">Industry *</label>
-            <select id="industry" name="Industry" required class="lv-input">
-              <option value="" disabled selected>Select your industry</option>
-              {industries.map((i) => <option value={i}>{i}</option>)}
-            </select>
-          </div>
+          <label for="full-name" class="mb-1.5 block text-sm font-medium text-white">Full name *</label>
+          <input id="full-name" name="Full Name" type="text" autocomplete="name" required class="lv-input" />
         </div>
 
         <div>
-          <label for="need" class="mb-1.5 block text-sm font-medium text-white">What do you need? *</label>
-          <select id="need" name="What do you need" required class="lv-input">
-            <option value="" disabled selected>Select an option</option>
-            {NEED_OPTIONS.map((n) => <option value={n.value}>{n.label}</option>)}
+          <label for="email" class="mb-1.5 block text-sm font-medium text-white">Email *</label>
+          <input id="email" name="Email" type="email" autocomplete="email" required class="lv-input" />
+        </div>
+
+        <div>
+          <label for="phone" class="mb-1.5 block text-sm font-medium text-white">WhatsApp or phone <span class="font-normal text-white/50">(optional)</span></label>
+          <input id="phone" name="WhatsApp or Phone" type="tel" autocomplete="tel" placeholder="+1 555 123 4567" class="lv-input" />
+        </div>
+
+        <div>
+          <label for="who" class="mb-1.5 block text-sm font-medium text-white">Who do you want to reach? *</label>
+          <textarea
+            id="who"
+            name="Who Do You Want to Reach"
+            rows="4"
+            required
+            placeholder="e.g. Dental clinics in Texas, practice manager or owner"
+            class="lv-input"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="lead-count" class="mb-1.5 block text-sm font-medium text-white">How many leads? *</label>
+          <select id="lead-count" name="How Many Leads" required class="lv-input">
+            <option value="" disabled selected>Select a number</option>
+            {leadCountOptions.map((o) => <option value={o.value}>{o.label}</option>)}
           </select>
         </div>
 
-        <div>
-          <label for="ideal-customer" class="mb-1.5 block text-sm font-medium text-white">
-            Who is your ideal customer, counterparty, or decision-maker?
-          </label>
-          <input id="ideal-customer" name="Ideal Customer" type="text" placeholder="e.g. VP of Sales at 50–200 person SaaS companies" class="lv-input" />
-        </div>
+        <button type="submit" class="btn-primary w-full text-sm sm:text-base">{CTA_MAIN} <ArrowRight size={18} /></button>
 
-        <div>
-          <label for="target-locations" class="mb-1.5 block text-sm font-medium text-white">Target locations</label>
-          <input id="target-locations" name="Target Locations" type="text" placeholder="Countries / states / cities" class="lv-input" />
-        </div>
-
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="volume" class="mb-1.5 block text-sm font-medium text-white">Approximate volume needed</label>
-            <select id="volume" name="Approximate Volume" class="lv-input">
-              <option value="" disabled selected>Select a range</option>
-              {volumes.map((v) => <option value={v}>{v}</option>)}
-            </select>
-          </div>
-          <div>
-            <label for="budget" class="mb-1.5 block text-sm font-medium text-white">Budget range</label>
-            <select id="budget" name="Budget Range" class="lv-input">
-              <option value="" disabled selected>Select a range</option>
-              {budgets.map((b) => <option value={b}>{b}</option>)}
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label for="outreach-support" class="mb-1.5 block text-sm font-medium text-white">Do you need outreach support too?</label>
-          <select id="outreach-support" name="Outreach Support" class="lv-input">
-            <option value="" disabled selected>Select an option</option>
-            {outreachOptions.map((o) => <option value={o}>{o}</option>)}
-          </select>
-        </div>
-
-        <div>
-          <label for="challenge" class="mb-1.5 block text-sm font-medium text-white">
-            What are you trying to achieve?
-          </label>
-          <textarea id="challenge" name="Biggest Challenge" rows="4" class="lv-input" placeholder="e.g. your biggest challenge in reaching these prospects right now"></textarea>
-        </div>
-
-        <button type="submit" class="btn-primary w-[calc(100%-2rem)] !px-4 text-sm sm:text-base">Submit My Data Request <ArrowRight size={18} /></button>
+        <p class="text-center text-sm text-white/70">We reply within 24 hours with a quote, or questions if we need more detail.</p>
 
         <p class="text-xs text-white/50">
           By submitting, you agree to be contacted by LeadVault via email, phone, or WhatsApp. We
@@ -323,42 +267,32 @@ const briefExamples = [
 </BaseLayout>
 
 <script>
-  import { NEED_SLUG_TO_OPTION, CATALOG_CATEGORIES, DATASET_TIERS } from '../data/catalog';
+  import { CATALOG_CATEGORIES } from '../data/catalog';
 
   const params = new URLSearchParams(window.location.search);
-  const needSelect = document.getElementById('need') as HTMLSelectElement | null;
-  const idealCustomer = document.getElementById('ideal-customer') as HTMLInputElement | null;
+  const who = document.getElementById('who') as HTMLTextAreaElement | null;
+  const leadCount = document.getElementById('lead-count') as HTMLSelectElement | null;
 
-  // Data Catalog "Request This Dataset" buttons link to /contact?need=<category-slug>
-  // (CLAUDE.md). Pre-fill "What do you need?" + the "ideal customer" field from it.
-  const slug = params.get('need');
-  if (slug) {
-    const category = CATALOG_CATEGORIES.find((c) => c.slug === slug);
-    const needOption = NEED_SLUG_TO_OPTION[slug] ?? (category ? 'Fresh custom dataset' : undefined);
+  // Phase 1: ?tier= links from pricing keep working by mapping each tier to the
+  // matching "How many leads?" value.
+  const TIER_TO_LEADS: Record<string, string> = {
+    'prospect-sample': '100',
+    'targeted-list': '250',
+    'campaign-list': '500',
+    'larger-campaign': '1000',
+  };
 
-    if (needSelect && needOption) {
-      needSelect.value = needOption;
-    }
-    if (idealCustomer && category && !idealCustomer.value) {
-      idealCustomer.value = `Interested in: ${category.name}`;
-    }
+  const tierSlug = params.get('tier');
+  if (tierSlug && TIER_TO_LEADS[tierSlug] && leadCount) {
+    leadCount.value = TIER_TO_LEADS[tierSlug];
   }
 
-  // Pricing's "Request This Tier" links use /contact?tier=<slug> so a visitor's
-  // exact dataset and price carry over unambiguously (payment/pricing audit
-  // round — see ASSUMPTIONS.md). Pre-fills "What do you need?", "Approximate
-  // volume needed", and names the tier in "ideal customer" for the strategist.
-  const tierSlug = params.get('tier');
-  if (tierSlug) {
-    const tier = DATASET_TIERS.find((t) => t.slug === tierSlug);
-    const volumeSelect = document.getElementById('volume') as HTMLSelectElement | null;
-
-    if (tier) {
-      if (needSelect) needSelect.value = 'Fresh custom dataset';
-      if (volumeSelect) volumeSelect.value = tier.volumeBucket;
-      if (idealCustomer && !idealCustomer.value) {
-        idealCustomer.value = `Requesting: ${tier.name} — ${tier.records} prospects, ${tier.price}`;
-      }
-    }
+  // Data Catalog "Request This Dataset" links use ?need=<category-slug>. The new
+  // form has no "What do you need?" field, so the category name goes into the
+  // "Who do you want to reach?" box instead.
+  const needSlug = params.get('need');
+  if (needSlug && who && !who.value) {
+    const category = CATALOG_CATEGORIES.find((c) => c.slug === needSlug);
+    if (category) who.value = category.name;
   }
 </script>

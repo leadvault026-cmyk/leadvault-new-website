@@ -4,11 +4,10 @@ import HeroWorldGraphic from '../components/HeroWorldGraphic.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import SampleDataSection from '../components/SampleDataSection.astro';
 import {
-  PRIMARY_TAGLINE,
+  CTA_MAIN,
   CTA_PRIMARY,
-  CTA_SAMPLE_DATA,
-  CTA_SAMPLE_HREF,
   CTA_HIGH_INTENT,
+  WHATSAPP_GET_LEADS_LINK,
 } from '../data/site';
 import {
   ArrowRight,
@@ -205,28 +204,21 @@ const qualityPrinciples = [
   <!-- Hero -->
   <section class="section grid gap-12 lg:grid-cols-2 lg:items-center">
     <div>
-      <p class="eyebrow">B2B Prospect Intelligence</p>
-      <h1 class="mt-2 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-        {PRIMARY_TAGLINE}
+      <h1 class="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+        Tell us who buys from you. We'll find them.
       </h1>
       <p class="mt-5 text-white/75">
-        LeadVault researches the companies that match your opportunity, determines why they
-        qualify, identifies the people who matter inside those organizations, and delivers
-        structured prospect intelligence your team can use for sales, outreach, market development
-        and business research.
+        Researched lists of businesses and the people who decide, with verified emails and phone
+        numbers. For sales teams, agencies, freelancers and exporters in the US, UK, Nigeria and
+        worldwide.
       </p>
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact" data-cta="hero-start-project" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
-        <a href={CTA_SAMPLE_HREF} data-cta="hero-get-sample" class="btn-outline">{CTA_SAMPLE_DATA}</a>
+        <a href="/contact" data-cta="hero-get-leads" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+        <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="hero-whatsapp" class="btn-outline">Chat on WhatsApp</a>
       </div>
-      <ul class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/10 pt-6">
-        {['Fresh Research', 'Evidence-Backed Qualification', 'Decision-Maker Research', 'Verified Contact Data', 'Worldwide Coverage'].map((item) => (
-          <li class="flex items-center gap-1.5 text-sm font-medium text-white/80">
-            <Check size={15} class="text-[var(--color-lime)]" aria-hidden="true" />
-            {item}
-          </li>
-        ))}
-      </ul>
+      <p class="mt-8 border-t border-white/10 pt-6 text-sm font-medium text-white/80">
+        Verified before delivery · Free replacement guarantee · Start with 100 leads for $29
+      </p>
     </div>
     <div>
       <HeroWorldGraphic />

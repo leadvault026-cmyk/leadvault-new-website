@@ -5,21 +5,22 @@ export interface NavLink {
   href: string;
 }
 
+// Phase 1 (2026-10-03): Industries, Why LeadVault and Tools & Technology moved
+// to the footer only. Current service destinations are temporary until Phase 2
+// creates /lead-lists, /custom-research and /outreach.
 export const EXPLORE_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
-  { label: 'Services', href: '/services' },
-  { label: 'Trade Desk', href: '/trade' },
+  { label: 'Lead Lists', href: '/qualified-prospect-data' },
+  { label: 'Custom Research', href: '/prospect-intelligence' },
+  { label: 'Outreach & List Cleaning', href: '/managed-outreach' },
+  { label: 'For Exporters & Importers', href: '/trade' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Samples', href: '/data-catalog' },
+  { label: 'About', href: '/about' },
   { label: 'Industries', href: '/industries' },
   { label: 'Why LeadVault', href: '/why-leadvault' },
   { label: 'Tools & Technology', href: '/tools' },
-  { label: 'Data Catalog', href: '/data-catalog' },
-  { label: 'About', href: '/about' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Get Started', href: '/contact' },
 ];
-
-// Header nav omits "Get Started" — the sticky CTA button covers that slot.
-export const HEADER_LINKS: NavLink[] = EXPLORE_LINKS.filter((l) => l.href !== '/contact');
 
 // Grouped header nav (design review: 9 flat items was too crowded). Two related
 // groups collapse into keyboard-accessible dropdowns; everything still points at
@@ -45,23 +46,22 @@ export function isNavGroup(entry: NavEntry): entry is NavGroup {
 // instead. "Tools & Technology" (the former "Company" group) isn't in the
 // brief's proposed nav bar either — kept reachable via the footer and
 // cross-links instead of primary nav.
+// Phase 1 nav (2026-10-03): Home · Services ▾ · Pricing · Samples · About, plus
+// Get Leads and the WhatsApp icon. "Learn" is intentionally absent until Phase 3
+// creates /learn — add it back here at that point.
 export const HEADER_NAV: NavEntry[] = [
   { label: 'Home', href: '/' },
-  { label: 'Prospect Intelligence', href: '/prospect-intelligence' },
   {
-    label: 'Solutions',
+    label: 'Services',
     items: [
-      { label: 'Qualified Prospect Data', href: '/qualified-prospect-data' },
-      { label: 'Market & ICP Research', href: '/market-icp-research' },
-      { label: 'Decision-Maker Intelligence', href: '/decision-maker-intelligence' },
-      { label: 'Trade & Counterparty Intelligence', href: '/trade' },
-      { label: 'Intelligence-Led Outreach', href: '/managed-outreach' },
-      { label: 'Data Cleaning & Enrichment', href: '/services#data-cleaning' },
+      { label: 'Lead Lists', href: '/qualified-prospect-data' },
+      { label: 'Custom Research', href: '/prospect-intelligence' },
+      { label: 'Outreach & List Cleaning', href: '/managed-outreach' },
+      { label: 'For Exporters & Importers', href: '/trade' },
     ],
   },
-  { label: 'Industries', href: '/industries' },
-  { label: 'Why LeadVault', href: '/why-leadvault' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Samples', href: '/data-catalog' },
   { label: 'About', href: '/about' },
 ];
 
@@ -113,7 +113,15 @@ export const CONTACT_EMAIL = 'hello@leadvaultdata.com';
 export const PHONE_DISPLAY = '+234 803 625 3684';
 export const WHATSAPP_NUMBER_INTL = '2348036253684';
 export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER_INTL}`;
+export const WHATSAPP_GET_LEADS_LINK = `${WHATSAPP_LINK}?text=Hi%20LeadVault%2C%20I%27d%20like%20to%20get%20leads.`;
+
+// Phase 1 (2026-10-03): Houston removed from public display per owner decision.
+// Privacy policy keeps the full list below — it's a legal disclosure page.
 export const OFFICE_ADDRESSES = [
   { label: 'Nigeria', address: '16, Jegede Street, Shagari Estate, Ipaja-Lagos, Nigeria' },
+];
+export const LEGAL_OFFICE_ADDRESSES = [
+  ...OFFICE_ADDRESSES,
   { label: 'USA', address: '4040 Synott Road, Houston, Texas 77082, USA' },
 ];
+export const CTA_MAIN = 'Get Leads';

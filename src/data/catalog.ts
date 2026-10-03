@@ -67,14 +67,14 @@ export const CATALOG_CATEGORIES: CatalogCategory[] = [
   {
     slug: 'insurance-prospects',
     name: 'Insurance Prospects',
-    description: 'Businesses and individuals by policy relevance',
+    description: 'Insurance brokers, agencies and business policy buyers',
     turnaround: '3–5 days',
     sample: parseCsv(insuranceProspectsCsv),
   },
   {
     slug: 'investment-investor-leads',
-    name: 'Investment & Investor Leads',
-    description: 'Verified investors, HNW prospects, financial advisors, and capital-seeking businesses',
+    name: 'Investment Firms & Family Offices',
+    description: 'Investment firms, family offices and real estate developers',
     turnaround: '3–5 days',
     sample: parseCsv(investmentInvestorLeadsCsv),
   },
