@@ -1,0 +1,178 @@
+---
+// Interactive hero globe (cobe). Loads after the page's load event so the hero
+// text and buttons render first. The container reserves its square space up
+// front, so nothing shifts when the canvas appears.
+const CITIES = [
+  { name: 'Lagos', lat: 6.5244, lng: 3.3792, home: true },
+  { name: 'New York', lat: 40.7128, lng: -74.006 },
+  { name: 'Houston', lat: 29.7604, lng: -95.3698 },
+  { name: 'Toronto', lat: 43.6532, lng: -79.3832 },
+  { name: 'London', lat: 51.5074, lng: -0.1278 },
+  { name: 'Dubai', lat: 25.2048, lng: 55.2708 },
+  { name: 'Johannesburg', lat: -26.2041, lng: 28.0473 },
+  { name: 'Nairobi', lat: -1.2921, lng: 36.8219 },
+  { name: 'Mumbai', lat: 19.076, lng: 72.8777 },
+  { name: 'Singapore', lat: 1.3521, lng: 103.8198 },
+  { name: 'São Paulo', lat: -23.5505, lng: -46.6333 },
+  { name: 'Sydney', lat: -33.8688, lng: 151.2093 },
+];
+
+// Static fallback: orthographic projection of the same points, computed at build time.
+const CENTER_LAT = 10 * (Math.PI / 180);
+const CENTER_LNG = 20 * (Math.PI / 180);
+const project = (lat: number, lng: number) => {
+  const φ = lat * (Math.PI / 180);
+  const λ = lng * (Math.PI / 180);
+  const x = Math.cos(φ) * Math.sin(λ - CENTER_LNG);
+  const y = Math.cos(CENTER_LAT) * Math.sin(φ) - Math.sin(CENTER_LAT) * Math.cos(φ) * Math.cos(λ - CENTER_LNG);
+  return { x: +(x * 90).toFixed(2), y: +(-y * 90).toFixed(2), visible: Math.cos(CENTER_LAT) * Math.cos(φ) * Math.cos(λ - CENTER_LNG) + Math.sin(CENTER_LAT) * Math.sin(φ) > 0 };
+};
+const fallbackDots = CITIES.map((c) => ({ ...c, ...project(c.lat, c.lng) })).filter((c) => c.visible);
+const homeDot = fallbackDots.find((c) => c.home);
+---
+
+<div data-globe class="mx-auto w-full max-w-[300px] md:max-w-md">
+  <div class="relative aspect-square w-full">
+    <canvas
+      data-globe-canvas
+      class="absolute inset-0 h-full w-full touch-pan-y"
+      role="img"
+      aria-label="Rotating globe showing LeadVault's research reach from Lagos to cities in North America, Europe, Africa, the Middle East, Asia, South America and Australia."
+    ></canvas>
+    <svg data-globe-fallback class="absolute inset-0 hidden h-full w-full" viewBox="-100 -100 200 200" role="img" aria-label="Map of LeadVault's research reach, with Lagos highlighted.">
+      <circle cx="0" cy="0" r="90" fill="#0A0B0D" stroke="#00D9FF" stroke-opacity="0.35" stroke-width="1" />
+      {fallbackDots.map((c) => (
+        <g>
+          {!c.home && <line x1={homeDot?.x} y1={homeDot?.y} x2={c.x} y2={c.y} stroke="#00D9FF" stroke-opacity="0.25" stroke-width="0.6" />}
+          <circle cx={c.x} cy={c.y} r={c.home ? 3.5 : 2} fill={c.home ? '#B7FF00' : '#00D9FF'} />
+        </g>
+      ))}
+    </svg>
+  </div>
+</div>
+
+<script>
+  import type { COBEOptions } from 'cobe';
+
+  const CITIES = [
+    { lat: 6.5244, lng: 3.3792, home: true },
+    { lat: 40.7128, lng: -74.006 },
+    { lat: 29.7604, lng: -95.3698 },
+    { lat: 43.6532, lng: -79.3832 },
+    { lat: 51.5074, lng: -0.1278 },
+    { lat: 25.2048, lng: 55.2708 },
+    { lat: -26.2041, lng: 28.0473 },
+    { lat: -1.2921, lng: 36.8219 },
+    { lat: 19.076, lng: 72.8777 },
+    { lat: 1.3521, lng: 103.8198 },
+    { lat: -23.5505, lng: -46.6333 },
+    { lat: -33.8688, lng: 151.2093 },
+  ];
+  const LIME: [number, number, number] = [0.718, 1, 0];
+  const CYAN: [number, number, number] = [0, 0.851, 1];
+
+  const root = document.querySelector<HTMLElement>('[data-globe]');
+  const canvas = root?.querySelector<HTMLCanvasElement>('[data-globe-canvas]');
+  const fallback = root?.querySelector<SVGElement>('[data-globe-fallback]');
+
+  function hasWebGL(): boolean {
+    try {
+      const c = document.createElement('canvas');
+      return !!(c.getContext('webgl') || c.getContext('experimental-webgl'));
+    } catch {
+      return false;
+    }
+  }
+
+  async function start() {
+    if (!root || !canvas || !fallback) return;
+    if (!hasWebGL()) {
+      canvas.remove();
+      fallback.classList.remove('hidden');
+      return;
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isSmall = window.innerWidth < 768;
+    const dpr = isSmall ? 1 : Math.min(2, window.devicePixelRatio || 1);
+    const size = Math.round(canvas.getBoundingClientRect().width) || 300;
+
+    const { default: createGlobe } = await import('cobe');
+
+    const markers = CITIES.map((c) => ({
+      location: [c.lat, c.lng] as [number, number],
+      size: c.home ? 0.09 : 0.05,
+      color: c.home ? LIME : CYAN,
+    }));
+    const home = CITIES[0];
+    const arcs = CITIES.slice(1).map((c) => ({
+      from: [home.lat, home.lng] as [number, number],
+      to: [c.lat, c.lng] as [number, number],
+    }));
+
+    const options: COBEOptions = {
+      devicePixelRatio: dpr,
+      width: size * dpr,
+      height: size * dpr,
+      phi: -1.57,
+      theta: 0.25,
+      dark: 1,
+      diffuse: 1.2,
+      mapSamples: isSmall ? 8000 : 16000,
+      mapBrightness: 5,
+      mapBaseBrightness: 0.06,
+      baseColor: [0.22, 0.22, 0.25],
+      markerColor: CYAN,
+      glowColor: CYAN,
+      opacity: 0.9,
+      markers,
+      arcs,
+      arcColor: CYAN,
+      arcWidth: 0.4,
+      arcHeight: 0.25,
+    };
+    const globe = createGlobe(canvas, options);
+
+    if (reduceMotion) return;
+
+    let phi = -1.57;
+    let dragging = false;
+    let lastX = 0;
+    let visible = true;
+
+    const onDown = (e: PointerEvent) => {
+      dragging = true;
+      lastX = e.clientX;
+      canvas.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      phi += (e.clientX - lastX) / 200;
+      lastX = e.clientX;
+    };
+    const onUp = () => {
+      dragging = false;
+    };
+    canvas.addEventListener('pointerdown', onDown);
+    canvas.addEventListener('pointermove', onMove);
+    canvas.addEventListener('pointerup', onUp);
+    canvas.addEventListener('pointercancel', onUp);
+
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    }).observe(canvas);
+
+    const tick = () => {
+      if (visible && !dragging) phi += 0.0025;
+      globe.update({ phi });
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  if (document.readyState === 'complete') {
+    start();
+  } else {
+    window.addEventListener('load', () => start(), { once: true });
+  }
+</script>
