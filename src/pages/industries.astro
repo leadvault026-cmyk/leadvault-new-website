@@ -40,7 +40,7 @@ const industries = [
     questions: ['Which businesses fit this client\'s exact niche?', 'Which locations or company characteristics matter?', 'Which titles/functions are appropriate for this offer?', 'What should be excluded before the list reaches campaign production?'],
     typical: ['Client-specific ICP lists', 'Local or national businesses', 'Industry segmentation', 'Decision-maker mapping', 'Custom qualification criteria', 'Recurring campaign data', 'Enrichment of agency-owned lists'],
     roles: 'Owners and founders for smaller businesses; marketing, sales, operations or commercial leaders for larger organizations; and other functions defined by the client\'s offer.',
-    deeper: 'When the agency\'s client asks for a niche that cannot be represented cleanly by standard filters, Prospect Intelligence can investigate the condition before records are delivered.',
+    deeper: 'When the agency\'s client asks for a niche that cannot be represented cleanly by standard filters, Custom Research can investigate the condition before records are delivered.',
   },
   {
     icon: Code,
@@ -84,7 +84,7 @@ const industries = [
     questions: ['Does the company actually operate in the product category?', 'What commercial role does it appear to play?', 'Is it a buyer, supplier, distributor, wholesaler, importer, exporter or manufacturer?', 'Which business contact is relevant to a commercial approach?'],
     typical: ['Importers', 'Exporters', 'Distributors', 'Wholesalers', 'Manufacturers', 'Commercial buyers', 'Suppliers', 'Counterparties', 'Product relevance', 'Company verification', 'Public evidence', 'Commercial contact research'],
     example: 'A request for U.S. rice-related businesses should not become a generic list of food companies. The research should distinguish companies with meaningful relevance to rice import, distribution, wholesale or commercial purchasing from businesses that merely sit inside a broad food category.',
-    cta: { label: 'See the dedicated Trade Desk page', href: '/trade' },
+    cta: { label: 'See For Exporters & Importers', href: '/trade' },
   },
   {
     icon: ShoppingCart,
@@ -107,19 +107,19 @@ const otherMarkets = ['Fintech, Lending & Payments', 'Insurance Brokers & Agents
 
 const researchChain = [
   { icon: Building2, label: 'Company' },
-  { icon: UserCheck, label: 'Decision-Maker' },
+  { icon: UserCheck, label: 'Right Person' },
   { icon: CheckCircle2, label: 'Verified Contact' },
   { icon: Database, label: 'Research Dataset' },
 ];
 ---
 
 <BaseLayout
-  title="Prospect Intelligence by Industry | LeadVault"
+  title="Lead Lists and Research by Industry | LeadVault"
   description="See how LeadVault applies B2B prospect intelligence, decision-maker research and qualification across agencies, SaaS, recruitment, financial services, trade, e-commerce and specialist markets."
   path="/industries"
 >
   <section class="section text-center">
-    <p class="eyebrow">Prospect Intelligence by Industry</p>
+    <p class="eyebrow">Lead Lists and Research by Industry</p>
     <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Different Markets. One Research Discipline.</h1>
     <p class="mx-auto mt-5 max-w-2xl text-white/75">
       Industry tells us where to look. Your commercial requirement tells us what to research.
@@ -202,7 +202,7 @@ const researchChain = [
     <div class="card mx-auto mt-10 max-w-3xl text-center">
       <h3 class="text-sm font-semibold uppercase tracking-wide text-white/50">Other Markets We Support</h3>
       <p class="mt-3 text-sm text-white/70">{otherMarkets.join(' · ')}</p>
-      <a href="/data-catalog" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Browse Research Capabilities →</a>
+      <a href="/data-catalog" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See all samples →</a>
     </div>
   </section>
 

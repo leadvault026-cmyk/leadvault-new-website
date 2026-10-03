@@ -29,3 +29,34 @@
 # /thank-you after a Netlify Forms submission — before Netlify's form
 # handling and normal static routing could process it, forcing a hard 404
 # instead of the real thank-you page. Removed.
+
+# Phase 2 (2026-10-03): old service URLs permanently redirect to the new pages.
+[[redirects]]
+  from = "/qualified-prospect-data"
+  to = "/lead-lists"
+  status = 301
+
+[[redirects]]
+  from = "/decision-maker-intelligence"
+  to = "/lead-lists"
+  status = 301
+
+[[redirects]]
+  from = "/prospect-intelligence"
+  to = "/custom-research"
+  status = 301
+
+[[redirects]]
+  from = "/market-icp-research"
+  to = "/custom-research"
+  status = 301
+
+[[redirects]]
+  from = "/managed-outreach"
+  to = "/outreach"
+  status = 301
+
+[[redirects]]
+  from = "/services"
+  to = "/#services"
+  status = 301

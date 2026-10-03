@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import { CTA_MAIN, WHATSAPP_GET_LEADS_LINK } from '../data/site';
+import { ArrowRight, MessageCircle, Check } from '@lucide/astro';
+
+// Phase 2 (brief 2.1): merges /managed-outreach and the Data Cleaning section of /services.
+const whoFor = [
+  'Teams that already have a list and need it cleaned before sending',
+  'Businesses that want the research turned into an email campaign',
+  'Agencies running outreach for clients',
+  'Teams testing a new segment with a focused campaign',
+];
+
+const cleaningFixes = [
+  'Duplicate companies or contacts', 'Inconsistent company names', 'Broken or missing websites',
+  'Missing job titles', 'Outdated company or contact fields', 'Business contact details that need review',
+];
+
+const outreachIncludes = [
+  'Campaign strategy and structure', 'Email copy and sequence setup', 'Managed sending',
+  'Campaign monitoring and reporting', 'Audience definition and list preparation',
+];
+
+const steps = [
+  { title: 'Send us your list or your brief', body: 'We look at what you already have and what the campaign needs to reach.' },
+  { title: 'We clean, verify and prepare', body: 'Duplicates removed, formats fixed, contacts checked. For outreach, the audience is researched first.' },
+  { title: 'You get a clean file, or a managed campaign', body: 'Use the cleaned list yourself, or let us run the outreach to the agreed scope.' },
+];
+
+const faqs = [
+  { question: 'Will you guarantee replies or meetings?', answer: 'No. Results depend on the offer, the market, timing, deliverability and recipient behaviour. We run the agreed work professionally and improve the inputs we can control.' },
+  { question: 'Do you comply with anti-spam law?', answer: 'We run permission-appropriate, regulation-aware outreach and decline campaigns designed to deceive. Your own compliance obligations remain yours.' },
+  { question: 'Can you clean a list I bought elsewhere?', answer: 'Yes. That is exactly what list cleaning is for.' },
+  { question: 'Do you write the messages?', answer: 'Yes, as part of the campaign. We work from your offer and positioning, so it is a collaborative step.' },
+  { question: 'What does cleaning cost?', answer: 'Lists up to 5,000 contacts are $39, up to 25,000 are $129, and up to 100,000 are $399. Larger lists are quoted.' },
+];
+---
+
+<BaseLayout
+  title="Outreach and List Cleaning for B2B Lists | LeadVault"
+  description="Already have a list? We clean and verify it. Want it handled? We run the outreach for you."
+  path="/outreach"
+>
+  <section class="section text-center">
+    <p class="eyebrow">Outreach &amp; List Cleaning</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Already Have a List? We Clean and Verify It. Want It Handled? We Run the Outreach.</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      Clean data gives outreach a fair start. We can clean the list you already own, or research the
+      audience and run the campaign for you.
+    </p>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href="/contact" data-cta="outreach-hero" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="outreach-whatsapp" class="btn-outline"><MessageCircle size={16} aria-hidden="true" /> Chat on WhatsApp</a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-2">
+        <div class="min-w-0">
+          <h2 class="text-2xl font-bold text-white">List Cleaning</h2>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">
+            Cleaning improves the structure and consistency of a list you already have. We preserve
+            your original identifiers and flag uncertain fields rather than guessing.
+          </p>
+          <ul class="mt-4 space-y-2">
+            {cleaningFixes.map((f) => <li class="flex items-start gap-2 text-sm text-white/75"><Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />{f}</li>)}
+          </ul>
+        </div>
+        <div class="min-w-0">
+          <ComparisonTable
+            caption="List cleaning prices"
+            headers={['List size', 'Price']}
+            rows={[['Up to 5,000 contacts', '$39'], ['Up to 25,000 contacts', '$129'], ['Up to 100,000 contacts', '$399'], ['Larger lists', 'Quoted']]}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Outreach</h2>
+      <p class="mt-4 text-white/75">
+        When you want the campaign run for you, the audience comes first. We research and qualify the
+        prospects, then build the campaign on that audience. Pricing is quoted per campaign.
+      </p>
+      <ul class="mt-5 grid gap-2 sm:grid-cols-2">
+        {outreachIncludes.map((i) => <li class="flex items-start gap-2 text-sm text-white/75"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>{i}</li>)}
+      </ul>
+      <p class="mt-6 text-sm leading-relaxed text-white/75">
+        LeadVault does not guarantee replies, meetings or revenue. Results depend on the offer, the
+        market and the recipient, and the service covers the agreed work, not the recipient's decision.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Who It's For</h2>
+      <ul class="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
+        {whoFor.map((w) => <li class="card text-sm text-white/80">{w}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">How It Works</h2>
+      <ol class="mx-auto mt-10 grid gap-6 md:grid-cols-3">
+        {steps.map((s, i) => (
+          <li class="card">
+            <p class="text-sm font-semibold text-[var(--color-lime)]">Step {i + 1}</p>
+            <h3 class="mt-2 text-lg font-bold text-white">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/70">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-2xl font-bold text-white sm:text-3xl">Send the File, or Tell Us the Campaign.</h2>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href="/contact" data-cta="outreach-final" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+  })} />
+</BaseLayout>

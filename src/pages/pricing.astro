@@ -3,105 +3,76 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ComparisonTable from '../components/ComparisonTable.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
 import { DATASET_TIERS } from '../data/catalog';
-import { CTA_PRIMARY, CTA_HIGH_INTENT, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF } from '../data/site';
-import { ArrowRight, Check, Globe, UserCheck, Sliders, HelpCircle } from '@lucide/astro';
+import { CTA_MAIN, CTA_SAMPLE_DATA, CTA_SAMPLE_HREF, WHATSAPP_GET_LEADS_LINK } from '../data/site';
+import { ArrowRight, Check, MessageCircle, ShieldCheck } from '@lucide/astro';
 
-// Recurring prospect-research plans, not access to a static database — each
-// cycle's prospects are freshly researched to the client's specification.
-// Renamed from "Monthly Lead Subscriptions" (commercial-completion round —
-// see ASSUMPTIONS.md) to make that explicit, and restructured around ICPs/
-// target markets rather than a flat leads-per-month count.
+// Phase 2 (brief 2.4): three blocks matching the three services, with the $29
+// sample first. Every amount below is unchanged from the approved pricing.
+// The long tier table, the router and the FAQ sit lower on the page.
+
 const subscriptions = [
-  {
-    name: 'STARTER',
-    price: '$199/mo',
-    features: ['500 fresh prospects', '1 ICP', '1 target market', 'Email delivery', 'Email support'],
-  },
-  {
-    name: 'GROWTH',
-    price: '$399/mo',
-    popular: true,
-    features: ['1,500 prospects/month', 'Up to 3 ICPs', 'Multiple target markets', 'Strategy report', 'WhatsApp + email support'],
-  },
-  {
-    name: 'AGENCY',
-    price: 'From $799/mo',
-    features: ['Recurring research for multiple client campaigns', 'White-label delivery', 'Custom specifications', 'Dedicated strategist'],
-  },
+  { name: 'Starter', price: '$199/mo', features: ['500 fresh prospects', '1 ICP', '1 target market', 'Email delivery', 'Email support'] },
+  { name: 'Growth', price: '$399/mo', popular: true, features: ['1,500 prospects/month', 'Up to 3 ICPs', 'Multiple target markets', 'Strategy report', 'WhatsApp + email support'] },
+  { name: 'Agency', price: 'From $799/mo', features: ['Recurring research for multiple client campaigns', 'White-label delivery', 'Custom specifications', 'Dedicated strategist'] },
 ];
 
-// Managed Email Campaigns is a real, deliverable capability but not a primary
-// 90-day acquisition offer (pricing-positioning round — see ASSUMPTIONS.md).
-// The old 4-tier price grid ($499/$299/$699/$1,299) is no longer shown on
-// this page at all — quote-based instead, so it can't visually compete with
-// the core one-time/monthly ladder. The underlying capability list is kept
-// (still accurate), just condensed into one line each instead of a 4-card grid.
-const managedCampaignIncludes = [
-  'Campaign setup',
-  'Data verification',
-  'Deliverability sorting',
-  'Provider-aware testing',
-  'Sending infrastructure',
-  'Campaign execution',
-  'Reporting',
-];
-
-const customQuoteFactors = [
-  'Research complexity', 'Specificity of qualification criteria', 'Evidence requirements', 'Geography',
-  'Number of companies', 'Number of contacts per company', 'Custom fields', 'Source difficulty',
-  'Verification depth', 'Turnaround', 'Whether the engagement is one-time or recurring',
+const cleaningTable = [
+  ['Up to 5,000', '$39'],
+  ['Up to 25,000', '$129'],
+  ['Up to 100,000', '$399'],
+  ['Larger', 'Quoted'],
 ];
 
 const whichOption = [
-  { condition: 'Defined ICP + standard company/contact fields', service: 'Qualified Prospect Data', href: '/qualified-prospect-data' },
-  { condition: 'Ongoing supply of similar prospects', service: 'Recurring Prospect Research', href: '#monthly' },
-  { condition: 'Unclear target market', service: 'Market & ICP Research', href: '/market-icp-research' },
-  { condition: 'Complex qualification/evidence', service: 'Prospect Intelligence', href: '/prospect-intelligence' },
-  { condition: 'Known companies + unclear stakeholders', service: 'Decision-Maker Intelligence', href: '/decision-maker-intelligence' },
-  { condition: 'Research + campaign execution', service: 'Intelligence-Led Outreach', href: '/managed-outreach' },
-  { condition: 'Existing file needs improvement', service: 'Data Cleaning & Enrichment', href: '/services#data-cleaning' },
+  { condition: 'Defined ICP + standard company/contact fields', service: 'Lead Lists', href: '/lead-lists' },
+  { condition: 'Ongoing supply of similar prospects', service: 'Monthly plans', href: '#monthly' },
+  { condition: 'Unclear target market', service: 'Custom Research', href: '/custom-research' },
+  { condition: 'Complex qualification or evidence', service: 'Custom Research', href: '/custom-research' },
+  { condition: 'Buyers, suppliers or importers abroad', service: 'For Exporters & Importers', href: '/trade' },
+  { condition: 'Research + campaign execution', service: 'Outreach', href: '/outreach' },
+  { condition: 'Existing file needs improvement', service: 'List Cleaning', href: '/outreach' },
 ];
 
 const faqs = [
   {
     question: 'Do I need a subscription?',
-    answer: 'No — not for one-time research packages. Monthly plans are available for teams that want a continuing supply of fresh prospect research, but a one-time order never requires a subscription.',
+    answer: 'No. One-time packages never require a subscription. Monthly plans are for teams that want a continuing supply of fresh research.',
   },
   {
-    question: 'Why is Prospect Intelligence custom-quoted?',
-    answer: 'Because the effort is driven by the research question, not simply the number of rows — qualification depth, evidence requirements, and decision-maker investigation vary project to project.',
+    question: 'Why is Custom Research quoted?',
+    answer: 'Because the effort depends on the research question, qualification depth and evidence requirements, not simply the number of rows.',
   },
   {
     question: 'Can I request custom fields?',
-    answer: 'Yes, subject to feasibility and the agreed scope — the final schema is agreed with you before delivery.',
+    answer: 'Yes, subject to feasibility and the agreed scope. The final fields are agreed with you before delivery.',
   },
   {
-    question: 'Does a qualified prospect guarantee a sale?',
-    answer: 'No. Qualification means the record matches the agreed research criteria — it does not guarantee buyer intent or a response.',
+    question: 'Does a qualified company guarantee a sale?',
+    answer: 'No. Qualification means the company matches the agreed research criteria. It does not guarantee buyer intent or a response.',
   },
   {
-    question: 'What does "fresh" actually mean?',
-    answer: 'Records are sourced and verified for your specific order — typically within days of delivery, in some cases as recently as 72 hours before.',
+    question: 'What does "fresh" mean?',
+    answer: 'Records are sourced and verified for your specific order, typically within days of delivery, in some cases as recently as 72 hours before.',
   },
   {
     question: 'What fields come with each record?',
-    answer: 'Standard: name, job title, company, verified email, location, industry, phone where available — plus custom fields by request.',
+    answer: 'Standard: name, job title, company, verified email, location, industry, phone where available, plus custom fields by request.',
   },
   {
     question: 'How is data delivered?',
-    answer: 'To your email as a clean Google Sheet — our preferred format for easy filtering and re-use. CSV and Excel are also available on request. A self-serve portal is planned for a future phase — join the waitlist on the Data Catalog page.',
+    answer: 'To your email as a clean Google Sheet, which is our preferred format for easy filtering and re-use. CSV and Excel are also available on request.',
   },
   {
     question: 'How do I pay?',
-    answer: "Payment is by international bank transfer, in USD. For the Qualified Prospect Data tiers above, request your tier and we'll send transfer instructions for that exact amount. For Prospect Intelligence, monthly plans, Trade & Counterparty Intelligence, and Intelligence-Led Outreach, we send a quote first — payment instructions follow once you approve it. Custom projects: 50% deposit, balance on delivery.",
+    answer: "By international bank transfer, in USD. For the Lead List tiers above, request your tier and we'll send transfer instructions for that exact amount. For Custom Research, monthly plans, For Exporters & Importers and Outreach, we send a quote first. Payment instructions follow once you approve it. Custom projects: 50% deposit, balance on delivery.",
   },
   {
     question: 'Do you offer refunds?',
-    answer: 'We operate a replacement guarantee (above). Where a delivery cannot be corrected to specification, we make it right — talk to us.',
+    answer: 'We operate a replacement guarantee, shown above. Where a delivery cannot be corrected to specification, we make it right. Talk to us.',
   },
   {
     question: 'Can you clean a list I bought elsewhere?',
-    answer: "Yes — that's exactly what the cleaning service exists for.",
+    answer: "Yes. That's exactly what List Cleaning is for.",
   },
   {
     question: 'Do you serve my country?',
@@ -111,252 +82,184 @@ const faqs = [
 ---
 
 <BaseLayout
-  title="B2B Prospect Intelligence Pricing | LeadVault"
-  description="Transparent USD pricing for Qualified Prospect Data, custom-quoted Prospect Intelligence, data cleaning, recurring research plans, and the Trade Desk."
+  title="B2B Lead List Pricing and Custom Research | LeadVault"
+  description="Transparent USD pricing: lead lists from $29, monthly plans, custom research quoted per project, and list cleaning from $39."
   path="/pricing"
 >
   <section class="section text-center">
     <p class="eyebrow">Pricing</p>
-    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Transparent Pricing. All in USD. Worldwide.</h1>
-    <p class="mx-auto mt-5 max-w-3xl text-white/75">
-      Standardized Qualified Prospect Data is priced by tier below. Research-intensive Prospect
-      Intelligence and managed/ongoing services are scoped and quoted to the project — pricing that
-      reflects research complexity, not a fixed row count.
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Transparent Pricing. All in USD.</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      Start with a small sample, then scale up. Custom research and outreach are quoted to the project.
     </p>
-    <p class="mx-auto mt-2 max-w-2xl text-sm font-medium text-[var(--color-lime)]">
-      Straightforward pricing for targeted research and usable business data. Quality guaranteed
-      in writing.
-    </p>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href={CTA_SAMPLE_HREF} data-cta="pricing-get-sample" class="btn-primary">{CTA_SAMPLE_DATA} <ArrowRight size={18} /></a>
+      <a href="/contact" data-cta="pricing-get-leads" class="btn-outline">{CTA_MAIN}</a>
+    </div>
   </section>
 
   <section class="section-alt">
     <div class="section">
-      <p class="eyebrow">Standardized, One-Time</p>
-      <h2 class="mt-1 text-2xl font-bold text-white">Qualified Prospect Data</h2>
-      <p class="mt-2 text-sm text-white/60">Test → Start → Grow → Custom — start small and scale up as a specification proves out.</p>
-      <div class="mt-6">
-        <ComparisonTable
-          caption="Custom fresh dataset pricing by tier"
-          headers={['Tier', 'Prospects', 'Price']}
-          rows={[
-            ...DATASET_TIERS.map((t) => [t.name, t.records, t.price]),
-            ['Custom Research', 'Quoted to your specification', 'From $299'],
-          ]}
-        />
-      </div>
-      <p class="mt-4 text-sm text-white/60">
-        Includes: your exact specification · decision-maker filtering · per-order verification ·
-        bounce-free Google Sheet or CSV · strategist notes.
-      </p>
+      <div class="grid gap-6 lg:grid-cols-3">
 
-      <div class="mt-6 flex flex-wrap gap-3">
-        {DATASET_TIERS.map((t) => (
-          <a
-            href={`/contact?tier=${t.slug}`}
-            data-cta={`pricing-tier-${t.slug}`}
-            class="btn-outline !px-4 !py-2 text-sm"
-          >
-            Request {t.name} ({t.records} · {t.price})
-          </a>
-        ))}
-      </div>
-      <p class="mt-3 max-w-2xl text-xs text-white/50">
-        Requesting a tier confirms the exact dataset and amount — we'll follow up with bank
-        transfer payment instructions for that price. Nothing is charged automatically. Custom
-        Research is quoted first; see "How do I pay?" below.
-      </p>
-
-      <div class="card mt-10 max-w-2xl">
-        <p class="eyebrow">Research-Intensive</p>
-        <h2 class="mt-1 text-xl font-bold text-white">Prospect Intelligence</h2>
-        <p class="mt-3 text-sm leading-relaxed text-white/75">
-          For requirements a standard specification can't fully capture — evidence-backed
-          qualification, decision-maker relevance, and market research. Pricing depends on research
-          complexity, qualification criteria, geography, and turnaround, so it's scoped per project
-          rather than sold by the row.
-        </p>
-        <p class="mt-4 font-semibold text-white">Custom Quote — Discuss Your Project</p>
-        <div class="mt-4">
-          <a href="/prospect-intelligence" class="text-sm font-semibold text-[var(--color-lime)] hover:underline">See full Prospect Intelligence page →</a>
+        <!-- Block 1: Lead Lists -->
+        <div class="card flex flex-col gap-5 ring-1 ring-[var(--color-lime)]/50">
+          <span class="w-fit rounded-full bg-[var(--color-lime)] px-3 py-1 text-xs font-bold text-[var(--color-lime-dark)]">Recommended first step</span>
+          <div>
+            <h2 class="text-xl font-bold text-white">Lead Lists</h2>
+            <p class="mt-2 text-sm text-white/70">Start with 100 leads for $29.</p>
+          </div>
+          <div class="space-y-2">
+            {DATASET_TIERS.map((t) => (
+              <a href={`/contact?tier=${t.slug}`} data-cta={`pricing-tier-${t.slug}`} class="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm hover:border-[var(--color-lime)]">
+                <span class="text-white/80">{t.records} leads</span>
+                <span class="font-semibold text-white">{t.price}</span>
+              </a>
+            ))}
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Monthly plans</p>
+            <ul class="mt-2 space-y-1.5">
+              {subscriptions.map((p) => (
+                <li class="flex items-center justify-between text-sm text-white/80">
+                  <span>{p.name}</span><span class="font-semibold text-white">{p.price}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-2 text-xs text-white/50">Custom lists from $299.</p>
+          </div>
+          <a href="/lead-lists" class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">See Lead Lists →</a>
         </div>
-      </div>
 
-      <div class="mt-6 grid max-w-2xl gap-6 sm:grid-cols-2">
-        <div class="card">
-          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]"><Globe size={20} aria-hidden="true" /></div>
-          <h3 class="mt-3 text-base font-bold text-white">Market & ICP Research</h3>
-          <p class="mt-2 text-sm leading-relaxed text-white/70">
-            Routes to a project discussion when the work involves defining the market, segmenting
-            opportunities, building inclusion/exclusion rules or creating a researchable target
-            specification. We don't force strategic research into a per-contact price.
+        <!-- Block 2: Custom Research -->
+        <div class="card flex flex-col gap-5">
+          <div>
+            <h2 class="text-xl font-bold text-white">Custom Research</h2>
+            <p class="mt-2 text-sm text-white/70">Quoted per project.</p>
+          </div>
+          <p class="text-sm leading-relaxed text-white/75">
+            For hard-to-find targets, researched and evidenced company by company. The quote depends on
+            the criteria, the volume, the evidence required and the timeline.
           </p>
-          <a href="/market-icp-research" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See Market & ICP Research →</a>
+          <div class="rounded-lg border border-white/10 bg-white/5 p-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-white/50">Import and export work</p>
+            <p class="mt-1 text-sm text-white/80">Trade engagements from <span class="font-semibold text-white">$449</span> per engagement.</p>
+          </div>
+          <div class="mt-auto flex flex-col gap-2">
+            <a href="/custom-research" class="text-sm font-semibold text-[var(--color-lime)] hover:underline">See Custom Research →</a>
+            <a href="/trade" class="text-sm font-semibold text-[var(--color-lime)] hover:underline">For Exporters & Importers →</a>
+          </div>
         </div>
-        <div class="card">
-          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-lime)]/15 text-[var(--color-lime)]"><UserCheck size={20} aria-hidden="true" /></div>
-          <h3 class="mt-3 text-base font-bold text-white">Decision-Maker Intelligence</h3>
-          <p class="mt-2 text-sm leading-relaxed text-white/70">
-            Can range from straightforward contact enrichment to multi-stakeholder account research.
-            Complex requirements route to a project discussion rather than assuming every account
-            needs the same effort.
-          </p>
-          <a href="/decision-maker-intelligence" class="mt-3 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See Decision-Maker Intelligence →</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section id="monthly" class="section !pt-0">
-    <h2 class="text-2xl font-bold text-white">Monthly Prospect Research</h2>
-    <p class="mt-2 max-w-2xl text-sm text-white/60">
-      A recurring research engagement, not access to a static database — each cycle's prospects
-      are freshly researched to your specification, the same way a one-time order is.
-    </p>
-    <div class="mt-6 grid gap-6 lg:grid-cols-3">
-      {subscriptions.map((plan) => (
-        <div class:list={['card flex flex-col gap-4', plan.popular && 'ring-2 ring-[var(--color-lime)]']}>
-          {plan.popular && (
-            <span class="w-fit rounded-full bg-[var(--color-lime)] px-3 py-1 text-xs font-bold text-[var(--color-lime-dark)]">
-              ⭐ Most popular
-            </span>
-          )}
-          <h3 class="text-xl font-bold text-white">{plan.name}</h3>
-          <p class="text-3xl font-extrabold text-[var(--color-lime)]">{plan.price}</p>
-          <ul class="flex-1 space-y-2">
-            {plan.features.map((f) => (
-              <li class="flex items-start gap-2 text-sm text-white/75">
-                <Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-                {f}
+        <!-- Block 3: Outreach & List Cleaning -->
+        <div class="card flex flex-col gap-5">
+          <div>
+            <h2 class="text-xl font-bold text-white">Outreach &amp; List Cleaning</h2>
+            <p class="mt-2 text-sm text-white/70">List cleaning by list size. Outreach quoted per campaign.</p>
+          </div>
+          <ul class="space-y-1.5">
+            {cleaningTable.map(([size, price]) => (
+              <li class="flex items-center justify-between text-sm text-white/80">
+                <span>{size}</span><span class="font-semibold text-white">{price}</span>
               </li>
             ))}
           </ul>
-          <a href="/contact" class="btn-primary w-full">{CTA_PRIMARY}</a>
+          <p class="text-sm leading-relaxed text-white/75">Outreach is quoted per campaign, based on the audience and the agreed scope.</p>
+          <a href="/outreach" class="mt-auto text-sm font-semibold text-[var(--color-lime)] hover:underline">See Outreach &amp; List Cleaning →</a>
         </div>
-      ))}
-    </div>
-    <p class="mt-4 text-sm text-white/60">Pause or adjust at the end of any month.</p>
-  </section>
-
-  <section class="section-alt">
-    <div class="section">
-      <h2 class="text-2xl font-bold text-white">Data Cleaning & Enrichment</h2>
-      <p class="mt-2 max-w-2xl text-sm text-white/60">Already have a list? We can help clean and verify it.</p>
-      <div class="mt-6">
-        <ComparisonTable
-          caption="Email list cleaning pricing by list size"
-          headers={['List size', 'Price']}
-          rows={[
-            ['Up to 5,000', '$39'],
-            ['Up to 25,000', '$129'],
-            ['Up to 100,000', '$399'],
-            ['Larger', 'Custom quote'],
-          ]}
-        />
       </div>
     </div>
   </section>
 
-  <section class="section !pt-0">
-    <div class="card mx-auto max-w-2xl text-center">
-      <p class="eyebrow">Powered by the LeadVault Trade Desk</p>
-      <h2 class="mt-1 text-xl font-bold text-white">Trade & Counterparty Intelligence</h2>
-      <p class="mt-3 text-white/75">
-        <strong class="text-white">From $449 per engagement</strong> — consultation + verified
-        counterparty dataset + approach guidance.
+  <section class="section">
+    <div class="mx-auto max-w-3xl">
+      <div class="card flex items-start gap-4">
+        <ShieldCheck size={26} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
+        <div>
+          <h2 class="text-lg font-bold text-white">Our Replacement Guarantee</h2>
+          <p class="mt-2 text-sm leading-relaxed text-white/75">
+            If more than <strong class="text-white">5%</strong> of records in any delivery prove invalid
+            within 14 days, we replace them free.
+          </p>
+        </div>
+      </div>
+      <p class="mt-6 text-center text-sm text-white/60">Pause or adjust a monthly plan at the end of any month.</p>
+    </div>
+  </section>
+
+  <section id="monthly" class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Monthly Plans in Detail</h2>
+      <p class="mx-auto mt-3 max-w-2xl text-center text-sm text-white/60">
+        A recurring research engagement, not access to a static database. Each cycle's prospects are
+        freshly researched to your specification.
       </p>
-      <a href="/trade" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">Details →</a>
-    </div>
-  </section>
-
-  <section class="section-alt">
-    <div class="section">
-      <div class="card mx-auto max-w-2xl">
-        <p class="eyebrow text-center">Managed & Ongoing</p>
-        <h2 class="mt-2 text-center text-xl font-bold text-white">Intelligence-Led Outreach</h2>
-        <p class="mt-4 text-sm leading-relaxed text-white/75">
-          For businesses that want the research put into action, not just delivered. LeadVault can
-          combine prospect intelligence with campaign preparation, controlled outreach, and
-          reporting. Available for qualified projects.
-        </p>
-        <p class="mt-4 text-sm font-medium text-white">Services may include:</p>
-        <ul class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1.5">
-          {managedCampaignIncludes.map((item) => (
-            <li class="flex items-start gap-2 text-sm text-white/70">
-              <Check size={14} class="mt-1 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />
-              {item}
-            </li>
-          ))}
-        </ul>
-        <p class="mt-4 text-sm text-white/60">Pricing is provided based on campaign requirements.</p>
-        <p class="mt-3 text-xs italic text-white/50">
-          Campaign execution does not guarantee replies, meetings or revenue. The service covers the
-          agreed research/campaign work, not the recipient's decision.
-        </p>
-        <div class="mt-5 flex flex-col items-center gap-2">
-          <a href="/contact" data-cta="pricing-managed-campaign" class="btn-outline">{CTA_HIGH_INTENT}</a>
-          <a href="/managed-outreach" class="text-sm font-semibold text-[var(--color-lime)] hover:underline">See full Managed Outreach page →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section text-center">
-    <h2 class="text-2xl font-bold text-white sm:text-3xl">Our Replacement Guarantee</h2>
-    <p class="mx-auto mt-5 max-w-2xl text-white/75">
-      If more than <strong class="text-white">5%</strong> of
-      records in any delivery prove invalid within 14 days, we replace them free. That's not
-      generosity — it's confidence in the pipeline.
-    </p>
-  </section>
-
-  <section class="section-alt">
-    <div class="section">
-      <h2 class="flex items-center justify-center gap-2 text-center text-2xl font-bold text-white sm:text-3xl"><Sliders size={22} class="text-[var(--color-lime)]" /> What Affects a Custom Quote?</h2>
-      <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-2">
-        {customQuoteFactors.map((f) => (
-          <span class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80">{f}</span>
+      <div class="mt-8 grid gap-6 lg:grid-cols-3">
+        {subscriptions.map((plan) => (
+          <div class:list={['card flex flex-col gap-4', plan.popular && 'ring-2 ring-[var(--color-lime)]']}>
+            <h3 class="text-xl font-bold text-white">{plan.name}</h3>
+            <p class="text-3xl font-extrabold text-[var(--color-lime)]">{plan.price}</p>
+            <ul class="flex-1 space-y-2">
+              {plan.features.map((f) => (
+                <li class="flex items-start gap-2 text-sm text-white/75"><Check size={16} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />{f}</li>
+              ))}
+            </ul>
+            <a href="/contact" class="btn-primary w-full">{CTA_MAIN}</a>
+          </div>
         ))}
       </div>
     </div>
   </section>
 
   <section class="section">
-    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Which Option Should I Choose?</h2>
-    <div class="mx-auto mt-10 max-w-3xl">
-      <ComparisonTable
-        caption="Matching your situation to a LeadVault service"
-        headers={['If this is your situation...', '...this is the service']}
-        rows={whichOption.map((w) => [w.condition, w.service])}
-      />
-      <p class="mt-5 text-center text-sm text-white/60">If unsure, send the requirement instead of guessing a package.</p>
-      <div class="mt-6 flex flex-wrap justify-center gap-2">
-        {whichOption.map((w) => (
-          <a href={w.href} class="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-[var(--color-lime)] hover:underline">{w.service} →</a>
-        ))}
+    <div class="mx-auto max-w-5xl">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Full Lead List Pricing</h2>
+      <div class="mt-8">
+        <ComparisonTable
+          caption="Lead list pricing by size"
+          headers={['Tier', 'Leads', 'Price']}
+          rows={[...DATASET_TIERS.map((t) => [t.name, t.records, t.price]), ['Custom Research', 'Quoted to your specification', 'From $299']]}
+        />
       </div>
     </div>
   </section>
 
   <section class="section-alt">
     <div class="section">
-      <h2 class="flex items-center justify-center gap-2 text-center text-2xl font-bold text-white sm:text-3xl"><HelpCircle size={22} class="text-[var(--color-lime)]" /> FAQ</h2>
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Which Option Should I Choose?</h2>
       <div class="mx-auto mt-10 max-w-3xl">
-        <FaqAccordion items={faqs} />
-      </div>
-      <div class="mt-10 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center">
-        <a href="/contact" data-cta="pricing-custom-dataset" class="btn-primary">{CTA_PRIMARY} <ArrowRight size={18} /></a>
-        <a href={CTA_SAMPLE_HREF} class="btn-outline">{CTA_SAMPLE_DATA}</a>
+        <ComparisonTable
+          caption="Matching your situation to a LeadVault service"
+          headers={['If this is your situation...', '...this is the service']}
+          rows={whichOption.map((w) => [w.condition, w.service])}
+        />
+        <p class="mt-5 text-center text-sm text-white/60">If unsure, describe the requirement instead of guessing a package.</p>
       </div>
     </div>
   </section>
-</BaseLayout>
 
-<script type="application/ld+json" set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((f) => ({
-    '@type': 'Question',
-    name: f.question,
-    acceptedAnswer: { '@type': 'Answer', text: f.answer },
-  })),
-})} />
+  <section class="section">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Pricing Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt text-center">
+    <div class="section">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Simple Requirement? Choose a Package. Complex Requirement? Tell Us the Question.</h2>
+      <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a href={CTA_SAMPLE_HREF} data-cta="pricing-final-sample" class="btn-primary">{CTA_SAMPLE_DATA} <ArrowRight size={18} /></a>
+        <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="pricing-final-whatsapp" class="btn-outline"><MessageCircle size={16} aria-hidden="true" /> Chat on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+  })} />
+</BaseLayout>

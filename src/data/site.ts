@@ -5,14 +5,12 @@ export interface NavLink {
   href: string;
 }
 
-// Phase 1 (2026-10-03): Industries, Why LeadVault and Tools & Technology moved
-// to the footer only. Current service destinations are temporary until Phase 2
-// creates /lead-lists, /custom-research and /outreach.
+// Industries, Why LeadVault and Tools & Technology are footer-only.
 export const EXPLORE_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
-  { label: 'Lead Lists', href: '/qualified-prospect-data' },
-  { label: 'Custom Research', href: '/prospect-intelligence' },
-  { label: 'Outreach & List Cleaning', href: '/managed-outreach' },
+  { label: 'Lead Lists', href: '/lead-lists' },
+  { label: 'Custom Research', href: '/custom-research' },
+  { label: 'Outreach & List Cleaning', href: '/outreach' },
   { label: 'For Exporters & Importers', href: '/trade' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Samples', href: '/data-catalog' },
@@ -54,9 +52,9 @@ export const HEADER_NAV: NavEntry[] = [
   {
     label: 'Services',
     items: [
-      { label: 'Lead Lists', href: '/qualified-prospect-data' },
-      { label: 'Custom Research', href: '/prospect-intelligence' },
-      { label: 'Outreach & List Cleaning', href: '/managed-outreach' },
+      { label: 'Lead Lists', href: '/lead-lists' },
+      { label: 'Custom Research', href: '/custom-research' },
+      { label: 'Outreach & List Cleaning', href: '/outreach' },
       { label: 'For Exporters & Importers', href: '/trade' },
     ],
   },

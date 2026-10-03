@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { CTA_MAIN, WHATSAPP_GET_LEADS_LINK } from '../data/site';
+import { ArrowRight, MessageCircle, Check } from '@lucide/astro';
+
+// Phase 2 (brief 2.1): merges /prospect-intelligence and /market-icp-research.
+const whoFor = [
+  'Businesses whose ideal customer cannot be found with a simple filter',
+  'Teams entering a new market or region and unsure who to target first',
+  'Agencies serving a client with an unusual or narrow target',
+  'Founders testing a specific business opportunity',
+  'Trade businesses looking for buyers and suppliers abroad',
+];
+
+const whatYouGet = [
+  'A clear definition of who qualifies and who is excluded',
+  'Each company checked against your criteria, with the reason it was included',
+  'Public evidence or a source link where your project needs it',
+  'Relevant decision-makers identified for each company',
+  'Fields agreed with you before research begins',
+];
+
+const steps = [
+  { title: 'Describe the target', body: 'Tell us what makes a company valuable, where it should be, and who inside it matters.' },
+  { title: 'We research and qualify, company by company', body: 'Candidates are checked against your criteria. Companies that do not fit are excluded, not padded in.' },
+  { title: 'You get the list with the reasons', body: 'Each company comes with its qualification basis and, where needed, a supporting source.' },
+];
+
+const faqs = [
+  { question: 'How is this different from a database list?', answer: 'A database filter tells you a company matches a category. Custom Research checks whether it meets the condition you care about, and records why.' },
+  { question: 'Do I need to know my target market already?', answer: 'No. If the market is unclear, we start by defining it with you: positive criteria, exclusions and the roles that matter.' },
+  { question: 'Does a qualified company guarantee a sale?', answer: 'No. Qualification means the company matches the agreed research criteria. It does not guarantee buyer intent or a response.' },
+  { question: 'How long does a project take?', answer: 'It depends on the complexity of the criteria and the volume. We scope timing with you before the project begins.' },
+  { question: 'Can you research buyers and suppliers abroad?', answer: 'Yes. For import and export work, see For Exporters & Importers, where trade engagements start from $449.' },
+];
+---
+
+<BaseLayout
+  title="Find Hard-to-Reach B2B Targets | Custom Research | LeadVault"
+  description="For hard-to-find targets: niche providers, specific criteria, buyers and suppliers abroad. Researched and evidenced, company by company."
+  path="/custom-research"
+>
+  <section class="section text-center">
+    <p class="eyebrow">Custom Research</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">When a List Is Not Enough, Research the Target.</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      For hard-to-find targets: niche providers, specific criteria, buyers and suppliers abroad.
+      Researched and evidenced, company by company.
+    </p>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href="/contact" data-cta="custom-research-hero" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="custom-research-whatsapp" class="btn-outline"><MessageCircle size={16} aria-hidden="true" /> Chat on WhatsApp</a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto max-w-3xl">
+        <h2 class="text-2xl font-bold text-white sm:text-3xl">Some Targets Have to Be Investigated</h2>
+        <p class="mt-5 text-white/75">
+          A standard filter can find companies in an industry and a city. It cannot tell you whether
+          a company actually does the thing you need. Examples of targets that need research rather
+          than a filter:
+        </p>
+        <ul class="mt-5 space-y-2">
+          {['Healthcare providers that accept a particular type of arrangement', 'Distributors that actually handle a specific product', 'Businesses that serve a defined customer group', 'Companies with evidence of a certain capability'].map((t) => (
+            <li class="flex items-start gap-2 text-sm text-white/80"><Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />{t}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Who It's For</h2>
+    <ul class="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
+      {whoFor.map((w) => <li class="card text-sm text-white/80">{w}</li>)}
+    </ul>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <div class="mx-auto grid max-w-5xl gap-10 lg:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-bold text-white">What You Get</h2>
+          <ul class="mt-4 space-y-2">
+            {whatYouGet.map((f) => <li class="flex items-start gap-2 text-sm text-white/75"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>{f}</li>)}
+          </ul>
+        </div>
+        <div class="card">
+          <p class="eyebrow">Example: medical providers</p>
+          <p class="mt-3 text-sm leading-relaxed text-white/75">
+            "We need medical providers that work with personal injury cases" is too broad to research
+            consistently. A workable brief names the states, the provider types, the public evidence
+            that a provider accepts a particular arrangement (such as Letters of Protection), the
+            relevant business contact, and the fields to deliver. Anything without evidence is excluded.
+          </p>
+          <p class="mt-3 text-xs italic text-white/50">Illustrative example — not a real customer engagement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">How It Works</h2>
+      <ol class="mx-auto mt-10 grid gap-6 md:grid-cols-3">
+        {steps.map((s, i) => (
+          <li class="card">
+            <p class="text-sm font-semibold text-[var(--color-lime)]">Step {i + 1}</p>
+            <h3 class="mt-2 text-lg font-bold text-white">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/70">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Pricing</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-white/75">Custom research is quoted per project, based on the criteria, the volume and the timeline. Import and export work starts from $449 per engagement through For Exporters & Importers.</p>
+      <div class="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a href="/trade" class="btn-outline">For Exporters & Importers →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Questions</h2>
+    <div class="mx-auto mt-10 max-w-3xl">
+      <FaqAccordion items={faqs} />
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section text-center">
+      <h2 class="text-2xl font-bold text-white sm:text-3xl">Not Sure Who the Right Target Is?</h2>
+      <p class="mx-auto mt-4 max-w-xl text-white/75">Describe what you sell and who you think should buy it. We will help define the target.</p>
+      <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <a href="/contact" data-cta="custom-research-final" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+  })} />
+</BaseLayout>

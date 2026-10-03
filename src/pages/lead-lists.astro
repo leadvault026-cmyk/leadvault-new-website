@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import ComparisonTable from '../components/ComparisonTable.astro';
+import { CATALOG_CATEGORIES, DATASET_TIERS } from '../data/catalog';
+import { CTA_MAIN, WHATSAPP_GET_LEADS_LINK, CTA_SAMPLE_HREF, CTA_SAMPLE_DATA } from '../data/site';
+import { ArrowRight, MessageCircle, Check } from '@lucide/astro';
+
+// Phase 2 (brief 2.1): merges /qualified-prospect-data and /decision-maker-intelligence.
+const sampleCategory = CATALOG_CATEGORIES.find((c) => c.slug === 'business-decision-makers');
+
+const whoFor = [
+  'Sales teams building territories or account lists',
+  'Marketing agencies running campaigns for clients',
+  'Freelancers and consultants testing a new market',
+  'Recruiters and staffing firms reaching employers',
+  'Exporters and importers looking for buyers (see For Exporters & Importers)',
+  'Service businesses targeting a defined set of companies',
+];
+
+const whatYouGet = [
+  'Company name and website', 'Contact name and title', 'Business email where available',
+  'Phone where available', 'Address, city and state or region', 'Industry or provider type',
+  'Company details relevant to your brief', 'Custom fields agreed before delivery',
+];
+
+const steps = [
+  { title: 'Tell us who you sell to', body: 'Industry, geography, company profile, the roles you need, and anything to exclude.' },
+  { title: 'We research and verify', body: 'Companies and contacts are researched to your brief, checked, cleaned of duplicates, and reviewed before delivery.' },
+  { title: 'You get a clean Google Sheet', body: 'Delivered in a few working days (most lists in 3–5). CSV and Excel are available on request.' },
+];
+
+const faqs = [
+  { question: 'How fresh is the data?', answer: 'Researched and verified for your order, usually within days of delivery.' },
+  { question: 'What if some contacts are wrong?', answer: 'If more than 5% of records are invalid within 14 days of delivery, we replace them free.' },
+  { question: 'Can I get a list every month?', answer: 'Yes. Monthly plans deliver fresh prospects built to the same brief each cycle. See pricing for Starter, Growth and Agency.' },
+  { question: 'How do I pay?', answer: 'By bank transfer in USD. You will receive instructions for the exact amount before anything is charged.' },
+  { question: 'Can you find people, not just companies?', answer: 'Yes. Tell us which roles matter and we research the people in those roles at each company.' },
+];
+---
+
+<BaseLayout
+  title="B2B Lead Lists, Verified Business Contacts | LeadVault"
+  description="Ready-to-contact lists of businesses and decision-makers, built to your brief and verified before delivery. Start with 100 leads for $29."
+  path="/lead-lists"
+>
+  <section class="section text-center">
+    <p class="eyebrow">Lead Lists</p>
+    <h1 class="mt-2 text-4xl font-extrabold text-white sm:text-5xl">Ready-to-Contact Lists of Businesses and Decision-Makers.</h1>
+    <p class="mx-auto mt-5 max-w-2xl text-white/75">
+      Built to your brief and verified before delivery. Tell us who you sell to and we send back a
+      clean list you can use the same week.
+    </p>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href="/contact" data-cta="lead-lists-hero" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      <a href={WHATSAPP_GET_LEADS_LINK} target="_blank" rel="noopener noreferrer" data-cta="lead-lists-whatsapp" class="btn-outline"><MessageCircle size={16} aria-hidden="true" /> Chat on WhatsApp</a>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Who It's For</h2>
+      <ul class="mx-auto mt-8 grid max-w-4xl gap-3 sm:grid-cols-2">
+        {whoFor.map((w) => (
+          <li class="flex items-start gap-2 text-sm text-white/80"><Check size={15} class="mt-0.5 shrink-0 text-[var(--color-lime)]" aria-hidden="true" />{w}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 lg:grid-cols-2">
+      <div class="min-w-0">
+        <h2 class="text-2xl font-bold text-white">What You Get</h2>
+        <p class="mt-3 text-sm text-white/70">Depending on your brief, each record can include:</p>
+        <ul class="mt-4 space-y-2">
+          {whatYouGet.map((f) => <li class="flex items-start gap-2 text-sm text-white/75"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-lime)]"></span>{f}</li>)}
+        </ul>
+        <p class="mt-4 text-sm text-white/60">Every list is delivered as a Google Sheet, with CSV and Excel on request.</p>
+      </div>
+      <div class="min-w-0">
+        {sampleCategory && (
+          <ComparisonTable
+            caption="Illustrative sample — not real customer data"
+            headers={sampleCategory.sample.headers}
+            rows={sampleCategory.sample.rows.slice(0, 4)}
+            captionVisible
+          />
+        )}
+        <a href="/data-catalog" class="mt-4 inline-block text-sm font-semibold text-[var(--color-lime)] hover:underline">See more samples →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">How It Works</h2>
+      <ol class="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-3">
+        {steps.map((s, i) => (
+          <li class="card">
+            <p class="text-sm font-semibold text-[var(--color-lime)]">Step {i + 1}</p>
+            <h3 class="mt-2 text-lg font-bold text-white">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-white/70">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Pricing</h2>
+      <p class="mx-auto mt-3 max-w-xl text-center text-sm text-white/60">Start with a sample and scale up. All prices in USD.</p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {DATASET_TIERS.map((t) => (
+          <a href={`/contact?tier=${t.slug}`} data-cta={`lead-lists-tier-${t.slug}`} class="card block text-center hover:border-[var(--color-lime)]">
+            <p class="text-sm text-white/60">{t.name}</p>
+            <p class="mt-1 text-2xl font-extrabold text-white">{t.records} leads</p>
+            <p class="mt-1 text-lg font-semibold text-[var(--color-lime)]">{t.price}</p>
+          </a>
+        ))}
+      </div>
+      <p class="mt-6 text-center text-sm text-white/70">Custom lists from $299. Monthly plans from $199/mo. Quoted for larger or recurring needs.</p>
+      <div class="mt-6 text-center">
+        <a href="/pricing" class="text-sm font-semibold text-[var(--color-lime)] hover:underline">See full pricing →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="section">
+      <h2 class="text-center text-2xl font-bold text-white sm:text-3xl">Questions</h2>
+      <div class="mx-auto mt-10 max-w-3xl">
+        <FaqAccordion items={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section text-center">
+    <h2 class="text-2xl font-bold text-white sm:text-3xl">Start With 100 Leads for $29.</h2>
+    <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a href="/contact" data-cta="lead-lists-final" class="btn-primary">{CTA_MAIN} <ArrowRight size={18} /></a>
+      <a href={CTA_SAMPLE_HREF} data-cta="lead-lists-sample" class="btn-outline">{CTA_SAMPLE_DATA}</a>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+  })} />
+</BaseLayout>
